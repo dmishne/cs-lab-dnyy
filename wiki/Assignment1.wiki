@@ -5,6 +5,7 @@
 Stage 1:
 
 *Project Management*
+
 1._Task management:_
 	All steps of project development are included: specification, coding, testing
 	Each step is a concrete task for the concrete project members and concrete time
