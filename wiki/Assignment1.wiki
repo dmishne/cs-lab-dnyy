@@ -20,6 +20,7 @@ Stage 1:
 Stage 2:
 
 1. Create Use Case Diagram using VP with SubVersion.
+
 2. Create ATP.
 
 Stage 3:
