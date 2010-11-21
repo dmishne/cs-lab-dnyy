@@ -7,6 +7,8 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
@@ -23,10 +25,11 @@ public class GUI_CLoginPanel extends JPanel implements ActionListener{
 	private JPasswordField m_jPasswordField_Password = null;
 	private JButton m_jButton_Login = null;
 	
-	
+	/* FOR CHECKING PURPOSE ONLY - TO DELETE */
 	final String Username = "Daniel";
-	final String Password = "12345";
-		
+	final String Password = "12345";  //  @jve:decl-index=0:
+	/* ------------------------------------- */
+	
 	/**
 	 * This is the default constructor
 	 */
@@ -102,10 +105,20 @@ public class GUI_CLoginPanel extends JPanel implements ActionListener{
 		return m_jButton_Login;
 	}
 
+	/* 
+	 * TODO:
+	 * Need to rewrite after client interface will be compiled.
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		if(source == m_jButton_Login)
 		{
+			Boolean WrongAuth = true;
+			/*
+			 * TODO:
+			 * Add Validation
+			 * 
+			 */
 			if(Username.compareTo(m_jTextField_Username.getText()) == 0)
 			{
 				char[] input = m_jPasswordField_Password.getPassword();
@@ -116,8 +129,13 @@ public class GUI_CLoginPanel extends JPanel implements ActionListener{
 					 * TODO:
 					 * Save More Info.
 					 */
+					WrongAuth = false;
 					this.setVisible(false);
 				}
+			}
+			if(WrongAuth)
+			{
+				JOptionPane.showMessageDialog(null, "Wrong Authentication","Error",JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		

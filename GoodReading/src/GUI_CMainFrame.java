@@ -9,6 +9,7 @@ import java.awt.event.ComponentListener;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+
 import java.awt.Font;
 
 public class GUI_CMainFrame extends JFrame implements ComponentListener{
@@ -79,7 +80,12 @@ public class GUI_CMainFrame extends JFrame implements ComponentListener{
 		return GUI_CLoginPanel;
 	}
 	
+	
+	/* -------------------FIX IT--------------------  */
 	@SuppressWarnings("static-access")
+	/* Probably need to declare ENUM in another class
+	 * or to use Strings/Integers instead             */
+	/* ---------------------------------------------- */
 	public void componentHidden(ComponentEvent ceh) {
 		Object source = ceh.getSource();
 		if(source == GUI_CLoginPanel)
@@ -88,15 +94,14 @@ public class GUI_CMainFrame extends JFrame implements ComponentListener{
 		}
 		else if(source == GUI_CMainMenuPanel)
 		{
-			if(GUI_CMainMenuPanel.getM_lastChoice() == GUI_CMainMenuPanel.getM_lastChoice().LOGOUT);
+			if(GUI_CMainMenuPanel.getM_lastChoice() ==  GUI_CMainMenuPanel.getM_lastChoice().LOGOUT);
 			{
-				GUI_CMainMenuPanel.setVisible(true);
+				GUI_CLoginPanel.setVisible(true);
 			}
 		}
 	}
 
 	public void componentShown(ComponentEvent ces) {
-	
 		
 	}
 	
@@ -121,6 +126,4 @@ public class GUI_CMainFrame extends JFrame implements ComponentListener{
 		return GUI_CMainMenuPanel;
 	}
 	
-	
-
 }  //  @jve:decl-index=0:visual-constraint="10,10"

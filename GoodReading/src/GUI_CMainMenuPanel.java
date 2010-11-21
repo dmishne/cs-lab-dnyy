@@ -11,13 +11,13 @@ public class GUI_CMainMenuPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JButton m_jButton_Logout = null;
-	private JButton m_jButton_Search_MM = null;
+	private JButton m_jButton_SearchBook_MM = null;
 	private JButton m_jButton_NewMsgs_MM = null;
 	private JButton m_jButton_AddNewBook_MM = null;
 	private JButton m_jButton_Report_MM = null;
 	private JButton m_jButton_SearchUser_MM = null;
 	
-	public static enum MM_Decision{
+	public enum MM_Decision{
 		LOGOUT,SEARCH,XXXXXXXX,NEWMSGS,ADDNEWBOOK,REPORT,SEARCHUSER
 	}
 	
@@ -65,17 +65,17 @@ public class GUI_CMainMenuPanel extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * This method initializes m_jButton_Search_MM	
+	 * This method initializes m_jButton_SearchBook_MM	
 	 * 	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_Search_MM() {
-		if (m_jButton_Search_MM == null) {
-			m_jButton_Search_MM = new JButton();
-			m_jButton_Search_MM.setBounds(new Rectangle(50, 111, 174, 75));
-			m_jButton_Search_MM.setText("Search");
+		if (m_jButton_SearchBook_MM == null) {
+			m_jButton_SearchBook_MM = new JButton();
+			m_jButton_SearchBook_MM.setBounds(new Rectangle(50, 111, 174, 75));
+			m_jButton_SearchBook_MM.setText("Search Book");
 		}
-		return m_jButton_Search_MM;
+		return m_jButton_SearchBook_MM;
 	}
 
 	/**
