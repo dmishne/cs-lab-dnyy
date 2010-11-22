@@ -1,3 +1,5 @@
+package client.gui;
+
 import java.awt.GridBagLayout;
 import javax.swing.JPanel;
 import java.awt.Dimension;
@@ -16,7 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.BorderFactory;
 import javax.swing.border.EtchedBorder;
 
-public class GUI_CLoginPanel extends JPanel implements ActionListener{
+public class CLoginPanel extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JLabel m_JLabel_Username = null;
@@ -25,15 +27,10 @@ public class GUI_CLoginPanel extends JPanel implements ActionListener{
 	private JPasswordField m_jPasswordField_Password = null;
 	private JButton m_jButton_Login = null;
 	
-	/* FOR CHECKING PURPOSE ONLY - TO DELETE */
-	final String Username = "Daniel";
-	final String Password = "12345";  //  @jve:decl-index=0:
-	/* ------------------------------------- */
-	
 	/**
 	 * This is the default constructor
 	 */
-	public GUI_CLoginPanel() {
+	public CLoginPanel() {
 		super();
 		initialize();
 	}
@@ -113,27 +110,19 @@ public class GUI_CLoginPanel extends JPanel implements ActionListener{
 		Object source = ae.getSource();
 		if(source == m_jButton_Login)
 		{
-			Boolean WrongAuth = true;
 			/*
 			 * TODO:
 			 * Add Validation
 			 * 
 			 */
-			if(Username.compareTo(m_jTextField_Username.getText()) == 0)
+			char[] inputPasswordFilld= m_jPasswordField_Password.getPassword();
+			String Pass = String.valueOf(inputPasswordFilld, 0, inputPasswordFilld.length);
+			String User = m_jTextField_Username.getText();
+			if(client.core.CUser.getInstance().login(User,Pass))
 			{
-				char[] input = m_jPasswordField_Password.getPassword();
-				String sinput = String.valueOf(input, 0, input.length);
-				if(Password.compareTo((sinput)) == 0)
-				{
-					/*
-					 * TODO:
-					 * Save More Info.
-					 */
-					WrongAuth = false;
-					this.setVisible(false);
-				}
+				this.setVisible(false);
 			}
-			if(WrongAuth)
+			else
 			{
 				JOptionPane.showMessageDialog(null, "Wrong Authentication","Error",JOptionPane.ERROR_MESSAGE);
 			}

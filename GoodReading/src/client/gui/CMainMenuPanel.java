@@ -1,3 +1,5 @@
+package client.gui;
+
 import java.awt.GridBagLayout;
 import javax.swing.JPanel;
 import java.awt.Dimension;
@@ -7,7 +9,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GUI_CMainMenuPanel extends JPanel implements ActionListener {
+public class CMainMenuPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JButton m_jButton_Logout = null;
@@ -27,7 +29,7 @@ public class GUI_CMainMenuPanel extends JPanel implements ActionListener {
 	/**
 	 * This is the default constructor
 	 */
-	public GUI_CMainMenuPanel() {
+	public CMainMenuPanel() {
 		super();
 		initialize();
 	}

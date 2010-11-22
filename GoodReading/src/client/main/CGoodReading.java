@@ -1,3 +1,5 @@
+package client.main;
+
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -6,8 +8,8 @@ public class CGoodReading{
 	/**
 	 * @param args
 	 */
-	final static int Version = 0;
-	final static int Revision = 1;
+	final public static int Version = 0;
+	final public static int Revision = 1;
 
 	public static void main(String[] args) {
 
@@ -19,8 +21,8 @@ public class CGoodReading{
 		 * 
 		 */
 		initLookAndFeel();
-		GUI_CMainFrame.setDefaultLookAndFeelDecorated(true); // Set Graphics to be similar to OS.
-		GUI_CMainFrame mainFrame = new GUI_CMainFrame();
+		client.gui.CMainFrame.setDefaultLookAndFeelDecorated(true); // Set Graphics to be similar to OS.
+		client.gui.CMainFrame mainFrame = new client.gui.CMainFrame();
 		mainFrame.setVisible(true);
 	}
 	
