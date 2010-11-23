@@ -24,6 +24,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	}
 	
 	private MM_Decision m_lastChoice = MM_Decision.LOGOUT;
+	private JButton m_jButton_ArrangePayment = null;
 	
 	
 	/**
@@ -49,6 +50,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 		this.add(getM_jButton_AddNewBook_MM(), null);
 		this.add(getM_jButton_Report_MM(), null);
 		this.add(getM_jButton_SearchUser_MM(), null);
+		this.add(getM_jButton_ArrangePayment(), null);
 	}
 
 	/**
@@ -88,7 +90,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	private JButton getM_jButton_NewMsgs_MM() {
 		if (m_jButton_NewMsgs_MM == null) {
 			m_jButton_NewMsgs_MM = new JButton();
-			m_jButton_NewMsgs_MM.setBounds(new Rectangle(274, 111, 174, 75));
+			m_jButton_NewMsgs_MM.setBounds(new Rectangle(274, 216, 174, 75));
 			m_jButton_NewMsgs_MM.setText("New Messages");
 		}
 		return m_jButton_NewMsgs_MM;
@@ -116,7 +118,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	private JButton getM_jButton_Report_MM() {
 		if (m_jButton_Report_MM == null) {
 			m_jButton_Report_MM = new JButton();
-			m_jButton_Report_MM.setBounds(new Rectangle(274, 214, 174, 75));
+			m_jButton_Report_MM.setBounds(new Rectangle(50, 312, 174, 75));
 			m_jButton_Report_MM.setText("Generate Report");
 		}
 		return m_jButton_Report_MM;
@@ -130,7 +132,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	private JButton getM_jButton_SearchUser_MM() {
 		if (m_jButton_SearchUser_MM == null) {
 			m_jButton_SearchUser_MM = new JButton();
-			m_jButton_SearchUser_MM.setBounds(new Rectangle(162, 312, 174, 75));
+			m_jButton_SearchUser_MM.setBounds(new Rectangle(274, 312, 174, 75));
 			m_jButton_SearchUser_MM.setText("Search User");
 		}
 		return m_jButton_SearchUser_MM;
@@ -153,6 +155,20 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 
 	public MM_Decision getM_lastChoice() {
 		return m_lastChoice;
+	}
+
+	/**
+	 * This method initializes m_jButton_ArrangePayment	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getM_jButton_ArrangePayment() {
+		if (m_jButton_ArrangePayment == null) {
+			m_jButton_ArrangePayment = new JButton();
+			m_jButton_ArrangePayment.setBounds(new Rectangle(274, 111, 174, 75));
+			m_jButton_ArrangePayment.setText("Arrange Payment");
+		}
+		return m_jButton_ArrangePayment;
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="45,24"
