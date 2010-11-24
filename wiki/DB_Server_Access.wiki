@@ -12,7 +12,7 @@ we got a nice address on a good server with remote control - take care of it!
 address is *remote-mysql4.servage.net*
 port: *3306*
 username: *nirgeffen*
-password: *q1w2e3r4*
+
 
 if you're trying to _restore_ scheme and get an error, first check that you aren't trying to  restore the original scheme, choose another scheme.
 
