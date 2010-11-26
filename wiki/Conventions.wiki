@@ -9,7 +9,7 @@ This Wiki will dictated group 9's coding conventions.
 
 _Package Naming:_
 
-<nameofproject>.<nameofsection>
+nameofproject.nameofsection
 (only lowercase letters)
 example:
 client.core
@@ -17,7 +17,7 @@ client.gui
 
 _Class Naming:_
 
-T<ClassName>
+TClassName
 T stands for type
 C - Class
 I - Interface
