@@ -17,12 +17,12 @@ client.gui
 
 _Class Naming:_
 
-TClassName
-T stands for type
-C - Class
-I - Interface
-A - Abstract
-E - Enum
+==TClassName==
+===T stands for type===
+C - Class.
+I - Interface.
+A - Abstract.
+E - Enum.
 (A && I type name must end with 'able')
 example:
 CUser
