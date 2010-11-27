@@ -20,6 +20,12 @@ public class CDB_Interaction_Generator
 	{
 		return this.m_DB_Connection.createStatement().executeQuery(query);
 	}
+
+	public ResultSet MySQL_LoginQuery(String user) throws SQLException
+	{
+		return this.m_DB_Connection.createStatement().executeQuery("USE nirgeffen; SELECT u.user,u,password FROM users WHERE u.user = "+user);
+	}
+	
 	public static CDB_Interaction_Generator GetInstance()
 	{
 		/* TODO add constructor args */
