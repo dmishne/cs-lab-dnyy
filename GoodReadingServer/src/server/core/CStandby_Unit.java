@@ -8,7 +8,7 @@ public class CStandby_Unit  extends AbstractServer
 	/*signleton*/
 	private static CStandby_Unit m_obj;
 	final public static int DEFAULT_PORT = 5555;
-	 
+
 	/*Entry queue*/
 	private Queue <CClient_Entry> m_que;
 	/*signleton*/
@@ -46,13 +46,11 @@ public class CStandby_Unit  extends AbstractServer
 	}
 	
 	/*handle msgs from client*/
-	public void handleMessageFromClient
-    (Object msg, ConnectionToClient client)
+	public void handleMessageFromClient (Object msg, ConnectionToClient client)
 	{
 		m_que.add((CClient_Entry) msg);
-		((CClient_Entry) msg).m_client = client;
 		System.out.println("Server recieved client request from" + client);
-		CExecuter.GetInstance().notify();
+		CExecuter.GetInstance().Notify();
 	}
 
 	public CStandby_Unit(int port) 
