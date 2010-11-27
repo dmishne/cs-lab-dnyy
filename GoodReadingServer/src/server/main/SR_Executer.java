@@ -6,7 +6,7 @@ public class SR_Executer implements Runnable
 	private static SR_Executer obj;
 	private boolean sleeping;
 	/*signleton*/
-	SR_Executer GetInstance()
+	static SR_Executer GetInstance()
 	{
 		/* TODO add constructor args */
 		if(obj == null)
@@ -19,10 +19,10 @@ public class SR_Executer implements Runnable
 	{
 	//todo constructor
 	}
-	private void init()
+	private static void init()
 	{
 		obj=new SR_Executer();
-		sleeping=true;
+		obj.sleeping=true;
 		new Thread(obj).start();
 	}
 	public void run()
