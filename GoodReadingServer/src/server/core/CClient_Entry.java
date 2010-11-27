@@ -5,14 +5,14 @@ import java.util.Map;
 
 @SuppressWarnings("serial")
 public class CClient_Entry implements Serializable {
-	String type; /* type of request */
-	Map <String, String> args; /* arguments for request - may change from request to request*/
-	java.net.InetAddress IP;
-	Object client;
+	String m_type; /* type of request */
+	Map <String, String> m_args; /* arguments for request - may change from request to request*/
+	java.net.InetAddress m_IP;
+	Object m_client; /*TODO check about client relevancy */
 	
 	boolean isLogin()
 	{
-		if ( type.equals("Login"))
+		if ( m_type.equals("Login"))
 			return true;
 		return false;
 	}	
