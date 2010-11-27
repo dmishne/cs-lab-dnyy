@@ -16,8 +16,11 @@ public class CDB_Interaction_Generator
 	final private static String m_DEFAULTPASS="q1w2e3r4";
 	
 	
-	
-	static CDB_Interaction_Generator GetInstance()
+	public ResultSet MySQL_Query(String query) throws SQLException
+	{
+		return this.m_DB_Connection.createStatement().executeQuery(query);
+	}
+	public static CDB_Interaction_Generator GetInstance()
 	{
 		/* TODO add constructor args */
 		if(m_obj == null)
@@ -31,7 +34,7 @@ public class CDB_Interaction_Generator
 		{
 	        Class.forName("com.mysql.jdbc.Driver").newInstance();
 	        m_DB_Connection=DriverManager.getConnection(m_DEFAULTHOST,m_DEFAULTUSER,m_DEFAULTPASS);
-	 
+            System.out.println("SQL connection succeed");
 	 	} 
 		catch (Exception ex) 
  	    {/* handle any errors*/
