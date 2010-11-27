@@ -11,6 +11,7 @@ public class CExecuter implements Runnable
 	
 	private boolean m_sleeping; // @param indicates Executer is sleeping
 	private Random m_generator;	//infrastracture helping to generate random numbers.
+	/*TODO add randomly generated sessionIDs */
 
 	
 	/*signleton*/

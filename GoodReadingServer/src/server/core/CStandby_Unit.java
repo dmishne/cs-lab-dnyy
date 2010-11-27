@@ -51,6 +51,7 @@ public class CStandby_Unit  extends AbstractServer
 		m_que.add((CClient_Entry) msg);
 		System.out.println("Server recieved client request from" + client);
 		CExecuter.GetInstance().Notify();
+		//client.sendToClient(msg);/* TODO add this client as a map for the sender type <ConnectionToClient> */
 	}
 
 	public CStandby_Unit(int port) 
