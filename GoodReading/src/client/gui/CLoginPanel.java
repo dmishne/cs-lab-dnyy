@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
+import java.awt.HeadlessException;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -118,13 +119,18 @@ public class CLoginPanel extends JPanel implements ActionListener{
 			char[] inputPasswordFilld= m_jPasswordField_Password.getPassword();
 			String Pass = String.valueOf(inputPasswordFilld, 0, inputPasswordFilld.length);
 			String User = m_jTextField_Username.getText();
-			if(client.core.CUser.getInstance().login(User,Pass))
-			{
-				this.setVisible(false);
-			}
-			else
-			{
-				JOptionPane.showMessageDialog(null, "Wrong Authentication","Error",JOptionPane.ERROR_MESSAGE);
+			try {
+				if(client.core.AUserConnectable.login(User,Pass) != client.core.EActor.None)
+				{
+					this.setVisible(false);
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Wrong Authentication","Error",JOptionPane.ERROR_MESSAGE);
+				}
+			} 
+			catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 		
