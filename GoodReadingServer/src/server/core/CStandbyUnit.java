@@ -10,7 +10,7 @@ public class CStandbyUnit  extends AbstractServer
 	final public static int DEFAULT_PORT = 5555;
 
 	/*Entry queue*/
-	private Queue <CClientEntry> m_que;
+	private Queue <CEntry> m_que;
 	/*signleton*/
 	public static CStandbyUnit GetInstance()
 	{
@@ -23,18 +23,18 @@ public class CStandbyUnit  extends AbstractServer
 		}
 	}
 
-	/*Entry queue*/
+	/*Entry queue
 	public void RemoveEntries( java.net.InetAddress oIP)
 	{
 		synchronized( m_que )
 		{
-			for(CClientEntry t : m_que)
+			for(CEntry t : m_que)
 				if(t.m_IP.equals(oIP))
 					m_que.remove(t);
 		}
-	}
+	}*/
 	
-	public CClientEntry getEntryFromQueue() 
+	public CEntry getEntryFromQueue() 
 	{
 		return m_que.remove();
 	}
@@ -48,8 +48,8 @@ public class CStandbyUnit  extends AbstractServer
 	/*handle msgs from client*/
 	public void handleMessageFromClient (Object msg, ConnectionToClient client)
 	{
-		((CClientEntry) msg).m_connection=client; //save client so we could send the response later on.
-		m_que.add((CClientEntry) msg);
+		((CEntry) msg).setClientConnect(client); //save client so we could send the response later on.
+		m_que.add((CEntry) msg);
 		System.out.println("Server recieved client request from" + client);
 		CExecuter.GetInstance().NotifyOfEntry();
 	}

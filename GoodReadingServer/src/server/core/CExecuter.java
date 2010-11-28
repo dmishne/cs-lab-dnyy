@@ -55,7 +55,7 @@ public class CExecuter implements Runnable
 	
 	public void run()
 	{
-		CClientEntry Work;
+		CEntry Work;
 		try {
 			while (true)
 			{
@@ -65,7 +65,7 @@ public class CExecuter implements Runnable
 						wait();
 				Work=CStandbyUnit.GetInstance().getEntryFromQueue();
 				/*handle entry from standby unit*/
-				//((CClient_Entry) msg).m_sessionID = m_generator.nextInt();
+				//((CClient_Entry) msg).getSessionID() = m_generator.nextInt();
 				if(Work.isLogin())
 				{
 					handleLogin(Work);
@@ -100,19 +100,24 @@ public class CExecuter implements Runnable
 	
 	
 	
-	private void handleLogin(CClientEntry Work) 
+	private void handleLogin(CEntry Work) 
 	{
 		//instead of isLogged() - saves checking if it's logged and then finding the session to kill
 		for(CClientSession t : m_sessions)
 			if(t.isOfUser(Work))
 				t.Kill();	/*   - session dead*/
-		Work.m_sessionID=this.m_generator.nextInt();
-		if(ValidateLogin(Work.m_args.get("user"),Work.m_args.get("password")))			
+		Work.setSessionID(this.m_generator.nextInt());
+		if(ValidateLogin(Work.getMsgMap().get("user"),Work.getMsgMap().get("password")))			
 		{
-			if(CRespondToClient.GetInstance().isRegistered(Work.m_sessionID+"~"+Work.m_user))//extra validation
-				CRespondToClient.GetInstance().Remove(Work.m_sessionID+"~"+Work.m_user);//ovverwrite instance
-			CRespondToClient.GetInstance().InsertOutstream(Work.m_sessionID+"~"+Work.m_user, Work.m_connection);
+			//insert to connections
+			if(CRespondToClient.GetInstance().isRegistered(Work.getSessionID()+"~"+Work.getUserName()))//extra validation
+				CRespondToClient.GetInstance().Remove(Work.getSessionID()+"~"+Work.getUserName());//ovverwrite instance
+			CRespondToClient.GetInstance().InsertOutstream(Work.getSessionID()+"~"+Work.getUserName(), Work.getClientConnect());
 	///////////////////////continue here
+			//create session
+			
+			
+			
 		}	
 	}
 
@@ -157,3 +162,8 @@ public class CExecuter implements Runnable
 	
 	
 }
+
+
+
+
+
