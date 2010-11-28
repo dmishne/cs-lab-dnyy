@@ -101,7 +101,7 @@ public abstract class AUserConnectable{
 		}
 	}
 	
-	public Object handshakeWithServer(Object message)
+	protected final Object handshakeWithServer(Object message)
 	{
 	   //send to server
 		try {

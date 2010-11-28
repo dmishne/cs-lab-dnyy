@@ -1,11 +1,15 @@
 package client.common;
 
+import java.io.Serializable;
 import java.util.*;
 
 import ocsf.server.ConnectionToClient;
 
 
-public class CEntry {
+public class CEntry implements Serializable{
+	
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String m_msgType;			        // Message Type
 	private Map<String,String> m_msgMap;        // Message Entry
@@ -27,6 +31,7 @@ public class CEntry {
 		this.m_clientConnect = null;
 	}
 
+
 	/**
 	 * @return the m_msgType
 	 */
@@ -39,6 +44,10 @@ public class CEntry {
 	 */
 	public Map<String, String> getMsgMap() {
 		return m_msgMap;
+	}
+
+	public void setSessionID(int mSessionID) {
+		m_sessionID = mSessionID;
 	}
 
 	/**
@@ -68,4 +77,17 @@ public class CEntry {
 	public ConnectionToClient getClientConnect() {
 		return m_clientConnect;
 	}
+	
+	 public String getKey()	 {
+	  return Integer.toString(m_sessionID)+ "~" + m_userName;
+	 }
+	 
+	 public boolean isLogin()
+	 {
+		 if ( m_msgType.compareTo("Login") == 0)
+		 {
+			 return true;
+		 }
+		 return false;
+	 }
 }
