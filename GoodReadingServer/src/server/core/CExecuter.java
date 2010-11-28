@@ -1,4 +1,5 @@
 package server.core;
+import client.common.CEntry;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
@@ -7,10 +8,12 @@ import java.util.TreeSet;
 
 import server.db.CDBInteractionGenerator;
 
+
 public class CExecuter implements Runnable
 {
 	private Set <CClientSession> m_sessions;
 	private boolean m_sleeping; // @param indicates Executer is sleeping
+	private Thread m_ThreadHolder;
 	private Random m_generator;	//infrastracture helping to generate random numbers.
 	/*TODO add randomly generated sessionIDs */
 	//private static CExecuter m_obj;/*signleton*/
@@ -31,7 +34,7 @@ public class CExecuter implements Runnable
 	
 	private CExecuter()
 	{
-	//todo constructor
+	//Instance is configured inside init()
 		this.m_sessions=new TreeSet<CClientSession>();
 	}
 	
@@ -45,9 +48,9 @@ public class CExecuter implements Runnable
 		m_obj.m_sleeping=true;
 		m_obj.m_generator = new Random( 19580427 );
 		
-		new Thread(m_obj).start();
+		m_obj.m_ThreadHolder=new Thread(m_obj);
+		m_obj.m_ThreadHolder.start();
 	}
-	
 	
 	
 	
@@ -113,16 +116,32 @@ public class CExecuter implements Runnable
 			if(CRespondToClient.GetInstance().isRegistered(Work.getSessionID()+"~"+Work.getUserName()))//extra validation
 				CRespondToClient.GetInstance().Remove(Work.getSessionID()+"~"+Work.getUserName());//ovverwrite instance
 			CRespondToClient.GetInstance().InsertOutstream(Work.getSessionID()+"~"+Work.getUserName(), Work.getClientConnect());
-	///////////////////////continue here
+			
+			
+			/*TODO:reconsider responder insert method */
+			//should move to random method, if session exists then we'll know about it via the sessions set, otherwise we can insert it in StandbyUnit		
+			/*int i=this.m_generator.nextInt();
+			while(CRespondToClient.GetInstance().isRegistered(i))
+				i=this.m_generator.nextInt();*/
+			
+			
 			//create session
+			CClientSession newSession=new CClientSession(Work.getSessionID(),Work.getUserName()); 
 			
+			//add to List
+			this.m_sessions.add(newSession);
 			
-			
+			//send response to client
+			Work.setClientConnect(null);
+			Work.getMsgMap().clear();
+			Work.getMsgMap().put("SessionID", Integer.toString( Work.getSessionID() ));
+			CRespondToClient.GetInstance().SendResponse(Work.getKey(), Work);
 		}	
 	}
 
 
 
+	
 	private boolean ValidateLogin(String user, String password) 
 	{
 		ResultSet rs;
@@ -131,7 +150,7 @@ public class CExecuter implements Runnable
 		
 		rs=CDBInteractionGenerator.GetInstance().MySQL_LoginQuery(user);
 	
-		if(password.equals(rs.getString(2)))
+		if(password.compareTo(rs.getString(2))==0)
 			return true;
 		//if validated, create session! then respond to client
 		else return false;//return failure to client
@@ -154,12 +173,8 @@ public class CExecuter implements Runnable
 	{
 		if(m_sleeping)
 			m_sleeping=false;
-		notifyAll();
+		m_obj.m_ThreadHolder.notify(); ///need to check that we're not missing on notifyall()
 	}
-	
-	
-	
-	
 	
 }
 

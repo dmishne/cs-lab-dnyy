@@ -1,11 +1,23 @@
 package server.core;
+import client.common.CEntry;
 
 public class CClientSession 
 {
 	//public java.net.InetAddress m_IP;
 	private int m_SessionID;
 	private String m_UserName;
-	private Thread m_executingThread; /*TODO: might not be needed, to check on later*/
+	private Thread m_executingThread;
+	///*TODO: what happens if we try to 'execute' while there's a request waiting? */
+	
+	
+	public CClientSession(int randomID,String user)
+	{
+		this.m_executingThread=null;
+		this.m_UserName=user;
+		this.m_SessionID=randomID;
+	}
+	
+	
 	
 	public boolean isOfUser(CEntry b)//
 	{
@@ -21,7 +33,6 @@ public class CClientSession
 		// TODO Auto-generated method stub
 		
 	}
-
 
 
 	public void setSessionID(int m_SessionID) {
