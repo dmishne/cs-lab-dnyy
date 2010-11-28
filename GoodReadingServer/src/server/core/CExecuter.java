@@ -1,33 +1,44 @@
 package server.core;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
+import server.db.CDBInteractionGenerator;
+
 public class CExecuter implements Runnable
 {
-	private Set <CClient_Session> m_sessions;
-	/*signleton*/
-	private static CExecuter m_obj;
-	
+	private Set <CClientSession> m_sessions;
 	private boolean m_sleeping; // @param indicates Executer is sleeping
 	private Random m_generator;	//infrastracture helping to generate random numbers.
 	/*TODO add randomly generated sessionIDs */
-
+	//private static CExecuter m_obj;/*signleton*/
+	
+	
 	
 	/*signleton*/
-	static CExecuter GetInstance()
+	private static CExecuter m_obj;
+	public static CExecuter GetInstance()
 	{
 		/* TODO add constructor args */
 		if(m_obj == null)
 			init();
 		return m_obj;
 	}
+
+	
 	
 	private CExecuter()
 	{
 	//todo constructor
-		this.m_sessions=new TreeSet<CClient_Session>();
+		this.m_sessions=new TreeSet<CClientSession>();
 	}
+	
+	
+	
+	
+	
 	private static void init()
 	{
 		m_obj=new CExecuter();
@@ -37,30 +48,47 @@ public class CExecuter implements Runnable
 		new Thread(m_obj).start();
 	}
 	
+	
+	
+	
+	
+	
 	public void run()
 	{
-		CClient_Entry Work;
+		CClientEntry Work;
 		try {
 			while (true)
 			{
-				if(CStandby_Unit.GetInstance().isEmpty())
+				if(CStandbyUnit.GetInstance().isEmpty())
 					m_sleeping = true;
 				while(m_sleeping)
 						wait();
-				Work=CStandby_Unit.GetInstance().getEntryFromQueue();
+				Work=CStandbyUnit.GetInstance().getEntryFromQueue();
 				/*handle entry from standby unit*/
 				//((CClient_Entry) msg).m_sessionID = m_generator.nextInt();
 				if(Work.isLogin())
 				{
-					for(CClient_Session t : m_sessions)
+					handleLogin(Work);
+				
+	
+				}//end of login handling
+				else 
+				{
+					boolean flag=false;
+					for(CClientSession t : m_sessions)
 						if(t.isOfUser(Work))
-							;/*TODO return fail - session dead*/
-					//this here is the else option
+							flag=true;
+					if(flag == false)
+					;/* TODO:respond false and close! */
+					else
+					{
+						
+						
+					}
+				}//end of isLogin
 					
-				}
-					
-			}
-		} 
+			}//end of while(forever)
+		}//try 
 		catch (InterruptedException e) 
 		{
 			System.out.println("Server fail, can't 'wait' in func run via CExecuter");
@@ -68,10 +96,64 @@ public class CExecuter implements Runnable
 		}
 	}
 	
-	public void Notify()
+	
+	
+	
+	
+	private void handleLogin(CClientEntry Work) 
+	{
+		//instead of isLogged() - saves checking if it's logged and then finding the session to kill
+		for(CClientSession t : m_sessions)
+			if(t.isOfUser(Work))
+				t.Kill();	/*   - session dead*/
+		Work.m_sessionID=this.m_generator.nextInt();
+		if(ValidateLogin(Work.m_args.get("user"),Work.m_args.get("password")))			
+		{
+			if(CRespondToClient.GetInstance().isRegistered(Work.m_sessionID+"~"+Work.m_user))//extra validation
+				CRespondToClient.GetInstance().Remove(Work.m_sessionID+"~"+Work.m_user);//ovverwrite instance
+			CRespondToClient.GetInstance().InsertOutstream(Work.m_sessionID+"~"+Work.m_user, Work.m_connection);
+	///////////////////////continue here
+		}	
+	}
+
+
+
+	private boolean ValidateLogin(String user, String password) 
+	{
+		ResultSet rs;
+		try {
+			
+		
+		rs=CDBInteractionGenerator.GetInstance().MySQL_LoginQuery(user);
+	
+		if(password.equals(rs.getString(2)))
+			return true;
+		//if validated, create session! then respond to client
+		else return false;//return failure to client
+		
+		} catch(SQLException e)
+		{ 
+			System.out.println("MySQL exception: "+e.getMessage());
+			System.out.println("Client Connection rejected due to SQL exception");
+		}
+		return false;		
+	}
+
+	
+	
+	
+	
+	
+	
+	public void NotifyOfEntry()
 	{
 		if(m_sleeping)
 			m_sleeping=false;
 		notifyAll();
 	}
+	
+	
+	
+	
+	
 }
