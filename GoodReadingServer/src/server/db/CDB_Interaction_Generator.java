@@ -23,8 +23,8 @@ public class CDB_Interaction_Generator
 
 	public ResultSet MySQL_LoginQuery(String user) throws SQLException
 	{
-		return this.m_DB_Connection.createStatement().executeQuery("USE nirgeffen; SELECT u.user,u,password FROM users WHERE u.user = "+user);
-	}
+		return this.m_DB_Connection.createStatement().executeQuery("USE nirgeffen; SELECT u.user,u,password FROM users WHERE u.user like '\""+user+"\"'");
+	} /////////////////need to fix " inside of DB
 	
 	public static CDB_Interaction_Generator GetInstance()
 	{
