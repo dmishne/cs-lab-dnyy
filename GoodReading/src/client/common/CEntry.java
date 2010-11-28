@@ -7,8 +7,8 @@ public class CEntry {
 	
 	private String m_msgType;			    // Message Type
 	private Map<String,String> m_msgMap;    // Message Entry
+	private String m_userName;       		// ?????????
 	private int m_sessionID;				// User's Session ID
-	private String m_userName;       		// ????????? 	
 		
 	/*
 	 * CEntry Constructor

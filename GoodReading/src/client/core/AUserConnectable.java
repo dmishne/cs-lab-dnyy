@@ -1,5 +1,11 @@
 package client.core;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import client.common.*;
+
 public abstract class AUserConnectable{
 	
 	/* FOR CHECKING PURPOSE ONLY - TO DELETE */
@@ -10,8 +16,32 @@ public abstract class AUserConnectable{
 	
 	static protected AUserConnectable m_actor = null;
 	
-	static public EActor login(String username, String password)
-	{		
+	final static public EActor login(String username, String password)
+	{	
+	    try {
+	    	CClientConnector.getInstance().openConnection();
+			Map<String,String> UP = new HashMap<String,String>();
+			UP.put(username, password);
+			CEntry clientEntry = new CEntry("login",UP,username,-1);
+			CClientConnector.getInstance().sendToServer(clientEntry);
+			while(!CClientConnector.getInstance().isWaitingMsg())
+			{
+				Thread.yield();
+			}	
+		} 
+	    catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+		CEntry result = (CEntry)CClientConnector.getInstance().getMsg();
+		/*
+		 * TODO:
+		 * CHECKING IF LOGGING SUCCESSFUL USING result  
+		 * 
+		 * 
+		 * 
+		 */
+
+		// TEMPORARY //	
 		if((Username.compareTo(username)==0) && (Password.compareTo(password)==0))
 		{
 			/*
@@ -20,16 +50,19 @@ public abstract class AUserConnectable{
 			 * Need Validation.
 			 * Need Update of User Privilege.
 			 */
+		
 			if(m_actor == null)
 			{
 				createActor(tmpAct);
 				return(tmpAct);
 			}
+			return(tmpAct); 
 		}
 		return(EActor.None);
+
 	}
 	
-	static public AUserConnectable getInstance() throws Exception
+	final static public AUserConnectable getInstance() throws Exception
 	{
 		if(null == m_actor)
 		{
@@ -41,7 +74,7 @@ public abstract class AUserConnectable{
 		}
 	}
 	
-	public boolean logout()
+	final public boolean logout()
 	{
 		// -Stub-
 		m_actor = null;
@@ -66,6 +99,25 @@ public abstract class AUserConnectable{
 			m_actor = new CLibraryManager();
 			break;
 		}
+	}
+	
+	public Object handshakeWithServer(Object message)
+	{
+	   //send to server
+		try {
+			CClientConnector.getInstance().sendToServer(message);
+			while(!CClientConnector.getInstance().isWaitingMsg())
+			{
+				wait();
+			}
+		} catch (IOException e) { 
+			e.getCause();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+			
+		// get answer		
+		return (CClientConnector.getInstance().getMsg());	
 	}
 	
 }
