@@ -11,4 +11,5 @@ public class CClient_Session
 			return true;
 		return false;
 	}
+	//session.kill
 }
