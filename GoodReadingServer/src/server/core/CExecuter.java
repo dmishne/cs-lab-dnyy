@@ -54,7 +54,7 @@ public class CExecuter implements Runnable
 				{
 					for(CClient_Session t : m_sessions)
 						if(t.isOfUser(Work))
-							;/*TODO return fail*/
+							;/*TODO return fail - session dead*/
 					//this here is the else option
 					
 				}
