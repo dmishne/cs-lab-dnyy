@@ -146,7 +146,7 @@ public class CExecuter implements Runnable
 				Work.setClient(null);
 				break;
 			case (1):
-				Work.setClient(new CReader());
+				//Work.setClient(new CReader());
 				
 			case (3):
 				
