@@ -1,5 +1,7 @@
 package client.common;
 
+import java.io.IOException;
+
 import ocsf.client.*;
 
 public class CClientConnector extends AbstractClient {
@@ -32,6 +34,27 @@ public class CClientConnector extends AbstractClient {
 			     this.m_haveMsg = true;
 			     notifyAll();
 		}
+		
+		public Object messageToServer(Object message)
+		{
+		   //send to server
+			try {
+				CClientConnector.getInstance().sendToServer(message);
+				while(!CClientConnector.getInstance().isWaitingMsg())
+				{
+					wait();
+				}
+			} catch (IOException e) { 
+				e.getCause();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+				
+			// get answer		
+			return (CClientConnector.getInstance().getMsg());	
+		}
+		
+		
 		
 		public boolean isWaitingMsg()
 		{

@@ -6,7 +6,7 @@ import java.util.Map;
 
 import client.common.*;
 
-public abstract class AUserConnectable{
+public abstract class AUser{
 	
 	/* FOR CHECKING PURPOSE ONLY - TO DELETE */
 	static final private String Username = "Daniel";
@@ -14,10 +14,16 @@ public abstract class AUserConnectable{
 	static final private EActor tmpAct = EActor.LibraryManager;
 	/* ------------------------------------- */
 	
-	static protected AUserConnectable m_actor = null;
-	
+	static protected AUser  m_actor = null;
+		   protected EActor m_privilege;
+		   protected String m_firstName;
+		   protected String m_lastName;
+		   protected int    m_userID;
+		   protected String m_userName;
+		   
 	final static public EActor login(String username, String password)
 	{	
+		/*
 	    try {
 	    	CClientConnector.getInstance().openConnection();
 			Map<String,String> UP = new HashMap<String,String>();
@@ -33,6 +39,10 @@ public abstract class AUserConnectable{
 			System.out.println(e.getMessage());
 		}
 		CEntry result = (CEntry)CClientConnector.getInstance().getMsg();
+		setActor(result.getClient());
+		*/
+		
+		
 		/*
 		 * TODO:
 		 * CHECKING IF LOGGING SUCCESSFUL USING result  
@@ -51,18 +61,14 @@ public abstract class AUserConnectable{
 			 * Need Update of User Privilege.
 			 */
 		
-			if(m_actor == null)
-			{
-				createActor(tmpAct);
-				return(tmpAct);
-			}
-			return(tmpAct); 
+			m_actor = new CLibraryManager();
+			return(m_actor.getPrivilege());
 		}
 		return(EActor.None);
 
 	}
 	
-	final static public AUserConnectable getInstance() throws Exception
+	final static public AUser getInstance() throws Exception
 	{
 		if(null == m_actor)
 		{
@@ -74,7 +80,7 @@ public abstract class AUserConnectable{
 		}
 	}
 	
-	final public boolean logout()
+	final static public boolean logout()
 	{
 		// -Stub-
 		m_actor = null;
@@ -82,42 +88,30 @@ public abstract class AUserConnectable{
 		// ------
 	}
 	
-	static private void createActor(EActor actor)
+	static private void setActor(Object pri)
 	{
-		switch(actor)
+		switch(((AUser)pri).getPrivilege())
 		{
-		case User:
-			m_actor = new CUser();
-			break;
 		case Reader:
-			m_actor = new CReader();
+			m_actor = (CReader)pri;
 			break;
 		case Librarian:
-			m_actor = new CLibrarian();
+			m_actor = (CLibrarian)pri;
 			break;
 		case LibraryManager:
-			m_actor = new CLibraryManager();
+			m_actor = (CLibraryManager)pri;
 			break;
 		}
 	}
+		
 	
-	protected final Object handshakeWithServer(Object message)
-	{
-	   //send to server
-		try {
-			CClientConnector.getInstance().sendToServer(message);
-			while(!CClientConnector.getInstance().isWaitingMsg())
-			{
-				wait();
-			}
-		} catch (IOException e) { 
-			e.getCause();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-			
-		// get answer		
-		return (CClientConnector.getInstance().getMsg());	
+	public EActor getPrivilege() {
+		return m_privilege;
 	}
+
+	public void setPrivilege(EActor mPrivilege) {
+		m_privilege = mPrivilege;
+	}
+	
 	
 }

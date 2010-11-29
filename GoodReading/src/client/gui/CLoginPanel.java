@@ -120,7 +120,7 @@ public class CLoginPanel extends JPanel implements ActionListener{
 			String Pass = String.valueOf(inputPasswordFilld, 0, inputPasswordFilld.length);
 			String User = m_jTextField_Username.getText();
 			try {
-				if(client.core.AUserConnectable.login(User,Pass) != client.core.EActor.None)
+				if(client.core.AUser.login(User,Pass) != client.core.EActor.None)
 				{
 					this.setVisible(false);
 				}

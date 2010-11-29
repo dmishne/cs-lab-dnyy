@@ -15,7 +15,7 @@ public class CEntry implements Serializable{
 	private Map<String,String> m_msgMap;        // Message Entry
 	private String m_userName;       		    // 
 	private int m_sessionID;			        // User's Session ID
-	private ConnectionToClient m_clientConnect; // ClientConnectionInfo
+	private Object m_client; 				    // Client Info
 		
 	/*
 	 * CEntry Constructor
@@ -28,7 +28,7 @@ public class CEntry implements Serializable{
 		@SuppressWarnings("unchecked")
 		Map<String, String> temp_msg = (Map<String, String>)msg;
 		this.m_msgMap        = temp_msg;
-		this.m_clientConnect = null;
+		this.m_client	     = null;
 	}
 
 
@@ -67,15 +67,15 @@ public class CEntry implements Serializable{
 	/**
 	 * @param m_clientConnect the m_clientConnect to set
 	 */
-	public void setClientConnect(ConnectionToClient m_clientConnect) {
-		this.m_clientConnect = m_clientConnect;
+	public void setClient(ConnectionToClient m_clientConnect) {
+		this.m_client = m_clientConnect;
 	}
 
 	/**
 	 * @return the m_clientConnect
 	 */
-	public ConnectionToClient getClientConnect() {
-		return m_clientConnect;
+	public Object getClient() {
+		return m_client;
 	}
 	
 	 public String getKey()	 {
