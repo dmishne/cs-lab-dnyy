@@ -2,6 +2,9 @@ package server.db;
 
 import java.sql.*;
 import java.util.*;
+
+import client.common.CEntry;
+import client.core.CReader;
 import server.core.*;
 
 public class CDBInteractionGenerator 
@@ -93,4 +96,92 @@ public class CDBInteractionGenerator
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
+
+
+
+	private void handleLogin(CEntry Work) 
+	{
+		//instead of isLogged() - saves checking if it's logged and then finding the session to kill
+		for(CClientSession t : m_sessions)
+			if(t.isOfUser(Work))
+				t.Kill();	/*   - session dead*/
+		
+		Work.setSessionID(this.m_generator.nextInt());
+		
+		if(ValidateLogin(Work.getMsgMap().get("user"),Work.getMsgMap().get("password")))			
+		{
+			//insert to connections
+			if(CRespondToClient.GetInstance().isRegistered(Work.getSessionID()+"~"+Work.getUserName()))//extra validation
+				CRespondToClient.GetInstance().Remove(Work.getSessionID()+"~"+Work.getUserName());//ovverwrite instance
+			CRespondToClient.GetInstance().InsertOutstream(Work.getSessionID()+"~"+Work.getUserName(), Work.getClient());
+			
+			
+			/*TODO:reconsider responder insert method */
+			//should move to random method, if session exists then we'll know about it via the sessions set, otherwise we can insert it in StandbyUnit		
+			/*int i=this.m_generator.nextInt();
+			while(CRespondToClient.GetInstance().isRegistered(i))
+				i=this.m_generator.nextInt();*/
+			
+			
+			//create session
+			CClientSession newSession=new CClientSession(Work.getSessionID(),Work.getUserName(),MySQLGetAuth(Work.getMsgMap().get("user"))); 
+			if (newSession.getSessionID()==-1)
+				return ; //quick exit 
+			/* TODO: throw out of responder */
+			
+			//add to List
+			CExecuter.GetInstance().add(newSession);
+			
+			//send response to client
+			switch (newSession.getSessionID())
+			{
+			case (0):
+				Work.setClient(null);
+				break;
+			case (1):
+				Work.setClient(new CReader());
+				
+			case (3):
+				
+			case (5):
+				
+			}	
+			
+			Work.getMsgMap().clear();
+			Work.getMsgMap().put("SessionID", Integer.toString( Work.getSessionID() ));
+			CRespondToClient.GetInstance().SendResponse(Work.getKey(), Work);
+			
+		}	
+	}
+
+
+
+	
+	private boolean ValidateLogin(String user, String password) 
+	{
+		ResultSet rs;
+		try {
+			
+		
+		rs=MySQL_LoginQuery(user);
+	
+		if(password.compareTo(rs.getString(2))==0)
+			return true;
+		//if validated, create session! then respond to client
+		else return false;//return failure to client
+		
+		} catch(SQLException e)
+		{ 
+			System.out.println("MySQL exception: "+e.getMessage());
+			System.out.println("Client Connection rejected due to SQL exception");
+		}
+		return false;		
+	}
+
+	
+
+
 }
