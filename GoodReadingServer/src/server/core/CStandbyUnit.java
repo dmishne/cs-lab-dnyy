@@ -1,5 +1,7 @@
 package server.core;
 import java.util.*;
+import java.util.concurrent.SynchronousQueue;
+
 import ocsf.server.*;
 import client.common.CEntry;
 
@@ -13,17 +15,15 @@ public class CStandbyUnit  extends AbstractServer
 	/*Entry queue*/
 	private Queue <CEntry> m_que;
 	/*signleton*/
+	
 	public static CStandbyUnit GetInstance()
 	{
-		/* TODO add constructor args */
-		synchronized(CStandbyUnit.m_obj) 
-		{
-			if(CStandbyUnit.m_obj == null)
-				m_obj=new CStandbyUnit(DEFAULT_PORT);
-			return CStandbyUnit.m_obj;
-		}
+		if(CStandbyUnit.m_obj == null)
+			m_obj=new CStandbyUnit(DEFAULT_PORT);
+		return CStandbyUnit.m_obj;
 	}
 
+	
 	/*Entry queue
 	public void RemoveEntries( java.net.InetAddress oIP)
 	{
@@ -58,6 +58,7 @@ public class CStandbyUnit  extends AbstractServer
 	public CStandbyUnit(int port) 
 	{
 		super(port);
+		m_que=new SynchronousQueue<CEntry>();
 	}
 
 }

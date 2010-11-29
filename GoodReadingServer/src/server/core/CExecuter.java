@@ -1,5 +1,8 @@
 package server.core;
 import client.common.CEntry;
+import client.core.CReader;
+
+import java.io.Reader;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
@@ -109,7 +112,9 @@ public class CExecuter implements Runnable
 		for(CClientSession t : m_sessions)
 			if(t.isOfUser(Work))
 				t.Kill();	/*   - session dead*/
+		
 		Work.setSessionID(this.m_generator.nextInt());
+		
 		if(ValidateLogin(Work.getMsgMap().get("user"),Work.getMsgMap().get("password")))			
 		{
 			//insert to connections
@@ -126,13 +131,29 @@ public class CExecuter implements Runnable
 			
 			
 			//create session
-			CClientSession newSession=new CClientSession(Work.getSessionID(),Work.getUserName()); 
+			CClientSession newSession=new CClientSession(Work.getSessionID(),Work.getUserName(),CDBInteractionGenerator.GetInstance().MySQLGetAuth(Work.getMsgMap().get("user"))); 
+			if (newSession.getSessionID()==-1)
+				return ; //quick exit 
+			/* TODO: throw out of responder */
 			
 			//add to List
 			this.m_sessions.add(newSession);
 			
 			//send response to client
-			Work.setClient(null);/* TODO:return a user type */
+			switch (newSession.getSessionID())
+			{
+			case (0):
+				Work.setClient(null);
+				break;
+			case (1):
+				Work.setClient(new CReader());
+				
+			case (3):
+				
+			case (5):
+				
+			}	
+			
 			Work.getMsgMap().clear();
 			Work.getMsgMap().put("SessionID", Integer.toString( Work.getSessionID() ));
 			CRespondToClient.GetInstance().SendResponse(Work.getKey(), Work);
