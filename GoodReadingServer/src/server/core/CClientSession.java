@@ -7,14 +7,16 @@ public class CClientSession implements Comparable
 	private int m_SessionID;
 	private String m_UserName;
 	private Thread m_executingThread;
+	private int m_UserAuth;
 	///*TODO: what happens if we try to 'execute' while there's a request waiting? */
 	
 	
-	public CClientSession(int randomID,String user)
+	public CClientSession(int randomID,String user,int auth)
 	{
 		this.m_executingThread=null;
 		this.m_UserName=user;
 		this.m_SessionID=randomID;
+		this.m_UserAuth=auth;
 	}
 	
 	
@@ -83,6 +85,12 @@ public class CClientSession implements Comparable
 		if(o.equals(this))
 			return 0;
 		return 1;
+	}
+
+
+
+	public int getUserAuth() {
+		return m_UserAuth;
 	}
 	
 }
