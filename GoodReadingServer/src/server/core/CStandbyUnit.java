@@ -49,7 +49,7 @@ public class CStandbyUnit  extends AbstractServer
 	/*handle msgs from client*/
 	public void handleMessageFromClient (Object msg, ConnectionToClient client)
 	{
-		((CEntry) msg).setClientConnect(client); //save client so we could send the response later on.
+		((CEntry) msg).setClient(client); //save client so we could send the response later on.
 		m_que.add((CEntry) msg);
 		System.out.println("Server recieved client request from" + client);
 		CExecuter.GetInstance().NotifyOfEntry();

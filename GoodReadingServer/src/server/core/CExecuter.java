@@ -115,7 +115,7 @@ public class CExecuter implements Runnable
 			//insert to connections
 			if(CRespondToClient.GetInstance().isRegistered(Work.getSessionID()+"~"+Work.getUserName()))//extra validation
 				CRespondToClient.GetInstance().Remove(Work.getSessionID()+"~"+Work.getUserName());//ovverwrite instance
-			CRespondToClient.GetInstance().InsertOutstream(Work.getSessionID()+"~"+Work.getUserName(), Work.getClientConnect());
+			CRespondToClient.GetInstance().InsertOutstream(Work.getSessionID()+"~"+Work.getUserName(), Work.getClient());
 			
 			
 			/*TODO:reconsider responder insert method */
@@ -132,10 +132,11 @@ public class CExecuter implements Runnable
 			this.m_sessions.add(newSession);
 			
 			//send response to client
-			Work.setClientConnect(null);
+			Work.setClient(null);/* TODO:return a user type */
 			Work.getMsgMap().clear();
 			Work.getMsgMap().put("SessionID", Integer.toString( Work.getSessionID() ));
 			CRespondToClient.GetInstance().SendResponse(Work.getKey(), Work);
+			
 		}	
 	}
 
