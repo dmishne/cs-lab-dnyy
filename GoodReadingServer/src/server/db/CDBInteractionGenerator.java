@@ -9,11 +9,15 @@ public class CDBInteractionGenerator
 	
 	private static CDBInteractionGenerator m_obj;
 	private Connection m_DB_Connection;
-	final private static String m_DEFAULTHOST="jdbc:mysql://remote-mysql4.servage.net";
+	
+	final private static String m_DEFAULTHOST="jdbc:mysql://remote-mysql4.servage.net/nirgeffen";
 	final private static String m_DEFAULTUSER="nirgeffen";
 	final private static String m_DEFAULTPASS="q1w2e3r4";
-	
-	
+	/*
+	final private static String m_DEFAULTHOST="jdbc:mysql://localhost";
+	final private static String m_DEFAULTUSER="root";
+	final private static String m_DEFAULTPASS="m00nkey";
+	*/
 	public ResultSet MySQLQuery(String query) throws SQLException
 	{
 		return this.m_DB_Connection.createStatement().executeQuery(query);
@@ -55,13 +59,13 @@ public class CDBInteractionGenerator
 		       
 		       catch(ExceptionInInitializerError e)
 		       {
-		    	   System.out.println("Error initializing DB connection: " + e.getMessage()+" "+e.getCause());
+		    	   System.out.println("Error initializing DB connection 1: " + e.getMessage()+" "+e.getCause());
 		       } catch (InstantiationException e) {
-		    	   System.out.println("Error initializing DB connection: " + e.getMessage()+" "+e.getCause());
+		    	   System.out.println("Error initializing DB connection 2: " + e.getMessage()+" "+e.getCause());
 		       } catch (IllegalAccessException e) {
-		    	   System.out.println("Error initializing DB connection: " + e.getMessage()+" "+e.getCause());
+		    	   System.out.println("Error initializing DB connection 3: " + e.getMessage()+" "+e.getCause());
 			} catch (ClassNotFoundException e) {
-				 System.out.println("Error initializing DB connection: " + e.getMessage()+" "+e.getCause());
+				 System.out.println("Error initializing DB connection 4: " + e.getMessage()+" "+e.getCause());
 				}
 			
 				m_obj=new CDBInteractionGenerator(); //init();
@@ -81,7 +85,7 @@ public class CDBInteractionGenerator
 	 	} 
 		catch (SQLException ex) 
  	    {/* handle any errors*/
-			System.out.println("Error initializing DB connection: " + ex.getMessage()+" "+ex.getErrorCode()+" "+ex.getSQLState());
+			System.out.println("Error initializing DB connection 5: " + ex.getMessage()+" "+ex.getErrorCode()+" "+ex.getSQLState());
         }
 		
 	}
