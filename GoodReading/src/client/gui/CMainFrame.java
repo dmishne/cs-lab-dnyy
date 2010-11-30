@@ -1,24 +1,22 @@
 package client.gui;
 
-import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import javax.swing.JFrame;
 import java.awt.Dimension;
-import java.awt.Rectangle;
+import java.awt.Font;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-
-
-import java.awt.Font;
-import javax.swing.JMenuBar;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class CMainFrame extends JFrame implements ActionListener,ComponentListener{
 
@@ -70,7 +68,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			jContentPane = new JPanel();
 			jContentPane.setLayout(null);
 			jContentPane.add(getGUI_CLoginPanel(), null);
-			jContentPane.add(getGUI_CMainMenuPanel(), null);
+			//jContentPane.add(getGUI_CMainMenuPanel(), null);
 			jContentPane.add(m_jLabel_LOGO, null);
 		}
 		return jContentPane;
@@ -90,31 +88,6 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			GUI_CLoginPanel.addComponentListener(this);
 		}
 		return GUI_CLoginPanel;
-	}
-	
-	
-	/* -------------------FIX IT--------------------  */
-	@SuppressWarnings("static-access")
-	/* Probably need to declare ENUM in another class
-	 * or to use Strings/Integers instead             */
-	/* ---------------------------------------------- */
-	public void componentHidden(ComponentEvent ceh) {
-		Object source = ceh.getSource();
-		if(source == GUI_CLoginPanel)
-		{
-			GUI_CMainMenuPanel.setVisible(true);
-		}
-		else if(source == GUI_CMainMenuPanel)
-		{
-			if(GUI_CMainMenuPanel.getM_lastChoice() ==  GUI_CMainMenuPanel.getM_lastChoice().LOGOUT);
-			{
-				GUI_CLoginPanel.setVisible(true);
-			}
-		}
-	}
-
-	public void componentShown(ComponentEvent ces) {
-		
 	}
 	
 	/*--------------DO NOT TO IMPLEMENT---------------*/
@@ -179,7 +152,33 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		}
 		return m_jMenuItem_Help_About;
 	}
+	
+	/* -------------------FIX IT--------------------  */
+	@SuppressWarnings("static-access")
+	/* Probably need to declare ENUM in another class
+	 * or to use Strings/Integers instead             */
+	/* ---------------------------------------------- */
+	public void componentHidden(ComponentEvent ceh) {
+		Object source = ceh.getSource();
+		if(source == GUI_CLoginPanel)
+		{
+			jContentPane.add(getGUI_CMainMenuPanel());
+			GUI_CMainMenuPanel.setVisible(true);
+		}
+		else if(source == GUI_CMainMenuPanel)
+		{
+			if(GUI_CMainMenuPanel.getM_lastChoice() ==  GUI_CMainMenuPanel.getM_lastChoice().LOGOUT);
+			{
+				jContentPane.remove(GUI_CMainMenuPanel);
+				GUI_CLoginPanel.setVisible(true);
+			}
+		}
+	}
 
+	public void componentShown(ComponentEvent ces) {
+		
+	}
+	
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		if(source == m_jMenuItem_Help_About)

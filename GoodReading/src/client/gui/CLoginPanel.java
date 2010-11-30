@@ -1,22 +1,18 @@
 package client.gui;
 
-import java.awt.GridBagLayout;
-import javax.swing.JPanel;
-import java.awt.Dimension;
-import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import java.awt.HeadlessException;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
 public class CLoginPanel extends JPanel implements ActionListener{
@@ -104,36 +100,23 @@ public class CLoginPanel extends JPanel implements ActionListener{
 	}
 
 	/* 
-	 * TODO:
-	 * Need to rewrite after client interface will be compiled.
+	 * This method responsible on the actions occur in this container
 	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		if(source == m_jButton_Login)
 		{
-			/*
-			 * TODO:
-			 * Add Validation
-			 * 
-			 */
-			char[] inputPasswordFilld= m_jPasswordField_Password.getPassword();
-			String Pass = String.valueOf(inputPasswordFilld, 0, inputPasswordFilld.length);
+			char[] inputPasswordField =  m_jPasswordField_Password.getPassword();
+			String Pass = String.valueOf(inputPasswordField, 0, inputPasswordField.length);
 			String User = m_jTextField_Username.getText();
+			
 			try {
-				if(client.core.AUser.login(User,Pass) != client.core.EActor.None)
-				{
-					this.setVisible(false);
-				}
-				else
-				{
-					JOptionPane.showMessageDialog(null, "Wrong Authentication","Error",JOptionPane.ERROR_MESSAGE);
-				}
+				client.core.AUser.login(User,Pass);
+				this.setVisible(false);
 			} 
 			catch (Exception e) {
-				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, e.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		
 	}
-
 }  //  @jve:decl-index=0:visual-constraint="44,10"

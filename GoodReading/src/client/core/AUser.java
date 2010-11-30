@@ -3,14 +3,16 @@ package client.core;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import client.common.*;
 
 public abstract class AUser{
 	
 	/* FOR CHECKING PURPOSE ONLY - TO DELETE */
-	static final private String Username = "Daniel";
-	static final private String Password = "12345";  //  @jve:decl-index=0:
+	static final private String temp_Username = "Daniel";
+	static final private String temp_Password = "12345";  //  @jve:decl-index=0:
 	static final private EActor tmpAct = EActor.LibraryManager;
 	/* ------------------------------------- */
 	
@@ -21,8 +23,24 @@ public abstract class AUser{
 		   protected int    m_userID;
 		   protected String m_userName;
 		   
-	final static public EActor login(String username, String password)
+	final static public EActor login(String username, String password) throws Exception
 	{	
+		 /*
+		  *  Username && Password input validation 
+		 */
+		Pattern pu = Pattern.compile("(\\p{Alpha})+((\\p{Digit})*(\\p{Alpha})*)*");
+		Pattern pp = Pattern.compile("((\\p{Digit})*(\\p{Alpha})*)*");
+		Matcher mu = pu.matcher(username);
+		Matcher mp = pp.matcher(password);
+		boolean b = mu.matches();
+		b &= mp.matches();
+		if(!b){
+			throw new Exception("Invalid Username/Password Characters");
+		}
+		
+		
+		
+		
 		/*
 	    try {
 	    	CClientConnector.getInstance().openConnection();
@@ -51,8 +69,11 @@ public abstract class AUser{
 		 * 
 		 */
 
+
+
+		
 		// TEMPORARY //	
-		if((Username.compareTo(username)==0) && (Password.compareTo(password)==0))
+		if((temp_Username.compareTo(username)==0) && (temp_Password.compareTo(password)==0))
 		{
 			/*
 			 * TODO:
@@ -64,8 +85,7 @@ public abstract class AUser{
 			m_actor = new CLibraryManager();
 			return(m_actor.getPrivilege());
 		}
-		return(EActor.None);
-
+		throw new Exception("Incorrect Username/Password");
 	}
 	
 	final static public AUser getInstance() throws Exception
@@ -104,7 +124,6 @@ public abstract class AUser{
 		}
 	}
 		
-	
 	public EActor getPrivilege() {
 		return m_privilege;
 	}
