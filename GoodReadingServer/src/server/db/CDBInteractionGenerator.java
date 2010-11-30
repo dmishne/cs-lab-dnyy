@@ -170,6 +170,36 @@ public class CDBInteractionGenerator
 		}
 		return false;		
 	}
+	
+	public boolean RemoveCC(String user)
+	{
+		try {
+			Statement st = this.m_DB_Connection.createStatement();
+			st.executeUpdate("DELETE from credit_card_details ccd WHERE ccd.user LIKE "+user+";");
+			return true;	
+		} catch (SQLException e) {
+			System.out.println("RemoveCC():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
+	
+		return false;
+	}
+	public boolean AddCC(String user,String CCnum,String CCExpire,String CCid)
+	{
+		try {
+			this.MySQLQuery("INSERT INTO `credit_card_details` (`user`,`cc_num`,`cc_expire`,`cc_id`) VALUES ('"+user+"','"+CCnum+"','"+CCExpire+"','"+CCid+"'");
+			return true;	
+		} catch (SQLException e) {
+			System.out.println("AddCC():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
+	
+		return false;
+	}
+	
+	/*
+	CREATE TABLE `credit_card_details` (
+	  `user` varchar(30) NOT NULL,
+	  `cc_num` varchar(45) NOT NULL,
+	  `cc_expire` datetime NOT NULL,
+	  `cc_id` int(10) unsigned NOT NULL,
+			 */
 
 	
 

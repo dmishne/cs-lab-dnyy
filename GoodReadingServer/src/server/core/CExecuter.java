@@ -57,6 +57,7 @@ public class CExecuter implements Runnable
 	
 	
 	
+	
 	public void run()
 	{
 		CEntry Work;
@@ -82,25 +83,39 @@ public class CExecuter implements Runnable
 					
 					//insert to Connections
 					CRespondToClient.GetInstance().InsertOutstream(Work.getSessionID(), Work.getClient());
-					
+			
 					//handle Login
-					CDBInteractionGenerator.GetInstance().handleLogin(Work);
+					CDBInteractionGenerator.GetInstance().handleLogin(Work);		
+					//TODO: move operative handling of login to CExecuter (here)
+					
 					
 				}//end of login handling
 				else 
 				{
-					boolean flag=false;
-					for(CClientSession t : m_sessions)
-						if(t.isOfUser(Work))
-							flag=true;
-					if(flag == false)
-					;/* TODO:respond false and close! */
-					else
+					CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
+					if(Work.getMsgType().compareTo("ArrangePayment")==0)
+					  {
+						if(Work.getMsgMap().get("type").compareTo("once")==0)
+						{
+							db.RemoveCC(Work.getUserName());
+							//TODO: validation for existing params
+							db.AddCC(Work.getUserName(), Work.getMsgMap().get("cc_num"), Work.getMsgMap().get("cc_expire"), Work.getMsgMap().get("cc_id"));
+						}
+						else if(Work.getMsgMap().get("type").compareTo("monthly")==0)
+						{
+							
+						}
+						else if(Work.getMsgMap().get("type").compareTo("yearly")==0)
+						{
+							
+						}
+					  }
+					
+					else if (false)
 					{
-						
-						
+						db.GetInstance();
 					}
-				}//end of isLogin
+				}
 					
 			}//end of while(forever)
 		}//try 
