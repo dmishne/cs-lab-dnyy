@@ -1,6 +1,7 @@
 package client.core;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -8,7 +9,7 @@ import java.util.regex.Pattern;
 
 import client.common.*;
 
-public abstract class AUser{
+public abstract class AUser implements Serializable{
 	
 	/* FOR CHECKING PURPOSE ONLY - TO DELETE */
 	static final private String temp_Username = "Daniel";
@@ -43,7 +44,6 @@ public abstract class AUser{
 		
 		/*
 	    try {
-	    	CClientConnector.getInstance().openConnection();
 			Map<String,String> UP = new HashMap<String,String>();
 			UP.put(username, password);
 			CEntry clientEntry = new CEntry("login",UP,username,-1);
@@ -100,11 +100,17 @@ public abstract class AUser{
 		}
 	}
 	
-	final static public boolean logout()
+	final static public void logout()
 	{
 		// -Stub-
 		m_actor = null;
-		return(true);
+		try
+	    {
+			CClientConnector.getInstance().closeConnection();
+	    }
+	    catch(IOException e) {}
+	    System.exit(0);
+		
 		// ------
 	}
 	

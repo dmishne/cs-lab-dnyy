@@ -8,14 +8,18 @@ public class CClientConnector extends AbstractClient {
 		
 
 		private static CClientConnector m_ConnectorInstance;
-		private String m_clientSessionID;
+		private int m_clientSessionID;
 		private boolean m_haveMsg;
 		private Object m_msg;
+		
+		
+		
+		
 		
 		private CClientConnector(String host, int port)
 		{
 			super(host,port);
-			this.m_clientSessionID = null;
+			this.m_clientSessionID = -1;
 		}
 		
 		public static CClientConnector getInstance()
@@ -27,7 +31,7 @@ public class CClientConnector extends AbstractClient {
 			return m_ConnectorInstance;
 		}
 
-		protected void handleMessageFromServer(Object message)
+		final protected void handleMessageFromServer(Object message)
 		{
 			     // if message exist, the new message will overwrite it
 			     this.m_msg = message;
@@ -39,8 +43,8 @@ public class CClientConnector extends AbstractClient {
 		{
 		   //send to server
 			try {
-				CClientConnector.getInstance().sendToServer(message);
-				while(!CClientConnector.getInstance().isWaitingMsg())
+				sendToServer(message);
+				while(!isWaitingMsg())
 				{
 					wait();
 				}
@@ -61,6 +65,7 @@ public class CClientConnector extends AbstractClient {
 			return(m_haveMsg);	
 		}
 		
+		
 		/**
 		 * @return the m_msg
 		 */
@@ -68,10 +73,24 @@ public class CClientConnector extends AbstractClient {
 			m_haveMsg = false;
 			return m_msg;
 		}
-
-		public String getClientSessionID() {
+		
+		
+		/**
+		 * @return the m_clientSessionID
+		 */
+		public int getM_clientSessionID() {
 			return m_clientSessionID;
 		}
+
+		
+		
+		/**
+		 * @param m_clientSessionID the m_clientSessionID to set
+		 */
+		public void setM_clientSessionID(int m_clientSessionID) {
+			this.m_clientSessionID = m_clientSessionID;
+		}
+
 
 }
 

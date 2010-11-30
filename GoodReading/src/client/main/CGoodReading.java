@@ -1,7 +1,10 @@
 package client.main;
 
+import java.io.IOException;
+
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import client.common.CClientConnector;
 
 public class CGoodReading{
 
@@ -20,6 +23,16 @@ public class CGoodReading{
 		 * 
 		 * 
 		 */
+		
+		
+    	try {
+			CClientConnector.getInstance().openConnection();
+		} catch (IOException e) {
+			System.out.println("Can not open connection");
+			//return;
+		}
+		
+		
 		initLookAndFeel();
 		client.gui.CMainFrame.setDefaultLookAndFeelDecorated(true); // Set Graphics to be similar to OS.
 		client.gui.CMainFrame mainFrame = new client.gui.CMainFrame();
