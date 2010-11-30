@@ -53,7 +53,7 @@ public class CDBInteractionGenerator
 			return null;
 		}
 		
-	} /////////////////need to fix " inside of DB
+	} /////////////////TODO:need to fix " inside of DB
 	
 	
 	
@@ -110,13 +110,7 @@ public class CDBInteractionGenerator
 			
 			//create session
 			CClientSession newSession=new CClientSession(Work.getSessionID(),Work.getUserName(),MySQLGetAuth(Work.getMsgMap().get("user"))); 
-			if (newSession.getSessionID()==-1)
-			{
-				CRespondToClient.GetInstance().Remove(Work.getSessionID());
-				return ; //quick exit
-			}
-
-			
+		
 			//add to List
 			CExecuter.GetInstance().add(newSession);
 			
@@ -142,12 +136,15 @@ public class CDBInteractionGenerator
 			if(CExecuter.GetInstance().isLogged(Work))
 				CExecuter.GetInstance().Kill(Work);	/*   - session dead*/
 			
-			CRespondToClient.GetInstance().SendResponse(Work.getKey(), Work);
-			
-		}	
+			CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "dude i'm the king, admit it!");
+			return;
+		}	//end of valid login
 		
-			
-	
+		
+		CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Login Failed");
+		CRespondToClient.GetInstance().Remove(Work.getSessionID());
+		return ; //quick exit
+		
 	}
 
 

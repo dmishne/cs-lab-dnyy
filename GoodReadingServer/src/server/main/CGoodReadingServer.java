@@ -22,9 +22,10 @@ public class CGoodReadingServer {
 		CDBInteractionGenerator.GetInstance();		//.ServerUpdateLog("Server Started loading at "+ (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime())));
 		if(CStandbyUnit.GetInstance() == null)
 			System.out.println("Problem Instanciating Standby Unit");
+		else System.out.println("Standby Unit online and waiting");
 		if(CExecuter.GetInstance() == null)
 				System.out.println("Problem Instanciating Executer");
-		
+		else System.out.println("Excecuter online and waiting");
 	
 		//at last, we check that everthing is working
 	/*	if(CDBInteractionGenerator.GetInstance() != null && CStandbyUnit.GetInstance() != null && CExecuter.GetInstance() != null)
