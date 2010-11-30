@@ -7,7 +7,7 @@ import ocsf.server.ConnectionToClient;
 
 public class CRespondToClient {
 
-	private Map <String,Object> m_connections;
+	private Map <Integer,Object> m_connections;
 	private static CRespondToClient m_obj;
 	
 	
@@ -15,7 +15,7 @@ public class CRespondToClient {
 	
 	private CRespondToClient()
 	{
-		m_connections=new TreeMap<String,Object>();
+		m_connections=new TreeMap<Integer,Object>();
 	}
 	
 	
@@ -33,10 +33,14 @@ public class CRespondToClient {
 	
 	
 	//insert to Map
-	public void InsertOutstream(String key,Object stream)
+	public void InsertOutstream(int key,Object stream)
 	{
-		m_connections.put(key,stream);				 		
+		m_connections.put(new Integer(key),stream);				 		
 	}
+	
+	
+	
+	
 	//send response
 	public void SendResponse(String user, Object msg)
 	{
@@ -50,8 +54,10 @@ public class CRespondToClient {
 	}
 	
 	
+	
+	
 	//is object defined in map
-	public boolean isRegistered(String key)
+	public boolean isRegistered(int key)
 	{
 		return this.m_connections.containsKey(key);
 	}
@@ -59,7 +65,7 @@ public class CRespondToClient {
 	
 	
 	//removing an object so we can replace it
-	public void Remove(String key)
+	public void Remove(int key)
 	{
 		this.m_connections.remove(key);
 	}
