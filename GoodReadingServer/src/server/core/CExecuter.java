@@ -47,9 +47,10 @@ public class CExecuter implements Runnable
 		m_obj=new CExecuter();
 		m_obj.m_sleeping=true;
 		m_obj.m_generator = new Random( 19580427 );
-		
+		//new Thread(m_obj).start();
 		m_obj.m_ThreadHolder=new Thread(m_obj);
 		m_obj.m_ThreadHolder.start();
+		
 	}
 	
 	
@@ -64,8 +65,11 @@ public class CExecuter implements Runnable
 			{
 				if(CStandbyUnit.GetInstance().isEmpty())
 					m_sleeping = true;
-				while(m_sleeping)
+				synchronized(m_obj)
+				{
+					while(m_sleeping)
 						wait();
+				}
 				Work=CStandbyUnit.GetInstance().getEntryFromQueue();
 				/*handle entry from standby unit*/
 				//((CClient_Entry) msg).getSessionID() = m_generator.nextInt();
@@ -127,9 +131,12 @@ public class CExecuter implements Runnable
 	
 	public void NotifyOfEntry()
 	{
-		if(m_sleeping)
-			m_sleeping=false;
-		m_obj.m_ThreadHolder.notify(); ///need to check that we're not missing on notifyall()
+		synchronized(m_obj)
+		{
+			if(m_sleeping)
+				m_sleeping=false;
+			notify(); ///need to check that we're not missing on notifyall()
+		}
 	}
 	
 	
@@ -143,6 +150,13 @@ public class CExecuter implements Runnable
 	public void Kill(CEntry work) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+
+	public Thread getThread() {
+		// TODO Auto-generated method stub
+		return m_ThreadHolder;
 	}
 	
 }
