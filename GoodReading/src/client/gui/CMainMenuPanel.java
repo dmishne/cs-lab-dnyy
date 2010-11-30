@@ -1,16 +1,19 @@
 package client.gui;
 
-import java.awt.GridBagLayout;
-import javax.swing.JPanel;
 import java.awt.Dimension;
-import javax.swing.JButton;
-import java.awt.GridBagConstraints;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
 public class CMainMenuPanel extends JPanel implements ActionListener {
 
+	public enum EMMDecision{
+		LOGOUT,SEARCHBOOK,ARRANGE,NEWMSGS,ADDNEWBOOK,REPORT,SEARCHUSER
+	}
+		
 	private static final long serialVersionUID = 1L;
 	private JButton m_jButton_Logout = null;
 	private JButton m_jButton_SearchBook_MM = null;
@@ -19,11 +22,9 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	private JButton m_jButton_Report_MM = null;
 	private JButton m_jButton_SearchUser_MM = null;
 	
-	public enum MM_Decision{
-		LOGOUT,SEARCH,XXXXXXXX,NEWMSGS,ADDNEWBOOK,REPORT,SEARCHUSER
-	}
+
 	
-	private MM_Decision m_lastChoice = MM_Decision.LOGOUT;
+	private EMMDecision m_lastChoice = EMMDecision.LOGOUT;  //  @jve:decl-index=0:
 	private JButton m_jButton_ArrangePayment = null;
 	
 	
@@ -124,6 +125,23 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 		return m_jButton_Report_MM;
 	}
 
+
+	/**
+	 * This method initializes m_jButton_ArrangePayment	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getM_jButton_ArrangePayment() {
+		if (m_jButton_ArrangePayment == null) {
+			m_jButton_ArrangePayment = new JButton();
+			m_jButton_ArrangePayment.setBounds(new Rectangle(274, 111, 174, 75));
+			m_jButton_ArrangePayment.setText("Arrange Payment");
+			m_jButton_ArrangePayment.addActionListener(this);
+		}
+		return m_jButton_ArrangePayment;
+	}
+
+	
 	/**
 	 * This method initializes m_jButton_SearchUser_MM	
 	 * 	
@@ -144,31 +162,22 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 		Object source = ae.getSource();
 		if(source == m_jButton_Logout)
 		{
-			setM_lastChoice(MM_Decision.LOGOUT);
+			setLastChoice(EMMDecision.LOGOUT);
+			this.setVisible(false);
+		}
+		if(source == m_jButton_ArrangePayment)
+		{
+			setLastChoice(EMMDecision.ARRANGE);
 			this.setVisible(false);
 		}
 	}
 
-	public void setM_lastChoice(MM_Decision m_lastChoice) {
+	public void setLastChoice(EMMDecision m_lastChoice) {
 		this.m_lastChoice = m_lastChoice;
 	}
 
-	public MM_Decision getM_lastChoice() {
+	public EMMDecision getLastChoice() {
 		return m_lastChoice;
-	}
-
-	/**
-	 * This method initializes m_jButton_ArrangePayment	
-	 * 	
-	 * @return javax.swing.JButton	
-	 */
-	private JButton getM_jButton_ArrangePayment() {
-		if (m_jButton_ArrangePayment == null) {
-			m_jButton_ArrangePayment = new JButton();
-			m_jButton_ArrangePayment.setBounds(new Rectangle(274, 111, 174, 75));
-			m_jButton_ArrangePayment.setText("Arrange Payment");
-		}
-		return m_jButton_ArrangePayment;
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="45,24"

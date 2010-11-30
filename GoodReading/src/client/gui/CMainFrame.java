@@ -28,6 +28,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private JMenuBar m_jJMenuBar_MenuBar = null;
 	private JMenu m_jMenu_Help = null;
 	private JMenuItem m_jMenuItem_Help_About = null;
+	private CArrangePayPanel GUI_CArrangePayPanel = null;
 	/**
 	 * This is the default constructor
 	 */
@@ -61,14 +62,13 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private JPanel getJContentPane() {
 		if (jContentPane == null) {
 			m_jLabel_LOGO = new JLabel();
-			m_jLabel_LOGO.setBounds(new Rectangle(3, 3, 680, 94));
 			m_jLabel_LOGO.setHorizontalAlignment(SwingConstants.CENTER);
 			m_jLabel_LOGO.setFont(new Font("Edwardian Script ITC", Font.BOLD, 72));
+			m_jLabel_LOGO.setBounds(new Rectangle(0, 0, 700, 100));
 			m_jLabel_LOGO.setText("Good Reading V" + client.main.CGoodReading.Version + "." + client.main.CGoodReading.Revision);
 			jContentPane = new JPanel();
 			jContentPane.setLayout(null);
 			jContentPane.add(getGUI_CLoginPanel(), null);
-			//jContentPane.add(getGUI_CMainMenuPanel(), null);
 			jContentPane.add(m_jLabel_LOGO, null);
 		}
 		return jContentPane;
@@ -153,26 +153,42 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		return m_jMenuItem_Help_About;
 	}
 	
-	/* -------------------FIX IT--------------------  */
-	@SuppressWarnings("static-access")
-	/* Probably need to declare ENUM in another class
-	 * or to use Strings/Integers instead             */
-	/* ---------------------------------------------- */
 	public void componentHidden(ComponentEvent ceh) {
+		//Think about changing to switch//
+		
 		Object source = ceh.getSource();
 		if(source == GUI_CLoginPanel)
 		{
 			jContentPane.add(getGUI_CMainMenuPanel());
+			GUI_CLoginPanel.setVisible(false);
 			GUI_CMainMenuPanel.setVisible(true);
 		}
 		else if(source == GUI_CMainMenuPanel)
 		{
-			if(GUI_CMainMenuPanel.getM_lastChoice() ==  GUI_CMainMenuPanel.getM_lastChoice().LOGOUT);
+			if(GUI_CMainMenuPanel.getLastChoice() ==  CMainMenuPanel.EMMDecision.LOGOUT)
 			{
 				jContentPane.remove(GUI_CMainMenuPanel);
 				GUI_CLoginPanel.setVisible(true);
 			}
+			if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.ARRANGE)
+			{
+				jContentPane.add(getGUI_CArrangePayPanel());
+				GUI_CMainMenuPanel.setVisible(false);
+				GUI_CArrangePayPanel.setVisible(true);
+			}
 		}
+		else if(source == GUI_CArrangePayPanel)
+		{
+			if(GUI_CArrangePayPanel.getLastChoice() == CArrangePayPanel.EAPDecision.BACK )
+			{
+				jContentPane.remove(GUI_CArrangePayPanel);
+				GUI_CMainMenuPanel.setVisible(true);
+			}
+		}
+		
+		
+		
+		
 	}
 
 	public void componentShown(ComponentEvent ces) {
@@ -183,8 +199,22 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		Object source = ae.getSource();
 		if(source == m_jMenuItem_Help_About)
 		{
-			JOptionPane.showMessageDialog(null, "Group 9\n\nGroup Members:\nDaniel Mishne\nEvgeny Radbel\nNir Geffen\nYotam Margolin" ,"About",JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Group 9\n\nGroup Members:\n\nDaniel Mishne\nEvgeny Radbel\nNir Geffen\nYotam Margolin" ,"About",JOptionPane.INFORMATION_MESSAGE);
 		}
+	}
+
+	/**
+	 * This method initializes GUI_CArrangePayPanel	
+	 * 	
+	 * @return client.gui.CArrangePayPanel	
+	 */
+	private CArrangePayPanel getGUI_CArrangePayPanel() {
+		if (GUI_CArrangePayPanel == null) {
+			GUI_CArrangePayPanel = new CArrangePayPanel();
+			GUI_CArrangePayPanel.setBounds(new Rectangle(150, 150, 400, 400));
+			GUI_CArrangePayPanel.addComponentListener(this);
+		}
+		return GUI_CArrangePayPanel;
 	}
 	
 }  //  @jve:decl-index=0:visual-constraint="10,10"
