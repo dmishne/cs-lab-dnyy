@@ -5,7 +5,7 @@ import client.common.*;
 
 
 public class CReader extends AUser{
-	// serializable????????
+	
 	private static final long serialVersionUID = 1L;
 	
 	Map <String,String> m_forGui;
@@ -31,15 +31,12 @@ public class CReader extends AUser{
 	/*/    Translate GUI parameters to CEntry for server
 	/**///----------------------------------------------
 	/**/	m_fromGui.put("PayType", PayType);
-	/**/	if(CreditCardNumber != null){
+	/**/	if(PayType == "CreditCard")
+	/**/    {
 	/**/		     m_fromGui.put("cc_num", CreditCardNumber);
 	/**/		     m_fromGui.put("cc_expire", Expire);
-	/**/				m_fromGui.put("cc_id", UserID);
+	/**/			 m_fromGui.put("cc_id", UserID);
 	/**/	}
-	/**/	else
-	/**/		     m_fromGui.put("cc_num", " ");
-	/**/	         m_fromGui.put("cc_expire", " ");
-	/**/	         m_fromGui.put("cc_id", " ");
 	/**/	
 	/**/   try {
 	/**/	   m_CEntry = new CEntry("ArrangePayment",m_fromGui,AUser.getInstance().m_userName,CClientConnector.getInstance().getM_clientSessionID());
