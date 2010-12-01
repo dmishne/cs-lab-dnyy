@@ -1,35 +1,56 @@
 package client.core;
 
-import client.common.CClientConnector;
-import client.common.CEntry;
+import java.util.*;
+import client.common.*;
+
 
 public class CReader extends AUser{
-
-	public enum EPaymentType {Monthly,Yearly}
+	// serializable????????
+	private static final long serialVersionUID = 1L;
+	
+	Map <String,String> m_forGui;
 	
 	public CReader()
 	{
 		m_privilege = EActor.Reader;
 	}
-
 	
-	// *  This method get the payment type from GUI and send 
-	//    update info to server
 	
-	public Object ArrangePayment(EPaymentType PT)
+	
+	/*
+	 *  This method get the payment type from GUI and send 
+	 *   update info to server
+	 */
+	public Object ArrangePayment(String PayType, String CreditCardNumber, String Expire, String UserID )
 	{
 		CEntry m_CEntry = null;
-		Object result = null;
-	   try {
-		   m_CEntry = new CEntry("ArrangePayment",PT,AUser.getInstance().m_userName,CClientConnector.getInstance().getM_clientSessionID());
-		   result =  CClientConnector.getInstance().messageToServer(m_CEntry);
-	   } 
-	   catch (Exception e){
-		   e.printStackTrace();
-	   }
-	   
-	   // receipt
-	   return(result);      	          
+		Object OResult = null;
+		
+		Map <String,String> m_fromGui = new HashMap<String,String>();
+	/**///---------------------------------------------------------------------*/
+	/*/    Translate GUI parameters to CEntry for server
+	/**///----------------------------------------------
+	/**/	m_fromGui.put("PayType", PayType);
+	/**/	if(CreditCardNumber != null){
+	/**/		     m_fromGui.put("cc_num", CreditCardNumber);
+	/**/		     m_fromGui.put("cc_expire", Expire);
+	/**/				m_fromGui.put("cc_id", UserID);
+	/**/	}
+	/**/	else
+	/**/		     m_fromGui.put("cc_num", " ");
+	/**/	         m_fromGui.put("cc_expire", " ");
+	/**/	         m_fromGui.put("cc_id", " ");
+	/**/	
+	/**/   try {
+	/**/	   m_CEntry = new CEntry("ArrangePayment",m_fromGui,AUser.getInstance().m_userName,CClientConnector.getInstance().getM_clientSessionID());
+	/**/	   OResult =  CClientConnector.getInstance().messageToServer(m_CEntry);
+	/**/   } 
+	/**/   catch (Exception e){
+	/**/	   e.printStackTrace();
+	/**/   }
+	/*///----------------------------------------------------------------------*/
+	   String SResult = CGuiTranslator.getInstance().TranslateForGui(OResult);
+	   return(SResult);      	          
 	   
 	}
 	
