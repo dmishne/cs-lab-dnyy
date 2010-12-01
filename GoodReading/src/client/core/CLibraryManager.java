@@ -2,8 +2,14 @@ package client.core;
 
 public class CLibraryManager extends CLibrarian{
 
-	public CLibraryManager()
+	private static final long serialVersionUID = 1L;
+
+	public CLibraryManager(String FirstName, String LastName, int UserId, String UserName)
 	{
-		m_privilege = EActor.LibraryManager;
+		super(FirstName,LastName,UserId,UserName);
+		this.setPrivilege(EActor.LibraryManager);
 	}
+	
+	
+	
 }

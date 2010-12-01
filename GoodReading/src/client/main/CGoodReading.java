@@ -16,23 +16,13 @@ public class CGoodReading{
 
 	public static void main(String[] args) {
 
-		/*
-		 * TODO:
-		 * Create Connection To Server 
-		 *  
-		 * 
-		 * 
-		 */
-		
-		
     	try {
 			CClientConnector.getInstance().openConnection();
 		} catch (IOException e) {
+			e.printStackTrace();
 			System.out.println("Can not open connection");
-			//return;
+			return;
 		}
-		
-		
 		initLookAndFeel();
 		client.gui.CMainFrame.setDefaultLookAndFeelDecorated(true); // Set Graphics to be similar to OS.
 		client.gui.CMainFrame mainFrame = new client.gui.CMainFrame();

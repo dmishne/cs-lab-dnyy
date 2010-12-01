@@ -7,85 +7,64 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import client.common.*;
+import client.common.CClientConnector;
+import client.common.CEntry;
 
 public abstract class AUser implements Serializable{
 	
+	/**
+	 * 
+	 */
+
 	/* FOR CHECKING PURPOSE ONLY - TO DELETE */
-	static final private String temp_Username = "Daniel";
-	static final private String temp_Password = "12345";  //  @jve:decl-index=0:
-	static final private EActor tmpAct = EActor.LibraryManager;
+	//static final private String temp_Username = "Daniel";
+	//static final private String temp_Password = "12345";  //  @jve:decl-index=0:
+	//static final private EActor tmpAct = EActor.LibraryManager;
 	/* ------------------------------------- */
 	
-	static protected AUser  m_actor = null;
-		   protected EActor m_privilege;
-		   protected String m_firstName;
-		   protected String m_lastName;
-		   protected int    m_userID;
-		   protected String m_userName;
-		   
-	final static public EActor login(String username, String password) throws Exception
+	static private final long serialVersionUID = 1L;
+	static protected AUser m_actor = null;
+		   private String  m_firstName;
+		   private String  m_lastName;
+		   private int     m_userID;
+		   private String  m_userName;
+		   private EActor  m_privilege;
+		
+
+    public AUser(String FirstName, String LastName, int UserId, String UserName, EActor Privilege)
+    {
+    	m_firstName = FirstName;
+    	m_lastName = LastName;
+    	m_userID = UserId;
+    	m_userName = UserName;
+    	m_privilege = Privilege;
+    }
+    
+	final static public EActor login(String username, String password) throws IOException
 	{	
 		 /*
 		  *  Username && Password input validation 
 		 */
 		Pattern pu = Pattern.compile("(\\p{Alpha})+((\\p{Digit})*(\\p{Alpha})*)*");
-		Pattern pp = Pattern.compile("((\\p{Digit})*(\\p{Alpha})*)*");
+		Pattern pp = Pattern.compile("(((\\p{Digit})+(\\p{Alpha})*)+|((\\p{Digit})*(\\p{Alpha})+)+)+");
 		Matcher mu = pu.matcher(username);
 		Matcher mp = pp.matcher(password);
 		boolean b = mu.matches();
 		b &= mp.matches();
 		if(!b){
-			throw new Exception("Invalid Username/Password Characters");
+			throw new IOException("Invalid Username/Password Characters");
 		}
-		
-		
-		
-		
-		/*
-	    try {
-			Map<String,String> UP = new HashMap<String,String>();
-			UP.put(username, password);
-			CEntry clientEntry = new CEntry("login",UP,username,-1);
-			CClientConnector.getInstance().sendToServer(clientEntry);
-			while(!CClientConnector.getInstance().isWaitingMsg())
-			{
-				Thread.yield();
-			}	
-		} 
-	    catch (IOException e) {
-			System.out.println(e.getMessage());
-		}
-		CEntry result = (CEntry)CClientConnector.getInstance().getMsg();
-		setActor(result.getClient());
-		*/
-		
-		
-		/*
-		 * TODO:
-		 * CHECKING IF LOGGING SUCCESSFUL USING result  
-		 * 
-		 * 
-		 * 
-		 */
-
-
-
-		
-		// TEMPORARY //	
-		if((temp_Username.compareTo(username)==0) && (temp_Password.compareTo(password)==0))
+		Map<String,String> UP = new HashMap<String,String>();
+		UP.put("user", username);
+		UP.put("password", password);
+		CEntry clientEntry = new CEntry("Login",UP,username,-1);
+		CEntry result = (CEntry)CClientConnector.getInstance().messageToServer(clientEntry);
+		if(null == result.getClient())
 		{
-			/*
-			 * TODO:
-			 * Need Connection to Server.
-			 * Need Validation.
-			 * Need Update of User Privilege.
-			 */
-		
-			m_actor = new CLibraryManager();
+			setActor(result.getClient());
 			return(m_actor.getPrivilege());
 		}
-		throw new Exception("Incorrect Username/Password");
+		throw new IOException("Incorrect Username/Password");
 	}
 	
 	final static public AUser getInstance() throws Exception
@@ -138,5 +117,32 @@ public abstract class AUser implements Serializable{
 		m_privilege = mPrivilege;
 	}
 	
-	
+	 /**
+	 * @return the m_firstName
+	 */
+	public String getFirstName() {
+		return m_firstName;
+	}
+
+	/**
+	 * @return the m_lastName
+	 */
+	public String getLastName() {
+		return m_lastName;
+	}
+
+	/**
+	 * @return the m_userID
+	 */
+	public int getUserID() {
+		return m_userID;
+	}
+
+	/**
+	 * @return the m_userName
+	 */
+	public String getUserName() {
+		return m_userName;
+	}
+
 }

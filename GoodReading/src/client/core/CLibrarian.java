@@ -2,9 +2,14 @@ package client.core;
 
 public class CLibrarian extends AUser{
 
-	public CLibrarian()
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public CLibrarian(String FirstName, String LastName, int UserId, String UserName)
 	{
-		m_privilege = EActor.Librarian;
+		super(FirstName,LastName,UserId,UserName, EActor.Librarian);
 	}
 	
 }

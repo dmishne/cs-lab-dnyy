@@ -7,7 +7,7 @@ import ocsf.client.*;
 public class CClientConnector extends AbstractClient {
 		
 
-		private static CClientConnector m_ConnectorInstance;
+		private static CClientConnector m_ConnectorInstance = null;
 		private int m_clientSessionID;
 		private boolean m_haveMsg;
 		private Object m_msg;
@@ -36,7 +36,10 @@ public class CClientConnector extends AbstractClient {
 			     // if message exist, the new message will overwrite it
 			     this.m_msg = message;
 			     this.m_haveMsg = true;
-			     notifyAll();
+			     synchronized(this)
+			     {
+			    	 this.notify();
+			     }
 		}
 		
 		public Object messageToServer(Object message)
@@ -46,14 +49,18 @@ public class CClientConnector extends AbstractClient {
 				sendToServer(message);
 				while(!isWaitingMsg())
 				{
-					wait();
+					synchronized(this)
+					{
+						this.wait();
+					}
 				}
+				
 			} catch (IOException e) { 
 				e.getCause();
 			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-				
+			} 				
 			// get answer		
 			return (CClientConnector.getInstance().getMsg());	
 		}
