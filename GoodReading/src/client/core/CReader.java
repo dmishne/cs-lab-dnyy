@@ -1,6 +1,10 @@
 package client.core;
 
+import java.io.IOException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import client.common.*;
 
 
@@ -28,7 +32,19 @@ public class CReader extends AUser{
 		Object OResult = null;
 		
 		Map <String,String> fromGui = new HashMap<String,String>();
-	
+		
+		
+		Pattern pu = Pattern.compile("(\\p{Digit})*");
+		Matcher mu = pu.matcher(CreditCardNumber);
+		boolean b = mu.matches();
+		mu = pu.matcher(Expire);
+		b &= mu.matches();
+		mu = pu.matcher(UserID);
+		b &= mu.matches();
+		if(!b){
+			throw new IOException("Invalid Input, Use Only Digits");
+		}
+
 		fromGui.put("PayType", PayType);
 		if(PayType == "CreditCard")
 	    {
