@@ -54,7 +54,7 @@ public abstract class AUser implements Serializable{
 		if(!b){
 			throw new IOException("Invalid Username/Password Characters");
 		}
-		Map<String,String> UP = new HashMap<String,String>();
+		HashMap<String,String> UP = new HashMap<String,String>();
 		UP.put("user", username);
 		UP.put("password", password);
 		CEntry clientEntry = new CEntry("Login",UP,username,-1);

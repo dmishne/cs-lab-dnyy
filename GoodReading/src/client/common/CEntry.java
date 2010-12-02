@@ -12,7 +12,7 @@ public class CEntry implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private String m_msgType;			        // Message Type
-	private Map<String,String> m_msgMap;        // Message Entry
+	private HashMap<String,String> m_msgMap;    // Message Entry
 	private String m_userName;       		    // 
 	private int m_sessionID;			        // User's Session ID
 	private Object m_client; 				    // Client Info
@@ -26,7 +26,7 @@ public class CEntry implements Serializable{
 		this.m_userName      = usrname;
 		this.m_msgType       = msg_type;		
 		@SuppressWarnings("unchecked")
-		Map<String, String> temp_msg = (Map<String, String>)msg;
+		HashMap<String, String> temp_msg = (HashMap<String, String>)msg;
 		this.m_msgMap        = temp_msg;
 		this.m_client	     = null;
 	}
