@@ -12,7 +12,7 @@ public class CDBInteractionGenerator
 	private static CDBInteractionGenerator m_obj;
 	private Connection m_DB_Connection;
 	
-	final private static String m_DEFAULTHOST="jdbc:mysql://remote-mysql4.servage.net/nirgeffen";
+	final private static String m_DEFAULTHOST="jdbc:mysql://remote-mysql4.servage.net/cslabdnyy";
 	final private static String m_DEFAULTUSER="nirgeffen";
 	final private static String m_DEFAULTPASS="q1w2e3r4";
 	
