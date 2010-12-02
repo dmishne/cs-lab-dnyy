@@ -29,15 +29,17 @@ public abstract class AUser implements Serializable{
 		   private int     m_userID;
 		   private String  m_userName;
 		   private EActor  m_privilege;
+		   private int 	   m_UserSessionId;
 		
 
-    public AUser(String FirstName, String LastName, int UserId, String UserName, EActor Privilege)
+    public AUser(String FirstName, String LastName, int UserId, String UserName, EActor Privilege, int SessionID)
     {
-    	m_firstName = FirstName;
-    	m_lastName = LastName;
-    	m_userID = UserId;
-    	m_userName = UserName;
-    	m_privilege = Privilege;
+    	m_firstName     = FirstName;
+    	m_lastName      = LastName;
+    	m_userID        = UserId;
+    	m_userName      = UserName;
+    	m_privilege     = Privilege;
+    	m_UserSessionId = SessionID;
     }
     
 	final static public EActor login(String username, String password) throws IOException
@@ -143,6 +145,13 @@ public abstract class AUser implements Serializable{
 	 */
 	public String getUserName() {
 		return m_userName;
+	}
+
+	/**
+	 * @return the m_UserSessionId
+	 */
+	public int getUserSessionId() {
+		return m_UserSessionId;
 	}
 
 }

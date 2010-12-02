@@ -10,9 +10,9 @@ public class CReader extends AUser{
 	
 	Map <String,String> m_forGui;
 	
-	public CReader(String FirstName, String LastName, int UserId, String UserName)
+	public CReader(String FirstName, String LastName, int UserId, String UserName, int SessionID)
 	{
-		super(FirstName,LastName,UserId,UserName, EActor.Reader);
+		super(FirstName,LastName,UserId,UserName, EActor.Reader,SessionID);
 	}
 	
 	
