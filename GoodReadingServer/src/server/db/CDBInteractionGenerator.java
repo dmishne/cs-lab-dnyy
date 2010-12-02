@@ -11,17 +11,17 @@ public class CDBInteractionGenerator
 	
 	private static CDBInteractionGenerator m_obj;
 	private Connection m_DB_Connection;
-	
+	/*
 	final private static String m_DEFAULTHOST="jdbc:mysql://remote-mysql4.servage.net/cslabdnyy";
 	final private static String m_DEFAULTUSER="nirgeffen";
 	final private static String m_DEFAULTPASS="q1w2e3r4";
+	*/
+
 	
-	/*
 	final private static String m_DEFAULTHOST="jdbc:mysql://localhost/cslabdnyy";
 	final private static String m_DEFAULTUSER="root";
 	final private static String m_DEFAULTPASS="m00nkey";
-	*/
-	
+		
 	public ResultSet MySQLQuery(String query) throws SQLException
 	{
 		return this.m_DB_Connection.createStatement().executeQuery(query);
@@ -46,7 +46,7 @@ public class CDBInteractionGenerator
 	public ResultSet MySQL_LoginQuery(String user)
 	{
 		try {
-			return this.m_DB_Connection.createStatement().executeQuery("USE nirgeffen; SELECT u.user,u,password FROM users WHERE u.user like '\""+user+"\"'");
+			return this.m_DB_Connection.createStatement().executeQuery("SELECT u.user,u.password FROM users u WHERE u.user like '\""+user+"\"'");
 		}
 		catch(SQLException e)
 		{ 
