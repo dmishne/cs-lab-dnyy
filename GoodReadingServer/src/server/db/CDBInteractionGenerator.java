@@ -160,7 +160,7 @@ public class CDBInteractionGenerator
 		rs=MySQL_LoginQuery(user);
 		if(!rs.next())
 			return false;
-		if(password.compareTo(rs.getString(2))==0)
+		if(password.compareTo("\""+rs.getString(2)+"\"")==0)
 			return true;
 		//if validated, create session! then respond to client
 		else return false;//return failure to client

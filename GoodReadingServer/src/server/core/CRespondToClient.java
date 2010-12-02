@@ -46,6 +46,8 @@ public class CRespondToClient {
 	{
 		try 
 		{
+			System.out.println("Sending message to client @ "+((ConnectionToClient)m_connections.get(i)).getName()+" "+((ConnectionToClient)m_connections.get(i)).getInetAddress());
+			System.out.println(msg.toString());
 			((ConnectionToClient)m_connections.get(i)).sendToClient(msg);
 		} 
 		catch (IOException e) {	// TODO Auto-generated catch block
