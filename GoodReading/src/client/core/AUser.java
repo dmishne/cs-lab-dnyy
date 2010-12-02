@@ -3,7 +3,6 @@ package client.core;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,16 +10,6 @@ import client.common.CClientConnector;
 import client.common.CEntry;
 
 public abstract class AUser implements Serializable{
-	
-	/**
-	 * 
-	 */
-
-	/* FOR CHECKING PURPOSE ONLY - TO DELETE */
-	//static final private String temp_Username = "Daniel";
-	//static final private String temp_Password = "12345";  //  @jve:decl-index=0:
-	//static final private EActor tmpAct = EActor.LibraryManager;
-	/* ------------------------------------- */
 	
 	static private final long serialVersionUID = 1L;
 	static protected AUser m_actor = null;
@@ -42,7 +31,7 @@ public abstract class AUser implements Serializable{
     	m_UserSessionId = SessionID;
     }
     
-	final static public EActor login(String username, String password) throws IOException
+	final static public EActor login(String username, String password) throws Exception
 	{	
 		 /*
 		  *  Username && Password input validation 
@@ -56,14 +45,18 @@ public abstract class AUser implements Serializable{
 		if(!b){
 			throw new IOException("Invalid Username/Password Characters");
 		}
+		
+		/*
+		 * Creating Entry to send to server
+		 */
 		HashMap<String,String> UP = new HashMap<String,String>();
 		UP.put("user", username);
 		UP.put("password", password);
 		CEntry clientEntry = new CEntry("Login",UP,username,-1);
-		CEntry result = (CEntry)CClientConnector.getInstance().messageToServer(clientEntry);
-		if(null == result.getClient())
+		Object result = (CEntry)CClientConnector.getInstance().messageToServer(clientEntry);
+		if(null == result)
 		{
-			setActor(result.getClient());
+			setActor(result);
 			return(m_actor.getPrivilege());
 		}
 		throw new IOException("Incorrect Username/Password");
