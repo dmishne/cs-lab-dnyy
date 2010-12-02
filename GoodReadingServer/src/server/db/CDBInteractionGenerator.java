@@ -51,6 +51,7 @@ public class CDBInteractionGenerator
 		catch(SQLException e)
 		{ 
 			System.out.println("SQL exception error! "+ e.getMessage());
+			
 			return null;
 		}
 		
@@ -141,7 +142,6 @@ public class CDBInteractionGenerator
 			return;
 		}	//end of valid login
 		
-		
 		CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Login Failed");
 		CRespondToClient.GetInstance().Remove(Work.getSessionID());
 		return ; //quick exit
@@ -158,7 +158,8 @@ public class CDBInteractionGenerator
 			
 		
 		rs=MySQL_LoginQuery(user);
-	
+		if(!rs.next())
+			return false;
 		if(password.compareTo(rs.getString(2))==0)
 			return true;
 		//if validated, create session! then respond to client

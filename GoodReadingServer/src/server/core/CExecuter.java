@@ -97,6 +97,7 @@ public class CExecuter implements Runnable
 					  {
 						if(Work.getMsgMap().get("type").compareTo("once")==0)
 						{
+						
 							db.RemoveCC(Work.getUserName());
 							//TODO: validation for existing params
 							db.AddCC(Work.getUserName(), Work.getMsgMap().get("cc_num"), Work.getMsgMap().get("cc_expire"), Work.getMsgMap().get("cc_id"));
