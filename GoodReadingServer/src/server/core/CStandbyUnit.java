@@ -53,10 +53,8 @@ public class CStandbyUnit  extends AbstractServer
 	{
 		System.out.println("msg recieved");
 		((CEntry) msg).setClient(client); //save client so we could send the response later on.
-		System.out.println("added connection to Entry");		
 		m_que.add((CEntry) msg); ///////////problematic
-		System.out.println("msg entered to que");
-		System.out.println("Server recieved client request from" + client.getInetAddress());
+		System.out.println("Server recieved client request from " + client.getInetAddress());
 		CExecuter.GetInstance().NotifyOfEntry();
 	}
 
@@ -65,7 +63,7 @@ public class CStandbyUnit  extends AbstractServer
 	public CStandbyUnit(int port) 
 	{
 		super(port);
-		m_que=new SynchronousQueue<CEntry>();
+		m_que=new LinkedList<CEntry>();
 	}
 
 }
