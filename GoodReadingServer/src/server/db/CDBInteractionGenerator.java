@@ -46,7 +46,7 @@ public class CDBInteractionGenerator
 	public ResultSet MySQL_LoginQuery(String user)
 	{
 		try {
-			return this.m_DB_Connection.createStatement().executeQuery("SELECT u.user,u.password FROM users u WHERE u.user like '\""+user+"\"'");
+			return this.m_DB_Connection.createStatement().executeQuery("SELECT u.user,u.password FROM users u WHERE u.user like '\""+user+"\"';");
 		}
 		catch(SQLException e)
 		{ 
@@ -156,11 +156,10 @@ public class CDBInteractionGenerator
 		ResultSet rs;
 		try {
 			
-		
 		rs=MySQL_LoginQuery(user);
 		if(!rs.next())
 			return false;
-		if(password.compareTo("\""+rs.getString(2)+"\"")==0)
+		if(password.compareTo(rs.getString(2).replaceAll("\"", ""))==0)
 			return true;
 		//if validated, create session! then respond to client
 		else return false;//return failure to client
