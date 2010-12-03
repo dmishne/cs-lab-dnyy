@@ -45,7 +45,7 @@ public class CReader extends AUser{
 			throw new IOException("Invalid Input, Use Only Digits");
 		}
 
-		fromGui.put("PayType", PayType);
+		fromGui.put("type", "once");
 		if(PayType == "CreditCard")
 	    {
 			fromGui.put("cc_num", CreditCardNumber);
@@ -69,10 +69,15 @@ public class CReader extends AUser{
 		Object OResult = null;
 		
 		Map <String,String> fromGui = new HashMap<String,String>();
-		fromGui.put("PayType", PayType);
 		if(PayType == "CreditCard")
 		{
 			throw new Exception("Missing CreditCard Details");
+		}
+		else if (PayType == "Monthly")
+			fromGui.put("type", "monthly");
+		else
+		{
+			fromGui.put("type", "yearly");
 		}
 		EntryToSrv = new CEntry("ArrangePayment",fromGui,AUser.getInstance().getUserName(),CClientConnector.getInstance().getM_clientSessionID());
 		OResult =  CClientConnector.getInstance().messageToServer(EntryToSrv);

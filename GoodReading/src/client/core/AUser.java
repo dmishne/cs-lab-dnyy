@@ -53,10 +53,11 @@ public abstract class AUser implements Serializable{
 		UP.put("user", username);
 		UP.put("password", password);
 		CEntry clientEntry = new CEntry("Login",UP,username,-1);
-		Object result = (CEntry)CClientConnector.getInstance().messageToServer(clientEntry);
-		if(null == result)
+		Object result = CClientConnector.getInstance().messageToServer(clientEntry);
+		if(result instanceof AUser )
 		{
 			setActor(result);
+			System.out.println("Connection was successful");
 			return(m_actor.getPrivilege());
 		}
 		throw new IOException("Incorrect Username/Password");
@@ -82,9 +83,9 @@ public abstract class AUser implements Serializable{
 	    {
 			CClientConnector.getInstance().closeConnection();
 	    }
-	    catch(IOException e) {}
-	    System.exit(0);
-		
+	    catch(Exception e) {
+	    	System.out.println("logout wasn't successful");
+	    }    
 		// ------
 	}
 	

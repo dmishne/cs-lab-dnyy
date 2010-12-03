@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import client.core.AUser;
+
 public class CMainMenuPanel extends JPanel implements ActionListener {
 
 	public enum EMMDecision{
@@ -163,6 +165,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 		if(source == m_jButton_Logout)
 		{
 			setLastChoice(EMMDecision.LOGOUT);
+			AUser.logout();
 			this.setVisible(false);
 		}
 		if(source == m_jButton_ArrangePayment)

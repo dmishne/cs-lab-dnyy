@@ -1,8 +1,6 @@
 package client.common;
 
-import java.io.IOException;
-
-import ocsf.client.*;
+import ocsf.client.AbstractClient;
 
 public class CClientConnector extends AbstractClient {
 		
@@ -11,23 +9,20 @@ public class CClientConnector extends AbstractClient {
 		private int m_clientSessionID;
 		private boolean m_haveMsg;
 		private Object m_msg;
-		
-		
-		
-		
-		
+				
 		private CClientConnector(String host, int port)
 		{
 			super(host,port);
 			this.m_clientSessionID = -1;
 		}
 		
-		public static CClientConnector getInstance()
+		public static CClientConnector getInstance() throws Exception
 		{
 			if(m_ConnectorInstance == null)
 			{
 				m_ConnectorInstance = new CClientConnector("localhost",5555);
 			}
+			m_ConnectorInstance.openConnection();
 			return m_ConnectorInstance;
 		}
 
@@ -54,15 +49,16 @@ public class CClientConnector extends AbstractClient {
 						this.wait();
 					}
 				}
-				
-			} catch (IOException e) { 
-				e.getCause();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+			//get answer	
+			return (CClientConnector.getInstance().getMsg());		
+			} 
+			catch (InterruptedException e) { 
 				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.getCause();
 			} 				
-			// get answer		
-			return (CClientConnector.getInstance().getMsg());	
+			return (null);	
 		}
 		
 		
