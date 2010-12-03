@@ -92,5 +92,7 @@ public class CClientSession implements Comparable
 	public int getUserAuth() {
 		return m_UserAuth;
 	}
-	
+	public String getUsername() {
+		return this.m_UserName;
+	}
 }

@@ -8,6 +8,8 @@ import java.util.TreeSet;
 
 import server.db.CDBInteractionGenerator;
 
+import ocsf.server.ConnectionToClient;
+
 public class CExecuter implements Runnable
 {
 	private Set <CClientSession> m_sessions;
@@ -79,6 +81,29 @@ public class CExecuter implements Runnable
 				}//end of login handling
 				else 
 				{
+					boolean logged=false;
+					for(CClientSession s : this.m_sessions) //find session
+							if(s.getSessionID() == Work.getSessionID()) //sessionID match
+								if(Work.getUserName().compareTo(s.getUsername())==0)
+								{
+									logged=true;
+									break;
+								}
+								else { 
+									break;
+								}
+					if(!logged)
+					{
+								try {
+					 ((ConnectionToClient)Work.getClient()).sendToClient(null); /*TODO: response as NULL should be considered as FAIL on client side*/
+						
+								
+						}	catch (Exception e) 						
+						{	System.out.println("Server fail, can't 'wait' in func run via CExecuter");
+							e.printStackTrace();
+						}
+					}//((ConnectionToClient) (Work.getClient())
+					//getting an instance as "db" will make things easier for this part
 					CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
 					if(Work.getMsgType().compareTo("ArrangePayment")==0)
 					  {
