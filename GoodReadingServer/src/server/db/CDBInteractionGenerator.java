@@ -1,10 +1,15 @@
 package server.db;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-import client.common.CEntry;
-import client.core.*;
-import server.core.*;
+import client.core.AUser;
+import client.core.CLibrarian;
+import client.core.CLibraryManager;
+import client.core.CReader;
 
 public class CDBInteractionGenerator 
 {
@@ -16,7 +21,6 @@ public class CDBInteractionGenerator
 	final private static String m_DEFAULTUSER="nirgeffen";
 	final private static String m_DEFAULTPASS="q1w2e3r4";
 	*/
-
 	
 	final private static String m_DEFAULTHOST="jdbc:mysql://localhost/cslabdnyy";
 	final private static String m_DEFAULTUSER="root";
@@ -27,14 +31,14 @@ public class CDBInteractionGenerator
 		return this.m_DB_Connection.createStatement().executeQuery(query);
 	}
 
-	
 	public int MySQLGetAuth(String user)  
 	{
 		try
 		{
-		ResultSet rs=MySQLQuery("SELECT u.Autherization FROM users u WHERE u.user LIKE "+user);
-		rs.next();
-		return rs.getInt(1);
+			ResultSet rs = MySQLQuery("SELECT u.authorization FROM users u WHERE u.user LIKE '\"" + user + "\"';");
+			if(rs.next()){
+				return rs.getInt(1);
+			}
 		} catch(SQLException e)
 		{
 			System.out.println("SQLException during MySQLGetAuth: "+e.getErrorCode()+" "+e.getMessage());
@@ -42,7 +46,6 @@ public class CDBInteractionGenerator
 		return -1;
 	}
 
-	
 	public ResultSet MySQL_LoginQuery(String user)
 	{
 		try {
@@ -54,12 +57,7 @@ public class CDBInteractionGenerator
 			
 			return null;
 		}
-		
 	} /////////////////TODO:need to fix " inside of DB
-	
-	
-	
-	
 	
 	public static CDBInteractionGenerator GetInstance()
 	{
@@ -97,16 +95,6 @@ public class CDBInteractionGenerator
 		// TODO Auto-generated method stub
 		
 	}
-
-
-
-
-
-
-	
-
-
-
 	
 	public boolean ValidateLogin(String user, String password) 
 	{
@@ -134,7 +122,7 @@ public class CDBInteractionGenerator
 	{
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
-			st.executeUpdate("DELETE from credit_card_details ccd WHERE ccd.user LIKE "+user+";");
+			st.executeUpdate("DELETE from credit_card_details WHERE user LIKE '\""+user+"\"';");
 			return true;	
 		} catch (SQLException e) {
 			System.out.println("RemoveCC():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
@@ -144,7 +132,8 @@ public class CDBInteractionGenerator
 	public boolean AddCC(String user,String CCnum,String CCExpire,String CCid)
 	{
 		try {
-			this.MySQLQuery("INSERT INTO `credit_card_details` (`user`,`cc_num`,`cc_expire`,`cc_id`) VALUES ('"+user+"','"+CCnum+"','"+CCExpire+"','"+CCid+"'");
+			Statement st = this.m_DB_Connection.createStatement();
+			st.executeUpdate("INSERT INTO credit_card_details VALUES ('\""+user+"\"',"+CCnum+","+CCExpire+","+CCid+")");
 			return true;	
 		} catch (SQLException e) {
 			System.out.println("AddCC():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
@@ -156,7 +145,7 @@ public class CDBInteractionGenerator
 	{
 		ResultSet rs;
 		try {
-			rs= this.MySQLQuery("SELECT * FROM users u WHERE u.user LIKE \""+user+"\";");
+			rs= this.MySQLQuery("SELECT * FROM users u WHERE u.user LIKE '\""+user+"\"';");
 		if(!rs.next()) //nothing in rs
 			return null;
 		AUser arg;

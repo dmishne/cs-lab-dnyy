@@ -8,21 +8,17 @@ import java.util.TreeSet;
 
 import server.db.CDBInteractionGenerator;
 
-
 public class CExecuter implements Runnable
 {
 	private Set <CClientSession> m_sessions;
 	private boolean m_sleeping; // @param indicates Executer is sleeping
 	private Thread m_ThreadHolder;
 	private Random m_generator;	//infrastracture helping to generate random numbers.
+	private static CExecuter m_obj;
+	
 	/*TODO add randomly generated sessionIDs */
-	//private static CExecuter m_obj;/*signleton*/
-	
-	
-	
 	
 	/*signleton*/
-	private static CExecuter m_obj;
 	public static CExecuter GetInstance()
 	{
 		/* TODO add constructor args */
@@ -31,17 +27,11 @@ public class CExecuter implements Runnable
 		return m_obj;
 	}
 
-	
-	
 	private CExecuter()
 	{
-	//Instance is configured inside init()
+	    //Instance is configured inside init()
 		this.m_sessions=new TreeSet<CClientSession>();
 	}
-	
-	
-	
-	
 	
 	private static void init()
 	{
@@ -51,13 +41,7 @@ public class CExecuter implements Runnable
 		//new Thread(m_obj).start();
 		m_obj.m_ThreadHolder=new Thread(m_obj);
 		m_obj.m_ThreadHolder.start();
-		
 	}
-	
-	
-	
-	
-	
 	
 	public void run()
 	{
@@ -66,7 +50,9 @@ public class CExecuter implements Runnable
 			while (true)
 			{
 				if(CStandbyUnit.GetInstance().isEmpty())
+				{
 					m_sleeping = true;
+				}
 				synchronized(m_obj)
 				{
 					while(m_sleeping)
@@ -202,6 +188,7 @@ public class CExecuter implements Runnable
 			//kill previous session
 			if(CExecuter.GetInstance().isLogged(Work))
 				CExecuter.GetInstance().Kill(Work);	/*   - session dead*/
+			
 			//send response to client
 			CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), feedback);
 			return;

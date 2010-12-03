@@ -1,8 +1,6 @@
 package server.main;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import server.core.CExecuter;
 import server.core.CStandbyUnit;
@@ -35,6 +33,8 @@ public class CGoodReadingServer {
 				System.out.println("Problem Instanciating Executer");
 		else System.out.println("Excecuter online and waiting");
 	
+		
+		
 		//at last, we check that everthing is working
 	/*	if(CDBInteractionGenerator.GetInstance() != null && CStandbyUnit.GetInstance() != null && CExecuter.GetInstance() != null)
 			CDBInteractionGenerator.GetInstance().ServerUpdateLog("Server online at "+ (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime())));
