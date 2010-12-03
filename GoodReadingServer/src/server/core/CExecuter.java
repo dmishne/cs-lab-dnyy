@@ -1,5 +1,6 @@
 package server.core;
 import client.common.*;
+import client.core.AUser;
 
 import java.util.Random;
 import java.util.Set;
@@ -85,7 +86,7 @@ public class CExecuter implements Runnable
 					CRespondToClient.GetInstance().InsertOutstream(Work.getSessionID(), Work.getClient());
 			
 					//handle Login
-					CDBInteractionGenerator.GetInstance().handleLogin(Work);		
+					handleLogin(Work);		
 					//TODO: move operative handling of login to CExecuter (here)
 					
 					
@@ -175,6 +176,43 @@ public class CExecuter implements Runnable
 		return m_ThreadHolder;
 	}
 	
+	
+	
+	
+	
+	
+	
+	public void handleLogin(CEntry Work) 
+	{
+	
+		//call on ValidateLogin to make sure user matches password		
+		if(CDBInteractionGenerator.GetInstance().ValidateLogin(Work.getMsgMap().get("user"),Work.getMsgMap().get("password")))			
+		{	
+			
+			//create session and add to Executer's session list
+			CClientSession newSession=new CClientSession(Work.getSessionID(),Work.getUserName(),CDBInteractionGenerator.GetInstance().MySQLGetAuth(Work.getMsgMap().get("user"))); 
+			CExecuter.GetInstance().add(newSession);
+			
+			
+			//create instance
+			AUser feedback=CDBInteractionGenerator.GetInstance().getUserInstance(Work.getUserName(),Work.getSessionID());
+			
+			
+			
+			//kill previous session
+			if(CExecuter.GetInstance().isLogged(Work))
+				CExecuter.GetInstance().Kill(Work);	/*   - session dead*/
+			//send response to client
+			CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), feedback);
+			return;
+		}	//end of valid login
+		
+		CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),null);
+		CRespondToClient.GetInstance().Remove(Work.getSessionID());
+	
+		return ; //quick exit
+		
+	}
 }
 
 

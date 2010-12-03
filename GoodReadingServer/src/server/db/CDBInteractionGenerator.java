@@ -103,55 +103,12 @@ public class CDBInteractionGenerator
 
 
 
-	public void handleLogin(CEntry Work) 
-	{
 	
-						
-		if(ValidateLogin(Work.getMsgMap().get("user"),Work.getMsgMap().get("password")))			
-		{	
-			
-			//create session
-			CClientSession newSession=new CClientSession(Work.getSessionID(),Work.getUserName(),MySQLGetAuth(Work.getMsgMap().get("user"))); 
-		
-			//add to List
-			CExecuter.GetInstance().add(newSession);
-			
-			//send response to client
-			switch (newSession.getSessionID())
-			{
-			
-				case (0):
-					Work.setClient(null);
-					break;
-				case (1):
-				//	Work.setClient(new CReader());
-					
-				case (3):
-					
-				case (5):
-				
-			}	
-			
-			Work.getMsgMap().clear();
-			Work.getMsgMap().put("SessionID", Integer.toString( Work.getSessionID() ));
-			
-			if(CExecuter.GetInstance().isLogged(Work))
-				CExecuter.GetInstance().Kill(Work);	/*   - session dead*/
-			
-			CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "dude i'm the king, admit it!");
-			return;
-		}	//end of valid login
-		
-		CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Login Failed");
-		CRespondToClient.GetInstance().Remove(Work.getSessionID());
-		return ; //quick exit
-		
-	}
 
 
 
 	
-	private boolean ValidateLogin(String user, String password) 
+	public boolean ValidateLogin(String user, String password) 
 	{
 		ResultSet rs;
 		try {
@@ -195,15 +152,38 @@ public class CDBInteractionGenerator
 		return false;
 	}
 	
-	/*
-	CREATE TABLE `credit_card_details` (
-	  `user` varchar(30) NOT NULL,
-	  `cc_num` varchar(45) NOT NULL,
-	  `cc_expire` datetime NOT NULL,
-	  `cc_id` int(10) unsigned NOT NULL,
-			 */
-
+	public AUser getUserInstance(String user,int sessionID)
+	{
+		ResultSet rs;
+		try {
+			rs= this.MySQLQuery("SELECT * FROM users u WHERE u.user LIKE \""+user+"\";");
+		if(!rs.next()) //nothing in rs
+			return null;
+		AUser arg;
+		switch (rs.getInt(3))
+		{
+		case (0):
+			return null;
+		case (1):
+			arg=new CReader(rs.getString(7), rs.getString(8), rs.getInt(5), user, sessionID);
+			return arg;
+		case (3):
+			arg=new CLibrarian(rs.getString(7), rs.getString(8), rs.getInt(5), user, sessionID);
+			return arg;
+		case (5):
+			arg=new CLibraryManager(rs.getString(7), rs.getString(8), rs.getInt(5), user, sessionID);
+			return arg;
+		}
+		
+		
+		
+		//TODO: add log
+		} catch (SQLException e) {
+			System.out.print("SQL Exception while gettins user info, func GetUsernstance: "+e.getErrorCode()+" "+e.getMessage());	}
 	
-
+		return null;
+		
+	}
+	
 
 }
