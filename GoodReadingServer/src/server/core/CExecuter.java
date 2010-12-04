@@ -110,14 +110,16 @@ public class CExecuter implements Runnable
 						{
 							db.RemoveCC(Work.getUserName());
 							//TODO: validation for existing params
-							db.AddCC(Work.getUserName(), Work.getMsgMap().get("cc_num"), Work.getMsgMap().get("cc_expire"), Work.getMsgMap().get("cc_id"));
-							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Updated user's credit card details");
+							if(db.AddCC(Work.getUserName(), Work.getMsgMap().get("cc_num"), Work.getMsgMap().get("cc_expire"), Work.getMsgMap().get("cc_id")))
+							  CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Updated user's credit card details");
+							else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), null);
+							
 						}
 						else if(Work.getMsgMap().get("type").compareTo("monthly") == 0)
 						{
 							//add / update user's Subscription
 							if(db.AddMonthly(Work.getUserName()))
-							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Updated user's Monthly subscription details");
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Updated user's Monthly subscription details");
 							else
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),null);
 						}

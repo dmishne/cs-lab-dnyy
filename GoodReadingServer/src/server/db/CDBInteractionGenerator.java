@@ -159,7 +159,10 @@ public class CDBInteractionGenerator
 	public boolean AddCC(String user,String CCnum,String CCExpire,String CCid)
 	{
 		try {
+			if(!CCnum.startsWith("01/") && CCnum.getBytes()[5]!='/')
+				return false;
 			Statement st = this.m_DB_Connection.createStatement();
+		
 			st.executeUpdate("INSERT INTO credit_card_details VALUES ('\""+user+"\"',"+CCnum+","+CCExpire+","+CCid+")");
 			return true;	
 		} catch (SQLException e) {
