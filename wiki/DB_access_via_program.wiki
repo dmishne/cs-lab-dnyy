@@ -3,8 +3,11 @@ ok, so program is working as prototype.
 we can test with these usernames:
 full access: 
   daniel
+
   yotam
-  yevgeny
+
+  evgeny
+
   nir
 reader access:
   test
