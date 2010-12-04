@@ -16,16 +16,19 @@ public class CDBInteractionGenerator
 	
 	private static CDBInteractionGenerator m_obj;
 	private Connection m_DB_Connection;
-	/*
-	final private static String m_DEFAULTHOST="jdbc:mysql://remote-mysql4.servage.net/cslabdnyy";
-	final private static String m_DEFAULTUSER="nirgeffen";
-	final private static String m_DEFAULTPASS="q1w2e3r4";
-	*/
 	
+	final private static String m_DEFAULTHOST="jdbc:mysql://remote-mysql4.servage.net/cslabdnyy";
+	final private static String m_DEFAULTUSER="cslabdnyy";
+	final private static String m_DEFAULTPASS="q1w2e3r4";
+	final private int m_MONTHLY_AMMOUNT=5;
+	final private int m_YEARLY_AMMOUNT=150;
+	
+	/*
 	final private static String m_DEFAULTHOST="jdbc:mysql://localhost/cslabdnyy";
 	final private static String m_DEFAULTUSER="root";
 	final private static String m_DEFAULTPASS="m00nkey";
-		
+	*/
+	
 	public ResultSet MySQLQuery(String query) throws SQLException
 	{
 		return this.m_DB_Connection.createStatement().executeQuery(query);
@@ -37,8 +40,11 @@ public class CDBInteractionGenerator
 		{
 			ResultSet rs = MySQLQuery("SELECT u.authorization FROM users u WHERE u.user LIKE '\"" + user + "\"';");
 			if(rs.next()){
-				return rs.getInt(1);
+				int i=rs.getInt(1);
+				rs.close();
+				return i;
 			}
+			rs.close();
 		} catch(SQLException e)
 		{
 			System.out.println("SQLException during MySQLGetAuth: "+e.getErrorCode()+" "+e.getMessage());
@@ -46,7 +52,21 @@ public class CDBInteractionGenerator
 		return -1;
 	}
 
-	public ResultSet MySQL_LoginQuery(String user)
+	private boolean MySQLExecute(String statement)
+	{
+		try{
+			//create statement
+			Statement st = this.m_DB_Connection.createStatement();
+			//execute statement
+			st.executeUpdate(statement);
+			return true;	//return success
+		} catch (SQLException e) {
+				System.out.println("can't execute statement: SQL exception: "+e.getErrorCode()+" "+e.getMessage());		
+				return false;
+		}
+	}
+	
+	public ResultSet MySQLLoginQuery(String user)
 	{
 		try {
 			return this.m_DB_Connection.createStatement().executeQuery("SELECT u.user,u.password FROM users u WHERE u.user like '\""+user+"\"';");
@@ -101,14 +121,21 @@ public class CDBInteractionGenerator
 		ResultSet rs;
 		try {
 			
-		rs=MySQL_LoginQuery(user);
+		rs=MySQLLoginQuery(user);
 		if(!rs.next())
-			return false;
+			{
+				rs.close();
+				return false;
+			}
 		
 		if(password.compareTo(rs.getString(2).replaceAll("\"", ""))==0)
-			return true;
+			{ 
+				rs.close();
+				return true;
+			}
 		//if validated, create session! then respond to client
-		else return false;//return failure to client
+		rs.close();
+		return false;//return failure to client
 		
 		} catch(SQLException e)
 		{ 
@@ -141,13 +168,18 @@ public class CDBInteractionGenerator
 		return false;
 	}
 	
+	
 	public AUser getUserInstance(String user,int sessionID)
 	{
 		ResultSet rs;
 		try {
 			rs= this.MySQLQuery("SELECT * FROM users u WHERE u.user LIKE '\""+user+"\"';");
 		if(!rs.next()) //nothing in rs
+		{
+			rs.close();
 			return null;
+		}
+			
 		AUser arg;
 		switch (rs.getInt(3))
 		{
@@ -155,12 +187,15 @@ public class CDBInteractionGenerator
 			return null;
 		case (1):
 			arg=new CReader(rs.getString(7), rs.getString(8), rs.getInt(5), user, sessionID);
+			rs.close();
 			return arg;
 		case (3):
 			arg=new CLibrarian(rs.getString(7), rs.getString(8), rs.getInt(5), user, sessionID);
+			rs.close();
 			return arg;
 		case (5):
 			arg=new CLibraryManager(rs.getString(7), rs.getString(8), rs.getInt(5), user, sessionID);
+			rs.close();
 			return arg;
 		}
 		
@@ -172,6 +207,38 @@ public class CDBInteractionGenerator
 	
 		return null;
 		
+	}
+
+	public void AddMonthly(String userName) {
+		try {
+			ResultSet rs=MySQLQuery("SELECT * FROM subscriptions s WHERE s.type LIKE 'monthly' AND s.user LIKE '\""+userName+"\"';");
+			if(rs.next())
+				//if there is a row already in table, then update
+				this.MySQLExecute("UPDATE subscriptions SET ammount="+(this.m_MONTHLY_AMMOUNT+rs.getInt(3))+" WHERE s.type LIKE 'monthly' AND s.user LIKE '\""+userName+"\"';");
+			else
+				//else, we need to insert
+				this.MySQLExecute("INSERT INTO subscriptions (`user`,`type`,`ammount`) VALUES ('\""+userName+"\"','monthly',"+this.m_MONTHLY_AMMOUNT+");");
+			
+			rs.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException during AddMonthly: "+e.getErrorCode()+" "+e.getMessage());
+		}
+	}
+
+	public void AddYearly(String userName) {
+		try {
+			ResultSet rs=MySQLQuery("SELECT * FROM subscriptions s WHERE s.type LIKE 'yearly' AND s.user LIKE '\""+userName+"\"';");
+			if(rs.next())
+				//if there is a row already in table, then update
+				this.MySQLExecute("UPDATE subscriptions SET ammount="+(this.m_YEARLY_AMMOUNT+rs.getInt(3))+" WHERE s.type LIKE 'yearly' AND s.user LIKE '\""+userName+"\"';");
+			else
+				//else, we need to insert
+				this.MySQLExecute("INSERT INTO subscriptions (`user`,`type`,`ammount`) VALUES ('\""+userName+"\"','yearly',"+this.m_YEARLY_AMMOUNT+");");
+			
+			rs.close();
+		} catch (SQLException e) {
+			System.out.println("SQLException during AddYearly: "+e.getErrorCode()+" "+e.getMessage());
+		}
 	}
 	
 

@@ -84,7 +84,7 @@ public class CExecuter implements Runnable
 					boolean logged=false;
 					for(CClientSession s : this.m_sessions) //find session
 							if(s.getSessionID() == Work.getSessionID()) //sessionID match
-								if(Work.getUserName().compareTo(s.getUsername())==0)
+								if(Work.getUserName().compareTo(s.getUsername())==0) //username match
 								{
 									logged=true;
 									break;
@@ -94,40 +94,38 @@ public class CExecuter implements Runnable
 								}
 					if(!logged)
 					{
-								try {
-					 ((ConnectionToClient)Work.getClient()).sendToClient(null); /*TODO: response as NULL should be considered as FAIL on client side*/
-						
-								
-						}	catch (Exception e) 						
-						{	System.out.println("Server fail, can't 'wait' in func run via CExecuter");
-							e.printStackTrace();
+						//if user is not logged
+						try {
+							((ConnectionToClient)Work.getClient()).sendToClient(null); /*TODO: response as NULL should be considered as FAIL on client side*/
+						}	catch (Exception e) {	
+							System.out.println("Server fail, can't 'wait' in func run via CExecuter");
 						}
-					}//((ConnectionToClient) (Work.getClient())
+					}
 					//getting an instance as "db" will make things easier for this part
 					CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
+					//executing entry, currently only little to do
 					if(Work.getMsgType().compareTo("ArrangePayment")==0)
 					  {
 						if(Work.getMsgMap().get("type").compareTo("once")==0)
 						{
-						
 							db.RemoveCC(Work.getUserName());
 							//TODO: validation for existing params
 							db.AddCC(Work.getUserName(), Work.getMsgMap().get("cc_num"), Work.getMsgMap().get("cc_expire"), Work.getMsgMap().get("cc_id"));
+							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Updated user's credit card details");
 						}
 						else if(Work.getMsgMap().get("type").compareTo("monthly")==0)
 						{
-							
+							//add / update user's credit
+							db.AddMonthly(Work.getUserName());
+							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Updated user's Monthly subscription details");
 						}
 						else if(Work.getMsgMap().get("type").compareTo("yearly")==0)
 						{
-							
+							db.AddYearly(Work.getUserName());
+							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Updated user's Yearly subscription details");
 						}
 					  }
-					
-					else if (false)
-					{
-						db.GetInstance();
-					}
+	
 				}
 					
 			}//end of while(forever)
