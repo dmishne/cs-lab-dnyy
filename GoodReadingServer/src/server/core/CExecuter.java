@@ -104,28 +104,32 @@ public class CExecuter implements Runnable
 					//getting an instance as "db" will make things easier for this part
 					CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
 					//executing entry, currently only little to do
-					if(Work.getMsgType().compareTo("ArrangePayment")==0)
+					if(Work.getMsgType().compareTo("ArrangePayment") == 0)
 					  {
-						if(Work.getMsgMap().get("type").compareTo("once")==0)
+						if(Work.getMsgMap().get("type").compareTo("once") == 0)
 						{
 							db.RemoveCC(Work.getUserName());
 							//TODO: validation for existing params
 							db.AddCC(Work.getUserName(), Work.getMsgMap().get("cc_num"), Work.getMsgMap().get("cc_expire"), Work.getMsgMap().get("cc_id"));
 							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Updated user's credit card details");
 						}
-						else if(Work.getMsgMap().get("type").compareTo("monthly")==0)
+						else if(Work.getMsgMap().get("type").compareTo("monthly") == 0)
 						{
-							//add / update user's credit
-							db.AddMonthly(Work.getUserName());
+							//add / update user's Subscription
+							if(db.AddMonthly(Work.getUserName()))
 							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Updated user's Monthly subscription details");
+							else
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),null);
 						}
-						else if(Work.getMsgMap().get("type").compareTo("yearly")==0)
+						else if(Work.getMsgMap().get("type").compareTo("yearly") == 0)
 						{
-							db.AddYearly(Work.getUserName());
-							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Updated user's Yearly subscription details");
+							//add / update user's Subscription
+							if(db.AddYearly(Work.getUserName()))
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Updated user's Yearly subscription details");
+							else
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),null);
 						}
-					  }
-	
+					  } // end of ArrangePayment	
 				}
 					
 			}//end of while(forever)
@@ -133,7 +137,6 @@ public class CExecuter implements Runnable
 		catch (InterruptedException e) 
 		{
 			System.out.println("Server fail, can't 'wait' in func run via CExecuter");
-			e.printStackTrace();
 		}
 	}
 	

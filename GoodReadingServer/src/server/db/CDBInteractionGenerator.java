@@ -185,18 +185,24 @@ public class CDBInteractionGenerator
 		{
 		case (0):
 			return null;
-		case (1):
+		case (1): //User level
 			arg=new CReader(rs.getString(7), rs.getString(8), rs.getInt(5), user, sessionID);
 			rs.close();
 			return arg;
-		case (3):
+		case (2): //Reader level
+			arg=new CReader(rs.getString(7), rs.getString(8), rs.getInt(5), user, sessionID);
+			rs.close();
+			return arg;
+		case (3): //Librarian level
 			arg=new CLibrarian(rs.getString(7), rs.getString(8), rs.getInt(5), user, sessionID);
 			rs.close();
 			return arg;
-		case (5):
+		case (5): //Manager level
 			arg=new CLibraryManager(rs.getString(7), rs.getString(8), rs.getInt(5), user, sessionID);
 			rs.close();
 			return arg;
+		default:
+			return null;
 		}
 		
 		
@@ -209,7 +215,7 @@ public class CDBInteractionGenerator
 		
 	}
 
-	public void AddMonthly(String userName) {
+	public boolean AddMonthly(String userName) {
 		try {
 			ResultSet rs=MySQLQuery("SELECT * FROM subscriptions s WHERE s.type LIKE 'monthly' AND s.user LIKE '\""+userName+"\"';");
 			if(rs.next())
@@ -218,14 +224,16 @@ public class CDBInteractionGenerator
 			else
 				//else, we need to insert
 				this.MySQLExecute("INSERT INTO subscriptions (`user`,`type`,`ammount`) VALUES ('\""+userName+"\"','monthly',"+this.m_MONTHLY_AMMOUNT+");");
-			
+			this.MySQLExecute("UPDATE users SET u.authorization=2 WHERE user LIKE '\""+userName+"\"';");
 			rs.close();
 		} catch (SQLException e) {
 			System.out.println("SQLException during AddMonthly: "+e.getErrorCode()+" "+e.getMessage());
+			return false;
 		}
+		return true;
 	}
 
-	public void AddYearly(String userName) {
+	public boolean AddYearly(String userName) {
 		try {
 			ResultSet rs=MySQLQuery("SELECT * FROM subscriptions s WHERE s.type LIKE 'yearly' AND s.user LIKE '\""+userName+"\"';");
 			if(rs.next())
@@ -234,11 +242,13 @@ public class CDBInteractionGenerator
 			else
 				//else, we need to insert
 				this.MySQLExecute("INSERT INTO subscriptions (`user`,`type`,`ammount`) VALUES ('\""+userName+"\"','yearly',"+this.m_YEARLY_AMMOUNT+");");
-			
+			this.MySQLExecute("UPDATE users SET u.authorization=2 WHERE user LIKE '\""+userName+"\"';");
 			rs.close();
 		} catch (SQLException e) {
 			System.out.println("SQLException during AddYearly: "+e.getErrorCode()+" "+e.getMessage());
+			return false;
 		}
+		return true;
 	}
 	
 
