@@ -42,7 +42,11 @@ public class CRespondToClient {
 			System.out.println(e.toString());
 		}
 		try{
+			if(msg != null)
 			((ConnectionToClient)m_connections.get(i)).sendToClient(msg);
+			else
+			((ConnectionToClient)m_connections.get(i)).sendToClient("null");
+			
 		}
 		catch (IOException e) {	// TODO Auto-generated catch block
 			System.out.println("\nResponse Unit failed to send msg to "+i+": "+e.getMessage());
