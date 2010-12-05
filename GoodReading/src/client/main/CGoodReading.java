@@ -1,5 +1,6 @@
 package client.main;
 
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -15,15 +16,14 @@ public class CGoodReading{
 
 	public static void main(String[] args) {
 
+		initLookAndFeel();
+		client.gui.CMainFrame.setDefaultLookAndFeelDecorated(true); // Set Graphics to be similar to OS.
     	try {
 			CClientConnector.getInstance().openConnection();
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Can not open connection");
+			JOptionPane.showMessageDialog(null, "Can not open connection", "Error",JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		initLookAndFeel();
-		client.gui.CMainFrame.setDefaultLookAndFeelDecorated(true); // Set Graphics to be similar to OS.
 		client.gui.CMainFrame mainFrame = new client.gui.CMainFrame();
 		mainFrame.setVisible(true);
 	}

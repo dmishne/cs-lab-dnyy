@@ -179,11 +179,8 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		}
 		else if(source == GUI_CArrangePayPanel)
 		{
-			if(GUI_CArrangePayPanel.getLastChoice() == CArrangePayPanel.EAPDecision.BACK )
-			{
-				jContentPane.remove(GUI_CArrangePayPanel);
-				GUI_CMainMenuPanel.setVisible(true);
-			}
+			jContentPane.remove(GUI_CArrangePayPanel);
+			GUI_CMainMenuPanel.setVisible(true);
 		}
 		
 		

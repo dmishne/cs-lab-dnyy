@@ -153,23 +153,25 @@ public class CArrangePayPanel extends JPanel implements ActionListener {
 		}
 		else if(source == m_jButton_Purchase)
 		{
+			String result;
 			try
 			{
 				if(m_jComboBox_PaymentType.getSelectedIndex() == 2)
 				{
-					((CReader)CReader.getInstance()).ArrangePayment("CreditCard",m_jTextField_CCNUM.getText(),m_jTextField_CCEXP.getText(),m_jTextField_SSN.getText());
+					result = ((CReader)CReader.getInstance()).ArrangePayment("CreditCard",m_jTextField_CCNUM.getText(),m_jTextField_CCEXP.getText(),m_jTextField_SSN.getText());
 				}
 				else
 				{
 					if(m_jComboBox_PaymentType.getSelectedIndex() == 0)
 					{
-						((CReader)CReader.getInstance()).ArrangePayment("Yearly");
+						result = ((CReader)CReader.getInstance()).ArrangePayment("Yearly");
 					}
 					else
 					{
-						((CReader)CReader.getInstance()).ArrangePayment("Monthly");
+						result = ((CReader)CReader.getInstance()).ArrangePayment("Monthly");
 					}
 				}
+				JOptionPane.showMessageDialog(null, result, "Success",JOptionPane.INFORMATION_MESSAGE);
 				setLastChoice(EAPDecision.PURCHASE);
 				this.setVisible(false);
 			}

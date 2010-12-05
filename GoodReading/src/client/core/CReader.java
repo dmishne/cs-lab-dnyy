@@ -26,7 +26,7 @@ public class CReader extends AUser{
 	 *  This method get the payment type from GUI and send 
 	 *   update info to server
 	 */
-	public Object ArrangePayment(String PayType, String CreditCardNumber, String Expire, String UserID ) throws Exception
+	public String ArrangePayment(String PayType, String CreditCardNumber, String Expire, String UserID ) throws Exception
 	{
 		CEntry EntryToSrv = null;
 		Object OResult = null;
@@ -56,14 +56,18 @@ public class CReader extends AUser{
 		{
 			throw new Exception("Credit Card Information doesn't needed");
 		}
-		EntryToSrv = new CEntry("ArrangePayment",fromGui,AUser.getInstance().getUserName(),CClientConnector.getInstance().getM_clientSessionID());
+		EntryToSrv = new CEntry("ArrangePayment",fromGui,AUser.getInstance().getUserName(),this.getUserSessionId());
 		OResult =  CClientConnector.getInstance().messageToServer(EntryToSrv);
 
 		String SResult = CGuiTranslator.getInstance().TranslateForGui(OResult);
+		if(SResult.compareTo("null") == 0 )
+		{
+			throw new Exception("Update wasn't successful, please try again later");
+		}
 		return(SResult);      	          
 	}
 	
-	public Object ArrangePayment(String PayType) throws Exception
+	public String ArrangePayment(String PayType) throws Exception
 	{
 		CEntry EntryToSrv = null;
 		Object OResult = null;
@@ -79,10 +83,14 @@ public class CReader extends AUser{
 		{
 			fromGui.put("type", "yearly");
 		}
-		EntryToSrv = new CEntry("ArrangePayment",fromGui,AUser.getInstance().getUserName(),CClientConnector.getInstance().getM_clientSessionID());
+		EntryToSrv = new CEntry("ArrangePayment",fromGui,AUser.getInstance().getUserName(),this.getUserSessionId());
 		OResult =  CClientConnector.getInstance().messageToServer(EntryToSrv);
 		
 		String SResult = CGuiTranslator.getInstance().TranslateForGui(OResult);
+		if(SResult.compareTo("null") == 0 )
+		{
+			throw new Exception("Update wasn't successful, please try again later");
+		}
 		return(SResult);      	          
 	}
 	
