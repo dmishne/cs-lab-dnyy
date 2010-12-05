@@ -16,18 +16,19 @@ public class CDBInteractionGenerator
 	
 	private static CDBInteractionGenerator m_obj;
 	private Connection m_DB_Connection;
-	
+	/*
 	final private static String m_DEFAULTHOST="jdbc:mysql://remote-mysql4.servage.net/cslabdnyy";
 	final private static String m_DEFAULTUSER="cslabdnyy";
 	final private static String m_DEFAULTPASS="q1w2e3r4";
+	*/
 	final private int m_MONTHLY_AMMOUNT=5;
 	final private int m_YEARLY_AMMOUNT=150;
 	
-	/*
+	
 	final private static String m_DEFAULTHOST="jdbc:mysql://localhost/cslabdnyy";
 	final private static String m_DEFAULTUSER="root";
 	final private static String m_DEFAULTPASS="m00nkey";
-	*/
+	
 	
 	public ResultSet MySQLQuery(String query) throws SQLException
 	{
@@ -159,10 +160,7 @@ public class CDBInteractionGenerator
 	public boolean AddCC(String user,String CCnum,String CCExpire,String CCid)
 	{
 		try {
-			if(!CCnum.startsWith("01/") && CCnum.getBytes()[5]!='/')
-				return false;
 			Statement st = this.m_DB_Connection.createStatement();
-		
 			st.executeUpdate("INSERT INTO credit_card_details VALUES ('\""+user+"\"',"+CCnum+","+CCExpire+","+CCid+")");
 			return true;	
 		} catch (SQLException e) {
@@ -223,11 +221,11 @@ public class CDBInteractionGenerator
 			ResultSet rs=MySQLQuery("SELECT * FROM subscriptions s WHERE s.type LIKE 'monthly' AND s.user LIKE '\""+userName+"\"';");
 			if(rs.next())
 				//if there is a row already in table, then update
-				this.MySQLExecute("UPDATE subscriptions SET ammount="+(this.m_MONTHLY_AMMOUNT+rs.getInt(3))+" WHERE s.type LIKE 'monthly' AND s.user LIKE '\""+userName+"\"';");
+				this.MySQLExecute("UPDATE subscriptions SET ammount="+(this.m_MONTHLY_AMMOUNT+rs.getInt(3))+" WHERE type LIKE 'monthly' AND user LIKE '\""+userName+"\"';");
 			else
 				//else, we need to insert
-				this.MySQLExecute("INSERT INTO subscriptions (`user`,`type`,`ammount`) VALUES ('\""+userName+"\"','monthly',"+this.m_MONTHLY_AMMOUNT+");");
-			this.MySQLExecute("UPDATE users SET u.authorization=2 WHERE user LIKE '\""+userName+"\"';");
+				this.MySQLExecute("INSERT INTO subscriptions VALUES ('\""+userName+"\"','monthly',"+this.m_MONTHLY_AMMOUNT+");");
+			this.MySQLExecute("UPDATE users SET authorization=2 WHERE user LIKE '\""+userName+"\"';");
 			rs.close();
 		} catch (SQLException e) {
 			System.out.println("SQLException during AddMonthly: "+e.getErrorCode()+" "+e.getMessage());
@@ -241,11 +239,11 @@ public class CDBInteractionGenerator
 			ResultSet rs=MySQLQuery("SELECT * FROM subscriptions s WHERE s.type LIKE 'yearly' AND s.user LIKE '\""+userName+"\"';");
 			if(rs.next())
 				//if there is a row already in table, then update
-				this.MySQLExecute("UPDATE subscriptions SET ammount="+(this.m_YEARLY_AMMOUNT+rs.getInt(3))+" WHERE s.type LIKE 'yearly' AND s.user LIKE '\""+userName+"\"';");
+				this.MySQLExecute("UPDATE subscriptions SET ammount="+(this.m_YEARLY_AMMOUNT+rs.getInt(3))+" WHERE type LIKE 'yearly' AND user LIKE '\""+userName+"\"';");
 			else
 				//else, we need to insert
-				this.MySQLExecute("INSERT INTO subscriptions (`user`,`type`,`ammount`) VALUES ('\""+userName+"\"','yearly',"+this.m_YEARLY_AMMOUNT+");");
-			this.MySQLExecute("UPDATE users SET u.authorization=2 WHERE user LIKE '\""+userName+"\"';");
+				this.MySQLExecute("INSERT INTO subscriptions VALUES ('\""+userName+"\"','yearly',"+this.m_YEARLY_AMMOUNT+");");
+			this.MySQLExecute("UPDATE users SET authorization=2 WHERE user LIKE '\""+userName+"\"';");
 			rs.close();
 		} catch (SQLException e) {
 			System.out.println("SQLException during AddYearly: "+e.getErrorCode()+" "+e.getMessage());
