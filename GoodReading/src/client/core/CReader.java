@@ -34,7 +34,7 @@ public class CReader extends AUser{
 		Map <String,String> fromGui = new HashMap<String,String>();
 		
 		
-		Pattern pu = Pattern.compile("(\\p{Digit})*");
+		Pattern pu = Pattern.compile("(\\p{Digit})+");
 		Matcher mu = pu.matcher(CreditCardNumber);
 		boolean b = mu.matches();
 		mu = pu.matcher(Expire);
