@@ -9,23 +9,30 @@ public class CClientConnector extends AbstractClient {
 		private int m_clientSessionID;
 		private boolean m_haveMsg;
 		private Object m_msg;
+		private static String m_host = "localhost";
 				
 		private CClientConnector(String host, int port)
 		{
 			super(host,port);
 			this.m_clientSessionID = -1;
+			this.m_host = host;
 		}
 		
 		public static CClientConnector getInstance() throws Exception
 		{
 			if(m_ConnectorInstance == null)
 			{
-				m_ConnectorInstance = new CClientConnector("localhost",5555);
+				m_ConnectorInstance = new CClientConnector(m_host,5555);
 			}
 			m_ConnectorInstance.openConnection();
 			return m_ConnectorInstance;
 		}
 
+		public static void setConnectionHost(String host)
+		{
+			m_host = host;
+		}
+		
 		final protected void handleMessageFromServer(Object message)
 		{
 			     // if message exist, the new message will overwrite it

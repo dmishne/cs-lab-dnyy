@@ -175,9 +175,13 @@ public class CArrangePayPanel extends JPanel implements ActionListener {
 				setLastChoice(EAPDecision.PURCHASE);
 				this.setVisible(false);
 			}
+			catch (ClassCastException ce)
+			{
+				JOptionPane.showMessageDialog(null, "You don't have the correct privilege!" , "Error",JOptionPane.ERROR_MESSAGE);
+			}
 			catch (Exception e)
 			{
-				JOptionPane.showMessageDialog(null, e.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null,e.getClass().toString() + " - " + e.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

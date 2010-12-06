@@ -18,6 +18,10 @@ public class CGoodReading{
 
 		initLookAndFeel();
 		client.gui.CMainFrame.setDefaultLookAndFeelDecorated(true); // Set Graphics to be similar to OS.
+		if(args.length != 0)
+		{
+			CClientConnector.setConnectionHost(args[0]);
+		}
     	try {
 			CClientConnector.getInstance().openConnection();
 		} catch (Exception e) {

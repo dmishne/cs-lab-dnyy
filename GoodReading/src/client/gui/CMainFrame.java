@@ -160,7 +160,8 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		if(source == GUI_CLoginPanel)
 		{
 			jContentPane.add(getGUI_CMainMenuPanel());
-			GUI_CLoginPanel.setVisible(false);
+			jContentPane.remove(GUI_CLoginPanel);
+			GUI_CLoginPanel = null;
 			GUI_CMainMenuPanel.setVisible(true);
 		}
 		else if(source == GUI_CMainMenuPanel)
@@ -168,6 +169,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			if(GUI_CMainMenuPanel.getLastChoice() ==  CMainMenuPanel.EMMDecision.LOGOUT)
 			{
 				jContentPane.remove(GUI_CMainMenuPanel);
+				jContentPane.add(getGUI_CLoginPanel());
 				GUI_CLoginPanel.setVisible(true);
 			}
 			if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.ARRANGE)
@@ -180,12 +182,10 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		else if(source == GUI_CArrangePayPanel)
 		{
 			jContentPane.remove(GUI_CArrangePayPanel);
+			GUI_CArrangePayPanel = null;
 			GUI_CMainMenuPanel.setVisible(true);
 		}
-		
-		
-		
-		
+		validate();		
 	}
 
 	public void componentShown(ComponentEvent ces) {
