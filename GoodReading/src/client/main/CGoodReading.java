@@ -16,12 +16,16 @@ public class CGoodReading{
 
 	public static void main(String[] args) {
 
+		// initialize OS look and feel
 		initLookAndFeel();
 		client.gui.CMainFrame.setDefaultLookAndFeelDecorated(true); // Set Graphics to be similar to OS.
-		if(args.length != 0)
+		// getting server's ip address
+		String IP = JOptionPane.showInputDialog(null, "Enter Server's ip address", "IP Input", JOptionPane.QUESTION_MESSAGE );
+		if(IP == null || IP.length() == 0)
 		{
-			CClientConnector.setConnectionHost(args[0]);
+			IP = "localhost";
 		}
+		CClientConnector.setConnectionHost(IP);
     	try {
 			CClientConnector.getInstance().openConnection();
 		} catch (Exception e) {
