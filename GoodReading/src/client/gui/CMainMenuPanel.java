@@ -28,6 +28,8 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	
 	private EMMDecision m_lastChoice = EMMDecision.LOGOUT;  //  @jve:decl-index=0:
 	private JButton m_jButton_ArrangePayment = null;
+	private JButton m_jButton_SearchReview_MM = null;
+	private JButton m_jButton_UserInfo_MM = null;
 	
 	
 	/**
@@ -44,9 +46,9 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(500, 500);
+		this.setSize(700, 600);
 		this.setLayout(null);
-		this.setPreferredSize(new Dimension(500, 500));
+		this.setPreferredSize(new Dimension(700, 600));
 		this.add(getM_jButton_Logout(), null);
 		this.add(getM_jButton_Search_MM(), null);
 		this.add(getM_jButton_NewMsgs_MM(), null);
@@ -54,6 +56,8 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 		this.add(getM_jButton_Report_MM(), null);
 		this.add(getM_jButton_SearchUser_MM(), null);
 		this.add(getM_jButton_ArrangePayment(), null);
+		this.add(getM_jButton_SearchReview_MM(), null);
+		this.add(getM_jButton_UserInfo_MM(), null);
 	}
 
 	/**
@@ -64,7 +68,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	private JButton getM_jButton_Logout() {
 		if (m_jButton_Logout == null) {
 			m_jButton_Logout = new JButton();
-			m_jButton_Logout.setBounds(new Rectangle(23, 18, 121, 34));
+			m_jButton_Logout.setBounds(new Rectangle(28, 18, 86, 34));
 			m_jButton_Logout.setText("Logout");
 			m_jButton_Logout.addActionListener(this);
 		}
@@ -79,7 +83,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	private JButton getM_jButton_Search_MM() {
 		if (m_jButton_SearchBook_MM == null) {
 			m_jButton_SearchBook_MM = new JButton();
-			m_jButton_SearchBook_MM.setBounds(new Rectangle(50, 111, 174, 75));
+			m_jButton_SearchBook_MM.setBounds(new Rectangle(117, 111, 174, 75));
 			m_jButton_SearchBook_MM.setText("Search Book");
 		}
 		return m_jButton_SearchBook_MM;
@@ -93,7 +97,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	private JButton getM_jButton_NewMsgs_MM() {
 		if (m_jButton_NewMsgs_MM == null) {
 			m_jButton_NewMsgs_MM = new JButton();
-			m_jButton_NewMsgs_MM.setBounds(new Rectangle(274, 216, 174, 75));
+			m_jButton_NewMsgs_MM.setBounds(new Rectangle(408, 216, 174, 75));
 			m_jButton_NewMsgs_MM.setText("New Messages");
 		}
 		return m_jButton_NewMsgs_MM;
@@ -107,7 +111,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	private JButton getM_jButton_AddNewBook_MM() {
 		if (m_jButton_AddNewBook_MM == null) {
 			m_jButton_AddNewBook_MM = new JButton();
-			m_jButton_AddNewBook_MM.setBounds(new Rectangle(50, 216, 174, 75));
+			m_jButton_AddNewBook_MM.setBounds(new Rectangle(117, 216, 174, 75));
 			m_jButton_AddNewBook_MM.setText("Add New Book");
 		}
 		return m_jButton_AddNewBook_MM;
@@ -121,7 +125,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	private JButton getM_jButton_Report_MM() {
 		if (m_jButton_Report_MM == null) {
 			m_jButton_Report_MM = new JButton();
-			m_jButton_Report_MM.setBounds(new Rectangle(50, 312, 174, 75));
+			m_jButton_Report_MM.setBounds(new Rectangle(117, 312, 174, 75));
 			m_jButton_Report_MM.setText("Generate Report");
 		}
 		return m_jButton_Report_MM;
@@ -136,7 +140,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	private JButton getM_jButton_ArrangePayment() {
 		if (m_jButton_ArrangePayment == null) {
 			m_jButton_ArrangePayment = new JButton();
-			m_jButton_ArrangePayment.setBounds(new Rectangle(274, 111, 174, 75));
+			m_jButton_ArrangePayment.setBounds(new Rectangle(303, 18, 148, 34));
 			m_jButton_ArrangePayment.setText("Arrange Payment");
 			m_jButton_ArrangePayment.addActionListener(this);
 		}
@@ -152,7 +156,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	private JButton getM_jButton_SearchUser_MM() {
 		if (m_jButton_SearchUser_MM == null) {
 			m_jButton_SearchUser_MM = new JButton();
-			m_jButton_SearchUser_MM.setBounds(new Rectangle(274, 312, 174, 75));
+			m_jButton_SearchUser_MM.setBounds(new Rectangle(408, 312, 174, 75));
 			m_jButton_SearchUser_MM.setText("Search User");
 		}
 		return m_jButton_SearchUser_MM;
@@ -181,6 +185,34 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 
 	public EMMDecision getLastChoice() {
 		return m_lastChoice;
+	}
+
+	/**
+	 * This method initializes m_jButton_SearchReview_MM	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getM_jButton_SearchReview_MM() {
+		if (m_jButton_SearchReview_MM == null) {
+			m_jButton_SearchReview_MM = new JButton();
+			m_jButton_SearchReview_MM.setBounds(new Rectangle(408, 111, 174, 75));
+			m_jButton_SearchReview_MM.setText("Search Review");
+		}
+		return m_jButton_SearchReview_MM;
+	}
+
+	/**
+	 * This method initializes m_jButton_UserInfo_MM	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getM_jButton_UserInfo_MM() {
+		if (m_jButton_UserInfo_MM == null) {
+			m_jButton_UserInfo_MM = new JButton();
+			m_jButton_UserInfo_MM.setBounds(new Rectangle(134, 18, 148, 34));
+			m_jButton_UserInfo_MM.setText("My Info");
+		}
+		return m_jButton_UserInfo_MM;
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="45,24"
