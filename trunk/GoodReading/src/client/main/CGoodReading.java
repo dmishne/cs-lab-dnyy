@@ -3,6 +3,7 @@ package client.main;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 import client.common.CClientConnector;
 
@@ -19,19 +20,6 @@ public class CGoodReading{
 		// initialize OS look and feel
 		initLookAndFeel();
 		client.gui.CMainFrame.setDefaultLookAndFeelDecorated(true); // Set Graphics to be similar to OS.
-		// getting server's ip address
-		String IP = JOptionPane.showInputDialog(null, "Enter Server's ip address", "IP Input", JOptionPane.QUESTION_MESSAGE );
-		if(IP == null || IP.length() == 0)
-		{
-			IP = "localhost";
-		}
-		CClientConnector.setConnectionHost(IP);
-    	try {
-			CClientConnector.getInstance().openConnection();
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Can not open connection", "Error",JOptionPane.ERROR_MESSAGE);
-			return;
-		}
 		client.gui.CMainFrame mainFrame = new client.gui.CMainFrame();
 		mainFrame.setVisible(true);
 	}
@@ -40,7 +28,12 @@ public class CGoodReading{
 	static void initLookAndFeel()
 	{
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+			        if ("Nimbus".equals(info.getName())) {
+			            UIManager.setLookAndFeel(info.getClassName());
+			            break;
+			        }
+			    }
 		}
 		catch (ClassNotFoundException e) {
 			System.err.println("Couldn't find class for specified look and feel:"

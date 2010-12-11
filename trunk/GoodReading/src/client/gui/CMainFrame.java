@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import client.common.CClientConnector;
+
 public class CMainFrame extends JFrame implements ActionListener,ComponentListener{
 
 	private static final long serialVersionUID = 1L;
@@ -29,6 +31,8 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private JMenu m_jMenu_Help = null;
 	private JMenuItem m_jMenuItem_Help_About = null;
 	private CArrangePayPanel GUI_CArrangePayPanel = null;
+	private JMenu m_jMenu_Tools = null;
+	private JMenuItem m_jMenuItem_ServerInfo = null;
 	/**
 	 * This is the default constructor
 	 */
@@ -70,6 +74,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			jContentPane.setLayout(null);
 			jContentPane.add(getGUI_CLoginPanel(), null);
 			jContentPane.add(m_jLabel_LOGO, null);
+			jContentPane.setOpaque(false);
 		}
 		return jContentPane;
 	}
@@ -103,8 +108,8 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private CMainMenuPanel getGUI_CMainMenuPanel() {
 		if (GUI_CMainMenuPanel == null) {
 			GUI_CMainMenuPanel = new CMainMenuPanel();
-			GUI_CMainMenuPanel.setLocation(new Point(100, 100));
-			GUI_CMainMenuPanel.setSize(new Dimension(500, 500));
+			GUI_CMainMenuPanel.setLocation(new Point(0, 100));
+			GUI_CMainMenuPanel.setSize(new Dimension(700,700));
 			GUI_CMainMenuPanel.setVisible(false);
 			GUI_CMainMenuPanel.addComponentListener(this);
 		}
@@ -119,6 +124,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private JMenuBar getM_jJMenuBar_MenuBar() {
 		if (m_jJMenuBar_MenuBar == null) {
 			m_jJMenuBar_MenuBar = new JMenuBar();
+			m_jJMenuBar_MenuBar.add(getM_jMenu_Tools());
 			m_jJMenuBar_MenuBar.add(getM_jMenu_About());
 			
 		}
@@ -198,6 +204,11 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		{
 			JOptionPane.showMessageDialog(null, "Group 9\n\nGroup Members:\n\nDaniel Mishne\nEvgeny Radbel\nNir Geffen\nYotam Margolin" ,"About",JOptionPane.INFORMATION_MESSAGE);
 		}
+		else if(source == m_jMenuItem_ServerInfo)
+		{
+			String IP = JOptionPane.showInputDialog(null, "Enter Server's ip address", "IP Input", JOptionPane.QUESTION_MESSAGE );
+			CClientConnector.setConnectionHost(IP);
+		}
 	}
 
 	/**
@@ -212,6 +223,34 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			GUI_CArrangePayPanel.addComponentListener(this);
 		}
 		return GUI_CArrangePayPanel;
+	}
+
+	/**
+	 * This method initializes m_jMenu_Tools	
+	 * 	
+	 * @return javax.swing.JMenu	
+	 */
+	private JMenu getM_jMenu_Tools() {
+		if (m_jMenu_Tools == null) {
+			m_jMenu_Tools = new JMenu();
+			m_jMenu_Tools.setText("Tools");
+			m_jMenu_Tools.add(getM_jMenuItem_ServerInfo());
+		}
+		return m_jMenu_Tools;
+	}
+
+	/**
+	 * This method initializes m_jMenuItem_ServerInfo	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem getM_jMenuItem_ServerInfo() {
+		if (m_jMenuItem_ServerInfo == null) {
+			m_jMenuItem_ServerInfo = new JMenuItem();
+			m_jMenuItem_ServerInfo.setText("Set Server's IP address");
+			m_jMenuItem_ServerInfo.addActionListener(this);
+		}
+		return m_jMenuItem_ServerInfo;
 	}
 	
 }  //  @jve:decl-index=0:visual-constraint="10,10"
