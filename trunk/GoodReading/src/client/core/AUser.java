@@ -23,8 +23,10 @@ public abstract class AUser implements Serializable{
 
     public AUser(String FirstName, String LastName, int UserId, String UserName, EActor Privilege, int SessionID)
     {
-    	m_firstName     = FirstName;
-    	m_lastName      = LastName;
+    	FirstName = FirstName.replace("\"", "");
+    	LastName  = LastName.replace("\"", "");
+    	m_firstName     = Character.toUpperCase(FirstName.charAt(0)) + FirstName.substring(1, FirstName.length());
+    	m_lastName      = Character.toUpperCase(LastName.charAt(1)) + LastName.substring(2, LastName.length() - 1);
     	m_userID        = UserId;
     	m_userName      = UserName;
     	m_privilege     = Privilege;

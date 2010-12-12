@@ -4,11 +4,17 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import client.core.AUser;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class CMainMenuPanel extends JPanel implements ActionListener {
 
@@ -29,23 +35,33 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	private EMMDecision m_lastChoice = EMMDecision.LOGOUT;  //  @jve:decl-index=0:
 	private JButton m_jButton_ArrangePayment = null;
 	private JButton m_jButton_SearchReview_MM = null;
-	private JButton m_jButton_UserInfo_MM = null;
-	
-	
+	private JLabel m_jLabel_Greeting = null;
 	/**
 	 * This is the default constructor
 	 */
-	public CMainMenuPanel() {
+	public CMainMenuPanel() throws Exception {
 		super();
 		initialize();
 	}
 
+	
+	public void initGreeting() throws Exception
+	{
+		m_jLabel_Greeting.setText("Hey " + AUser.getInstance().getFirstName() + " " + AUser.getInstance().getLastName() + ", Privilege: " + AUser.getInstance().getPrivilege().toString());
+	}
+	
+	
 	/**
 	 * This method initializes this
 	 * 
 	 * @return void
 	 */
-	private void initialize() {
+	private void initialize() throws Exception{
+		m_jLabel_Greeting = new JLabel();
+		m_jLabel_Greeting.setBounds(new Rectangle(128, 18, 384, 35));
+		m_jLabel_Greeting.setHorizontalTextPosition(SwingConstants.LEFT);
+		m_jLabel_Greeting.setFont(new Font("Eras Light ITC", Font.BOLD, 16));
+		initGreeting();
 		this.setSize(700, 600);
 		this.setLayout(null);
 		this.setPreferredSize(new Dimension(700, 600));
@@ -57,7 +73,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 		this.add(getM_jButton_SearchUser_MM(), null);
 		this.add(getM_jButton_ArrangePayment(), null);
 		this.add(getM_jButton_SearchReview_MM(), null);
-		this.add(getM_jButton_UserInfo_MM(), null);
+		this.add(m_jLabel_Greeting, null);
 	}
 
 	/**
@@ -140,7 +156,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	private JButton getM_jButton_ArrangePayment() {
 		if (m_jButton_ArrangePayment == null) {
 			m_jButton_ArrangePayment = new JButton();
-			m_jButton_ArrangePayment.setBounds(new Rectangle(303, 18, 148, 34));
+			m_jButton_ArrangePayment.setBounds(new Rectangle(524, 18, 148, 34));
 			m_jButton_ArrangePayment.setText("Arrange Payment");
 			m_jButton_ArrangePayment.addActionListener(this);
 		}
@@ -200,19 +216,6 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 		}
 		return m_jButton_SearchReview_MM;
 	}
-
-	/**
-	 * This method initializes m_jButton_UserInfo_MM	
-	 * 	
-	 * @return javax.swing.JButton	
-	 */
-	private JButton getM_jButton_UserInfo_MM() {
-		if (m_jButton_UserInfo_MM == null) {
-			m_jButton_UserInfo_MM = new JButton();
-			m_jButton_UserInfo_MM.setBounds(new Rectangle(134, 18, 148, 34));
-			m_jButton_UserInfo_MM.setText("My Info");
-		}
-		return m_jButton_UserInfo_MM;
-	}
-
+	
+	
 }  //  @jve:decl-index=0:visual-constraint="45,24"
