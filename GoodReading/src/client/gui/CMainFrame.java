@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -105,7 +107,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	 * 	
 	 * @return GUI_CMainMenuPanel	
 	 */
-	private CMainMenuPanel getGUI_CMainMenuPanel() {
+	private CMainMenuPanel getGUI_CMainMenuPanel() throws Exception {
 		if (GUI_CMainMenuPanel == null) {
 			GUI_CMainMenuPanel = new CMainMenuPanel();
 			GUI_CMainMenuPanel.setLocation(new Point(0, 100));
@@ -159,37 +161,45 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		return m_jMenuItem_Help_About;
 	}
 	
-	public void componentHidden(ComponentEvent ceh) {
+	public void componentHidden(ComponentEvent ceh){
 		//Think about changing to switch//
 		
 		Object source = ceh.getSource();
-		if(source == GUI_CLoginPanel)
+		try
 		{
-			jContentPane.add(getGUI_CMainMenuPanel());
-			jContentPane.remove(GUI_CLoginPanel);
-			GUI_CLoginPanel = null;
-			GUI_CMainMenuPanel.setVisible(true);
-		}
-		else if(source == GUI_CMainMenuPanel)
-		{
-			if(GUI_CMainMenuPanel.getLastChoice() ==  CMainMenuPanel.EMMDecision.LOGOUT)
+			if(source == GUI_CLoginPanel)
 			{
-				jContentPane.remove(GUI_CMainMenuPanel);
-				jContentPane.add(getGUI_CLoginPanel());
-				GUI_CLoginPanel.setVisible(true);
+				jContentPane.add(getGUI_CMainMenuPanel());
+				jContentPane.remove(GUI_CLoginPanel);
+				GUI_CLoginPanel = null;
+				GUI_CMainMenuPanel.initGreeting();
+				GUI_CMainMenuPanel.setVisible(true);
 			}
-			if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.ARRANGE)
+			else if(source == GUI_CMainMenuPanel)
 			{
-				jContentPane.add(getGUI_CArrangePayPanel());
-				GUI_CMainMenuPanel.setVisible(false);
-				GUI_CArrangePayPanel.setVisible(true);
+				if(GUI_CMainMenuPanel.getLastChoice() ==  CMainMenuPanel.EMMDecision.LOGOUT)
+				{
+					jContentPane.remove(GUI_CMainMenuPanel);
+					jContentPane.add(getGUI_CLoginPanel());
+					GUI_CLoginPanel.setVisible(true);
+				}
+				if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.ARRANGE)
+				{
+					jContentPane.add(getGUI_CArrangePayPanel());
+					GUI_CMainMenuPanel.setVisible(false);
+					GUI_CArrangePayPanel.setVisible(true);
+				}
+			}
+			else if(source == GUI_CArrangePayPanel)
+			{
+				jContentPane.remove(GUI_CArrangePayPanel);
+				GUI_CArrangePayPanel = null;
+				GUI_CMainMenuPanel.setVisible(true);
 			}
 		}
-		else if(source == GUI_CArrangePayPanel)
+		catch (Exception e)
 		{
-			jContentPane.remove(GUI_CArrangePayPanel);
-			GUI_CArrangePayPanel = null;
-			GUI_CMainMenuPanel.setVisible(true);
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);	
 		}
 		validate();		
 	}
@@ -207,7 +217,15 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		else if(source == m_jMenuItem_ServerInfo)
 		{
 			String IP = JOptionPane.showInputDialog(null, "Enter Server's ip address", "IP Input", JOptionPane.QUESTION_MESSAGE );
-			CClientConnector.setConnectionHost(IP);
+			Pattern pip = Pattern.compile("\\p{Digit}{1,3}\\.\\p{Digit}{1,3}\\.\\p{Digit}{1,3}\\.\\p{Digit}{1,3}");
+			Matcher mu = pip.matcher(IP);
+			if(mu.matches() || (IP.compareTo("localhost") == 0) )
+				CClientConnector.setConnectionHost(IP);
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Wrong input" ,"Error",JOptionPane.ERROR_MESSAGE);
+			}
+			
 		}
 	}
 
