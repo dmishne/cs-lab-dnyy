@@ -35,6 +35,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private CArrangePayPanel GUI_CArrangePayPanel = null;
 	private JMenu m_jMenu_Tools = null;
 	private JMenuItem m_jMenuItem_ServerInfo = null;
+	private CSearchBookPanel GUI_cSearchBookPanel = null;
 	/**
 	 * This is the default constructor
 	 */
@@ -183,17 +184,30 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 					jContentPane.add(getGUI_CLoginPanel());
 					GUI_CLoginPanel.setVisible(true);
 				}
-				if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.ARRANGE)
+				else if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.ARRANGE)
 				{
 					jContentPane.add(getGUI_CArrangePayPanel());
 					GUI_CMainMenuPanel.setVisible(false);
 					GUI_CArrangePayPanel.setVisible(true);
 				}
+				else if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.SEARCHBOOK)
+				{
+					jContentPane.add(getGUI_cSearchBookPanel());
+					GUI_CMainMenuPanel.setVisible(false);
+					GUI_cSearchBookPanel.setVisible(true);
+				}
+				
 			}
 			else if(source == GUI_CArrangePayPanel)
 			{
 				jContentPane.remove(GUI_CArrangePayPanel);
 				GUI_CArrangePayPanel = null;
+				GUI_CMainMenuPanel.setVisible(true);
+			}
+			else if(source == GUI_cSearchBookPanel)
+			{
+				jContentPane.remove(GUI_cSearchBookPanel);
+				GUI_cSearchBookPanel = null;
 				GUI_CMainMenuPanel.setVisible(true);
 			}
 		}
@@ -269,6 +283,22 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			m_jMenuItem_ServerInfo.addActionListener(this);
 		}
 		return m_jMenuItem_ServerInfo;
+	}
+
+	/**
+	 * This method initializes GUI_cSearchBookPanel	
+	 * 	
+	 * @return client.gui.CSearchBookPanel	
+	 */
+	private CSearchBookPanel getGUI_cSearchBookPanel() {
+		if (GUI_cSearchBookPanel == null) {
+			GUI_cSearchBookPanel = new CSearchBookPanel();
+			GUI_cSearchBookPanel.setLocation(new Point(0, 100));
+			GUI_cSearchBookPanel.setSize(new Dimension(700, 600));
+			GUI_cSearchBookPanel.setVisible(false);
+			GUI_cSearchBookPanel.addComponentListener(this);
+		}
+		return GUI_cSearchBookPanel;
 	}
 	
 }  //  @jve:decl-index=0:visual-constraint="10,10"
