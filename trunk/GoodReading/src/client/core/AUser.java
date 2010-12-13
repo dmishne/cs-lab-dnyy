@@ -26,7 +26,7 @@ public abstract class AUser implements Serializable{
     	FirstName = FirstName.replace("\"", "");
     	LastName  = LastName.replace("\"", "");
     	m_firstName     = Character.toUpperCase(FirstName.charAt(0)) + FirstName.substring(1, FirstName.length());
-    	m_lastName      = Character.toUpperCase(LastName.charAt(1)) + LastName.substring(2, LastName.length() - 1);
+    	m_lastName      = Character.toUpperCase(LastName.charAt(0)) + LastName.substring(1, LastName.length());
     	m_userID        = UserId;
     	m_userName      = UserName;
     	m_privilege     = Privilege;
