@@ -1,5 +1,6 @@
 From GUI:
 
+Reader:
 +submitScore  : (int score, CBook book)   //////   book = current book in state
 +submitReview : (String reviewTitle, String Review, CBook book)
  
