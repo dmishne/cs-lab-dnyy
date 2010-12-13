@@ -1,17 +1,27 @@
+For GUI:
+
+Reader:
++getPaymentType()  : String[];
++getFileType(int ISBN)  : String[];
+
+
 From GUI:
 
 Reader:
-+submitScore  : (int score, CBook book)   //////   book = current book in state
-+submitReview : (String reviewTitle, String Review, CBook book)
++submitScore  : (int score, int bookISBN)   
++submitReview : (String reviewTitle, String Review, int bookISBN)
  
 
 
 
 
 For Server:
-
++getPaymentType : (CEntry) 
++getFileType : (CEntry)  
 
 
 
 
 From Server:
++getPaymentType()  : String[];
++getFileType()  : String[];
