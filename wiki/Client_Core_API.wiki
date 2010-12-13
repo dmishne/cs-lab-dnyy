@@ -1,8 +1,8 @@
 From GUI:
 
-submitScore() : (int score, CBook book)        book = current book in state
+submitScore() : (int score, CBook book)        book = current book in state;
  
-submitReview() : (String reviewTitle, String review, CBook book) 
+submitReview() : (String reviewTitle, String review, CBook book); 
 
 
 
