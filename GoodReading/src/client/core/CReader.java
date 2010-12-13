@@ -59,7 +59,7 @@ public class CReader extends AUser{
 		EntryToSrv = new CEntry("ArrangePayment",fromGui,AUser.getInstance().getUserName(),this.getUserSessionId());
 		OResult =  CClientConnector.getInstance().messageToServer(EntryToSrv);
 
-		String SResult = CGuiTranslator.getInstance().TranslateForGui(OResult);
+		String SResult = OResult.toString();
 		if(SResult.compareTo("null") == 0 )
 		{
 			throw new Exception("Update wasn't successful, please try again later");
@@ -86,7 +86,7 @@ public class CReader extends AUser{
 		EntryToSrv = new CEntry("ArrangePayment",fromGui,AUser.getInstance().getUserName(),this.getUserSessionId());
 		OResult =  CClientConnector.getInstance().messageToServer(EntryToSrv);
 		
-		String SResult = CGuiTranslator.getInstance().TranslateForGui(OResult);
+		String SResult = OResult.toString();
 		if(SResult.compareTo("null") == 0 )
 		{
 			throw new Exception("Update wasn't successful, please try again later");
@@ -94,19 +94,76 @@ public class CReader extends AUser{
 		return(SResult);      	          
 	}
 	
-	public void submitScore(int score, CBook book)
+	public void submitScore(int score, int bookISBN)
 	{
-		book.setM_score(score);
+		CEntry EntryToSrv = null;
+		Map <String,String> Bscore = new HashMap<String,String>();
+		String isbn = Integer.toString(bookISBN);
+		String sc = Integer.toString(score);
+		Bscore.put("ISBN",isbn );
+		Bscore.put("Score", sc);
+		EntryToSrv = new CEntry("submitScore",Bscore,this.getUserName(),this.getUserSessionId());
+		try {
+			CClientConnector.getInstance().messageToServer(EntryToSrv);
+		} catch (Exception e) {
+			System.out.println("Can't send to server");
+		}
 	}
 	
 	
-	public void submitReview(String reviewTitle , String review , CBook book)
+	public void submitReview(String reviewTitle , String review , int bookISBN) 
 	{
-		CBookReview newreview = new CBookReview(review, super.getUserName(), reviewTitle);
-		book.addReviews(newreview);
+		CEntry EntryToSrv = null;
+		Map <String,String> Breview = new HashMap<String,String>();
+		String isbn = Integer.toString(bookISBN);
+		Breview.put("ISBN",isbn );
+		Breview.put("Title",reviewTitle );
+		Breview.put("Review", review);
+		EntryToSrv = new CEntry("AddBookReview",Breview,this.getUserName(),this.getUserSessionId());
+		try {
+			CClientConnector.getInstance().messageToServer(EntryToSrv);
+		} catch (Exception e) {
+			System.out.println("Can't send to server");
+		}
 	}
 	
 	
+	public String[] getPaymentType() throws Exception
+	{
+		CEntry EntryToSrv = null;
+		String[] result = new String[5];
+		EntryToSrv = new CEntry("getPaymentType",null,this.getUserName(),this.getUserSessionId());
+		result = (String[]) CClientConnector.getInstance().messageToServer(EntryToSrv);
+		return result;
+	}
+	
+	
+	public String[] getFileType(int bookISBN) throws Exception
+	{
+		CEntry EntryToSrv = null;
+		Map <String,String> fileType = new HashMap<String,String>();
+		String[] result = new String[5];
+		String isbn = Integer.toString(bookISBN);
+		fileType.put("ISBN",isbn );
+		EntryToSrv = new CEntry("getFileType",fileType,this.getUserName(),this.getUserSessionId());
+		result = (String[]) CClientConnector.getInstance().messageToServer(EntryToSrv);
+		return result;
+	}
+	
+	
+	public String orderBook (int bookISBN, String PayType, String FileType) throws Exception 
+	{
+		CEntry EntryToSrv = null;
+		Map <String,String> orderInfo = new HashMap<String,String>();
+		String isbn = Integer.toString(bookISBN);
+		orderInfo.put("ISBN", isbn);
+		orderInfo.put("PayType", PayType);
+		orderInfo.put("FileType", FileType);
+		EntryToSrv = new CEntry("orderBook",orderInfo,this.getUserName(),this.getUserSessionId());
+		Object res = CClientConnector.getInstance().messageToServer(EntryToSrv);
+		String result = res.toString();
+		return result;
+	}
 	
 	
 }

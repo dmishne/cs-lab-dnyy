@@ -112,8 +112,8 @@ public class CClientConnector extends AbstractClient {
 		public String[] getLangages()
 		{
 			String[] lang = new String[ m_listOptions.getM_langueges().size()];
-			
-			int i =0;
+			lang[0]= " ";
+			int i =1;
 			Iterator<String> it = m_listOptions.getM_langueges().iterator();
 			while(it.hasNext())
 			{
@@ -128,8 +128,8 @@ public class CClientConnector extends AbstractClient {
 		public String[] getTopics()
 		{
 			String[] topics = new String[ m_listOptions.getM_topics().size()];
-			
-			int i =0;
+			topics[0]=" ";
+			int i =1;
 			Iterator<String> it = m_listOptions.getM_topics().iterator();
 			while(it.hasNext())
 			{
