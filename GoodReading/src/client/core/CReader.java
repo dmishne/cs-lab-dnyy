@@ -94,6 +94,18 @@ public class CReader extends AUser{
 		return(SResult);      	          
 	}
 	
+	public void submitScore(int score, CBook book)
+	{
+		book.setM_score(score);
+	}
+	
+	
+	public void submitReview(String reviewTitle , String review , CBook book)
+	{
+		CBookReview newreview = new CBookReview(review, super.getUserName(), reviewTitle);
+		book.addReviews(newreview);
+	}
+	
 	
 	
 	
