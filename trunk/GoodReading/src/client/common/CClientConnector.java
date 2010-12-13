@@ -1,5 +1,7 @@
 package client.common;
 
+import java.util.*;
+
 import ocsf.client.AbstractClient;
 
 public class CClientConnector extends AbstractClient {
@@ -11,12 +13,14 @@ public class CClientConnector extends AbstractClient {
 		private Object m_msg;
 		private static String m_host = "localhost";
 		private static boolean m_change;
+		private CListOptions m_listOptions;
 				
 		private CClientConnector(String host, int port)
 		{
 			super(host,port);
 			this.m_clientSessionID = -1;
 			m_change = false;
+			this. m_listOptions = new CListOptions(); 
 		}
 		
 		public static CClientConnector getInstance() throws Exception
@@ -102,6 +106,38 @@ public class CClientConnector extends AbstractClient {
 		 */
 		public void setM_clientSessionID(int m_clientSessionID) {
 			this.m_clientSessionID = m_clientSessionID;
+		}
+
+		
+		public String[] getLangages()
+		{
+			String[] lang = new String[ m_listOptions.getM_langueges().size()];
+			
+			int i =0;
+			Iterator<String> it = m_listOptions.getM_langueges().iterator();
+			while(it.hasNext())
+			{
+				lang[i] = it.next();
+				i++;
+			}
+			
+			return lang;
+		}
+		
+		
+		public String[] getTopics()
+		{
+			String[] topics = new String[ m_listOptions.getM_topics().size()];
+			
+			int i =0;
+			Iterator<String> it = m_listOptions.getM_topics().iterator();
+			while(it.hasNext())
+			{
+				topics[i] = it.next();
+				i++;
+			}
+			
+			return topics;
 		}
 
 
