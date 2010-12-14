@@ -6,7 +6,6 @@ import java.util.Set;
 
 public class CListOptions {
 	
-	private static CListOptions m_listOptions;
 	private Set<String> m_langueges;
 	private Set<String> m_topics;
 	
