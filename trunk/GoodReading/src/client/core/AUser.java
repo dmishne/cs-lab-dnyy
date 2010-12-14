@@ -1,10 +1,16 @@
 package client.core;
 
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import client.common.*;
 
 import client.common.CClientConnector;
 import client.common.CEntry;
@@ -105,6 +111,54 @@ public abstract class AUser implements Serializable{
 			m_actor = (CLibraryManager)pri;
 			break;
 		}
+	}
+	
+	
+	public Object searchBook(Object book_param) throws Exception
+	{
+		CEntry EntryToSrv =null;
+		Map <String,String> search_param = new HashMap<String,String>();
+		Object result = null;
+		String lang, topic;
+		@SuppressWarnings("unchecked")
+	    Map <String,String> cast_O = (HashMap<String, String>) book_param;
+		if(cast_O.containsKey("language"))
+		  {
+		      lang = cast_O.get("language");
+		      Set<String> avail_lang = CClientConnector.getInstance().getM_listOptions().getM_langueges();
+		    if (!avail_lang.contains(lang))
+		    {
+		    	throw new Exception("Language unavailable!");
+		    }
+		    else 
+		    	 search_param.put("language", lang);
+		  }
+	    if(cast_O.containsKey("topics"))
+		  {
+		      topic = cast_O.get("topics");
+		      Set<String> avail_topics = CClientConnector.getInstance().getM_listOptions().getM_topics();
+		    if (!avail_topics.contains(topic))
+		    {
+		    	throw new Exception("Topic unavailable!");
+		    }
+		    else 
+		    	 search_param.put("topics", topic);
+		  }
+	    search_param.put("title", cast_O.get("title"));
+	    search_param.put("author", cast_O.get("author"));
+	    search_param.put("summery", cast_O.get("summery"));
+	    search_param.put("TOC", cast_O.get("TOC"));
+	    search_param.put("labels", cast_O.get("labels"));
+	    EntryToSrv = new CEntry("searchBook",search_param,this.m_userName,this.m_UserSessionId);
+		//result = CClientConnector.getInstance().messageToServer(EntryToSrv);
+	    
+	    // TEMPORARY
+	    LinkedList<CBook> list = new LinkedList<CBook>();
+	    CBook book;
+	    book = new CBook("HoferStory","Hofer","123hsg553","HaMihlala","Fuck Fuck Fuck",0.01,"Hafirot","hafer,hofer,hafira","eih lahfor",1,"kafkazit");
+	    list.add(book);
+	    //
+		return list;
 	}
 		
 	public EActor getPrivilege() {

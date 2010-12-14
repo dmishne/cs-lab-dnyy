@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class CListOptions {
 	
-	
+	private static CListOptions m_listOptions;
 	private Set<String> m_langueges;
 	private Set<String> m_topics;
 	
@@ -19,6 +19,8 @@ public class CListOptions {
 		this.m_langueges = m_langueges;
 		this.m_topics = m_topics;
 	}
+	
+	
 	
 	public CListOptions() {
 		CListOptionsInit();
@@ -35,10 +37,9 @@ public class CListOptions {
 		m_langueges.add("Russian");
 		m_topics.add("Action");
 		m_topics.add("Drama");
-		m_topics.add("Comedy");
-		
-	
+		m_topics.add("Comedy");	
 	}
+	
 
 
 	/**
