@@ -67,9 +67,9 @@ public class CSearchResultPanel extends JPanel implements ActionListener {
 		m_jLabel_SRP_title.setHorizontalAlignment(SwingConstants.CENTER);
 		m_jLabel_SRP_title.setFont(new Font("Freestyle Script", Font.BOLD, 36));
 		m_jLabel_SRP_title.setSize(new Dimension(700, 35));
-		this.setSize(700, 600);
+		this.setSize(700, 550);
 		this.setLayout(null);
-		this.setPreferredSize(new Dimension(700, 600));
+		this.setPreferredSize(new Dimension(700, 550));
 		this.add(getM_jButton_back_SRP(), null);
 		this.add(getM_JScrollPane_Results_SRP(), null);
 		this.add(m_jLabel_SRP_title, null);

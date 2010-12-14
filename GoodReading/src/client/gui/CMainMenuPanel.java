@@ -62,9 +62,9 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 		m_jLabel_Greeting.setHorizontalTextPosition(SwingConstants.LEFT);
 		m_jLabel_Greeting.setFont(new Font("Eras Light ITC", Font.BOLD, 16));
 		initGreeting();
-		this.setSize(700, 600);
+		this.setSize(700, 550);
 		this.setLayout(null);
-		this.setPreferredSize(new Dimension(700, 600));
+		this.setPreferredSize(new Dimension(700, 550));
 		this.add(getM_jButton_Logout(), null);
 		this.add(getM_jButton_Search_MM(), null);
 		this.add(getM_jButton_NewMsgs_MM(), null);
