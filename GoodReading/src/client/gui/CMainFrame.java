@@ -36,6 +36,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private JMenu m_jMenu_Tools = null;
 	private JMenuItem m_jMenuItem_ServerInfo = null;
 	private CSearchBookPanel GUI_cSearchBookPanel = null;
+	private CSearchResultPanel GUI_CSearchResultPanel = null;
 	/**
 	 * This is the default constructor
 	 */
@@ -206,15 +207,31 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			}
 			else if(source == GUI_cSearchBookPanel)
 			{
-				jContentPane.remove(GUI_cSearchBookPanel);
-				GUI_cSearchBookPanel = null;
-				GUI_CMainMenuPanel.setVisible(true);
+				if(GUI_cSearchBookPanel.getLastChoice() == CSearchBookPanel.SBPDecision.BACK)
+				{
+					jContentPane.remove(GUI_cSearchBookPanel);
+					GUI_cSearchBookPanel = null;
+					GUI_CMainMenuPanel.setVisible(true);
+				}
+				else if(GUI_cSearchBookPanel.getLastChoice() == CSearchBookPanel.SBPDecision.SEARCH)
+				{
+					jContentPane.add(getGUI_CSearchResultPanel());
+					GUI_cSearchBookPanel.setVisible(false);
+					GUI_CSearchResultPanel.setVisible(true);
+				}
+			}
+			else if(source == GUI_CSearchResultPanel)
+			{
+				jContentPane.remove(GUI_CSearchResultPanel);
+				GUI_CSearchResultPanel = null;
+				GUI_cSearchBookPanel.setVisible(true);
 			}
 		}
 		catch (Exception e)
 		{
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);	
 		}
+		pack();
 		validate();		
 	}
 
@@ -290,7 +307,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	 * 	
 	 * @return client.gui.CSearchBookPanel	
 	 */
-	private CSearchBookPanel getGUI_cSearchBookPanel() {
+	private CSearchBookPanel getGUI_cSearchBookPanel() throws Exception{
 		if (GUI_cSearchBookPanel == null) {
 			GUI_cSearchBookPanel = new CSearchBookPanel();
 			GUI_cSearchBookPanel.setLocation(new Point(0, 100));
@@ -299,6 +316,22 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			GUI_cSearchBookPanel.addComponentListener(this);
 		}
 		return GUI_cSearchBookPanel;
+	}
+
+	/**
+	 * This method initializes GUI_CSearchResultPanel	
+	 * 	
+	 * @return client.gui.CSearchResultPanel	
+	 */
+	private CSearchResultPanel getGUI_CSearchResultPanel() {
+		if (GUI_CSearchResultPanel == null) {
+			GUI_CSearchResultPanel = new CSearchResultPanel();
+			GUI_CSearchResultPanel.setSize(new Dimension(700, 600));
+			GUI_CSearchResultPanel.setLocation(new Point(0, 100));
+			GUI_CSearchResultPanel.setVisible(false);
+			GUI_CSearchResultPanel.addComponentListener(this);
+		}
+		return GUI_CSearchResultPanel;
 	}
 	
 }  //  @jve:decl-index=0:visual-constraint="10,10"
