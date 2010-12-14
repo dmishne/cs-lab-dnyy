@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 import javax.swing.SwingConstants;
 import javax.swing.BorderFactory;
@@ -19,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
 import client.common.CClientConnector;
+import client.core.CBook;
 
 public class CSearchBookPanel extends JPanel implements ActionListener{
 
@@ -46,6 +49,8 @@ public class CSearchBookPanel extends JPanel implements ActionListener{
 	private JComboBox m_jComboBox_Topics_SBP = null;
 	private JButton m_jButton_Search_SBP = null;
 	private SBPDecision m_lastChoice = SBPDecision.BACK;  //  @jve:decl-index=0:
+	
+	static private HashMap<String,String> m_searchDetails = null;
 	
 	/**
 	 * @return the m_lastChoice
@@ -263,9 +268,24 @@ public class CSearchBookPanel extends JPanel implements ActionListener{
 		}
 		else if(source == m_jButton_Search_SBP)
 		{
+			m_searchDetails = new HashMap<String,String>();
+			m_searchDetails.put("title",m_jTextField_title_SBP.getText());
+			m_searchDetails.put("author",m_jTextField_title_SBP.getText());
+			m_searchDetails.put("language",(String)m_jComboBox_Language_SBP.getSelectedItem());
+			m_searchDetails.put("topics",(String)m_jComboBox_Topics_SBP.getSelectedItem());
+			m_searchDetails.put("summary",m_jTextField_Summary_SBP.getText());
+			m_searchDetails.put("TOC",m_jTextField_TOC_SBP.getText());
+			m_searchDetails.put("labels",m_jTextField_Labels_SBP.getText());
 			this.setLastChoice(SBPDecision.SEARCH);
 			this.setVisible(false);
 		}
+	}
+
+	/**
+	 * @return the m_searchDetails
+	 */
+	static public HashMap<String, String> getSearchDetails() {
+		return m_searchDetails;
 	}
 
 	/**
@@ -282,5 +302,5 @@ public class CSearchBookPanel extends JPanel implements ActionListener{
 		}
 		return m_jButton_Search_SBP;
 	}
-
+	
 }

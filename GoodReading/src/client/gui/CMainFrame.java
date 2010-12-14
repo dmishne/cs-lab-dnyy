@@ -322,8 +322,9 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	 * This method initializes GUI_CSearchResultPanel	
 	 * 	
 	 * @return client.gui.CSearchResultPanel	
+	 * @throws Exception 
 	 */
-	private CSearchResultPanel getGUI_CSearchResultPanel() {
+	private CSearchResultPanel getGUI_CSearchResultPanel() throws Exception {
 		if (GUI_CSearchResultPanel == null) {
 			GUI_CSearchResultPanel = new CSearchResultPanel();
 			GUI_CSearchResultPanel.setSize(new Dimension(700, 550));

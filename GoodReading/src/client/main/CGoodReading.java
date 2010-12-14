@@ -1,11 +1,8 @@
 package client.main;
 
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.UIManager.LookAndFeelInfo;
-
-import client.common.CClientConnector;
 
 public class CGoodReading{
 

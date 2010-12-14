@@ -16,7 +16,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import client.core.AUser;
+import client.core.CBook;
+
 import java.awt.Font;
+import java.util.LinkedList;
 
 public class CSearchResultPanel extends JPanel implements ActionListener {
 
@@ -24,6 +29,7 @@ public class CSearchResultPanel extends JPanel implements ActionListener {
 	private JButton m_jButton_back_SRP = null;
 	private JList m_jList_Results_SRP = null;
 	private JScrollPane m_JScrollPane_Results_SRP = null;
+	private LinkedList<CBook> m_books = null;  //  @jve:decl-index=0:
 
 
 
@@ -48,8 +54,9 @@ public class CSearchResultPanel extends JPanel implements ActionListener {
 	
 	/**
 	 * This is the default constructor
+	 * @throws Exception 
 	 */
-	public CSearchResultPanel() {
+	public CSearchResultPanel() throws Exception {
 		super();
 		initialize();
 	}
@@ -58,8 +65,9 @@ public class CSearchResultPanel extends JPanel implements ActionListener {
 	 * This method initializes this
 	 * 
 	 * @return void
+	 * @throws Exception 
 	 */
-	private void initialize() {
+	private void initialize() throws Exception {
 		m_jLabel_SRP_title = new JLabel();
 		m_jLabel_SRP_title.setText("Search Results");
 		m_jLabel_SRP_title.setLocation(new Point(0, 0));
@@ -97,10 +105,19 @@ public class CSearchResultPanel extends JPanel implements ActionListener {
 	 * This method initializes m_jList_Results_SRP	
 	 * 	
 	 * @return javax.swing.JList	
+	 * @throws Exception 
 	 */
-	private JList getM_jList_Results_SRP() {
+	private JList getM_jList_Results_SRP() throws Exception {
 		if (m_jList_Results_SRP == null) {
-			m_jList_Results_SRP = new JList(tempString);
+			setBooks(AUser.getInstance().searchBook(CSearchBookPanel.getSearchDetails()));
+			String []result = new String[m_books.size()];
+			int i = 0;
+			for( CBook b : m_books )
+			{
+				result[i] = b.getM_ISBN() + " - " + b.getM_title() + " - " + b.getM_author();
+				i++;
+			}
+			m_jList_Results_SRP = new JList(result);
 			m_jList_Results_SRP.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			m_jList_Results_SRP.setSize(new Dimension(600, 400));
 			m_jList_Results_SRP.setLocation(new Point(50, 50));
@@ -111,8 +128,9 @@ public class CSearchResultPanel extends JPanel implements ActionListener {
 
 	/**
 	 * @return the m_JScrollPane_Results_SRP
+	 * @throws Exception 
 	 */
-	public JScrollPane getM_JScrollPane_Results_SRP() {
+	public JScrollPane getM_JScrollPane_Results_SRP() throws Exception {
 		if(m_JScrollPane_Results_SRP == null)
 		{
 			m_JScrollPane_Results_SRP = new JScrollPane(getM_jList_Results_SRP());
@@ -130,6 +148,20 @@ public class CSearchResultPanel extends JPanel implements ActionListener {
 		{
 			this.setVisible(false);
 		}
+	}
+
+	/**
+	 * @param m_books the m_books to set
+	 */
+	public void setBooks(LinkedList m_books) {
+		this.m_books = m_books;
+	}
+
+	/**
+	 * @return the m_books
+	 */
+	public LinkedList getBooks() {
+		return m_books;
 	}
 
 	/**
