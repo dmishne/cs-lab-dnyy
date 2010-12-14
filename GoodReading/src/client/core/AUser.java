@@ -3,15 +3,9 @@ package client.core;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import client.common.*;
-
 import client.common.CClientConnector;
 import client.common.CEntry;
 
@@ -114,17 +108,14 @@ public abstract class AUser implements Serializable{
 	}
 	
 	
-	public Object searchBook(Object book_param) throws Exception
+	public LinkedList<CBook> searchBook(HashMap<String,String> book_param) throws Exception
 	{
 		CEntry EntryToSrv =null;
-		Map <String,String> search_param = new HashMap<String,String>();
-		Object result = null;
+		HashMap<String,String> search_param = new HashMap<String,String>();
 		String lang, topic;
-		@SuppressWarnings("unchecked")
-	    Map <String,String> cast_O = (HashMap<String, String>) book_param;
-		if(cast_O.containsKey("language"))
+		if(book_param.containsKey("language"))
 		  {
-		      lang = cast_O.get("language");
+		      lang = (String)book_param.get("language");
 		      Set<String> avail_lang = CClientConnector.getInstance().getM_listOptions().getM_langueges();
 		    if (!avail_lang.contains(lang))
 		    {
@@ -133,9 +124,9 @@ public abstract class AUser implements Serializable{
 		    else 
 		    	 search_param.put("language", lang);
 		  }
-	    if(cast_O.containsKey("topics"))
+	    if(book_param.containsKey("topics"))
 		  {
-		      topic = cast_O.get("topics");
+		      topic = (String)book_param.get("topics");
 		      Set<String> avail_topics = CClientConnector.getInstance().getM_listOptions().getM_topics();
 		    if (!avail_topics.contains(topic))
 		    {
@@ -144,11 +135,11 @@ public abstract class AUser implements Serializable{
 		    else 
 		    	 search_param.put("topics", topic);
 		  }
-	    search_param.put("title", cast_O.get("title"));
-	    search_param.put("author", cast_O.get("author"));
-	    search_param.put("summery", cast_O.get("summery"));
-	    search_param.put("TOC", cast_O.get("TOC"));
-	    search_param.put("labels", cast_O.get("labels"));
+	    search_param.put("title", (String)book_param.get("title"));
+	    search_param.put("author", (String)book_param.get("author"));
+	    search_param.put("summary", (String)book_param.get("summary"));
+	    search_param.put("TOC", (String)book_param.get("TOC"));
+	    search_param.put("labels", (String)book_param.get("labels"));
 	    EntryToSrv = new CEntry("searchBook",search_param,this.m_userName,this.m_UserSessionId);
 		//result = CClientConnector.getInstance().messageToServer(EntryToSrv);
 	    
