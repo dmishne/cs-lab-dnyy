@@ -34,15 +34,15 @@ public class CSearchBookPanel extends JPanel implements ActionListener{
 	private JLabel m_jLabel_Title_SBP = null;
 	private JLabel m_jLabel_TOC_SBP = null;
 	private JLabel m_jLabel_Topic_SBP = null;
-	private JLabel m_jLabel_Languege_SBP = null;
-	private JLabel m_jLabel_Summery_SBP = null;
+	private JLabel m_jLabel_Language_SBP = null;
+	private JLabel m_jLabel_Summary_SBP = null;
 	private JLabel m_jLabel_Labels_SBP = null;
 	private JTextField m_jTextField_title_SBP = null;
 	private JTextField m_jTextField_Author_SBP = null;
-	private JTextField m_jTextField_Summery_SBP = null;
+	private JTextField m_jTextField_Summary_SBP = null;
 	private JTextField m_jTextField_TOC_SBP = null;
 	private JTextField m_jTextField_Labels_SBP = null;
-	private JComboBox m_jComboBox_Languege_SBP = null;
+	private JComboBox m_jComboBox_Language_SBP = null;
 	private JComboBox m_jComboBox_Topics_SBP = null;
 	private JButton m_jButton_Search_SBP = null;
 	private SBPDecision m_lastChoice = SBPDecision.BACK;  //  @jve:decl-index=0:
@@ -78,63 +78,63 @@ public class CSearchBookPanel extends JPanel implements ActionListener{
 		m_jLabel_Labels_SBP = new JLabel();
 		m_jLabel_Labels_SBP.setText("Labels:");
 		m_jLabel_Labels_SBP.setSize(new Dimension(160, 40));
-		m_jLabel_Labels_SBP.setLocation(new Point(30, 390));
+		m_jLabel_Labels_SBP.setLocation(new Point(30, 345));
 		m_jLabel_Labels_SBP.setFont(new Font("Eras Light ITC", Font.BOLD, 18));
-		m_jLabel_Summery_SBP = new JLabel();
-		m_jLabel_Summery_SBP.setText("Summery:");
-		m_jLabel_Summery_SBP.setSize(new Dimension(160, 40));
-		m_jLabel_Summery_SBP.setLocation(new Point(30, 270));
-		m_jLabel_Summery_SBP.setFont(new Font("Eras Light ITC", Font.BOLD, 18));
-		m_jLabel_Languege_SBP = new JLabel();
-		m_jLabel_Languege_SBP.setText("Languege:");
-		m_jLabel_Languege_SBP.setSize(new Dimension(160, 40));
-		m_jLabel_Languege_SBP.setLocation(new Point(30, 230));
-		m_jLabel_Languege_SBP.setFont(new Font("Eras Light ITC", Font.BOLD, 18));
+		m_jLabel_Summary_SBP = new JLabel();
+		m_jLabel_Summary_SBP.setText("Summary:");
+		m_jLabel_Summary_SBP.setSize(new Dimension(160, 40));
+		m_jLabel_Summary_SBP.setLocation(new Point(30, 225));
+		m_jLabel_Summary_SBP.setFont(new Font("Eras Light ITC", Font.BOLD, 18));
+		m_jLabel_Language_SBP = new JLabel();
+		m_jLabel_Language_SBP.setText("Language:");
+		m_jLabel_Language_SBP.setSize(new Dimension(160, 40));
+		m_jLabel_Language_SBP.setLocation(new Point(30, 185));
+		m_jLabel_Language_SBP.setFont(new Font("Eras Light ITC", Font.BOLD, 18));
 		m_jLabel_Topic_SBP = new JLabel();
 		m_jLabel_Topic_SBP.setText("Topic:");
 		m_jLabel_Topic_SBP.setSize(new Dimension(160, 40));
-		m_jLabel_Topic_SBP.setLocation(new Point(30, 350));
+		m_jLabel_Topic_SBP.setLocation(new Point(30, 305));
 		m_jLabel_Topic_SBP.setFont(new Font("Eras Light ITC", Font.BOLD, 18));
 		m_jLabel_TOC_SBP = new JLabel();
 		m_jLabel_TOC_SBP.setText("TOC:");
 		m_jLabel_TOC_SBP.setSize(new Dimension(160, 40));
-		m_jLabel_TOC_SBP.setLocation(new Point(30, 310));
+		m_jLabel_TOC_SBP.setLocation(new Point(30, 265));
 		m_jLabel_TOC_SBP.setFont(new Font("Eras Light ITC", Font.BOLD, 18));
 		m_jLabel_Title_SBP = new JLabel();
 		m_jLabel_Title_SBP.setText("Title:");
 		m_jLabel_Title_SBP.setSize(new Dimension(160, 40));
-		m_jLabel_Title_SBP.setLocation(new Point(30, 150));
+		m_jLabel_Title_SBP.setLocation(new Point(30, 105));
 		m_jLabel_Title_SBP.setFont(new Font("Eras Light ITC", Font.BOLD, 18));
 		m_jLabel_Author_SBP = new JLabel();
 		m_jLabel_Author_SBP.setFont(new Font("Eras Light ITC", Font.BOLD, 18));
 		m_jLabel_Author_SBP.setSize(new Dimension(160, 40));
-		m_jLabel_Author_SBP.setLocation(new Point(30, 190));
+		m_jLabel_Author_SBP.setLocation(new Point(30, 145));
 		m_jLabel_Author_SBP.setText("Author:");
 		m_jLabel_title_SBP = new JLabel();
 		m_jLabel_title_SBP.setHorizontalAlignment(SwingConstants.CENTER);
 		m_jLabel_title_SBP.setText("Search Book");
-		m_jLabel_title_SBP.setLocation(new Point(0, 60));
+		m_jLabel_title_SBP.setLocation(new Point(0, 15));
 		m_jLabel_title_SBP.setSize(new Dimension(700, 60));
 		m_jLabel_title_SBP.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		m_jLabel_title_SBP.setFont(new Font("Freestyle Script", Font.BOLD, 48));
-		this.setSize(700, 600);
+		this.setSize(700, 550);
 		this.setLayout(null);
-		this.setPreferredSize(new Dimension(700, 600));
+		this.setPreferredSize(new Dimension(700, 550));
 		this.add(getM_jButton_back_SBP(), null);
 		this.add(m_jLabel_title_SBP, null);
 		this.add(m_jLabel_Author_SBP, null);
 		this.add(m_jLabel_Title_SBP, null);
 		this.add(m_jLabel_TOC_SBP, null);
 		this.add(m_jLabel_Topic_SBP, null);
-		this.add(m_jLabel_Languege_SBP, null);
-		this.add(m_jLabel_Summery_SBP, null);
+		this.add(m_jLabel_Language_SBP, null);
+		this.add(m_jLabel_Summary_SBP, null);
 		this.add(m_jLabel_Labels_SBP, null);
 		this.add(getM_jTextField_title_SBP(), null);
 		this.add(getM_jTextField_Author_SBP(), null);
-		this.add(getM_jTextField_Summery_SBP(), null);
+		this.add(getM_jTextField_Summary_SBP(), null);
 		this.add(getM_jTextField_TOC_SBP(), null);
 		this.add(getM_jTextField_Labels_SBP(), null);
-		this.add(getM_jComboBox_Languege_SBP(), null);
+		this.add(getM_jComboBox_Language_SBP(), null);
 		this.add(getM_jComboBox_Topics_SBP(), null);
 		this.add(getM_jButton_Search_SBP(), null);
 	}
@@ -164,7 +164,7 @@ public class CSearchBookPanel extends JPanel implements ActionListener{
 	private JTextField getM_jTextField_title_SBP() {
 		if (m_jTextField_title_SBP == null) {
 			m_jTextField_title_SBP = new JTextField();
-			m_jTextField_title_SBP.setLocation(new Point(200, 155));
+			m_jTextField_title_SBP.setLocation(new Point(200, 110));
 			m_jTextField_title_SBP.setSize(new Dimension(400, 30));
 		}
 		return m_jTextField_title_SBP;
@@ -179,23 +179,23 @@ public class CSearchBookPanel extends JPanel implements ActionListener{
 		if (m_jTextField_Author_SBP == null) {
 			m_jTextField_Author_SBP = new JTextField();
 			m_jTextField_Author_SBP.setSize(new Dimension(400, 30));
-			m_jTextField_Author_SBP.setLocation(new Point(200, 195));
+			m_jTextField_Author_SBP.setLocation(new Point(200, 150));
 		}
 		return m_jTextField_Author_SBP;
 	}
 
 	/**
-	 * This method initializes m_jTextField_Summery_SBP	
+	 * This method initializes m_jTextField_Summary_SBP	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
-	private JTextField getM_jTextField_Summery_SBP() {
-		if (m_jTextField_Summery_SBP == null) {
-			m_jTextField_Summery_SBP = new JTextField();
-			m_jTextField_Summery_SBP.setSize(new Dimension(400, 30));
-			m_jTextField_Summery_SBP.setLocation(new Point(200, 275));
+	private JTextField getM_jTextField_Summary_SBP() {
+		if (m_jTextField_Summary_SBP == null) {
+			m_jTextField_Summary_SBP = new JTextField();
+			m_jTextField_Summary_SBP.setSize(new Dimension(400, 30));
+			m_jTextField_Summary_SBP.setLocation(new Point(200, 230));
 		}
-		return m_jTextField_Summery_SBP;
+		return m_jTextField_Summary_SBP;
 	}
 
 	/**
@@ -207,7 +207,7 @@ public class CSearchBookPanel extends JPanel implements ActionListener{
 		if (m_jTextField_TOC_SBP == null) {
 			m_jTextField_TOC_SBP = new JTextField();
 			m_jTextField_TOC_SBP.setSize(new Dimension(400, 30));
-			m_jTextField_TOC_SBP.setLocation(new Point(200, 315));
+			m_jTextField_TOC_SBP.setLocation(new Point(200, 270));
 		}
 		return m_jTextField_TOC_SBP;
 	}
@@ -221,23 +221,23 @@ public class CSearchBookPanel extends JPanel implements ActionListener{
 		if (m_jTextField_Labels_SBP == null) {
 			m_jTextField_Labels_SBP = new JTextField();
 			m_jTextField_Labels_SBP.setSize(new Dimension(400, 30));
-			m_jTextField_Labels_SBP.setLocation(new Point(200, 395));
+			m_jTextField_Labels_SBP.setLocation(new Point(200, 350));
 		}
 		return m_jTextField_Labels_SBP;
 	}
 
 	/**
-	 * This method initializes m_jComboBox_Languege_SBP	
+	 * This method initializes m_jComboBox_Language_SBP	
 	 * 	
 	 * @return javax.swing.JComboBox	
 	 */
-	private JComboBox getM_jComboBox_Languege_SBP() throws Exception {
-		if (m_jComboBox_Languege_SBP == null) {
-			m_jComboBox_Languege_SBP = new JComboBox(CClientConnector.getInstance().getLangages());
-			m_jComboBox_Languege_SBP.setLocation(new Point(200, 235));
-			m_jComboBox_Languege_SBP.setSize(new Dimension(400, 30));
+	private JComboBox getM_jComboBox_Language_SBP() throws Exception {
+		if (m_jComboBox_Language_SBP == null) {
+			m_jComboBox_Language_SBP = new JComboBox(CClientConnector.getInstance().getLangages());
+			m_jComboBox_Language_SBP.setLocation(new Point(200, 190));
+			m_jComboBox_Language_SBP.setSize(new Dimension(400, 30));
 		}
-		return m_jComboBox_Languege_SBP;
+		return m_jComboBox_Language_SBP;
 	}
 
 	/**
@@ -249,7 +249,7 @@ public class CSearchBookPanel extends JPanel implements ActionListener{
 		if (m_jComboBox_Topics_SBP == null) {
 			m_jComboBox_Topics_SBP = new JComboBox(CClientConnector.getInstance().getTopics());
 			m_jComboBox_Topics_SBP.setSize(new Dimension(400, 30));
-			m_jComboBox_Topics_SBP.setLocation(new Point(200, 355));
+			m_jComboBox_Topics_SBP.setLocation(new Point(200, 310));
 		}
 		return m_jComboBox_Topics_SBP;
 	}

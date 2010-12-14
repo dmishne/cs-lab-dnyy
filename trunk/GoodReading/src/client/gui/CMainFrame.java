@@ -51,8 +51,8 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(700, 700);
 		this.setJMenuBar(getM_jJMenuBar_MenuBar());
+		this.setSize(700, 700);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setPreferredSize(new Dimension(700, 700));
@@ -113,7 +113,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		if (GUI_CMainMenuPanel == null) {
 			GUI_CMainMenuPanel = new CMainMenuPanel();
 			GUI_CMainMenuPanel.setLocation(new Point(0, 100));
-			GUI_CMainMenuPanel.setSize(new Dimension(700,700));
+			GUI_CMainMenuPanel.setSize(new Dimension(700,550));
 			GUI_CMainMenuPanel.setVisible(false);
 			GUI_CMainMenuPanel.addComponentListener(this);
 		}
@@ -311,7 +311,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		if (GUI_cSearchBookPanel == null) {
 			GUI_cSearchBookPanel = new CSearchBookPanel();
 			GUI_cSearchBookPanel.setLocation(new Point(0, 100));
-			GUI_cSearchBookPanel.setSize(new Dimension(700, 600));
+			GUI_cSearchBookPanel.setSize(new Dimension(700, 550));
 			GUI_cSearchBookPanel.setVisible(false);
 			GUI_cSearchBookPanel.addComponentListener(this);
 		}
@@ -326,7 +326,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private CSearchResultPanel getGUI_CSearchResultPanel() {
 		if (GUI_CSearchResultPanel == null) {
 			GUI_CSearchResultPanel = new CSearchResultPanel();
-			GUI_CSearchResultPanel.setSize(new Dimension(700, 600));
+			GUI_CSearchResultPanel.setSize(new Dimension(700, 550));
 			GUI_CSearchResultPanel.setLocation(new Point(0, 100));
 			GUI_CSearchResultPanel.setVisible(false);
 			GUI_CSearchResultPanel.addComponentListener(this);
