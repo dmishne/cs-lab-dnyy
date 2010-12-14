@@ -8,12 +8,12 @@ public class CBook implements Serializable {
 	static private final long serialVersionUID = 1L;
 	private String  m_title;
 	private String  m_author;
-	private int m_ISBN;
+	private String m_ISBN;
 	private Date m_release_date;    // Warning : Date type used
 	private String m_publisher;
 	private String m_summary;
-	private float m_price;
-	private float m_score=0;
+	private double m_price;
+	private double m_score=0;
 	private int m_score_count=0;
 	private String m_topic;
 	private String m_lables;
@@ -43,15 +43,15 @@ public class CBook implements Serializable {
 	 * @param m_invisible
 	 * @param m_language
 	 */
-	public CBook(String m_title, String m_author, int m_ISBN,
-			Date m_release_date, String m_publisher, String m_summary,
-			float m_price, String m_topic,String m_lables, String m_TOC,
-			int m_invisible, String m_language) 
-	{
+	public CBook(String m_title, String m_author, String m_ISBN,
+		    String m_publisher, String m_summary,double m_price, String m_topic,
+		    String m_lables, String m_TOC,int m_invisible, String m_language) 
+	{   
+		//  To Do : add date to constructor
 		this.m_title = m_title;
 		this.m_author = m_author;
 		this.m_ISBN = m_ISBN;
-		this.m_release_date = m_release_date;
+		//this.m_release_date = m_release_date;
 		this.m_publisher = m_publisher;
 		this.m_summary = m_summary;
 		this.m_price = m_price;
@@ -81,7 +81,7 @@ public class CBook implements Serializable {
 	/**
 	 * @return the m_ISBN
 	 */
-	public int getM_ISBN() {
+	public String getM_ISBN() {
 		return m_ISBN;
 	}
 	
@@ -109,14 +109,14 @@ public class CBook implements Serializable {
 	/**
 	 * @return the m_price
 	 */
-	public float getM_price() {
+	public double getM_price() {
 		return m_price;
 	}
 	
 	/**
 	 * @return the m_score
 	 */
-	public float getM_score() {
+	public double getM_score() {
 		return m_score;
 	}
 	
@@ -176,8 +176,8 @@ public class CBook implements Serializable {
 	 */
 	
 	
-	public void setM_score(float score) {
-		float temp =(this.m_score*this.m_score_count);
+	public void setM_score(double score) {
+		double temp =(this.m_score*this.m_score_count);
 		this.m_score_count++;
 		this.m_score = (temp + score)/this.m_score_count;
 	}

@@ -100,6 +100,13 @@ public class CClientConnector extends AbstractClient {
 		}
 
 		
+		/**
+		 * @return the m_listOptions
+		 */
+		public CListOptions getM_listOptions() {
+			return m_listOptions;
+		}
+		
 		
 		/**
 		 * @param m_clientSessionID the m_clientSessionID to set
@@ -111,7 +118,7 @@ public class CClientConnector extends AbstractClient {
 		
 		public String[] getLangages()
 		{
-			String[] lang = new String[ m_listOptions.getM_langueges().size()];
+			String[] lang = new String[ m_listOptions.getM_langueges().size() + 1];
 			lang[0]= " ";
 			int i =1;
 			Iterator<String> it = m_listOptions.getM_langueges().iterator();
@@ -125,9 +132,11 @@ public class CClientConnector extends AbstractClient {
 		}
 		
 		
+		
+
 		public String[] getTopics()
 		{
-			String[] topics = new String[ m_listOptions.getM_topics().size()];
+			String[] topics = new String[ m_listOptions.getM_topics().size() + 1];
 			topics[0]=" ";
 			int i =1;
 			Iterator<String> it = m_listOptions.getM_topics().iterator();
