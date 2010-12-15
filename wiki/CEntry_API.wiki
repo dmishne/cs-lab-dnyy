@@ -8,11 +8,9 @@ User function Logout: <BR/>
 CEntry.m_msgType = "Logout"; <BR/>
 map EMPTY; <BR/>
 return value String "Logout OK"; <BR/>
+End of Logout <BR/>
 
- <BR/> <BR/>
-
-<h5> already gone through: </h5> <BR/><BR/>
-
+<h3> already gone through: </h3> <BR/>
 User function Login: <BR/>
 
 CEntry.m_msgType = "Login"; <BR/>
@@ -21,8 +19,8 @@ map VALUES: <BR/>
      "password" = user password; <BR/>
 validity check for map to match the CEntry value of User is up to client.
 return value AUser; <BR/>
-
- <BR/> <BR/>
+End of Login
+ <BR/>
 
 User function ArrangePayment: <BR/>
 
@@ -36,9 +34,9 @@ map VALUES: <BR/>
         "type"="once"<BR/>
            "cc_num"="123213321" - Credit Card number depicted as a long integer in String; <BR/>
            "cc_expire"="12/01/2000" - Credit Card Expire date depicted as a DB DATE in String; <BR/>
-            "cc_id"="123321" - ID / SSN of the Card owner depicted as a long integer in String; <BR/>
+           "cc_id"="123321" - ID / SSN of the Card owner depicted as a long integer in String; <BR/>
       return value in this case will be String "Updated user's credit card details"; <BR/>
       return on failure value in this case will be String "null"; <BR/>
+End of ArrangePayment
 
-
- <BR/> <BR/>
+ <BR/>
