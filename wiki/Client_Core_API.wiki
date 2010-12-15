@@ -1,6 +1,6 @@
 For GUI:
 <p>
-Reader:
+Reader: <BR/>
 +getPaymentType()  : String[];
 +getFileType(int ISBN)  : String[];
 </p>
