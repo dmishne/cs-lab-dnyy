@@ -60,9 +60,11 @@ public class CRespondToClient {
 	}
 	
 	//removing an object so we can replace it
-	public void Remove(int key)
+	public ConnectionToClient Remove(int key)
 	{
+		ConnectionToClient arg=(ConnectionToClient) this.m_connections.get(key);
 		this.m_connections.remove(key);
+		return arg;
 	}
 	
 	/*
