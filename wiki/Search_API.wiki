@@ -1,0 +1,9 @@
+#Same as CEntry API
+
+in this we must make sure we don't have many problems as Search repeats itself in many variations. <BR/>
+
+<h4> CEntry Params </h4>
+-msg type = "Searchbook"; <BR/>
+-user privilage cannot be disabled (-1)! <BR/> 
+
+/*TODO: continue this */
