@@ -14,9 +14,9 @@ public class CReader extends AUser{
 	
 	Map <String,String> m_forGui;
 	
-	public CReader(String FirstName, String LastName, int UserId, String UserName, int SessionID)
+	public CReader(String FirstName, String LastName, int UserId, String UserName, int SessionID, EActor pri)
 	{
-		super(FirstName,LastName,UserId,UserName, EActor.Reader,SessionID);
+		super(FirstName,LastName,UserId,UserName, pri,SessionID);
 	}
 	
 	
@@ -64,6 +64,7 @@ public class CReader extends AUser{
 		{
 			throw new Exception("Update wasn't successful, please try again later");
 		}
+		this.updateAccount(EActor.Reader);
 		return(SResult);      	          
 	}
 	
@@ -160,9 +161,8 @@ public class CReader extends AUser{
 		orderInfo.put("PayType", PayType);
 		orderInfo.put("FileType", FileType);
 		EntryToSrv = new CEntry("orderBook",orderInfo,this.getUserName(),this.getUserSessionId());
-		Object res = CClientConnector.getInstance().messageToServer(EntryToSrv);
-		String result = res.toString();
-		return result;
+		String res = (String)CClientConnector.getInstance().messageToServer(EntryToSrv);
+		return res;
 	}
 	
 	

@@ -108,39 +108,49 @@ public abstract class AUser implements Serializable{
 	}
 	
 	
+	
+	protected void updateAccount (EActor mPrivilege)
+	{
+		m_privilege = mPrivilege;
+	}
+	
+	
 	public LinkedList<CBook> searchBook(HashMap<String,String> book_param) throws Exception
 	{
-		CEntry EntryToSrv =null;
+		//CEntry EntryToSrv =null;
 		HashMap<String,String> search_param = new HashMap<String,String>();
 		String lang, topic;
-		if(book_param.containsKey("language"))
+		if(book_param.get("language").compareTo(" ") != 0)
 		  {
 		      lang = (String)book_param.get("language");
 		      Set<String> avail_lang = CClientConnector.getInstance().getM_listOptions().getM_langueges();
 		    if (!avail_lang.contains(lang))
-		    {
-		    	throw new Exception("Language unavailable!");
-		    }
+		    	  throw new Exception("Language unavailable!");
+		    
 		    else 
-		    	 search_param.put("language", lang);
+		    	  search_param.put("language", lang);
 		  }
-	    if(book_param.containsKey("topics"))
+	    if(book_param.get("topics").compareTo(" ") != 0)
 		  {
 		      topic = (String)book_param.get("topics");
 		      Set<String> avail_topics = CClientConnector.getInstance().getM_listOptions().getM_topics();
 		    if (!avail_topics.contains(topic))
-		    {
-		    	throw new Exception("Topic unavailable!");
-		    }
+		    	  throw new Exception("Topic unavailable!");
+
 		    else 
-		    	 search_param.put("topics", topic);
+		    	   search_param.put("topics", topic);
 		  }
-	    search_param.put("title", (String)book_param.get("title"));
-	    search_param.put("author", (String)book_param.get("author"));
-	    search_param.put("summary", (String)book_param.get("summary"));
-	    search_param.put("TOC", (String)book_param.get("TOC"));
-	    search_param.put("labels", (String)book_param.get("labels"));
-	    EntryToSrv = new CEntry("searchBook",search_param,this.m_userName,this.m_UserSessionId);
+	    if(book_param.get("title").compareTo(" ") != 0)
+	                search_param.put("title", (String)book_param.get("title"));
+	    if(book_param.get("author").compareTo(" ") != 0)
+	                search_param.put("author", (String)book_param.get("author"));
+	    if(book_param.get("summary").compareTo(" ") != 0)
+	                search_param.put("summary", (String)book_param.get("summary"));
+	    if(book_param.get("TOC").compareTo(" ") != 0)
+	                search_param.put("TOC", (String)book_param.get("TOC"));
+	    if(book_param.get("labels").compareTo(" ") != 0)
+	                search_param.put("labels", (String)book_param.get("labels"));
+	    //EntryToSrv = new CEntry("searchBook",search_param,m_userName,m_UserSessionId);
 		//result = CClientConnector.getInstance().messageToServer(EntryToSrv);
 	    
 	    // TEMPORARY
@@ -151,14 +161,27 @@ public abstract class AUser implements Serializable{
 	    //
 		return list;
 	}
+	
+	
+	
+	public LinkedList<CBookReview> searchBookReview(HashMap<String,String> review_param) throws Exception
+	{
+		CEntry EntryToSrv =null;
+		EntryToSrv = new CEntry("searchBookReview",review_param,m_userName,m_UserSessionId);
+		Object res =   CClientConnector.getInstance().messageToServer(EntryToSrv);
+		@SuppressWarnings("unchecked")
+		LinkedList<CBookReview> result = (LinkedList<CBookReview>)res;
+		return result;
+	}
 		
+	
 	public EActor getPrivilege() {
 		return m_privilege;
 	}
 
-	public void setPrivilege(EActor mPrivilege) {
+	/*public void setPrivilege(EActor mPrivilege) {
 		m_privilege = mPrivilege;
-	}
+	}*/
 	
 	 /**
 	 * @return the m_firstName
