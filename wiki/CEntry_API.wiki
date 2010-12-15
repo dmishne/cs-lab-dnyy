@@ -2,28 +2,24 @@
 
 = Introduction =
 
-example: <BR/>
- 
-<h4>User function Logout:</h4> <BR/>
+example: 
+<h4>User function Logout:</h4> 
 CEntry.m_msgType = "Logout"; <BR/>
 map EMPTY; <BR/>
 return value String "Logout OK"; <BR/>
 End of Logout <BR/>
 
-<h3> already gone through: </h3> <BR/>
-<h4>User function Login:</h4> <BR/>
+<h3> already gone through: </h3> 
 
+<h4>User function Login:</h4>
 CEntry.m_msgType = "Login"; <BR/>
 map VALUES: <BR/>
      "user" = user handle; <BR/>
      "password" = user password; <BR/>
 validity check for map to match the CEntry value of User is up to client.
 return value AUser; <BR/>
-End of Login
- <BR/>
-
-<h4>User function ArrangePayment:</h4> <BR/>
-
+End of Login <BR/>
+<h4>User function ArrangePayment:</h4>
 CEntry.m_msgType = "ArrangePayment"; <BR/>
 map VALUES: <BR/>
      "type" will be one of the following :<BR/>
