@@ -8,8 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,8 +17,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
-import client.common.CClientConnector;
 
 public class CMainFrame extends JFrame implements ActionListener,ComponentListener{
 
@@ -33,10 +29,6 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private JMenu m_jMenu_Help = null;
 	private JMenuItem m_jMenuItem_Help_About = null;
 	private CArrangePayPanel GUI_CArrangePayPanel = null;
-	private JMenu m_jMenu_Tools = null;
-	private JMenuItem m_jMenuItem_ServerInfo = null;
-	private CSearchBookPanel GUI_cSearchBookPanel = null;
-	private CSearchResultPanel GUI_CSearchResultPanel = null;
 	/**
 	 * This is the default constructor
 	 */
@@ -51,8 +43,8 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	 * @return void
 	 */
 	private void initialize() {
-		this.setJMenuBar(getM_jJMenuBar_MenuBar());
 		this.setSize(700, 700);
+		this.setJMenuBar(getM_jJMenuBar_MenuBar());
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setPreferredSize(new Dimension(700, 700));
@@ -78,7 +70,6 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			jContentPane.setLayout(null);
 			jContentPane.add(getGUI_CLoginPanel(), null);
 			jContentPane.add(m_jLabel_LOGO, null);
-			jContentPane.setOpaque(false);
 		}
 		return jContentPane;
 	}
@@ -109,11 +100,11 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	 * 	
 	 * @return GUI_CMainMenuPanel	
 	 */
-	private CMainMenuPanel getGUI_CMainMenuPanel() throws Exception {
+	private CMainMenuPanel getGUI_CMainMenuPanel() {
 		if (GUI_CMainMenuPanel == null) {
 			GUI_CMainMenuPanel = new CMainMenuPanel();
-			GUI_CMainMenuPanel.setLocation(new Point(0, 100));
-			GUI_CMainMenuPanel.setSize(new Dimension(700,550));
+			GUI_CMainMenuPanel.setLocation(new Point(100, 100));
+			GUI_CMainMenuPanel.setSize(new Dimension(500, 500));
 			GUI_CMainMenuPanel.setVisible(false);
 			GUI_CMainMenuPanel.addComponentListener(this);
 		}
@@ -128,7 +119,6 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private JMenuBar getM_jJMenuBar_MenuBar() {
 		if (m_jJMenuBar_MenuBar == null) {
 			m_jJMenuBar_MenuBar = new JMenuBar();
-			m_jJMenuBar_MenuBar.add(getM_jMenu_Tools());
 			m_jJMenuBar_MenuBar.add(getM_jMenu_About());
 			
 		}
@@ -163,75 +153,38 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		return m_jMenuItem_Help_About;
 	}
 	
-	public void componentHidden(ComponentEvent ceh){
+	public void componentHidden(ComponentEvent ceh) {
 		//Think about changing to switch//
 		
 		Object source = ceh.getSource();
-		try
+		if(source == GUI_CLoginPanel)
 		{
-			if(source == GUI_CLoginPanel)
+			jContentPane.add(getGUI_CMainMenuPanel());
+			jContentPane.remove(GUI_CLoginPanel);
+			GUI_CLoginPanel = null;
+			GUI_CMainMenuPanel.setVisible(true);
+		}
+		else if(source == GUI_CMainMenuPanel)
+		{
+			if(GUI_CMainMenuPanel.getLastChoice() ==  CMainMenuPanel.EMMDecision.LOGOUT)
 			{
-				jContentPane.add(getGUI_CMainMenuPanel());
-				jContentPane.remove(GUI_CLoginPanel);
-				GUI_CLoginPanel = null;
-				GUI_CMainMenuPanel.initGreeting();
-				GUI_CMainMenuPanel.setVisible(true);
+				jContentPane.remove(GUI_CMainMenuPanel);
+				jContentPane.add(getGUI_CLoginPanel());
+				GUI_CLoginPanel.setVisible(true);
 			}
-			else if(source == GUI_CMainMenuPanel)
+			if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.ARRANGE)
 			{
-				if(GUI_CMainMenuPanel.getLastChoice() ==  CMainMenuPanel.EMMDecision.LOGOUT)
-				{
-					jContentPane.remove(GUI_CMainMenuPanel);
-					jContentPane.add(getGUI_CLoginPanel());
-					GUI_CLoginPanel.setVisible(true);
-				}
-				else if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.ARRANGE)
-				{
-					jContentPane.add(getGUI_CArrangePayPanel());
-					GUI_CMainMenuPanel.setVisible(false);
-					GUI_CArrangePayPanel.setVisible(true);
-				}
-				else if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.SEARCHBOOK)
-				{
-					jContentPane.add(getGUI_cSearchBookPanel());
-					GUI_CMainMenuPanel.setVisible(false);
-					GUI_cSearchBookPanel.setVisible(true);
-				}
-				
-			}
-			else if(source == GUI_CArrangePayPanel)
-			{
-				jContentPane.remove(GUI_CArrangePayPanel);
-				GUI_CArrangePayPanel = null;
-				GUI_CMainMenuPanel.setVisible(true);
-			}
-			else if(source == GUI_cSearchBookPanel)
-			{
-				if(GUI_cSearchBookPanel.getLastChoice() == CSearchBookPanel.SBPDecision.BACK)
-				{
-					jContentPane.remove(GUI_cSearchBookPanel);
-					GUI_cSearchBookPanel = null;
-					GUI_CMainMenuPanel.setVisible(true);
-				}
-				else if(GUI_cSearchBookPanel.getLastChoice() == CSearchBookPanel.SBPDecision.SEARCH)
-				{
-					jContentPane.add(getGUI_CSearchResultPanel());
-					GUI_cSearchBookPanel.setVisible(false);
-					GUI_CSearchResultPanel.setVisible(true);
-				}
-			}
-			else if(source == GUI_CSearchResultPanel)
-			{
-				jContentPane.remove(GUI_CSearchResultPanel);
-				GUI_CSearchResultPanel = null;
-				GUI_cSearchBookPanel.setVisible(true);
+				jContentPane.add(getGUI_CArrangePayPanel());
+				GUI_CMainMenuPanel.setVisible(false);
+				GUI_CArrangePayPanel.setVisible(true);
 			}
 		}
-		catch (Exception e)
+		else if(source == GUI_CArrangePayPanel)
 		{
-			JOptionPane.showMessageDialog(null, e.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);	
+			jContentPane.remove(GUI_CArrangePayPanel);
+			GUI_CArrangePayPanel = null;
+			GUI_CMainMenuPanel.setVisible(true);
 		}
-		pack();
 		validate();		
 	}
 
@@ -244,19 +197,6 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		if(source == m_jMenuItem_Help_About)
 		{
 			JOptionPane.showMessageDialog(null, "Group 9\n\nGroup Members:\n\nDaniel Mishne\nEvgeny Radbel\nNir Geffen\nYotam Margolin" ,"About",JOptionPane.INFORMATION_MESSAGE);
-		}
-		else if(source == m_jMenuItem_ServerInfo)
-		{
-			String IP = JOptionPane.showInputDialog(null, "Enter Server's ip address", "IP Input", JOptionPane.QUESTION_MESSAGE );
-			Pattern pip = Pattern.compile("\\p{Digit}{1,3}\\.\\p{Digit}{1,3}\\.\\p{Digit}{1,3}\\.\\p{Digit}{1,3}");
-			Matcher mu = pip.matcher(IP);
-			if(mu.matches() || (IP.compareTo("localhost") == 0) )
-				CClientConnector.setConnectionHost(IP);
-			else
-			{
-				JOptionPane.showMessageDialog(null, "Wrong input" ,"Error",JOptionPane.ERROR_MESSAGE);
-			}
-			
 		}
 	}
 
@@ -272,67 +212,6 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			GUI_CArrangePayPanel.addComponentListener(this);
 		}
 		return GUI_CArrangePayPanel;
-	}
-
-	/**
-	 * This method initializes m_jMenu_Tools	
-	 * 	
-	 * @return javax.swing.JMenu	
-	 */
-	private JMenu getM_jMenu_Tools() {
-		if (m_jMenu_Tools == null) {
-			m_jMenu_Tools = new JMenu();
-			m_jMenu_Tools.setText("Tools");
-			m_jMenu_Tools.add(getM_jMenuItem_ServerInfo());
-		}
-		return m_jMenu_Tools;
-	}
-
-	/**
-	 * This method initializes m_jMenuItem_ServerInfo	
-	 * 	
-	 * @return javax.swing.JMenuItem	
-	 */
-	private JMenuItem getM_jMenuItem_ServerInfo() {
-		if (m_jMenuItem_ServerInfo == null) {
-			m_jMenuItem_ServerInfo = new JMenuItem();
-			m_jMenuItem_ServerInfo.setText("Set Server's IP address");
-			m_jMenuItem_ServerInfo.addActionListener(this);
-		}
-		return m_jMenuItem_ServerInfo;
-	}
-
-	/**
-	 * This method initializes GUI_cSearchBookPanel	
-	 * 	
-	 * @return client.gui.CSearchBookPanel	
-	 */
-	private CSearchBookPanel getGUI_cSearchBookPanel() throws Exception{
-		if (GUI_cSearchBookPanel == null) {
-			GUI_cSearchBookPanel = new CSearchBookPanel();
-			GUI_cSearchBookPanel.setLocation(new Point(0, 100));
-			GUI_cSearchBookPanel.setSize(new Dimension(700, 550));
-			GUI_cSearchBookPanel.setVisible(false);
-			GUI_cSearchBookPanel.addComponentListener(this);
-		}
-		return GUI_cSearchBookPanel;
-	}
-
-	/**
-	 * This method initializes GUI_CSearchResultPanel	
-	 * 	
-	 * @return client.gui.CSearchResultPanel	
-	 * @throws Exception 
-	 */
-	private CSearchResultPanel getGUI_CSearchResultPanel() throws Exception {
-		if (GUI_CSearchResultPanel == null) {
-			GUI_CSearchResultPanel = new CSearchResultPanel();
-			GUI_CSearchResultPanel.setSize(new Dimension(700, 550));
-			GUI_CSearchResultPanel.setLocation(new Point(0, 100));
-			GUI_CSearchResultPanel.setVisible(false);
-			GUI_CSearchResultPanel.addComponentListener(this);
-		}
-		return GUI_CSearchResultPanel;
 	}
 	
 }  //  @jve:decl-index=0:visual-constraint="10,10"

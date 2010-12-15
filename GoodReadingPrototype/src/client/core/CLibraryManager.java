@@ -7,6 +7,6 @@ public class CLibraryManager extends CLibrarian{
 	public CLibraryManager(String FirstName, String LastName, int UserId, String UserName, int SessionID)
 	{
 		super(FirstName,LastName,UserId,UserName,SessionID);
-		this.updateAccount(EActor.LibraryManager);
+		this.setPrivilege(EActor.LibraryManager);
 	}
 }

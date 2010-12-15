@@ -1,11 +1,11 @@
 package client.core;
 
-
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.*;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import client.common.CClientConnector;
 import client.common.CEntry;
 
@@ -23,10 +23,8 @@ public abstract class AUser implements Serializable{
 
     public AUser(String FirstName, String LastName, int UserId, String UserName, EActor Privilege, int SessionID)
     {
-    	FirstName = FirstName.replace("\"", "");
-    	LastName  = LastName.replace("\"", "");
-    	m_firstName     = Character.toUpperCase(FirstName.charAt(0)) + FirstName.substring(1, FirstName.length());
-    	m_lastName      = Character.toUpperCase(LastName.charAt(0)) + LastName.substring(1, LastName.length());
+    	m_firstName     = FirstName;
+    	m_lastName      = LastName;
     	m_userID        = UserId;
     	m_userName      = UserName;
     	m_privilege     = Privilege;
@@ -106,82 +104,14 @@ public abstract class AUser implements Serializable{
 			break;
 		}
 	}
-	
-	
-	
-	protected void updateAccount (EActor mPrivilege)
-	{
-		m_privilege = mPrivilege;
-	}
-	
-	
-	public LinkedList<CBook> searchBook(HashMap<String,String> book_param) throws Exception
-	{
-		//CEntry EntryToSrv =null;
-		HashMap<String,String> search_param = new HashMap<String,String>();
-		String lang, topic;
-		if(book_param.get("language").compareTo(" ") != 0)
-		  {
-		      lang = (String)book_param.get("language");
-		      Set<String> avail_lang = CClientConnector.getInstance().getM_listOptions().getM_langueges();
-		    if (!avail_lang.contains(lang))
-		    	  throw new Exception("Language unavailable!");
-		    
-		    else 
-		    	  search_param.put("language", lang);
-		  }
-	    if(book_param.get("topics").compareTo(" ") != 0)
-		  {
-		      topic = (String)book_param.get("topics");
-		      Set<String> avail_topics = CClientConnector.getInstance().getM_listOptions().getM_topics();
-		    if (!avail_topics.contains(topic))
-		    	  throw new Exception("Topic unavailable!");
-
-		    else 
-		    	   search_param.put("topics", topic);
-		  }
-	    if(book_param.get("title").compareTo(" ") != 0)
-	                search_param.put("title", (String)book_param.get("title"));
-	    if(book_param.get("author").compareTo(" ") != 0)
-	                search_param.put("author", (String)book_param.get("author"));
-	    if(book_param.get("summary").compareTo(" ") != 0)
-	                search_param.put("summary", (String)book_param.get("summary"));
-	    if(book_param.get("TOC").compareTo(" ") != 0)
-	                search_param.put("TOC", (String)book_param.get("TOC"));
-	    if(book_param.get("labels").compareTo(" ") != 0)
-	                search_param.put("labels", (String)book_param.get("labels"));
-	    //EntryToSrv = new CEntry("searchBook",search_param,m_userName,m_UserSessionId);
-		//result = CClientConnector.getInstance().messageToServer(EntryToSrv);
-	    
-	    // TEMPORARY
-	    LinkedList<CBook> list = new LinkedList<CBook>();
-	    CBook book;
-	    book = new CBook("HoferStory","Hofer","123hsg553","HaMihlala","Fuck Fuck Fuck",0.01,"Hafirot","hafer,hofer,hafira","eih lahfor",1,"kafkazit");
-	    list.add(book);
-	    //
-		return list;
-	}
-	
-	
-	
-	public LinkedList<CBookReview> searchBookReview(HashMap<String,String> review_param) throws Exception
-	{
-		CEntry EntryToSrv =null;
-		EntryToSrv = new CEntry("searchBookReview",review_param,m_userName,m_UserSessionId);
-		Object res =   CClientConnector.getInstance().messageToServer(EntryToSrv);
-		@SuppressWarnings("unchecked")
-		LinkedList<CBookReview> result = (LinkedList<CBookReview>)res;
-		return result;
-	}
 		
-	
 	public EActor getPrivilege() {
 		return m_privilege;
 	}
 
-	/*public void setPrivilege(EActor mPrivilege) {
+	public void setPrivilege(EActor mPrivilege) {
 		m_privilege = mPrivilege;
-	}*/
+	}
 	
 	 /**
 	 * @return the m_firstName

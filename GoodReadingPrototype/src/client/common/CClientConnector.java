@@ -1,7 +1,5 @@
 package client.common;
 
-import java.util.*;
-
 import ocsf.client.AbstractClient;
 
 public class CClientConnector extends AbstractClient {
@@ -12,23 +10,19 @@ public class CClientConnector extends AbstractClient {
 		private boolean m_haveMsg;
 		private Object m_msg;
 		private static String m_host = "localhost";
-		private static boolean m_change;
-		private CListOptions m_listOptions;
 				
 		private CClientConnector(String host, int port)
 		{
 			super(host,port);
 			this.m_clientSessionID = -1;
-			m_change = false;
-			this. m_listOptions = new CListOptions(); 
+			this.m_host = host;
 		}
 		
 		public static CClientConnector getInstance() throws Exception
 		{
-			if(m_ConnectorInstance == null || m_change == true)
+			if(m_ConnectorInstance == null)
 			{
 				m_ConnectorInstance = new CClientConnector(m_host,5555);
-				m_change = false;
 			}
 			m_ConnectorInstance.openConnection();
 			return m_ConnectorInstance;
@@ -37,7 +31,6 @@ public class CClientConnector extends AbstractClient {
 		public static void setConnectionHost(String host)
 		{
 			m_host = host;
-			m_change = true;
 		}
 		
 		final protected void handleMessageFromServer(Object message)
@@ -100,53 +93,12 @@ public class CClientConnector extends AbstractClient {
 		}
 
 		
-		/**
-		 * @return the m_listOptions
-		 */
-		public CListOptions getM_listOptions() {
-			return m_listOptions;
-		}
-		
 		
 		/**
 		 * @param m_clientSessionID the m_clientSessionID to set
 		 */
 		public void setM_clientSessionID(int m_clientSessionID) {
 			this.m_clientSessionID = m_clientSessionID;
-		}
-
-		
-		public String[] getLangages()
-		{
-			String[] lang = new String[ m_listOptions.getM_langueges().size() + 1];
-			lang[0]= " ";
-			int i =1;
-			Iterator<String> it = m_listOptions.getM_langueges().iterator();
-			while(it.hasNext())
-			{
-				lang[i] = it.next();
-				i++;
-			}
-			
-			return lang;
-		}
-		
-		
-		
-
-		public String[] getTopics()
-		{
-			String[] topics = new String[ m_listOptions.getM_topics().size() + 1];
-			topics[0]=" ";
-			int i =1;
-			Iterator<String> it = m_listOptions.getM_topics().iterator();
-			while(it.hasNext())
-			{
-				topics[i] = it.next();
-				i++;
-			}
-			
-			return topics;
 		}
 
 

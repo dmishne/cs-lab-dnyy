@@ -10,7 +10,6 @@ import client.core.AUser;
 import client.core.CLibrarian;
 import client.core.CLibraryManager;
 import client.core.CReader;
-import client.core.EActor;
 
 public class CDBInteractionGenerator 
 {
@@ -188,11 +187,11 @@ public class CDBInteractionGenerator
 		case (0):
 			return null;
 		case (1): //User level
-			arg=new CReader(rs.getString(7), rs.getString(8), rs.getInt(5), user, sessionID, EActor.User);
+			arg=new CReader(rs.getString(7), rs.getString(8), rs.getInt(5), user, sessionID);
 			rs.close();
 			return arg;
 		case (2): //Reader level
-			arg=new CReader(rs.getString(7), rs.getString(8), rs.getInt(5), user, sessionID, EActor.Reader);
+			arg=new CReader(rs.getString(7), rs.getString(8), rs.getInt(5), user, sessionID);
 			rs.close();
 			return arg;
 		case (3): //Librarian level
