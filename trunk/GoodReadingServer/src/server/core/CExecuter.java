@@ -2,6 +2,7 @@ package server.core;
 import client.common.*;
 import client.core.AUser;
 
+import java.io.IOException;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
@@ -18,12 +19,9 @@ public class CExecuter implements Runnable
 	private Random m_generator;	//infrastracture helping to generate random numbers.
 	private static CExecuter m_obj;
 	
-	/*TODO add randomly generated sessionIDs */
-	
 	/*signleton*/
 	public static CExecuter GetInstance()
 	{
-		/* TODO add constructor args */
 		if(m_obj == null)
 			init();
 		return m_obj;
@@ -74,66 +72,96 @@ public class CExecuter implements Runnable
 					CRespondToClient.GetInstance().InsertOutstream(Work.getSessionID(), Work.getClient());
 			
 					//handle Login
-					handleLogin(Work);		
-					//TODO: move operative handling of login to CExecuter (here)
-					
+					handleLogin(Work);			
 					
 				}//end of login handling
 				else 
 				{
-					boolean logged=false;
+					int Privilage=-1;
+					
 					for(CClientSession s : this.m_sessions) //find session
 							if(s.getSessionID() == Work.getSessionID()) //sessionID match
 								if(Work.getUserName().compareTo(s.getUsername())==0) //username match
 								{
-									logged=true;
+									Privilage=s.getUserAuth();
 									break;
 								}
 								else { 
 									break;
 								}
-					if(!logged)
+					if(Privilage<0)
 					{
 						//if user is not logged
 						try {
-							((ConnectionToClient)Work.getClient()).sendToClient(null); /*TODO: response as NULL should be considered as FAIL on client side*/
+							((ConnectionToClient)Work.getClient()).sendToClient(null); //response as null (actually translated to string null at responder) is considered a FAIL on client side
 						}	catch (Exception e) {	
 							System.out.println("Server fail, can't 'wait' in func run via CExecuter");
 						}
 					}
 					else
 					{
+						//TODO: update responder to contain NEW connection
+						
 						//getting an instance as "db" will make things easier for this part
 						CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
 						//executing entry, currently only little to do
 						if(Work.getMsgType().compareTo("ArrangePayment") == 0)
+						{	
+							
+							if(Privilage <3)
+							{//here we made sure user is actually a reader and not a librarian / library manager
+								if(Work.getMsgMap().get("type").compareTo("once") == 0)
+								{
+									db.RemoveCC(Work.getUserName());
+									//TODO: validation for existing params
+									if(db.AddCC(Work.getUserName(), Work.getMsgMap().get("cc_num"), Work.getMsgMap().get("cc_expire"), Work.getMsgMap().get("cc_id")))
+									  CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Updated user's credit card details");
+									else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), null);								
+								}
+								else if(Work.getMsgMap().get("type").compareTo("monthly") == 0)
+								{
+									//add / update user's Subscription
+									if(db.AddMonthly(Work.getUserName()))
+										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Updated user's Monthly subscription details");
+									else
+										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),null);
+								}
+								else if(Work.getMsgMap().get("type").compareTo("yearly") == 0)
+								{
+									//add / update user's Subscription
+									if(db.AddYearly(Work.getUserName()))
+										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Updated user's Yearly subscription details");
+									else
+										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),null);
+								}
+							}
+							else {
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Not authorized to use function \"ArrangePayment()\"");								
+							}
+						}// end of ArrangePayment
+						
+						
+						else if(Work.getMsgType().compareTo("Logout") == 0)
 						{
-							if(Work.getMsgMap().get("type").compareTo("once") == 0)
-							{
-								db.RemoveCC(Work.getUserName());
-								//TODO: validation for existing params
-								if(db.AddCC(Work.getUserName(), Work.getMsgMap().get("cc_num"), Work.getMsgMap().get("cc_expire"), Work.getMsgMap().get("cc_id")))
-								  CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Updated user's credit card details");
-								else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), null);								
-							}
-							else if(Work.getMsgMap().get("type").compareTo("monthly") == 0)
-							{
-								//add / update user's Subscription
-								if(db.AddMonthly(Work.getUserName()))
-									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Updated user's Monthly subscription details");
-								else
-									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),null);
-							}
-							else if(Work.getMsgMap().get("type").compareTo("yearly") == 0)
-							{
-								//add / update user's Subscription
-								if(db.AddYearly(Work.getUserName()))
-									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Updated user's Yearly subscription details");
-								else
-									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),null);
-							}
-						}// end of ArrangePayment 
-					}
+							//remove from sessions
+							for(CClientSession s : this.m_sessions) //find session
+								if(s.getSessionID() == Work.getSessionID()) //sessionID match
+									this.m_sessions.remove(s);
+							//remove from responder and RESPOND
+							try {
+								CRespondToClient.GetInstance().Remove(Work.getSessionID()).sendToClient("Logout OK");
+							} catch (IOException e) {
+								System.out.println("CExecuter: Error returning msg during logout: "+e.getMessage());
+								}
+							
+						}//end of Logout
+						
+						
+						else if(Work.getMsgType().compareTo("Searchbook") == 0)
+						{
+							
+						} //end of Searchbook
+					} //end of handling Entry
 				}
 					
 			}//end of while(forever)
@@ -188,7 +216,7 @@ public class CExecuter implements Runnable
 
 
 	public Thread getThread() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub, might not be needed**!!
 		return m_ThreadHolder;
 	}
 	
