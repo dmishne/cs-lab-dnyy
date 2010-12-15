@@ -37,6 +37,7 @@ map VALUES: <BR/>
            "cc_id"="123321" - ID / SSN of the Card owner depicted as a long integer in String; <BR/>
       return value in this case will be String "Updated user's credit card details"; <BR/>
       return on failure value in this case will be String "null"; <BR/>
-End of ArrangePayment
+End of ArrangePayment <BR/>
 
+authorization fail will return String "Not authorized to use function \"ArrangePayment()\""
  <BR/>
