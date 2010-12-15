@@ -1,0 +1,44 @@
+#summary this page will contain the CEntry API, what properties it has and the response
+
+= Introduction =
+
+example: <BR/>
+ 
+User function Logout: <BR/>
+CEntry.m_msgType = "Logout"; <BR/>
+map EMPTY; <BR/>
+return value String "Logout OK"; <BR/>
+
+ <BR/> <BR/>
+
+<h5> already gone through: </h5> <BR/><BR/>
+
+User function Login: <BR/>
+
+CEntry.m_msgType = "Login"; <BR/>
+map VALUES: <BR/>
+     "user" = user handle; <BR/>
+     "password" = user password; <BR/>
+validity check for map to match the CEntry value of User is up to client.
+return value AUser; <BR/>
+
+ <BR/> <BR/>
+
+User function ArrangePayment: <BR/>
+
+CEntry.m_msgType = "ArrangePayment"; <BR/>
+map VALUES: <BR/>
+     "type" will be one of the following :<BR/>
+        "type"="monthly" - no additional info requiered <BR/>
+        return value in this case will be String "Updated user's Monthly subscription details"; <BR/>
+        "type"="yearly" - no additional info requiered <BR/>
+        return value in this case will be String "Updated user's yearly subscription details"; <BR/>
+        "type"="once"<BR/>
+           "cc_num"="123213321" - Credit Card number depicted as a long integer in String; <BR/>
+           "cc_expire"="12/01/2000" - Credit Card Expire date depicted as a DB DATE in String; <BR/>
+            "cc_id"="123321" - ID / SSN of the Card owner depicted as a long integer in String; <BR/>
+      return value in this case will be String "Updated user's credit card details"; <BR/>
+      return on failure value in this case will be String "null"; <BR/>
+
+
+ <BR/> <BR/>
