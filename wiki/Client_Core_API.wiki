@@ -1,29 +1,29 @@
 For GUI:
 <p>
 Reader: <BR/>
-+getPaymentType()  : String[];
-+getFileType(int ISBN)  : String[];
++getPaymentType()  : String[];<BR/>
++getFileType(int ISBN)  : String[];<BR/>
 </p>
 
 <p>
-From GUI:
+From GUI:<BR/>
 
-Reader:
-+submitScore  : (int score, int bookISBN)   
-+submitReview : (String reviewTitle, String Review, int bookISBN)
+Reader:<BR/>
++submitScore  : (int score, int bookISBN)   <BR/>
++submitReview : (String reviewTitle, String Review, int bookISBN)<BR/>
 </p> 
 
 
 
 <p>
-For Server:
-+getPaymentType : (CEntry) 
-+getFileType : (CEntry)  
+For Server:<BR/>
++getPaymentType : (CEntry) <BR/>
++getFileType : (CEntry)  <BR/>
 </p>
 
 
 <p>
-From Server:
-+getPaymentType()  : String[];
-+getFileType()  : String[];
+From Server:<BR/>
++getPaymentType()  : String[];<BR/>
++getFileType()  : String[];<BR/>
 </p>
