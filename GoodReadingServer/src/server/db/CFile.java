@@ -26,7 +26,7 @@ public class CFile {
 	    BufferedInputStream bis = new BufferedInputStream(new FileInputStream(myFile)); //get Buffered Stream
 	    
 	    bis.read(mybytearray,0,mybytearray.length); // read file into array
-	    
+	    bis.close();
 	    return mybytearray;	//return array
 		
 		} catch (FileNotFoundException e) {
@@ -42,10 +42,12 @@ public class CFile {
 	public static boolean saveFile(String path, byte[] mybytearray)
 	{
 		try {
-		    BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(path));
+			// set output stream
+		    BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(path)); 
 		   
-		    bos.write(mybytearray, 0 , mybytearray.length);
-		    bos.flush();
+		    bos.write(mybytearray, 0 , mybytearray.length); //write out file
+		    bos.flush(); //close buffer
+		    bos.close();
 		    return true;
 	    
 		} catch (FileNotFoundException e) {
