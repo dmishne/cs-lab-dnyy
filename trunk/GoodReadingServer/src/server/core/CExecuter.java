@@ -91,9 +91,9 @@ public class CExecuter implements Runnable
 								}
 					if(Privilage<0)
 					{
-						//if user is not logged
+						//if user is not logged or is disabled
 						try {
-							((ConnectionToClient)Work.getClient()).sendToClient(null); //response as null (actually translated to string null at responder) is considered a FAIL on client side
+							((ConnectionToClient)Work.getClient()).sendToClient("User is not logged or is disabled");
 						}	catch (Exception e) {	
 							System.out.println("Server fail, can't 'wait' in func run via CExecuter");
 						}
@@ -157,10 +157,34 @@ public class CExecuter implements Runnable
 						}//end of Logout
 						
 						
-						else if(Work.getMsgType().compareTo("Searchbook") == 0)
+						else if(Work.getMsgType().compareTo("SearchBook") == 0)
 						{
 							
 						} //end of Searchbook
+						
+						
+						else if(Work.getMsgType().compareTo("SearchReview") == 0)
+						{
+							
+						} //end of Searchreview
+						
+						
+						else if(Work.getMsgType().compareTo("PurchaseBook") == 0)
+						{
+							if(Privilage <3)
+							{//here we made sure user is actually a reader and not a librarian / library manager
+						
+								//update account according to payment method
+								//generate reciept
+								//check for Privilage change (no more credit and no credit card)
+								//return book								
+							}
+							else
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Not authorized to use function \"PurchaseBook()\"");		
+							
+						} //end of PurchaseBook
+						
+						
 					} //end of handling Entry
 				}
 					
