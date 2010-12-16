@@ -3,7 +3,7 @@
 in this we must make sure we don't have many problems as Search repeats itself in many variations. <BR/>
 
 <h4> CEntry Params </h4>
-   -msg type = "Searchbook"; <BR/>
+   -msg type = "SearchBook" / "SearchReview" ; <BR/>
    -user privilage cannot be disabled (-1)! <BR/> 
 
 <h4> CEntry.map Params </h4>
