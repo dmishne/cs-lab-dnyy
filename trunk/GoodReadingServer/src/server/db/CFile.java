@@ -7,9 +7,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class CFile {
-	
+public class CFile implements Serializable
+{
 	private byte [] m_file;
 		
 	public CFile(String path)
@@ -26,12 +27,14 @@ public class CFile {
 	    BufferedInputStream bis = new BufferedInputStream(new FileInputStream(myFile)); //get Buffered Stream
 	    
 	    bis.read(mybytearray,0,mybytearray.length); // read file into array
+	  
 	    bis.close();
+	    
 	    return mybytearray;	//return array
 		
 		} catch (FileNotFoundException e) {
-			System.out.println("Error getting file "+ path+": "+e.getMessage());		}
-		catch(IOException e) {
+			System.out.println("Error getting file "+ path+": "+e.getMessage());		
+		} catch(IOException e) {
 			System.out.println("Error getting file "+ path+": "+e.getMessage());	
 		}
 		
@@ -42,7 +45,7 @@ public class CFile {
 	public static boolean saveFile(String path, byte[] mybytearray)
 	{
 		try {
-			// set output stream
+			// set output stream to write file in filesystem
 		    BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(path)); 
 		   
 		    bos.write(mybytearray, 0 , mybytearray.length); //write out file
@@ -56,6 +59,10 @@ public class CFile {
 			System.out.println("Error getting file "+ path+": "+e.getMessage());	
 		}
 		return false;
+	}
+
+	public byte [] getFilearray() {
+		return m_file;
 	}
 	
 }
