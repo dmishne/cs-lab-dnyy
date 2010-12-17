@@ -7,10 +7,10 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import common.api.CEntry;
 import common.data.CBook;
 
 import client.common.CClientConnector;
-import client.common.CEntry;
 
 public abstract class AUser implements Serializable{
 	
