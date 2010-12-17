@@ -4,7 +4,9 @@ package client.gui;
 import javax.swing.JPanel;
 import java.awt.Dimension;
 import javax.swing.JButton;
-import client.core.CBook;
+
+import common.data.CBook;
+
 import java.awt.Point;
 
 public class CBookDetailPanel extends JPanel {

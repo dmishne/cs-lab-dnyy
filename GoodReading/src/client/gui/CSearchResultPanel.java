@@ -17,8 +17,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import common.data.CBook;
+
 import client.core.AUser;
-import client.core.CBook;
 
 import java.awt.Font;
 import java.util.LinkedList;

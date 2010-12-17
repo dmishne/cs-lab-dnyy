@@ -20,8 +20,9 @@ import javax.swing.border.BevelBorder;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
+import common.data.CBook;
+
 import client.common.CClientConnector;
-import client.core.CBook;
 
 public class CSearchBookPanel extends JPanel implements ActionListener{
 
