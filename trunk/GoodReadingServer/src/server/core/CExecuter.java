@@ -1,6 +1,8 @@
 package server.core;
 import client.common.*;
 import client.core.AUser;
+import server.db.CBook;
+import client.core.CBookReview;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -9,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
@@ -165,12 +168,34 @@ public class CExecuter implements Runnable
 						
 						else if(Work.getMsgType().compareTo("SearchBook") == 0)
 						{
+							//get set
+							LinkedList<CBook> rez=db.SearchBook(Work.getMsgMap());
+							
+							//if not a librarian, remove invisible books
+							if(Privilage < 3)
+								for(CBook book: rez)
+									if(!book.isVisibility())
+										rez.remove(book);
+							
+							//reply to client
+							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), rez);
 							
 						} //end of Searchbook
 						
 						
 						else if(Work.getMsgType().compareTo("SearchReview") == 0)
 						{
+							//get set
+							LinkedList<CBookReview> rez=db.SearchReview(Work.getMsgMap());
+							
+							//if not a librarian, remove unapproved reviews
+							if(Privilage < 3)
+								for(CBookReview rev: rez)
+									if(rev.getConfirmation() == 0)
+										rez.remove(rev);
+							
+							//reply to client
+							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), rez);
 							
 						} //end of Searchreview
 						
