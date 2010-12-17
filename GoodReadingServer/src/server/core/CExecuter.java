@@ -1,8 +1,8 @@
 package server.core;
 import client.common.*;
 import client.core.AUser;
-import server.db.CBook;
 import client.core.CBookReview;
+import common.data.*;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -174,7 +174,7 @@ public class CExecuter implements Runnable
 							//if not a librarian, remove invisible books
 							if(Privilage < 3)
 								for(CBook book: rez)
-									if(!book.isVisibility())
+									if(!book.getM_invisible())
 										rez.remove(book);
 							
 							//reply to client
