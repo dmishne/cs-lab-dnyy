@@ -8,9 +8,10 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.Map;
 
+import common.data.CBook;
+
 
 import client.core.AUser;
-//import client.core.CBook;
 import client.core.CBookReview;
 import client.core.CLibrarian;
 import client.core.CLibraryManager;
@@ -259,7 +260,7 @@ public class CDBInteractionGenerator
 	}
 	
 
-	@SuppressWarnings("unused") //TODO: remove this suppress
+	
 	private String buildSearchBookWhere(Map<String,String> params)
 	{
 		String ans="";
@@ -365,9 +366,19 @@ public class CDBInteractionGenerator
 		return ans;		
 	}
 
-	public LinkedList<CBook> SearchBook(Map<String, String> msgMap) {
-		// TODO Auto-generated method stub
-		return null;
+	public LinkedList<CBook> SearchBook(Map<String, String> msgMap) 
+	{
+		LinkedList<CBook> arg=new LinkedList<CBook>();
+		ResultSet data=null;
+		try {
+			data = this.MySQLQuery("SELECT * FROM BOOKS"+this.buildSearchBookWhere(msgMap));
+			while(data.next())
+				arg.add(new CBook(data.getString(1),data.getString(2),data.getString(3),data.getString(4),data.getString(5),data.getString(6),data.getFloat(7),data.getInt(8),data.getLong(9),data.getString(10),data.getString(11),data.getString(12),data.getBoolean(13),data.getString(14)));
+		
+			} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}	
+	
+		return arg;
 	}
 
 	public LinkedList<CBookReview> SearchReview(Map<String, String> msgMap) {
