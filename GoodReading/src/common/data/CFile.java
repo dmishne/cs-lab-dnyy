@@ -1,4 +1,4 @@
-package server.db;
+package common.data;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

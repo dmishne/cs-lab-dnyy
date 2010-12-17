@@ -22,8 +22,7 @@ public class CBook implements Serializable {
 	private String m_TOC;
 	private boolean m_invisible;
 	private String m_language;
-	private List <CBookReview> Reviews;    // Include list of CBookReview class
-	
+
 	
 	 
 	
@@ -171,10 +170,7 @@ public class CBook implements Serializable {
 	/**
 	 * @return "List<CBookReview>" with reviews
 	 */
-	public List<CBookReview> getReviews() {
-		return Reviews;
-	}
-	
+
 	/**
 	 * @param m_score the m_score to set
 	 */
@@ -191,10 +187,6 @@ public class CBook implements Serializable {
 	/**
 	 * @param add review to "List<CBookReview>"
 	 */
-	public void addReviews(CBookReview review) {
-		Reviews.add(review);
-	}
-	
 	
 	/*// ??????????????????????
 	public void deleteReview(int index)

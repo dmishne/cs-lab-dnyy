@@ -1,5 +1,5 @@
 package server.core;
-import client.common.CEntry;
+import common.api.CEntry;
 
 public class CClientSession implements Comparable
 {

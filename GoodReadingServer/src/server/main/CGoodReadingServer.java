@@ -3,10 +3,11 @@ package server.main;
 import java.io.IOException;
 import java.util.Map;
 
+import common.data.CFile;
+
 import server.core.CExecuter;
 import server.core.CStandbyUnit;
 import server.db.CDBInteractionGenerator;
-import server.db.CFile;
 
 public class CGoodReadingServer {
 

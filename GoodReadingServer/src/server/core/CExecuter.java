@@ -2,6 +2,7 @@ package server.core;
 import client.common.*;
 import client.core.AUser;
 import client.core.CBookReview;
+import common.api.CEntry;
 import common.data.*;
 
 import java.io.BufferedInputStream;
