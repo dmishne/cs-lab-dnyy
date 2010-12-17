@@ -1,11 +1,12 @@
 package server.db;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CBook implements IDBable {
+public class CBook implements IDBable,Serializable {
 
 	private String m_isbn;
 	private String m_author;

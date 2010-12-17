@@ -5,9 +5,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.Map;
 
+
 import client.core.AUser;
+//import client.core.CBook;
+import client.core.CBookReview;
 import client.core.CLibrarian;
 import client.core.CLibraryManager;
 import client.core.CReader;
@@ -255,7 +259,8 @@ public class CDBInteractionGenerator
 	}
 	
 
-	private String buildSearchBookWhere(Map params)
+	@SuppressWarnings("unused") //TODO: remove this suppress
+	private String buildSearchBookWhere(Map<String,String> params)
 	{
 		String ans="";
 		if(params.isEmpty())
@@ -358,6 +363,16 @@ public class CDBInteractionGenerator
 		
 		
 		return ans;		
+	}
+
+	public LinkedList<CBook> SearchBook(Map<String, String> msgMap) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public LinkedList<CBookReview> SearchReview(Map<String, String> msgMap) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 
