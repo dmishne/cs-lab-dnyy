@@ -156,7 +156,9 @@ public abstract class AUser implements Serializable{
 	    // TEMPORARY
 	    LinkedList<CBook> list = new LinkedList<CBook>();
 	    CBook book;
-	    book = new CBook("HoferStory","Hofer","123hsg553","HaMihlala","Fuck Fuck Fuck",0.01,"Hafirot","hafer,hofer,hafira","eih lahfor",1,"kafkazit");
+	    book = new CBook("arg101", "JRR Tolkin", "The hobbit", "21.09.1937", "arg", "it's about dwarves and pretty ladies",5.5, 2,9.0,"Fantasy", "arg!", "1 .. 2 .. 3 ..",false, "English"); 
+	 //   //public CBook(String m_ISBN, String m_author, String m_title, String m_release, String m_publisher, String m_summary,double m_price, int m_score_count,long m_score,String m_topic, String m_lables, String m_TOC,boolean m_invisible, String m_language, Date m_release_date) 
+		
 	    list.add(book);
 	    //
 		return list;

@@ -9,7 +9,7 @@ public class CBook implements Serializable {
 	private String  m_title;
 	private String  m_author;
 	private String m_ISBN;
-	private Date m_release_date;    // Warning : Date type used
+	private String m_release;    // Warning : Date type used
 	private String m_publisher;
 	private String m_summary;
 	private double m_price;
@@ -18,12 +18,12 @@ public class CBook implements Serializable {
 	private String m_topic;
 	private String m_lables;
 	private String m_TOC;
-	private int m_invisible;
+	private boolean m_invisible;
 	private String m_language;
 	private List <CBookReview> Reviews;    // Include list of CBookReview class
 	
 	
-	
+	 
 	
 	
 	
@@ -42,16 +42,16 @@ public class CBook implements Serializable {
 	 * @param m_TOC
 	 * @param m_invisible
 	 * @param m_language
+	 * @param m_release_date 
 	 */
-	public CBook(String m_title, String m_author, String m_ISBN,
-		    String m_publisher, String m_summary,double m_price, String m_topic,
-		    String m_lables, String m_TOC,int m_invisible, String m_language) 
+	
+	public CBook(String m_ISBN, String m_author, String m_title, String m_release, String m_publisher, String m_summary,double m_price, int m_score_count,double m_score,String m_topic, String m_lables, String m_TOC,boolean m_invisible, String m_language) 
 	{   
-		//  To Do : add date to constructor
+		//  TODO : add date to constructor
 		this.m_title = m_title;
 		this.m_author = m_author;
 		this.m_ISBN = m_ISBN;
-		//this.m_release_date = m_release_date;
+		this.m_release = m_release;
 		this.m_publisher = m_publisher;
 		this.m_summary = m_summary;
 		this.m_price = m_price;
@@ -60,6 +60,8 @@ public class CBook implements Serializable {
 		this.m_TOC = m_TOC;
 		this.m_invisible = m_invisible;
 		this.m_language = m_language;
+		this.m_score_count=m_score_count;
+		this.m_score= m_score;
 	}
 
 	
@@ -88,8 +90,8 @@ public class CBook implements Serializable {
 	/**
 	 * @return the m_release_date
 	 */
-	public Date getM_release_date() {
-		return m_release_date;
+	public String getM_release_date() {
+		return m_release;
 	}
 	
 	/**
@@ -151,7 +153,7 @@ public class CBook implements Serializable {
 	/**
 	 * @return the m_invisible
 	 */
-	public int getM_invisible() {
+	public boolean getM_invisible() {
 		return m_invisible;
 	}
 	
