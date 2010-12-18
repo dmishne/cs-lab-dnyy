@@ -1,18 +1,13 @@
 package server.core;
-import client.common.*;
+
 import client.core.AUser;
 
 import common.api.CEntry;
 import common.data.*;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
@@ -205,13 +200,34 @@ public class CExecuter implements Runnable
 						{
 							if(Privilage <3)
 							{//here we made sure user is actually a reader and not a librarian / library manager
-						
+								Map<String,String> arg= Work.getMsgMap();
 								//update account according to payment method
-								//generate reciept
-								//check for Privilage change (no more credit and no credit card)
-								//return book								
-							}
-							else
+								if(arg.get("paymethod").compareTo("monthly")==0)
+									if (db.subscriptionPay("monthly",Work.getUserName(),arg.get("isbn")))
+										{ 
+										int rID=db.createReciept(Work.getUserName(),arg.get("isbn"),"monthly");//generate reciept
+										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Success "+Integer.toString(rID));//response to client
+										}
+									else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "failed operation");
+								
+								else if(arg.get("paymethod").compareTo("yearly")==0)
+									if (db.subscriptionPay("yearly",Work.getUserName(),arg.get("isbn")))
+									{ 
+										int rID=db.createReciept(Work.getUserName(),arg.get("isbn"),"yearly");//generate reciept
+										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Success "+Integer.toString(rID));//response to client
+									}
+									else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "failed operation");
+								
+								else if(arg.get("paymethod").compareTo("once")==0)
+									if (db.ccPay("once",Work.getUserName(),db.getPrice(arg.get("isbn")),arg.get("isbn")))
+									{ 
+										int rID=db.createReciept(Work.getUserName(),arg.get("isbn"),"once");//generate reciept
+										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Success "+Integer.toString(rID));//response to client
+									}
+									else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "failed operation");
+							
+							} //end of privilege
+							else //take care of unprivileged ppl
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Not authorized to use function \"PurchaseBook()\"");		
 							
 						} //end of PurchaseBook
@@ -263,25 +279,17 @@ public class CExecuter implements Runnable
 	}
 
 
-
 	public void Kill(CEntry work) {
 		// TODO Auto-generated method stub
 		
 	}
-
-
 
 	public Thread getThread() {
 		// TODO Auto-generated method stub, might not be needed**!!
 		return m_ThreadHolder;
 	}
 	
-	
-	
-	
-	
-	
-	
+		
 	public void handleLogin(CEntry Work) 
 	{
 	

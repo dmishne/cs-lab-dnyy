@@ -347,13 +347,13 @@ public class CDBInteractionGenerator
 		}
 		 if(params.containsKey("topic"))
 		{
-			ans=ans+" AND m_m_author topic "+params.get("topic");
+			ans=ans+" AND m_m_topic "+params.get("topic");
 			params.remove("topic");
 		}
 		 if(params.containsKey("TOC"))
 		{
-			ans=ans+" AND m_m_author TOC "+params.get("TOC");
-			params.remove("TOC");
+			ans=ans+" AND m_m_TOC "+params.get("toc");
+			params.remove("toc");
 		}
 		 if(params.containsKey("language"))
 		{
@@ -451,6 +451,31 @@ public class CDBInteractionGenerator
 		
 		return ans;		
 	}
+
+
+	public double getPrice(String isbn) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public boolean subscriptionPay(String string, String userName,
+			String string2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean ccPay(String string, String userName, double price,
+			String string2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public int createReciept(String userName, String isbn, String type) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
 	
 
 }
