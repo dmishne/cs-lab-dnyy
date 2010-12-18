@@ -261,7 +261,7 @@ public class CDBInteractionGenerator
 
 	
 	private String buildSearchBookWhere(Map<String,String> params)
-	{ //TODO: replace m_m_ vars by appropriate substitute
+	{
 		String ans="";
 		if(params.isEmpty())
 			return ans;
@@ -269,47 +269,47 @@ public class CDBInteractionGenerator
 
 		if(params.containsKey("title"))
 		{
-			ans=ans+"m_m_title CONTAINS "+params.get("title");
+			ans=ans+"title CONTAINS "+params.get("title");
 			params.remove("title");
 		}
 		else if(params.containsKey("author"))
 		{
-			ans=ans+"m_m_author CONTAINS "+params.get("author");
+			ans=ans+"author CONTAINS "+params.get("author");
 			params.remove("author");
 		}
 		else if(params.containsKey("lable"))
 		{
-			ans=ans+"m_m_lable CONTAINS "+params.get("lable");
+			ans=ans+"lables CONTAINS "+params.get("lable");
 			params.remove("lable");
 		}
 		else if(params.containsKey("isbn"))
 		{
-			ans=ans+"m_m_isbn CONTAINS "+params.get("isbn");
+			ans=ans+"isbn CONTAINS "+params.get("isbn");
 			params.remove("isbn");
 		}
 		else if(params.containsKey("publisher"))
 		{
-			ans=ans+"m_m_publisher CONTAINS "+params.get("publisher");
+			ans=ans+"publisher CONTAINS "+params.get("publisher");
 			params.remove("publisher");
 		}
 		else if(params.containsKey("summary"))
 		{
-			ans=ans+"m_m_summary CONTAINS "+params.get("summary");
+			ans=ans+"summary CONTAINS "+params.get("summary");
 			params.remove("summary");
 		}
 		else if(params.containsKey("topic"))
 		{
-			ans=ans+"m_m_author topic "+params.get("topic");
+			ans=ans+"topic "+params.get("topic");
 			params.remove("topic");
 		}
 		else if(params.containsKey("TOC"))
 		{
-			ans=ans+"m_m_author TOC "+params.get("TOC");
+			ans=ans+"TOC "+params.get("TOC");
 			params.remove("TOC");
 		}
 		else if(params.containsKey("language"))
 		{
-			ans=ans+"m_m_language "+params.get("language");
+			ans=ans+"language "+params.get("language");
 			params.remove("language");
 		}
 		
@@ -317,47 +317,47 @@ public class CDBInteractionGenerator
 		//now inserting new attributes
 		if(params.containsKey("title"))
 		{
-			ans=ans+" AND m_m_title CONTAINS "+params.get("title");
+			ans=ans+" AND title CONTAINS "+params.get("title");
 			params.remove("title");
 		}
 		 if(params.containsKey("author"))
 		{
-			ans=ans+" AND m_m_author CONTAINS "+params.get("author");
+			ans=ans+" AND author CONTAINS "+params.get("author");
 			params.remove("author");
 		}
 		 if(params.containsKey("lable"))
 		{
-			ans=ans+" AND m_m_lable CONTAINS "+params.get("lable");
+			ans=ans+" AND lables CONTAINS "+params.get("lable");
 			params.remove("lable");
 		}
 		 if(params.containsKey("isbn"))
 		{
-			ans=ans+" AND m_m_isbn CONTAINS "+params.get("isbn");
+			ans=ans+" AND isbn CONTAINS "+params.get("isbn");
 			params.remove("isbn");
 		}
 		 if(params.containsKey("publisher"))
 		{
-			ans=ans+" AND m_m_publisher CONTAINS "+params.get("publisher");
+			ans=ans+" AND publisher CONTAINS "+params.get("publisher");
 			params.remove("publisher");
 		}
 		 if(params.containsKey("summary"))
 		{
-			ans=ans+" AND m_m_summary CONTAINS "+params.get("summary");
+			ans=ans+" AND summary CONTAINS "+params.get("summary");
 			params.remove("summary");
 		}
 		 if(params.containsKey("topic"))
 		{
-			ans=ans+" AND m_m_topic "+params.get("topic");
+			ans=ans+" AND topic "+params.get("topic");
 			params.remove("topic");
 		}
 		 if(params.containsKey("TOC"))
 		{
-			ans=ans+" AND m_m_TOC "+params.get("toc");
+			ans=ans+" AND TOC "+params.get("toc");
 			params.remove("toc");
 		}
 		 if(params.containsKey("language"))
 		{
-			ans=ans+" AND m_m_language "+params.get("language");
+			ans=ans+" AND language "+params.get("language");
 			params.remove("language");
 		}
 		
@@ -397,7 +397,6 @@ public class CDBInteractionGenerator
 	}
 
 	private String buildSearchBookReviewWhere(Map<String, String> params) {
-		//TODO: replace m_m_ vars by appropriate substitute
 		String ans="";
 		
 		if(params.isEmpty())
@@ -407,48 +406,48 @@ public class CDBInteractionGenerator
 
 		if(params.containsKey("title"))
 		{
-			ans=ans+"m_m_title CONTAINS "+params.get("title");
+			ans=ans+"title CONTAINS "+params.get("title");
 			params.remove("title");
 		}
 		else if(params.containsKey("author"))
 		{
-			ans=ans+"m_m_author CONTAINS "+params.get("author");
+			ans=ans+"author CONTAINS "+params.get("author");
 			params.remove("author");
 		}
 		else if(params.containsKey("isbn"))
 		{
-			ans=ans+"m_m_isbn CONTAINS "+params.get("isbn");
+			ans=ans+"isbn CONTAINS "+params.get("isbn");
 			params.remove("isbn");
 		}
 		else if(params.containsKey("review"))
 		{
-			ans=ans+"m_m_review CONTAINS "+params.get("review");
+			ans=ans+"review CONTAINS "+params.get("review");
 			params.remove("review");
 		}
 		else if(params.containsKey("authority"))
 		{
-			ans=ans+"m_m_authority "+params.get("authority");
+			ans=ans+"auth_by "+params.get("authority");
 			params.remove("authority");
 		}
 				
 		
 		//now inserting new attributes
 		if(params.containsKey("title"))
-			ans=ans+" AND m_m_title CONTAINS "+params.get("title");
+			ans=ans+" AND title CONTAINS "+params.get("title");
 
 		 if(params.containsKey("author"))
-			ans=ans+" AND m_m_author CONTAINS "+params.get("author");
+			ans=ans+" AND author CONTAINS "+params.get("author");
 
 	
 		 if(params.containsKey("isbn"))
-			ans=ans+" AND m_m_isbn CONTAINS "+params.get("isbn");
+			ans=ans+" AND isbn CONTAINS "+params.get("isbn");
 	
 	
 		 if(params.containsKey("review"))
-			ans=ans+" AND m_m_review CONTAINS "+params.get("review");
+			ans=ans+" AND review CONTAINS "+params.get("review");
 	
 		 if(params.containsKey("authority"))
-			ans=ans+" AND m_m_authority CONTAINS "+params.get("authority");
+			ans=ans+" AND auth_by CONTAINS "+params.get("authority");
 	
 		
 		return ans;		
@@ -456,7 +455,17 @@ public class CDBInteractionGenerator
 
 
 	public double getPrice(String isbn) {
-		// TODO Auto-generated method stub
+		ResultSet price=null;
+		Double p = null;
+		try {
+			price = this.MySQLQuery("CALL GetPriceByISBN ('"+ isbn +"');");
+			if(price.next())
+				{
+					return p.parseDouble((price.getString("price")));
+				}
+		} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}	
+		//TODO add not success return value
 		return 0;
 	}
 
