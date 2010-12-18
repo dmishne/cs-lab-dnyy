@@ -8,11 +8,10 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.Map;
 
-import common.data.CBook;
+import common.data.*;
 
 
 import client.core.AUser;
-import client.core.CBookReview;
 import client.core.CLibrarian;
 import client.core.CLibraryManager;
 import client.core.CReader;
@@ -262,7 +261,7 @@ public class CDBInteractionGenerator
 
 	
 	private String buildSearchBookWhere(Map<String,String> params)
-	{
+	{ //TODO: replace m_m_ vars by appropriate substitute
 		String ans="";
 		if(params.isEmpty())
 			return ans;
@@ -366,12 +365,13 @@ public class CDBInteractionGenerator
 		return ans;		
 	}
 
+	
 	public LinkedList<CBook> SearchBook(Map<String, String> msgMap) 
 	{
 		LinkedList<CBook> arg=new LinkedList<CBook>();
 		ResultSet data=null;
 		try {
-			data = this.MySQLQuery("SELECT * FROM BOOKS"+this.buildSearchBookWhere(msgMap));
+			data = this.MySQLQuery("SELECT * FROM books"+this.buildSearchBookWhere(msgMap)+";");
 			while(data.next())
 				arg.add(new CBook(data.getString(1),data.getString(2),data.getString(3),data.getString(4),data.getString(5),data.getString(6),data.getFloat(7),data.getInt(8),data.getLong(9),data.getString(10),data.getString(11),data.getString(12),data.getBoolean(13),data.getString(14)));
 		
@@ -381,7 +381,22 @@ public class CDBInteractionGenerator
 		return arg;
 	}
 
-	public LinkedList<CBookReview> SearchReview(Map<String, String> msgMap) {
+	public LinkedList<CBookReview> SearchReview(Map<String, String> msgMap) 
+	{
+		LinkedList<CBookReview> arg=new LinkedList<CBookReview>();
+		ResultSet data=null;
+		try {
+			data = this.MySQLQuery("SELECT * FROM reviews "+this.buildSearchBookReviewWhere(msgMap)+";");
+			while(data.next())
+				arg.add( new CBookReview( data.getString(1),data.getString(2),data.getString(3),data.getString(4),data.getString(5)  ,data.getInt(6),data.getString(8) ,data.getString(9) ) );
+		//      public CBookReview(       String isbn,       String author,  String title,        String review,  String writedate,         int accepted,     String Checkdate,   String authUser)
+			} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}	
+	
+		return arg;
+	}
+
+	private String buildSearchBookReviewWhere(Map<String, String> msgMap) {
 		// TODO Auto-generated method stub
 		return null;
 	}

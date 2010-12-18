@@ -3,8 +3,6 @@ package common.data;
 import java.io.Serializable;
 import java.util.*;
 
-import client.core.CBookReview;
-
 public class CBook implements Serializable {
 	
 	static private final long serialVersionUID = 1L;

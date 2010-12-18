@@ -1,7 +1,7 @@
 package server.core;
 import client.common.*;
 import client.core.AUser;
-import client.core.CBookReview;
+
 import common.api.CEntry;
 import common.data.*;
 
@@ -192,7 +192,7 @@ public class CExecuter implements Runnable
 							//if not a librarian, remove unapproved reviews
 							if(Privilage < 3)
 								for(CBookReview rev: rez)
-									if(rev.getConfirmation() == 0)
+									if(rev.getaccepted() <1)
 										rez.remove(rev);
 							
 							//reply to client
