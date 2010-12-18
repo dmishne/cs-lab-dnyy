@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import common.api.CEntry;
 import common.data.CBook;
+import common.data.CBookReview;
 
 import client.common.CClientConnector;
 
