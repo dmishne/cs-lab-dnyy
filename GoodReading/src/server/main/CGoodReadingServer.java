@@ -39,6 +39,7 @@ public class CGoodReadingServer {
 	
 		
 	//	CDBInteractionGenerator.GetInstance().MySQLInsertBlobFile(new CFile("arg.txt").getFilearray().toString());
+	//	System.out.print(CDBInteractionGenerator.GetInstance().getPrice("1234"));
 		
 		//at last, we check that everthing is working
 	/*
