@@ -178,7 +178,7 @@ public class CExecuter implements Runnable
 							
 						} //end of Searchbook
 						
-						
+
 						else if(Work.getMsgType().compareTo("SearchReview") == 0)
 						{
 							//get set
@@ -194,6 +194,23 @@ public class CExecuter implements Runnable
 							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), rez);
 							
 						} //end of Searchreview
+
+						else if(Work.getMsgType().compareTo("AddReview") == 0)
+						{
+							Map<String,String> arg=Work.getMsgMap();
+							if(!db.hasUserRead(arg.get("isbn"),Work.getUserName()))
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: user must read book before submitting a review");
+							else
+							{//we're here because client has read the book
+								if(db.submitReview(arg.get("isbn"),Work.getUserName(),arg.get("title"),arg.get("review")))
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Review Submitted");
+								else 
+								{
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: failed to submit");
+									System.out.println("failure at executer: adding review");
+								}
+							}//end of reading auth
+						} //end of AddReview
 						
 						
 						else if(Work.getMsgType().compareTo("PurchaseBook") == 0)

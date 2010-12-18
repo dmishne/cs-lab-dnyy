@@ -399,8 +399,10 @@ public class CDBInteractionGenerator
 	private String buildSearchBookReviewWhere(Map<String, String> params) {
 		//TODO: replace m_m_ vars by appropriate substitute
 		String ans="";
+		
 		if(params.isEmpty())
 			return ans;
+		
 		ans="WHERE ";
 
 		if(params.containsKey("title"))
@@ -458,14 +460,12 @@ public class CDBInteractionGenerator
 		return 0;
 	}
 
-	public boolean subscriptionPay(String string, String userName,
-			String string2) {
+	public boolean subscriptionPay(String string, String userName, String string2) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public boolean ccPay(String string, String userName, double price,
-			String string2) {
+	public boolean ccPay(String string, String userName, double price, String string2) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -473,6 +473,17 @@ public class CDBInteractionGenerator
 	public int createReciept(String userName, String isbn, String type) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public boolean hasUserRead(String isbn, String userName) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean submitReview(String string, String userName, String string2,
+			String string3) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 
