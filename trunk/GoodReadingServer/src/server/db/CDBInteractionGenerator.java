@@ -396,9 +396,60 @@ public class CDBInteractionGenerator
 		return arg;
 	}
 
-	private String buildSearchBookReviewWhere(Map<String, String> msgMap) {
-		// TODO Auto-generated method stub
-		return null;
+	private String buildSearchBookReviewWhere(Map<String, String> params) {
+		//TODO: replace m_m_ vars by appropriate substitute
+		String ans="";
+		if(params.isEmpty())
+			return ans;
+		ans="WHERE ";
+
+		if(params.containsKey("title"))
+		{
+			ans=ans+"m_m_title CONTAINS "+params.get("title");
+			params.remove("title");
+		}
+		else if(params.containsKey("author"))
+		{
+			ans=ans+"m_m_author CONTAINS "+params.get("author");
+			params.remove("author");
+		}
+		else if(params.containsKey("isbn"))
+		{
+			ans=ans+"m_m_isbn CONTAINS "+params.get("isbn");
+			params.remove("isbn");
+		}
+		else if(params.containsKey("review"))
+		{
+			ans=ans+"m_m_review CONTAINS "+params.get("review");
+			params.remove("review");
+		}
+		else if(params.containsKey("authority"))
+		{
+			ans=ans+"m_m_authority "+params.get("authority");
+			params.remove("authority");
+		}
+				
+		
+		//now inserting new attributes
+		if(params.containsKey("title"))
+			ans=ans+" AND m_m_title CONTAINS "+params.get("title");
+
+		 if(params.containsKey("author"))
+			ans=ans+" AND m_m_author CONTAINS "+params.get("author");
+
+	
+		 if(params.containsKey("isbn"))
+			ans=ans+" AND m_m_isbn CONTAINS "+params.get("isbn");
+	
+	
+		 if(params.containsKey("review"))
+			ans=ans+" AND m_m_review CONTAINS "+params.get("review");
+	
+		 if(params.containsKey("authority"))
+			ans=ans+" AND m_m_authority CONTAINS "+params.get("authority");
+	
+		
+		return ans;		
 	}
 	
 
