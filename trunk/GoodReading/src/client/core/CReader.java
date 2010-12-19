@@ -167,5 +167,16 @@ public class CReader extends AUser{
 		return res;
 	}
 	
+	public void addScore(String isbn, double score) throws Exception
+	{
+		CEntry EntryToSrv;
+		Map <String,String> addSc = new HashMap<String,String>();
+		String sc = Double.toString(score);
+		addSc.put("isbn", isbn);
+		addSc.put("score", sc);
+		EntryToSrv = new CEntry("addscore",addSc,this.getUserName(),this.getUserSessionId());
+	    CClientConnector.getInstance().messageToServer(EntryToSrv);
+	}
+	
 	
 }
