@@ -242,13 +242,36 @@ public class CExecuter implements Runnable
 										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Success "+Integer.toString(rID));//response to client
 									}
 									else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "failed operation");
-							
+				
 							} //end of privilege
 							else //take care of unprivileged ppl
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Not authorized to use function \"PurchaseBook()\"");		
 							
 						} //end of PurchaseBook
 						
+						
+						//submit Score
+						else if(Work.getMsgType().compareTo("SubmitScore") == 0)
+						{
+							Map<String,String> arg= Work.getMsgMap();
+							
+							if(Privilage <3 )
+								if(!db.hasUserRead(arg.get("isbn"),Work.getUserName()))
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: user must read book before submitting a score");
+								
+								
+								else//we're here because client has read the book
+								{
+									if(db.giveScore(arg.get("isbn"),Work.getUserName(),Integer.reverse(Integer.getInteger(arg.get("score")))))
+										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "success");
+									else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Failed to comply");
+								}
+							
+							
+							else //take care of unprivileged ppl
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Not authorized to use function \"SubmitScore()\"");		
+								
+							} //end of SubmitScore	
 						
 					} //end of handling Entry
 				}
