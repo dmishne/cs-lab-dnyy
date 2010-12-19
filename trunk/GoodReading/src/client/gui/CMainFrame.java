@@ -37,6 +37,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private JMenuItem m_jMenuItem_ServerInfo = null;
 	private CSearchBookPanel GUI_cSearchBookPanel = null;
 	private CSearchResultPanel GUI_CSearchResultPanel = null;
+	private CBookDetailPanel GUI_CBookDetailPanel = null;
 	/**
 	 * This is the default constructor
 	 */
@@ -222,9 +223,24 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			}
 			else if(source == GUI_CSearchResultPanel)
 			{
-				jContentPane.remove(GUI_CSearchResultPanel);
-				GUI_CSearchResultPanel = null;
-				GUI_cSearchBookPanel.setVisible(true);
+				if(GUI_CSearchResultPanel.getLastChoice() == CSearchResultPanel.SRPDecision.BACK)
+				{
+					jContentPane.remove(GUI_CSearchResultPanel);
+					GUI_CSearchResultPanel = null;
+					GUI_cSearchBookPanel.setVisible(true);
+				}
+				else
+				{
+					jContentPane.add(getGUI_CBookDetailPanel());
+					GUI_CSearchResultPanel.setVisible(false);
+					GUI_CBookDetailPanel.setVisible(true);
+				}
+			}
+			else if(source == GUI_CBookDetailPanel)
+			{
+				jContentPane.remove(GUI_CBookDetailPanel);
+				GUI_CBookDetailPanel = null;
+				GUI_CSearchResultPanel.setVisible(true);
 			}
 		}
 		catch (Exception e)
@@ -333,6 +349,23 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			GUI_CSearchResultPanel.addComponentListener(this);
 		}
 		return GUI_CSearchResultPanel;
+	}
+
+	/**
+	 * This method initializes GUI_CBookDetailPanel	
+	 * 	
+	 * @return client.gui.CBookDetailPanel	
+	 */
+	private CBookDetailPanel getGUI_CBookDetailPanel() {
+		if (GUI_CBookDetailPanel == null) {
+			GUI_CBookDetailPanel = new CBookDetailPanel(CSearchResultPanel.getChosenBook());
+			GUI_CBookDetailPanel.setLocation(new Point(0, 100));
+			GUI_CBookDetailPanel.setPreferredSize(new Dimension(700, 600));
+			GUI_CBookDetailPanel.setSize(new Dimension(700, 600));
+			GUI_CBookDetailPanel.setVisible(false);
+			GUI_CBookDetailPanel.addComponentListener(this);
+		}
+		return GUI_CBookDetailPanel;
 	}
 	
 }  //  @jve:decl-index=0:visual-constraint="10,10"
