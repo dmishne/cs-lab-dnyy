@@ -72,5 +72,17 @@ public class CLibrarian extends AUser{
 	}
 	
 	
+	public void deleteReview(String title, String author, String isbn) throws Exception
+	{
+		CEntry entryToSrv ;
+		Map<String, String> delReview = new HashMap<String, String>();
+		delReview.put("title", title);
+		delReview.put("author", author);
+		delReview.put("isbn", isbn);
+		entryToSrv = new CEntry("deletereview",delReview, this.getUserName(),this.getUserSessionId());
+		CClientConnector.getInstance().messageToServer(entryToSrv);		
+	}
+	
+	
 	
 }

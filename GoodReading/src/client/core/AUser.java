@@ -23,6 +23,7 @@ public abstract class AUser implements Serializable{
 		   private String  m_userName;
 		   private EActor  m_privilege;
 		   private int 	   m_UserSessionId;
+		   
 		
 
     public AUser(String FirstName, String LastName, int UserId, String UserName, EActor Privilege, int SessionID)
