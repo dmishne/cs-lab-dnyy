@@ -360,8 +360,6 @@ public class CDBInteractionGenerator
 			ans=ans+" AND language "+params.get("language");
 			params.remove("language");
 		}
-		
-		
 		return ans;		
 	}
 
@@ -474,7 +472,7 @@ public class CDBInteractionGenerator
 		return false;
 	}
 
-	public boolean ccPay(String string, String userName, double price, String string2) {
+	public boolean ccPay( String userName, double price, String string2) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -492,6 +490,14 @@ public class CDBInteractionGenerator
 	public boolean submitReview(String string, String userName, String string2,
 			String string3) {
 		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean giveScore(String isbn, String userName, int score) 
+	{
+		// TODO Auto-generated method stub
+		//if user already has score then update
+		//need return false if fail
 		return false;
 	}
 
