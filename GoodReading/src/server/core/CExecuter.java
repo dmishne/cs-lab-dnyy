@@ -236,7 +236,7 @@ public class CExecuter implements Runnable
 									else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "failed operation");
 								
 								else if(arg.get("paymethod").compareTo("once")==0)
-									if (db.ccPay("once",Work.getUserName(),db.getPrice(arg.get("isbn")),arg.get("isbn")))
+									if (db.ccPay(Work.getUserName(),db.getPrice(arg.get("isbn")),arg.get("isbn")))
 									{ 
 										int rID=db.createReciept(Work.getUserName(),arg.get("isbn"),"once");//generate reciept
 										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Success "+Integer.toString(rID));//response to client
