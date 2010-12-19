@@ -14,7 +14,7 @@ public class CBook implements Serializable {
 	private String m_summary;
 	private double m_price;
 	private double m_score=0;
-	private int m_score_count=0;
+	private long m_score_count=0;
 	private String m_topic;
 	private String m_lables;
 	private String m_TOC;
@@ -44,7 +44,7 @@ public class CBook implements Serializable {
 	 * @param m_release_date 
 	 */
 	
-	public CBook(String m_ISBN, String m_author, String m_title, String m_release, String m_publisher, String m_summary,double m_price, int m_score_count,double m_score,String m_topic, String m_lables, String m_TOC,boolean m_invisible, String m_language) 
+	public CBook(String m_ISBN, String m_author, String m_title, String m_release, String m_publisher, String m_summary,double m_price, long m_score_count,double m_score,String m_topic, String m_lables, String m_TOC,boolean m_invisible, String m_language) 
 	{   
 		//  TODO : add date to constructor
 		this.m_title = m_title;
@@ -124,7 +124,7 @@ public class CBook implements Serializable {
 	/**
 	 * @return the m_score_count
 	 */
-	public int getM_score_count() {
+	public long getM_score_count() {
 		return m_score_count;
 	}
 	
@@ -162,41 +162,7 @@ public class CBook implements Serializable {
 	public String getM_language() {
 		return m_language;
 	}
-
-
-
-	/**
-	 * @return "List<CBookReview>" with reviews
-	 */
-
-	/**
-	 * @param m_score the m_score to set
-	 */
 	
-	
-	public void setM_score(double score) {
-		double temp =(this.m_score*this.m_score_count);
-		this.m_score_count++;
-		this.m_score = (temp + score)/this.m_score_count;
-	}
 
-
-
-	/**
-	 * @param add review to "List<CBookReview>"
-	 */
-	
-	/*// ??????????????????????
-	public void deleteReview(int index)
-	{
-		Reviews.remove(index);
-	}*/
-
-	
-	public void orderBook()
-	{
-		// TO DO
-	}
-	
 	
 }
