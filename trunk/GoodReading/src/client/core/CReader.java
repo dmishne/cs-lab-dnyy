@@ -97,21 +97,6 @@ public class CReader extends AUser{
 		return(SResult);      	          
 	}
 	
-	public void submitScore(int score, int bookISBN)
-	{
-		CEntry EntryToSrv = null;
-		Map <String,String> Bscore = new HashMap<String,String>();
-		String isbn = Integer.toString(bookISBN);
-		String sc = Integer.toString(score);
-		Bscore.put("ISBN",isbn );
-		Bscore.put("Score", sc);
-		EntryToSrv = new CEntry("submitScore",Bscore,this.getUserName(),this.getUserSessionId());
-		try {
-			CClientConnector.getInstance().messageToServer(EntryToSrv);
-		} catch (Exception e) {
-			System.out.println("Can't send to server");
-		}
-	}
 	
 	
 	public void submitReview(String reviewTitle , String review , int bookISBN) 
