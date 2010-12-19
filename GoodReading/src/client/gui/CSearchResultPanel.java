@@ -1,56 +1,47 @@
 package client.gui;
 
-import java.awt.GridBagLayout;
-import javax.swing.JPanel;
-import java.awt.Dimension;
-import javax.swing.JButton;
-import java.awt.GridBagConstraints;
-import java.awt.Rectangle;
-import java.awt.Point;
-import javax.swing.JList;
-import javax.swing.DefaultListModel;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import java.util.Iterator;
+import java.util.LinkedList;
 
-import common.data.CBook;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 
 import client.core.AUser;
 
-import java.awt.Font;
-import java.util.LinkedList;
+import common.data.CBook;
 
 public class CSearchResultPanel extends JPanel implements ActionListener {
 
+	public enum SRPDecision
+	{
+		BACK,DETAILS
+	}
+	
 	private static final long serialVersionUID = 1L;
 	private JButton m_jButton_back_SRP = null;
 	private JList m_jList_Results_SRP = null;
 	private JScrollPane m_JScrollPane_Results_SRP = null;
-	private LinkedList<CBook> m_books = null;  //  @jve:decl-index=0:
+	
+	private LinkedList<CBook> m_books = null;  			  //  @jve:decl-index=0:
+	private static CBook m_chosenBook = null;
 
-
-
-	////////////////////////////////STUB////////////////////////////////
-	private String[] tempString = {"The Hobbit, J. R. R. Tolkien",
-								   "Alice's Adventures in Wonderland, Lewis Carroll",
-								   "A","A","A","A","A","A","A","A","A","A",
-								   "A","A","A","A","A","A","A","A","A","A",
-								   "A","A","A","A","A","A","A","A","A","A",
-								   "A","A","A","A","A","A","A","A"
-	
-	
-	
-	
-	
-	};
-	////////////////////////////////////////////////////////////////////
 	private JLabel m_jLabel_SRP_title = null;
 	private JButton m_jButton_ShowDetails_SRP = null;
 	
+	private SRPDecision m_lastChoice = SRPDecision.BACK;  //  @jve:decl-index=0:
 	
 	
 	/**
@@ -147,21 +138,66 @@ public class CSearchResultPanel extends JPanel implements ActionListener {
 		Object source = ae.getSource();
 		if(source == m_jButton_back_SRP)
 		{
+			this.m_lastChoice = SRPDecision.BACK;
 			this.setVisible(false);
 		}
+		if(source == m_jButton_ShowDetails_SRP)
+		{
+			try{
+				String res = (String)m_jList_Results_SRP.getSelectedValue();
+				String[] splitedRes = res.split(" - ");
+				Iterator<CBook> it = m_books.iterator();
+				while(it.hasNext())
+				{
+					CBook temp = it.next();
+					if(temp.getM_ISBN().compareTo(splitedRes[0]) == 0)
+					{
+						m_chosenBook = temp;
+						break;
+					}
+				}
+				this.m_lastChoice = SRPDecision.DETAILS;
+				this.setVisible(false);
+			}
+			catch (Exception e)
+			{
+				JOptionPane.showMessageDialog(null, "Please choose a book" ,"Error",JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+
+	/**
+	 * @param m_lastChoice the m_lastChoice to set
+	 */
+	public void setLastChoice(SRPDecision m_lastChoice) {
+		this.m_lastChoice = m_lastChoice;
+	}
+
+	/**
+	 * @return the m_chosenBook
+	 */
+	public static CBook getChosenBook() {
+		return m_chosenBook;
+	}
+
+	/**
+	 * @return the m_lastChoice
+	 */
+	public SRPDecision getLastChoice() {
+		return m_lastChoice;
 	}
 
 	/**
 	 * @param m_books the m_books to set
 	 */
-	public void setBooks(LinkedList m_books) {
+	public void setBooks(LinkedList<CBook> m_books) {
 		this.m_books = m_books;
 	}
 
 	/**
 	 * @return the m_books
 	 */
-	public LinkedList getBooks() {
+	public LinkedList<CBook> getBooks() {
 		return m_books;
 	}
 
@@ -175,6 +211,7 @@ public class CSearchResultPanel extends JPanel implements ActionListener {
 			m_jButton_ShowDetails_SRP = new JButton();
 			m_jButton_ShowDetails_SRP.setBounds(new Rectangle(396, 481, 208, 34));
 			m_jButton_ShowDetails_SRP.setText("Show Details");
+			m_jButton_ShowDetails_SRP.addActionListener(this);
 		}
 		return m_jButton_ShowDetails_SRP;
 	}

@@ -1,20 +1,17 @@
 package client.gui;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import client.core.AUser;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.Font;
 
 public class CMainMenuPanel extends JPanel implements ActionListener {
 

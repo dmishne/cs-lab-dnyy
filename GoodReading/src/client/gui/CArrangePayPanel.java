@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import client.core.AUser;
 import client.core.CReader;
 
 public class CArrangePayPanel extends JPanel implements ActionListener {
@@ -158,17 +159,17 @@ public class CArrangePayPanel extends JPanel implements ActionListener {
 			{
 				if(m_jComboBox_PaymentType.getSelectedIndex() == 2)
 				{
-					result = ((CReader)CReader.getInstance()).ArrangePayment("CreditCard",m_jTextField_CCNUM.getText(),m_jTextField_CCEXP.getText(),m_jTextField_SSN.getText());
+					result = ((CReader)AUser.getInstance()).ArrangePayment("CreditCard",m_jTextField_CCNUM.getText(),m_jTextField_CCEXP.getText(),m_jTextField_SSN.getText());
 				}
 				else
 				{
 					if(m_jComboBox_PaymentType.getSelectedIndex() == 0)
 					{
-						result = ((CReader)CReader.getInstance()).ArrangePayment("Yearly");
+						result = ((CReader)AUser.getInstance()).ArrangePayment("Yearly");
 					}
 					else
 					{
-						result = ((CReader)CReader.getInstance()).ArrangePayment("Monthly");
+						result = ((CReader)AUser.getInstance()).ArrangePayment("Monthly");
 					}
 				}
 				JOptionPane.showMessageDialog(null, result, "Success",JOptionPane.INFORMATION_MESSAGE);

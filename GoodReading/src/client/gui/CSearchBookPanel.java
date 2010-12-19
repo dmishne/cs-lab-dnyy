@@ -1,26 +1,21 @@
 package client.gui;
 
-import java.awt.GridBagLayout;
-import javax.swing.JPanel;
 import java.awt.Dimension;
-import javax.swing.JButton;
-import java.awt.GridBagConstraints;
-import java.awt.Rectangle;
-import java.awt.Point;
-import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.util.LinkedList;
 
-import javax.swing.SwingConstants;
 import javax.swing.BorderFactory;
-import javax.swing.border.BevelBorder;
-import javax.swing.JTextField;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
-
-import common.data.CBook;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
 
 import client.common.CClientConnector;
 
