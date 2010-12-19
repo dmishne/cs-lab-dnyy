@@ -162,7 +162,14 @@ public class CBook implements Serializable {
 	public String getM_language() {
 		return m_language;
 	}
-	
 
-	
+	public int getScore() {
+		return (int) ((int) this.m_score/this.m_score_count);
+	}
+
+	public double getAvgScore() {
+		return (double) this.m_score/this.m_score_count;
+	}
+
+
 }
