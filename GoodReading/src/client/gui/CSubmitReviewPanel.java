@@ -34,7 +34,7 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 	private JLabel Jlabel_label = null;
 	private JScrollPane spfText = null;
 	
-	static private HashMap<String,String> m_newReview = null;
+    private HashMap<String,String> m_newReview = null;
 	
 	public enum ESRDecision
 	{
@@ -186,7 +186,7 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 	/**
 	 * @return the m_newReview
 	 */
-	public static HashMap<String, String> getM_newReview() {
+	public HashMap<String, String> getM_newReview() {
 		return m_newReview;
 	}
 
@@ -212,22 +212,15 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 			store_review = review.getText();
 			store_title = title.getText();
 			if(store_title.isEmpty() || store_title.compareTo(" Add Name to your review") == 0)
-			{
 				   m_newReview.put("title", " ");
-		           this.setLastChoice(ESRDecision.SUBMIT);
-			}
 			else
 			       m_newReview.put("title", title.getText());
-			if(store_review.isEmpty() || store_review.compareTo("Add your review here") == 0)
-			{
+			if(store_review.isEmpty() || store_review.compareTo(" Add your review here") == 0)
 				   m_newReview.put("review", " ");
-		           this.setLastChoice(ESRDecision.SUBMIT);
-			}
 			else
 				m_newReview.put("review", review.getText());
-	            this.setLastChoice(ESRDecision.SUBMIT);
-				
-			
+	            
+			this.setLastChoice(ESRDecision.SUBMIT);
 			this.setVisible(false);
 		}
 	}
