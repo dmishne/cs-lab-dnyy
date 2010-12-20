@@ -467,7 +467,7 @@ public class CDBInteractionGenerator
 		return 0;
 	}
 
-	public boolean subscriptionPay(String string, String userName, String string2) {
+	public boolean subscriptionPay(String type, String userName, String isbn) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -478,18 +478,41 @@ public class CDBInteractionGenerator
 	}
 
 	public int createReciept(String userName, String isbn, String type) {
-		// TODO Auto-generated method stub
-		return 0;
+		//TODO the amount in the DB table receipt is INT but the price in books is FLOAT ???????
+		// also the type is defined INT in DB but string in here ??????????
+		ResultSet rs = null;
+		try {
+			rs = this.MySQLQuery("CALL CreateReciept('"+ userName +"','"+ isbn +"','"+ type+"');");
+			if(rs.next())
+				{
+					return (rs.getInt("reciept_ID"));
+				}
+		} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}		
+		return -1;
 	}
 
 	public boolean hasUserRead(String isbn, String userName) {
-		// TODO Auto-generated method stub
+		ResultSet check = null;
+		try {
+			check = this.MySQLQuery("CALL CheckReceiptByUserNameAndISBN ('"+ isbn + "','"+ userName +"');");
+			if(check.next())
+				{
+					return true;
+				}
+		} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}		
 		return false;
 	}
 
-	public boolean submitReview(String string, String userName, String string2,
-			String string3) {
-		// TODO Auto-generated method stub
+	public boolean submitReview(String isbn, String userName, String title, String review) {
+		//TODO verify all values in SP here
+		try {
+			Statement st = this.m_DB_Connection.createStatement();
+			st.executeUpdate("CALL CreateReview('"+ isbn +"','"+ userName +"','"+ title +"','"+ review +"');");
+			return true;	
+		} catch (SQLException e) {
+			System.out.println("submitReview():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 		return false;
 	}
 
