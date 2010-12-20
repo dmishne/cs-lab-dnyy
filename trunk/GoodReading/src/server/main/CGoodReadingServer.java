@@ -40,6 +40,10 @@ public class CGoodReadingServer {
 		
 	//	CDBInteractionGenerator.GetInstance().MySQLInsertBlobFile(new CFile("arg.txt").getFilearray().toString());
 	//	System.out.print(CDBInteractionGenerator.GetInstance().getPrice("1234"));
+	//	System.out.print(CDBInteractionGenerator.GetInstance().hasUserRead("1234", "yotam"));
+	//	System.out.print(CDBInteractionGenerator.GetInstance().createReciept("yotam", "1234", "YEARLY"));
+	//	System.out.print(CDBInteractionGenerator.GetInstance().submitReview("978-0747532744", "yotam", "title...", "review..."));
+		
 		
 		//at last, we check that everthing is working
 	/*
