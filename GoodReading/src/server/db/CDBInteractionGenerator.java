@@ -469,12 +469,15 @@ public class CDBInteractionGenerator
 
 	public boolean subscriptionPay(String type, String userName, String isbn) {
 		// TODO Auto-generated method stub
+		// check that user has a matching type subscription
+		// if user doesn't have a subscription of "type" return false
+		// sub 1 from amount
+		// if amounnt - 0 delete subscription
 		return false;
 	}
 
 	public boolean ccPay( String userName, double price, String string2) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public int createReciept(String userName, String isbn, String type) {
