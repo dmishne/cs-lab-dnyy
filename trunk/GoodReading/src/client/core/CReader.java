@@ -99,20 +99,31 @@ public class CReader extends AUser{
 	
 	
 	
-	public void submitReview(String reviewTitle , String review , int bookISBN) 
+	public void submitReview(String reviewTitle , String review , int bookISBN) throws Exception 
 	{
 		CEntry EntryToSrv = null;
 		Map <String,String> Breview = new HashMap<String,String>();
 		String isbn = Integer.toString(bookISBN);
-		Breview.put("ISBN",isbn );
-		Breview.put("Title",reviewTitle );
-		Breview.put("Review", review);
-		EntryToSrv = new CEntry("AddBookReview",Breview,this.getUserName(),this.getUserSessionId());
-		try {
-			CClientConnector.getInstance().messageToServer(EntryToSrv);
-		} catch (Exception e) {
-			System.out.println("Can't send to server");
-		}
+		if(review.compareTo(" ") != 0)
+		{
+			if(reviewTitle.compareTo(" ") != 0)
+			{
+			    Breview.put("Review", review);
+			    Breview.put("ISBN",isbn );
+				Breview.put("Title",reviewTitle );
+				EntryToSrv = new CEntry("AddBookReview",Breview,this.getUserName(),this.getUserSessionId());
+				try {
+					CClientConnector.getInstance().messageToServer(EntryToSrv);
+				} catch (Exception e) {
+					System.out.println("Can't send to server");
+				}
+			}
+			else
+				throw new Exception("No Title added!");
+		}				
+		else
+			throw new Exception("No Review added!");
+		
 	}
 	
 	
@@ -152,11 +163,11 @@ public class CReader extends AUser{
 		return res;
 	}
 	
-	public void addScore(String isbn, double score) throws Exception
+	public void addScore(String isbn, int score) throws Exception
 	{
 		CEntry EntryToSrv;
 		Map <String,String> addSc = new HashMap<String,String>();
-		String sc = Double.toString(score);
+		String sc = Integer.toString(score);
 		addSc.put("isbn", isbn);
 		addSc.put("score", sc);
 		EntryToSrv = new CEntry("addscore",addSc,this.getUserName(),this.getUserSessionId());

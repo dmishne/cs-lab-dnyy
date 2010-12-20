@@ -32,6 +32,7 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 	private JButton JButton_reset = null;
 	private JButton JButton_submit = null;
 	private JLabel Jlabel_label = null;
+	private JScrollPane spfText = null;
 	
 	static private HashMap<String,String> m_newReview = null;
 	
@@ -48,6 +49,7 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 		super();
 		initialize();
 	}
+
 
 	/**
 	 * This method initializes this
@@ -72,13 +74,16 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 		this.setLayout(null);
 		this.setPreferredSize(new Dimension(700, 600));
 		this.add(getTitle(), null);
-		this.add(jtitle1, null);
-		this.add(new JScrollPane(getReview()),null);		
+		this.add(jtitle1, null);		
 		this.add(getBack(), null);
 		this.add(getReset(), null);
 		this.add(getSubmit(), null);
 		this.add(Jlabel_label, null);
 		this.add(getReview(), null);
+		spfText = new JScrollPane(review);
+		spfText.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		spfText.setBounds(new Rectangle(42, 135, 620, 343));
+		this.add(spfText, null);
 	}
 	
 	public void setLastChoice(ESRDecision m_lastChoice) {
@@ -97,9 +102,12 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 	private JTextField getTitle() {
 		if (title == null) {
 			title = new JTextField();
-			title.setLocation(new Point(100, 80));
+			title.setBorder(BorderFactory.createLineBorder(Color.black));
 			title.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-			title.setSize(new Dimension(562, 25));
+			title.setBounds(new Rectangle(100, 81, 560, 25));
+			title.setForeground(Color.gray);
+			title.setText(" Add Name to your review");
+			title.addMouseListener(this);
 		}
 		return title;
 	}
@@ -112,11 +120,13 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 	private JTextArea getReview() {
 		if (review == null) {
 			review = new JTextArea();
-			review.setText("  Add your review here");
-			review.setLineWrap(false);
+			review.setForeground(Color.gray);
+			review.setText(" Add your review here");
+			review.setLineWrap(true);
 			review.setBorder(BorderFactory.createLineBorder(Color.black));
-			//review.setPreferredSize(new Dimension(400, 200));
-			review.setBounds(new Rectangle(40, 129, 621, 357));
+			review.setWrapStyleWord(true);
+			review.setSize(new Dimension(606, 19));
+			review.setLocation(new Point(0, 0));
 			review.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 			review.addMouseListener(this);
 		}
@@ -189,8 +199,10 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 		}
 		else if(source == JButton_reset)
 		{
+			review.setForeground(Color.gray);
 			review.setText(" Add your review here");
-			title.setText(" ");
+			title.setForeground(Color.gray);
+			title.setText(" Add Name to your review");
 		}
 		else if(source == JButton_submit)
 		{
@@ -199,7 +211,7 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 			m_newReview = new HashMap<String,String>();
 			store_review = review.getText();
 			store_title = title.getText();
-			if(store_title.isEmpty())
+			if(store_title.isEmpty() || store_title.compareTo(" Add Name to your review") == 0)
 			{
 				   m_newReview.put("title", " ");
 		           this.setLastChoice(ESRDecision.SUBMIT);
@@ -222,12 +234,22 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 
 	@Override
 	public void mouseClicked(MouseEvent me) {
-		//Point clicked = me.getPoint();
-		//if(review.getBounds().contains(clicked.x, clicked.y)) 
-		//{
-			if(review.getText().compareTo("Add your review here") == 0)
+		if(me.getSource() == review)
+		{
+			if(review.getText().compareTo(" Add your review here") == 0)
+			{
 		                 review.setText("");
-		//}
+		                 review.setForeground(Color.black);
+			}
+		}
+		if(me.getSource() == title)
+		{
+			if(title.getText().compareTo(" Add Name to your review") == 0)
+			{
+				      title.setText("");
+				      title.setForeground(Color.black);
+			}
+		}
 	}
 
 	@Override
@@ -258,4 +280,4 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 	
 	
 
-}  //  @jve:decl-index=0:visual-constraint="-1,49"
+}  //  @jve:decl-index=0:visual-constraint="-22,-36"
