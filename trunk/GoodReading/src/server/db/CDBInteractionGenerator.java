@@ -33,7 +33,7 @@ public class CDBInteractionGenerator
 	
 	final private static String m_DEFAULTHOST="jdbc:mysql://localhost/cslabdnyy";
 	final private static String m_DEFAULTUSER="root";
-	final private static String m_DEFAULTPASS="cslab";
+	final private static String m_DEFAULTPASS="m00nkey";
 	
 	
 	public ResultSet MySQLQuery(String query) throws SQLException
