@@ -220,7 +220,7 @@ public class CExecuter implements Runnable
 								Map<String,String> arg= Work.getMsgMap();
 								//update account according to payment method
 								if(arg.get("paymethod").compareTo("monthly")==0)
-									if (db.subscriptionPay("monthly",Work.getUserName(),arg.get("isbn")))
+									if (db.subscriptionPay("monthly",Work.getUserName()))
 										{ 
 										int rID=db.createReciept(Work.getUserName(),arg.get("isbn"),"monthly");//generate reciept
 										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Success "+Integer.toString(rID));//response to client
@@ -228,7 +228,7 @@ public class CExecuter implements Runnable
 									else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "failed operation");
 								
 								else if(arg.get("paymethod").compareTo("yearly")==0)
-									if (db.subscriptionPay("yearly",Work.getUserName(),arg.get("isbn")))
+									if (db.subscriptionPay("yearly",Work.getUserName()))
 									{ 
 										int rID=db.createReciept(Work.getUserName(),arg.get("isbn"),"yearly");//generate reciept
 										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Success "+Integer.toString(rID));//response to client

@@ -463,26 +463,43 @@ public class CDBInteractionGenerator
 				}
 		} catch (Exception e) 
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}	
-		//TODO add not success return value
-		return 0;
+		return -1;
 	}
 
-	public boolean subscriptionPay(String type, String userName, String isbn) {
-		// TODO Auto-generated method stub
-		// check that user has a matching type subscription
-		// if user doesn't have a subscription of "type" return false
-		// sub 1 from amount
-		// if amounnt - 0 delete subscription
-		return false;
+	public boolean subscriptionPay(String type, String userName) {
+		ResultSet check = null;
+		String ltype = null;
+		int amount = 0;
+		try {
+			check = this.MySQLQuery("CALL CheckSubscription ('"+ userName + "');");
+			if(check.next())
+				{
+					check.beforeFirst();
+					while(check.next())
+					{
+						ltype = check.getString("type");
+						amount = check.getInt("ammount");
+						if(type.equals(ltype)) break;
+					}
+					if(type.equals(ltype)) // check that user has a matching type subscription
+					{
+						Statement st = this.m_DB_Connection.createStatement();
+						// sub 1 from amount and delete if needed
+						st.executeUpdate("CALL DecreaseFromSubscription('"+ userName +"',"+ (amount-1) +");");
+					}
+					else return false;	// if user doesn't have a subscription of "type" return false
+				}
+				else return false;
+		} catch (Exception e) 
+		{	 System.out.println("Exception in subscriptionPay (FactoryData() "+e.getMessage());	}
+		return true;
 	}
 
 	public boolean ccPay( String userName, double price, String string2) {
 		return true;
 	}
 
-	public int createReciept(String userName, String isbn, String type) {
-		//TODO the amount in the DB table receipt is INT but the price in books is FLOAT ???????
-		// also the type is defined INT in DB but string in here ??????????
+	public int createReciept(String userName, String isbn, String type) {	
 		ResultSet rs = null;
 		try {
 			rs = this.MySQLQuery("CALL CreateReciept('"+ userName +"','"+ isbn +"','"+ type+"');");
@@ -512,18 +529,38 @@ public class CDBInteractionGenerator
 		//TODO verify all values in SP here
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
-			st.executeUpdate("CALL CreateReview('"+ isbn +"','"+ userName +"','"+ title +"','"+ review +"');");
+			st.executeUpdate("CALL InsertReview('"+ isbn +"','"+ userName +"','"+ title +"','"+ review +"');");
 			return true;	
 		} catch (SQLException e) {
-			System.out.println("submitReview():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
+			System.out.println("InsertReview():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 		return false;
 	}
 
 	public boolean giveScore(String isbn, String userName, int score) 
 	{
-		// TODO Auto-generated method stub
-		//if user already has score then update
-		//need return false if fail
+		ResultSet check = null;
+		try {
+			check = this.MySQLQuery("CALL CheckScore ('"+ isbn + "','"+ userName +"');");
+			if(check.next()) //user has already scored this book
+				{
+				try {
+					Statement st = this.m_DB_Connection.createStatement();
+					st.executeUpdate("CALL UpdateScore('"+ isbn +"','"+ userName +"',"+ score +");");
+					return true;	
+				} catch (SQLException e) {
+					System.out.println("UpdateScore():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
+				}
+			else 
+			{
+				try {
+					Statement st = this.m_DB_Connection.createStatement();
+					st.executeUpdate("CALL SubmitScore('"+ isbn +"','"+ userName +"',"+ score +");");
+					return true;	
+				} catch (SQLException e) {
+					System.out.println("SubmitScore():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
+			}
+		} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
 		return false;
 	}
 
