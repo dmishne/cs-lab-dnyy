@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.util.HashMap;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
@@ -19,6 +20,10 @@ import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+
+import client.core.AUser;
+import client.core.CReader;
+
 import java.awt.Rectangle;
 
 public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseListener  {
@@ -212,16 +217,30 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 			store_review = review.getText();
 			store_title = title.getText();
 			if(store_title.isEmpty() || store_title.compareTo(" Add Name to your review") == 0)
+			{
 				   m_newReview.put("title", " ");
+			}
 			else
+			{
 			       m_newReview.put("title", title.getText());
+			}
 			if(store_review.isEmpty() || store_review.compareTo(" Add your review here") == 0)
+			{
 				   m_newReview.put("review", " ");
+			}
 			else
+			{
 				m_newReview.put("review", review.getText());
-	            
-			this.setLastChoice(ESRDecision.SUBMIT);
-			this.setVisible(false);
+			}
+			try {
+				((CReader)AUser.getInstance()).submitReview(m_newReview.get("title"),m_newReview.get("review") , CBookDetailPanel.getBook().getM_ISBN());
+				JOptionPane.showMessageDialog(null, "Your review will be added after further review" ,"OK",JOptionPane.ERROR_MESSAGE);
+				this.setVisible(false);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, e.getMessage() ,"Error",JOptionPane.ERROR_MESSAGE);
+				m_newReview = null;
+			}
+
 		}
 	}
 

@@ -100,7 +100,8 @@ public abstract class AUser implements Serializable{
 	{
 		switch(((AUser)pri).getPrivilege())
 		{
-		case Reader:
+		
+		case Reader: case User:
 			m_actor = (CReader)pri;
 			break;
 		case Librarian:
