@@ -44,7 +44,7 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 	
 	private static final long serialVersionUID = 1L;
 	private JButton m_jButton_back_BDP = null;
-	private CBook m_book;
+	private static CBook m_book;
 	private JLabel m_jLabel_Title = null;
 	private JLabel m_jLabel_Author = null;
 	private JTextArea m_jTextArea_Summary = null;
@@ -119,7 +119,7 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 	/**
 	 * @return the m_book
 	 */
-	public CBook getBook() {
+	public static CBook getBook() {
 		return m_book;
 	}
 

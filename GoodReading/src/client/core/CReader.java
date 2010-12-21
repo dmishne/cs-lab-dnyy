@@ -99,11 +99,10 @@ public class CReader extends AUser{
 	
 	
 	
-	public void submitReview(String reviewTitle , String review , int bookISBN) throws Exception 
+	public void submitReview(String reviewTitle , String review , String isbn) throws Exception 
 	{
 		CEntry EntryToSrv = null;
 		Map <String,String> Breview = new HashMap<String,String>();
-		String isbn = Integer.toString(bookISBN);
 		if(review.compareTo(" ") != 0)
 		{
 			if(reviewTitle.compareTo(" ") != 0)

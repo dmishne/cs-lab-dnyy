@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import client.common.CClientConnector;
+import client.core.AUser;
 
 public class CMainFrame extends JFrame implements ActionListener,ComponentListener{
 
