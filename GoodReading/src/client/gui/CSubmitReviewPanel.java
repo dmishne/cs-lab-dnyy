@@ -60,10 +60,10 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 		Jlabel_label = new JLabel();
 		Jlabel_label.setFont(new Font("Freestyle Script", Font.BOLD, 48));
 		Jlabel_label.setLocation(new Point(236, 14));
-		Jlabel_label.setSize(new Dimension(264, 44));
+		Jlabel_label.setSize(new Dimension(270, 44));
 		Jlabel_label.setPreferredSize(new Dimension(263, 57));
 		Jlabel_label.setHorizontalAlignment(SwingConstants.CENTER);
-		Jlabel_label.setText("review submition");
+		Jlabel_label.setText("Review Submission");
 		jtitle1 = new JLabel();
 		jtitle1.setText("Title :");
 		jtitle1.setSize(new Dimension(59, 40));
@@ -144,7 +144,7 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 			JButton_back.setSize(new Dimension(150, 34));
 			JButton_back.setPreferredSize(new Dimension(73, 27));
 			JButton_back.setText("Back");
-			JButton_back.setLocation(new Point(60, 510));
+			JButton_back.setLocation(new Point(62, 480));
 			JButton_back.addActionListener(this);
 		}
 		return JButton_back;
@@ -158,7 +158,7 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 	private JButton getReset() {
 		if (JButton_reset == null) {
 			JButton_reset = new JButton();
-			JButton_reset.setLocation(new Point(275, 510));
+			JButton_reset.setLocation(new Point(274, 480));
 			JButton_reset.setText("Reset");
 			JButton_reset.setSize(new Dimension(150, 34));
 			JButton_reset.addActionListener(this);
@@ -174,7 +174,7 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 	private JButton getSubmit() {
 		if (JButton_submit == null) {
 			JButton_submit = new JButton();
-			JButton_submit.setLocation(new Point(485, 510));
+			JButton_submit.setLocation(new Point(486, 480));
 			JButton_submit.setText("Submit");
 			JButton_submit.setSize(new Dimension(150, 34));
 			JButton_submit.addActionListener(this);
@@ -186,7 +186,7 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 	/**
 	 * @return the m_newReview
 	 */
-	public HashMap<String, String> getM_newReview() {
+	public HashMap<String, String> getNewReview() {
 		return m_newReview;
 	}
 
