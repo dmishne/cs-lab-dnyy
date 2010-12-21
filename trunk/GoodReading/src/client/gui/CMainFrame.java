@@ -38,6 +38,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private CSearchBookPanel GUI_cSearchBookPanel = null;
 	private CSearchResultPanel GUI_CSearchResultPanel = null;
 	private CBookDetailPanel GUI_CBookDetailPanel = null;
+	private CSubmitReviewPanel GUI_CSubmitReviewPanel = null;
 	/**
 	 * This is the default constructor
 	 */
@@ -238,9 +239,27 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			}
 			else if(source == GUI_CBookDetailPanel)
 			{
-				jContentPane.remove(GUI_CBookDetailPanel);
-				GUI_CBookDetailPanel = null;
-				GUI_CSearchResultPanel.setVisible(true);
+				if(GUI_CBookDetailPanel.getLastChoice() == CBookDetailPanel.EBDDecision.BACK)
+				{
+					jContentPane.remove(GUI_CBookDetailPanel);
+					GUI_CBookDetailPanel = null;
+					GUI_CSearchResultPanel.setVisible(true);
+				}
+				else if(GUI_CBookDetailPanel.getLastChoice() == CBookDetailPanel.EBDDecision.REVIEW)
+				{
+					jContentPane.add(getGUI_CSubmitReviewPanel());
+					GUI_CBookDetailPanel.setVisible(false);
+					GUI_CSubmitReviewPanel.setVisible(true);
+				}
+			}
+			else if(source == GUI_CSubmitReviewPanel)
+			{
+				if(GUI_CSubmitReviewPanel.getLastChoice() == CSubmitReviewPanel.ESRDecision.BACK)
+				{
+					jContentPane.remove(GUI_CSubmitReviewPanel);
+					GUI_CSubmitReviewPanel = null;
+					GUI_CBookDetailPanel.setVisible(true);
+				}
 			}
 		}
 		catch (Exception e)
@@ -366,6 +385,22 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			GUI_CBookDetailPanel.addComponentListener(this);
 		}
 		return GUI_CBookDetailPanel;
+	}
+
+	/**
+	 * This method initializes GUI_CSubmitReviewPanel	
+	 * 	
+	 * @return client.gui.CSubmitReviewPanel	
+	 */
+	private CSubmitReviewPanel getGUI_CSubmitReviewPanel() {
+		if (GUI_CSubmitReviewPanel == null) {
+			GUI_CSubmitReviewPanel = new CSubmitReviewPanel();
+			GUI_CSubmitReviewPanel.setSize(new Dimension(700, 600));
+			GUI_CSubmitReviewPanel.setLocation(new Point(0, 100));
+			GUI_CSubmitReviewPanel.setVisible(false);
+			GUI_CSubmitReviewPanel.addComponentListener(this);
+		}
+		return GUI_CSubmitReviewPanel;
 	}
 	
 }  //  @jve:decl-index=0:visual-constraint="10,10"
