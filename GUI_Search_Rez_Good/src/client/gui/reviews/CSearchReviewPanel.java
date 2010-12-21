@@ -10,14 +10,11 @@ import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
-
-import client.common.CClientConnector;
 
 public class CSearchReviewPanel extends JPanel implements ActionListener{
 
@@ -85,7 +82,7 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 		m_jLabel_Author_SBP.setText("Author:");
 		m_jLabel_title_SBP = new JLabel();
 		m_jLabel_title_SBP.setHorizontalAlignment(SwingConstants.CENTER);
-		m_jLabel_title_SBP.setText("Search Book");
+		m_jLabel_title_SBP.setText("Search Review");
 		m_jLabel_title_SBP.setLocation(new Point(0, 15));
 		m_jLabel_title_SBP.setSize(new Dimension(700, 60));
 		m_jLabel_title_SBP.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
@@ -200,7 +197,7 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 		if (m_jButton_Search_SBP == null) {
 			m_jButton_Search_SBP = new JButton();
 			m_jButton_Search_SBP.setBounds(new Rectangle(396, 480, 208, 34));
-			m_jButton_Search_SBP.setText("Search Book");
+			m_jButton_Search_SBP.setText("Search Review");
 			m_jButton_Search_SBP.addActionListener(this);
 		}
 		return m_jButton_Search_SBP;
