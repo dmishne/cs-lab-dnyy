@@ -43,6 +43,8 @@ public class CGoodReadingServer {
 	//	System.out.print(CDBInteractionGenerator.GetInstance().hasUserRead("1234", "yotam"));
 	//	System.out.print(CDBInteractionGenerator.GetInstance().createReciept("yotam", "1234", "YEARLY"));
 	//	System.out.print(CDBInteractionGenerator.GetInstance().submitReview("978-0747532744", "yotam", "title...", "review..."));
+	//	System.out.print(CDBInteractionGenerator.GetInstance().giveScore("1234", "yotam", 3));
+	//	System.out.print(CDBInteractionGenerator.GetInstance().subscriptionPay("YEARLY", "yotam"));
 		
 		
 		//at last, we check that everthing is working
