@@ -44,7 +44,7 @@ public class CReviewPanel extends JPanel
 		jLabelTitle.setText("Title:");
 		this.setSize(669, 116);
 		this.setLayout(null);
-		this.setPreferredSize(new Dimension(500, 70));
+		this.setPreferredSize(new Dimension(600, 100));
 		this.add(getJTextAreaTitle(), null);
 		this.add(jLabelTitle, null);
 		this.add(jLabelBy, null);

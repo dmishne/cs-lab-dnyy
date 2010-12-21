@@ -24,17 +24,14 @@ public class mainf {
 		arg.add(new CBookReview("444","test1","don't let me in","book rocks","30/12/2010", 1,"30/12/2010","daniel"));
 
 		JFrame a=new JFrame();
-		CReviewResults sub=new CReviewResults(arg);
-		JPanel blah=new JPanel();
-		blah.setPreferredSize(new Dimension(300,300));
-		blah.add( new JLabel("this is blah"),null);
-		blah.add(sub.getPanel(),null);
-		blah.setVisible(true);
-		a.add(blah);
+		JPanel sub=CReviewResults.getSearchReviewPanel(arg);
+	
+		a.setPreferredSize(new Dimension(800,1000));
+		a.add(sub);
 		a.setLayout(null);
 		a.pack();
 		a.setVisible(true);
-		a.setContentPane(blah);
+		a.setContentPane(sub);
 	}
 
 }
