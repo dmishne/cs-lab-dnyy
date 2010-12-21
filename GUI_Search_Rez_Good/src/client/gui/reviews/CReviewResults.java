@@ -136,7 +136,7 @@ public class CReviewResults extends JPanel implements ActionListener// JScrollPa
 	                                                boolean isSelected, 
 	                                                boolean cellHasFocus)
 	  {
-		  Component component = (Component)new CReviewPanel((CBookReview) value,cellIndex);
+		  Component component = (Component)new CReviewPanel((CBookReview) value,cellIndex,isSelected);
 		  component.setBackground (isSelected ? Color.BLUE : Color.LIGHT_GRAY);
 		   
 		  return component;

@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import common.data.CBookReview;
+
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 
@@ -23,6 +25,7 @@ public class CReviewPanel extends JPanel
 	private JLabel jLabelDate = null;
 	private JTextArea jTextAreadate = null;
 	private JLabel jLabel = null;
+	private boolean m_sel;
 	/**
 	 * This method initializes this
 	 * 
@@ -30,18 +33,22 @@ public class CReviewPanel extends JPanel
 	private void initialize() {
 		jLabel = new JLabel();
 		jLabel.setBounds(new Rectangle(12, 8, 43, 23));
+		jLabel.setForeground(m_sel ? Color.WHITE : Color.BLACK);		  
 		jLabelDate = new JLabel();
 		jLabelDate.setBounds(new Rectangle(512, 9, 30, 21));
 		jLabelDate.setText("Date:");
 		jLabelCont = new JLabel();
 		jLabelCont.setBounds(new Rectangle(11, 35, 50, 33));
 		jLabelCont.setText("Context:");
+		jLabelCont.setForeground(m_sel ? Color.WHITE : Color.BLACK);
 		jLabelBy = new JLabel();
 		jLabelBy.setBounds(new Rectangle(368, 10, 32, 21));
 		jLabelBy.setText("By");
+		jLabelBy.setForeground(m_sel ? Color.WHITE : Color.BLACK);
 		jLabelTitle = new JLabel();
 		jLabelTitle.setBounds(new Rectangle(58, 12, 40, 20));
 		jLabelTitle.setText("Title:");
+		jLabelTitle.setForeground(m_sel ? Color.WHITE : Color.BLACK);
 		this.setSize(669, 116);
 		this.setLayout(null);
 		this.setPreferredSize(new Dimension(600, 100));
@@ -56,10 +63,11 @@ public class CReviewPanel extends JPanel
 		this.add(jLabel, null);
 					
 	}
-	public CReviewPanel(CBookReview rev,int id)
+	public CReviewPanel(CBookReview rev,int id,boolean selected)
 	{
 		super();	
 		m_review=rev;
+		m_sel = selected;
 		initialize();
 		id++;
 		jLabel.setText("#"+id);
