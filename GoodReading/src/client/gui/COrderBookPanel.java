@@ -1,11 +1,14 @@
 package client.gui;
 
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import java.awt.Rectangle;
 import javax.swing.JLabel;
+
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -15,11 +18,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.border.BevelBorder;
-
 import client.core.*;
-import client.gui.CSubmitReviewPanel.ESRDecision;
-
-import common.data.CBook;
 
 public class COrderBookPanel extends JPanel implements ActionListener{
 
@@ -28,19 +27,18 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 	private JButton jButton_Back = null;
 	private JButton jButton_Purchase = null;
 	private JComboBox jComboBox_PayType = null;
-	private JLabel jLabel_BookTitle = null;
-	private JLabel jLabel_BookAuthor = null;
+	private CustomLabel jLabel_BookTitle = null;
+	private CustomLabel jLabel_BookAuthor = null;
 	private JLabel jLabel_DateRelease = null;
 	private JLabel jLabel_BookPrice = null;
 	private JLabel jLabel_BookLanguage = null;
 	private JButton jButton_ShowReceipt = null;
-	
-	
+	private JComboBox jComboBox_fileType = null;
 	private JLabel jLabel_release = null;
 	private JLabel jLabel_lang = null;
 	private JLabel jLabel_labelPrice = null;
 	private JLabel jLabel_choosePayment = null;
-	private CBook m_book;
+	private JLabel jLabel_chooseFile = null;
 	private EOBDecision m_lastChoice = null;  //  @jve:decl-index=0:
 	
 
@@ -51,14 +49,13 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 	 */
 	public COrderBookPanel() throws Exception {
 		super();
-		m_book = CSearchResultPanel.getChosenBook();
 		initialize();
 	}
 	
 	
 	public enum EOBDecision
 	{
-		BACK,PURCHASE,SHOWREVIEW
+		BACK,PURCHASE,SHOWRECEIPT
 	}
 
 	/**
@@ -71,54 +68,66 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 		jLabel_choosePayment = new JLabel();
 		jLabel_choosePayment.setText("Select your payment type");
 		jLabel_choosePayment.setFont(new Font("Elephant", Font.BOLD, 12));
-		jLabel_choosePayment.setLocation(new Point(205, 310));
-		jLabel_choosePayment.setSize(new Dimension(290, 27));
+		jLabel_choosePayment.setLocation(new Point(387, 349));
+		jLabel_choosePayment.setSize(new Dimension(230, 27));
 		jLabel_choosePayment.setHorizontalAlignment(SwingConstants.CENTER);
+	    jLabel_chooseFile = new JLabel();
+		jLabel_chooseFile.setText("Select preferred file type");
+		jLabel_chooseFile.setFont(new Font("Elephant", Font.BOLD, 12));
+		jLabel_chooseFile.setSize(new Dimension(230, 27));
+		jLabel_chooseFile.setLocation(new Point(80, 349));
+		jLabel_chooseFile.setHorizontalAlignment(SwingConstants.CENTER);
 		jLabel_labelPrice = new JLabel();
-		jLabel_labelPrice.setText("Price               :");
-		jLabel_labelPrice.setFont(new Font("Elephant", Font.BOLD, 12));
-		jLabel_labelPrice.setLocation(new Point(20, 260));
+		jLabel_labelPrice.setText("Price              : ");
+		jLabel_labelPrice.setFont(new Font("Eras Bold ITC", Font.BOLD, 12));
+		jLabel_labelPrice.setLocation(new Point(60, 275));
 		jLabel_labelPrice.setSize(new Dimension(110, 30));
 		jLabel_labelPrice.setHorizontalAlignment(SwingConstants.CENTER);
 		jLabel_lang = new JLabel();
-		jLabel_lang.setText("Language       :");
-		jLabel_lang.setFont(new Font("Elephant", Font.BOLD, 12));
-		jLabel_lang.setLocation(new Point(20, 230));
+		jLabel_lang.setText("Language       : ");
+		jLabel_lang.setFont(new Font("Eras Bold ITC", Font.BOLD, 12));
+		jLabel_lang.setLocation(new Point(60, 245));
 		jLabel_lang.setSize(new Dimension(110, 30));
 		jLabel_lang.setHorizontalAlignment(SwingConstants.CENTER);
 		jLabel_release = new JLabel();
-		jLabel_release.setText("Date Release :");
-		jLabel_release.setFont(new Font("Elephant", Font.BOLD, 12));
-		jLabel_release.setLocation(new Point(20, 200));
+		jLabel_release.setText("Date Release : ");
+		jLabel_release.setFont(new Font("Eras Bold ITC", Font.BOLD, 12));
+		jLabel_release.setLocation(new Point(60, 215));
 		jLabel_release.setSize(new Dimension(110, 30));
 		jLabel_release.setHorizontalAlignment(SwingConstants.CENTER);
 		jLabel_BookLanguage = new JLabel(); 
-		jLabel_BookLanguage.setText("English");
+		//jLabel_BookLanguage.setText(CBookDetailPanel.getBook().getM_language());
+		jLabel_BookLanguage.setText("English");  // stub
 		jLabel_BookLanguage.setSize(new Dimension(150, 30));
-		jLabel_BookLanguage.setLocation(new Point(130, 230));
-		jLabel_BookLanguage.setFont(new Font("Elephant", Font.BOLD, 12));
-		//String price = Double.toString(m_book.getM_price());	
+		jLabel_BookLanguage.setLocation(new Point(170, 245));
+		jLabel_BookLanguage.setFont(new Font("Eras Bold ITC", Font.BOLD, 12));
+		//String price = Double.toString(CBookDetailPanel.getBook().getM_price());
+		String price = "13.80";  // stub
 		jLabel_BookPrice = new JLabel();
-		jLabel_BookPrice.setText("233.50$");
+		jLabel_BookPrice.setText(price);
 		jLabel_BookPrice.setSize(new Dimension(150, 30));
-		jLabel_BookPrice.setLocation(new Point(130, 260));
-		jLabel_BookPrice.setFont(new Font("Elephant", Font.BOLD, 12));
+		jLabel_BookPrice.setLocation(new Point(170, 275));
+		jLabel_BookPrice.setFont(new Font("Eras Bold ITC", Font.BOLD, 12));
+		jLabel_BookPrice.setForeground(Color.red);
 		jLabel_DateRelease = new JLabel(); 
-		jLabel_DateRelease.setText("12.10.1987");
+		//jLabel_DateRelease.setText(CBookDetailPanel.getBook().getM_release_date());
+		jLabel_DateRelease.setText("12.10.1987");   // stub
 		jLabel_DateRelease.setSize(new Dimension(150, 30));
-		jLabel_DateRelease.setLocation(new Point(130, 200));
-		jLabel_DateRelease.setFont(new Font("Elephant", Font.BOLD, 12));
-		jLabel_BookAuthor = new JLabel(); 
-		jLabel_BookAuthor.setBounds(new Rectangle(230, 161, 435, 40));
-		//jLabel_BookAuthor.setText(m_book.getM_author());
-		jLabel_BookAuthor.setText("by 2PAC");
+		jLabel_DateRelease.setLocation(new Point(170, 215));
+		jLabel_DateRelease.setFont(new Font("Eras Bold ITC", Font.BOLD, 12));
+		jLabel_BookAuthor = new CustomLabel();
+		//jLabel_BookAuthor.setText(CBookDetailPanel.getBook().getM_author());
+		jLabel_BookAuthor.setText("by Derrick Jensen");      // stub
 		jLabel_BookAuthor.setFont(new Font("Freestyle Script", Font.BOLD, 36));
+		jLabel_BookAuthor.setSize(new Dimension(435, 40));
+		jLabel_BookAuthor.setLocation(new Point(264, 160));
 		jLabel_BookAuthor.setHorizontalAlignment(SwingConstants.CENTER);
-		jLabel_BookTitle = new JLabel(); 
-		jLabel_BookTitle.setBounds(new Rectangle(0, 110, 540, 45));
-		//jLabel_BookTitle.setText(m_book.getM_title());
-		jLabel_BookTitle.setText("Tag Life");
+		jLabel_BookTitle = new CustomLabel();
+		jLabel_BookTitle.setBounds(new Rectangle(81, 114, 540, 45));
+		//jLabel_BookTitle.setText(CBookDetailPanel.getBook().getM_title());
+		jLabel_BookTitle.setText(" A Language Older Than Words");       // stub
 		jLabel_BookTitle.setFont(new Font("Freestyle Script", Font.BOLD, 45));
+		jLabel_BookTitle.setForeground(Color.blue);
 		jLabel_BookTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		jLabel_screenTitle = new JLabel();
 		jLabel_screenTitle.setText("Order Book Menu");
@@ -126,13 +135,14 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 		jLabel_screenTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		jLabel_screenTitle.setFont(new Font("Freestyle Script", Font.BOLD, 48));
 		jLabel_screenTitle.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-		jLabel_screenTitle.setLocation(new Point(0, 0));
+		jLabel_screenTitle.setLocation(new Point(0, 15));
 		this.setLayout(null);
 		this.setBounds(new Rectangle(0, 0, 700, 600));
 		this.add(jLabel_screenTitle, null);
 		this.add(getJButton_Back(), null);
 		this.add(getJButton_Purchase(), null);
 		this.add(getJComboBox_PayType(), null);
+		this.add(getJComboBox_fileType(),null);
 		this.add(jLabel_BookTitle, null);
 		this.add(jLabel_BookAuthor, null);
 		this.add(jLabel_DateRelease, null);
@@ -143,6 +153,7 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 		this.add(jLabel_lang, null);
 		this.add(jLabel_labelPrice, null);
 		this.add(jLabel_choosePayment, null);
+		this.add(jLabel_chooseFile, null);
 	}
 	
 	
@@ -195,12 +206,29 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 	 */
 	private JComboBox getJComboBox_PayType() throws Exception {
 		if (jComboBox_PayType == null) {
-			//jComboBox_PayType = new JComboBox(((CReader)AUser.getInstance()).getPaymentType());
 			jComboBox_PayType = new JComboBox();
-			jComboBox_PayType.setLocation(new Point(205, 338));
-			jComboBox_PayType.setSize(new Dimension(290, 27));
+			//jComboBox_PayType = new JComboBox(((CReader)AUser.getInstance()).getPaymentType());
+			jComboBox_PayType.setLocation(new Point(387, 377));
+			jComboBox_PayType.setSize(new Dimension(230, 27));
 		}
 		return jComboBox_PayType;
+	}
+	
+	
+	/**
+	 * This method initializes jComboBox_PayType	
+	 * 	
+	 * @return javax.swing.JComboBox	
+	 * @throws Exception 
+	 */
+	private JComboBox getJComboBox_fileType() throws Exception {
+		if (jComboBox_fileType == null) {
+			jComboBox_fileType = new JComboBox();
+			//jComboBox_fileType = new JComboBox(((CReader)AUser.getInstance()).getFileType(CBookDetailPanel.getBook().getM_ISBN()));
+			jComboBox_fileType.setLocation(new Point(80, 377));
+			jComboBox_fileType.setSize(new Dimension(230, 27));
+		}
+		return jComboBox_fileType;
 	}
 
 	/**
@@ -224,12 +252,34 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
+		String receipt;
 		if(source == jButton_Back)
 		{
-			setLastChoice(EOBDecision.BACK);
+			this.setLastChoice(EOBDecision.BACK);
+			this.setVisible(false);
+		}
+		if(source == jButton_Purchase)
+		{
+			try {
+				//receipt =((CReader)AUser.getInstance()).orderBook(CBookDetailPanel.getBook().getM_ISBN(),(String)jComboBox_PayType.getSelectedItem(), (String)jComboBox_fileType.getSelectedItem() );
+	            receipt = "187641gyug381";  // stub
+				if(receipt.isEmpty() == false)
+	            {
+	            	jButton_Purchase.setVisible(false);
+	            	jButton_ShowReceipt.setVisible(true);	
+	            }
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, e.getMessage() ,"Error",JOptionPane.ERROR_MESSAGE);
+			}
+			
+		}
+		if(source == jButton_ShowReceipt)
+		{
+			this.setLastChoice(EOBDecision.SHOWRECEIPT); 
 			this.setVisible(false);
 		}
 		
 	}
+	
 
 }
