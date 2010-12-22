@@ -99,6 +99,7 @@ public class CReader extends AUser{
 	
 	
 	
+
 	public void submitReview(String reviewTitle , String review , String isbn) throws Exception 
 	{
 		CEntry EntryToSrv = null;
@@ -136,12 +137,11 @@ public class CReader extends AUser{
 	}
 	
 	
-	public String[] getFileType(int bookISBN) throws Exception
+	public String[] getFileType(String isbn) throws Exception
 	{
 		CEntry EntryToSrv = null;
 		Map <String,String> fileType = new HashMap<String,String>();
 		String[] result = new String[5];
-		String isbn = Integer.toString(bookISBN);
 		fileType.put("ISBN",isbn );
 		EntryToSrv = new CEntry("getFileType",fileType,this.getUserName(),this.getUserSessionId());
 		result = (String[]) CClientConnector.getInstance().messageToServer(EntryToSrv);
@@ -149,11 +149,10 @@ public class CReader extends AUser{
 	}
 	
 	
-	public String orderBook (int bookISBN, String PayType, String FileType) throws Exception 
+	public String orderBook (String isbn, String PayType, String FileType) throws Exception 
 	{
 		CEntry EntryToSrv = null;
 		Map <String,String> orderInfo = new HashMap<String,String>();
-		String isbn = Integer.toString(bookISBN);
 		orderInfo.put("ISBN", isbn);
 		orderInfo.put("PayType", PayType);
 		orderInfo.put("FileType", FileType);
