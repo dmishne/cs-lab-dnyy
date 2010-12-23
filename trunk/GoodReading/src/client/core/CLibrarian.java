@@ -23,7 +23,7 @@ public class CLibrarian extends AUser{
 	}
 	
 	
-	public void addNewBook(String title, String author, String isbn, String release, String publisher, String summery, double price, String topic, String lable, String TOC, boolean invis, String lang) throws IOException, Exception
+	public void addNewBook(String title, String author, String isbn, String release, String publisher, String summery, String price, String topic, String lable, String TOC, boolean invis, String lang) throws IOException, Exception
 	{
 		CEntry entryToSrv;
 		CBook book;
@@ -33,7 +33,8 @@ public class CLibrarian extends AUser{
 		if(!md.matches()){
 			throw new IOException("Invalid Username/Password Characters");
 		}
-		book = new CBook(isbn,author, title, release, publisher, summery, price, 0, 0, topic, lable, TOC, invis,lang );
+		double Bprice = Double.parseDouble(price);
+		book = new CBook(isbn,author, title, release, publisher, summery, Bprice, 0, 0, topic, lable, TOC, invis,lang );
 		entryToSrv = new CEntry("addnewbook", book, this.getUserName(),this.getUserSessionId());
 		CClientConnector.getInstance().messageToServer(entryToSrv);
 	}
