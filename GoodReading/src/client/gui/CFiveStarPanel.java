@@ -28,7 +28,7 @@ public class CFiveStarPanel extends JPanel {
 	{
 		super();
 		this.setLayout(null);
-		if(numOfFullStars >= 1 && numOfFullStars <= 5)
+		if(numOfFullStars >= 0 && numOfFullStars <= 5)
 		{
 			stars = new BufferedImage[5];
 			try{
@@ -51,10 +51,13 @@ public class CFiveStarPanel extends JPanel {
 	
 	public void paintComponent(Graphics g) {
 		int i=0;
-		for(BufferedImage img : stars)
+		if(stars != null)
 		{
-			g.drawImage(img, i*40, 0, 30 , 30 , null);
-			i++;
+			for(BufferedImage img : stars)
+			{
+				g.drawImage(img, i*40, 0, 30 , 30 , null);
+				i++;
+			}
 		}
 	}
 

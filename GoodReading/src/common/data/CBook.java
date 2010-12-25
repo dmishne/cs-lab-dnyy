@@ -164,7 +164,11 @@ public class CBook implements Serializable {
 	}
 
 	public int getScore() {
-		return (int) ((int) this.m_score/this.m_score_count);
+		if(this.m_score_count != 0)
+		{
+			return (int) ((int) this.m_score/this.m_score_count);
+		}
+		return 0;
 	}
 
 	public double getAvgScore() {
