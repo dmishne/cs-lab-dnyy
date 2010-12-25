@@ -20,9 +20,26 @@ public class CLibraryManager extends CLibrarian{
 	}
 	
 	
-	public LinkedList<CUser> searchUser(Map<String,String> userParam) throws Exception
+	public LinkedList<CUser> searchUser(String UserName, String UserID, String FirstName, String LastName) throws Exception
 	{
 		CEntry entryToSrv ;
+		Map<String,String> userParam = new HashMap <String,String>();
+		if(UserName.isEmpty() == false)
+		{
+			userParam.put("username", UserName);
+		}
+		if(UserID.isEmpty() == false)
+		{
+			userParam.put("userid", UserID);
+		}
+		if(FirstName.isEmpty() == false)
+		{
+			userParam.put("firstname", FirstName);
+		}
+		if(LastName.isEmpty() == false)
+		{
+			userParam.put("lastname", LastName);
+		}
 		entryToSrv = new CEntry("searchuser",userParam, this.getUserName(),this.getUserSessionId());
 		Object res = CClientConnector.getInstance().messageToServer(entryToSrv);
 		@SuppressWarnings("unchecked")
