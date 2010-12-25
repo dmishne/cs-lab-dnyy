@@ -96,13 +96,11 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 		jLabel_release.setSize(new Dimension(110, 30));
 		jLabel_release.setHorizontalAlignment(SwingConstants.CENTER);
 		jLabel_BookLanguage = new JLabel(); 
-		//jLabel_BookLanguage.setText(CBookDetailPanel.getBook().getM_language());
-		jLabel_BookLanguage.setText("English");  // stub
+		jLabel_BookLanguage.setText(CBookDetailPanel.getBook().getM_language());
 		jLabel_BookLanguage.setSize(new Dimension(150, 30));
 		jLabel_BookLanguage.setLocation(new Point(170, 245));
 		jLabel_BookLanguage.setFont(new Font("Eras Bold ITC", Font.BOLD, 12));
-		//String price = Double.toString(CBookDetailPanel.getBook().getM_price());
-		String price = "13.80";  // stub
+		String price = Double.toString(CBookDetailPanel.getBook().getM_price());
 		jLabel_BookPrice = new JLabel();
 		jLabel_BookPrice.setText(price);
 		jLabel_BookPrice.setSize(new Dimension(150, 30));
@@ -110,22 +108,19 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 		jLabel_BookPrice.setFont(new Font("Eras Bold ITC", Font.BOLD, 12));
 		jLabel_BookPrice.setForeground(Color.red);
 		jLabel_DateRelease = new JLabel(); 
-		//jLabel_DateRelease.setText(CBookDetailPanel.getBook().getM_release_date());
-		jLabel_DateRelease.setText("12.10.1987");   // stub
+		jLabel_DateRelease.setText(CBookDetailPanel.getBook().getM_release_date());
 		jLabel_DateRelease.setSize(new Dimension(150, 30));
 		jLabel_DateRelease.setLocation(new Point(170, 215));
 		jLabel_DateRelease.setFont(new Font("Eras Bold ITC", Font.BOLD, 12));
 		jLabel_BookAuthor = new CustomLabel();
-		//jLabel_BookAuthor.setText(CBookDetailPanel.getBook().getM_author());
-		jLabel_BookAuthor.setText("by Derrick Jensen");      // stub
+		jLabel_BookAuthor.setText(CBookDetailPanel.getBook().getM_author());
 		jLabel_BookAuthor.setFont(new Font("Freestyle Script", Font.BOLD, 36));
 		jLabel_BookAuthor.setSize(new Dimension(435, 40));
 		jLabel_BookAuthor.setLocation(new Point(264, 160));
 		jLabel_BookAuthor.setHorizontalAlignment(SwingConstants.CENTER);
 		jLabel_BookTitle = new CustomLabel();
 		jLabel_BookTitle.setBounds(new Rectangle(81, 114, 540, 45));
-		//jLabel_BookTitle.setText(CBookDetailPanel.getBook().getM_title());
-		jLabel_BookTitle.setText(" A Language Older Than Words");       // stub
+		jLabel_BookTitle.setText(CBookDetailPanel.getBook().getM_title());
 		jLabel_BookTitle.setFont(new Font("Freestyle Script", Font.BOLD, 45));
 		jLabel_BookTitle.setForeground(Color.blue);
 		jLabel_BookTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -206,7 +201,7 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 	 */
 	private JComboBox getJComboBox_PayType() throws Exception {
 		if (jComboBox_PayType == null) {
-			jComboBox_PayType = new JComboBox();
+			jComboBox_PayType = new JComboBox(); //stub
 			//jComboBox_PayType = new JComboBox(((CReader)AUser.getInstance()).getPaymentType());
 			jComboBox_PayType.setLocation(new Point(387, 377));
 			jComboBox_PayType.setSize(new Dimension(230, 27));
@@ -223,7 +218,7 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 	 */
 	private JComboBox getJComboBox_fileType() throws Exception {
 		if (jComboBox_fileType == null) {
-			jComboBox_fileType = new JComboBox();
+			jComboBox_fileType = new JComboBox(); //stub
 			//jComboBox_fileType = new JComboBox(((CReader)AUser.getInstance()).getFileType(CBookDetailPanel.getBook().getM_ISBN()));
 			jComboBox_fileType.setLocation(new Point(80, 377));
 			jComboBox_fileType.setSize(new Dimension(230, 27));
@@ -261,8 +256,7 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 		if(source == jButton_Purchase)
 		{
 			try {
-				//receipt =((CReader)AUser.getInstance()).orderBook(CBookDetailPanel.getBook().getM_ISBN(),(String)jComboBox_PayType.getSelectedItem(), (String)jComboBox_fileType.getSelectedItem() );
-	            receipt = "187641gyug381";  // stub
+				receipt =((CReader)AUser.getInstance()).orderBook(CBookDetailPanel.getBook().getM_ISBN(),(String)jComboBox_PayType.getSelectedItem(), (String)jComboBox_fileType.getSelectedItem() );	       
 				if(receipt.isEmpty() == false)
 	            {
 	            	jButton_Purchase.setVisible(false);

@@ -127,15 +127,19 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 		Object source = ae.getSource();
 		if (source == m_jButton_back_BDP)
 		{
-			this.setVisible(false);
 			this.setLastChoice(EBDDecision.BACK);
+			this.setVisible(false);
 		}
 		else if(source == m_jButton_publishReview)
 		{
-			this.setVisible(false);
 			this.setLastChoice(EBDDecision.REVIEW);
+			this.setVisible(false);
 		}
-		this.setVisible(false);
+		else if(source == m_jButton_Purchase_BDP)
+		{
+			this.setLastChoice(EBDDecision.ORDER);
+			this.setVisible(false);
+		}
 	}
 
 	/**
@@ -230,6 +234,7 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 			m_jButton_Purchase_BDP.setBounds(new Rectangle(486, 480, 150, 34));
 			m_jButton_Purchase_BDP.setText("Order");
 			m_jButton_Purchase_BDP.setPreferredSize(new Dimension(150, 34));
+			m_jButton_Purchase_BDP.addActionListener(this);
 		}
 		return m_jButton_Purchase_BDP;
 	}

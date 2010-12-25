@@ -16,7 +16,7 @@ import client.core.AUser;
 public class CMainMenuPanel extends JPanel implements ActionListener {
 
 	public enum EMMDecision{
-		LOGOUT,SEARCHBOOK,ARRANGE,NEWMSGS,ADDNEWBOOK,REPORT,SEARCHUSER
+		LOGOUT,SEARCHBOOK,SEARCHREVIEW,ARRANGE,NEWMSGS,ADDNEWBOOK,REPORT,SEARCHUSER
 	}
 		
 	private static final long serialVersionUID = 1L;
@@ -196,6 +196,11 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 			setLastChoice(EMMDecision.SEARCHBOOK);
 			this.setVisible(false);
 		}
+		if(source == m_jButton_SearchReview_MM)
+		{
+			setLastChoice(EMMDecision.SEARCHREVIEW);
+			this.setVisible(false);
+		}
 	}
 
 	public void setLastChoice(EMMDecision m_lastChoice) {
@@ -216,6 +221,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 			m_jButton_SearchReview_MM = new JButton();
 			m_jButton_SearchReview_MM.setBounds(new Rectangle(408, 111, 174, 75));
 			m_jButton_SearchReview_MM.setText("Search Review");
+			m_jButton_SearchReview_MM.addActionListener(this);
 		}
 		return m_jButton_SearchReview_MM;
 	}
