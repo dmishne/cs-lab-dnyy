@@ -121,43 +121,50 @@ public abstract class AUser implements Serializable{
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public LinkedList<CBook> searchBook(HashMap<String,String> book_param) throws Exception
 	{
 		//CEntry EntryToSrv =null;
 		HashMap<String,String> search_param = new HashMap<String,String>();
 		String lang, topic;
 		if(book_param.get("language").compareTo(" ") != 0)
-		  {
-		      lang = (String)book_param.get("language");
-		      Set<String> avail_lang = CClientConnector.getInstance().getM_listOptions().getM_langueges();
+		{
+			lang = (String)book_param.get("language");
+		    Set<String> avail_lang = CClientConnector.getInstance().getM_listOptions().getM_langueges();
 		    if (!avail_lang.contains(lang))
-		    	  throw new Exception("Language unavailable!");
-		    
-		    else 
-		    	  search_param.put("language", lang);
-		  }
+		    {
+		    	throw new Exception("Language unavailable!");
+		    }
+		    else
+		    {
+		    	search_param.put("language", lang);
+		    }
+		}
 	    if(book_param.get("topics").compareTo(" ") != 0)
-		  {
-		      topic = (String)book_param.get("topics");
-		      Set<String> avail_topics = CClientConnector.getInstance().getM_listOptions().getM_topics();
+		{
+	    	topic = (String)book_param.get("topics");
+	    	Set<String> avail_topics = CClientConnector.getInstance().getM_listOptions().getM_topics();
 		    if (!avail_topics.contains(topic))
-		    	  throw new Exception("Topic unavailable!");
-
-		    else 
-		    	   search_param.put("topics", topic);
-		  }
-	    if(book_param.get("title").compareTo(" ") != 0)
+		    {
+		    	throw new Exception("Topic unavailable!");
+		    }
+		    else
+		    {
+		    	search_param.put("topics", topic);
+		    }
+		}
+	    if(!book_param.get("title").isEmpty())
 	                search_param.put("title", (String)book_param.get("title"));
-	    if(book_param.get("author").compareTo(" ") != 0)
+	    if(!book_param.get("author").isEmpty())
 	                search_param.put("author", (String)book_param.get("author"));
-	    if(book_param.get("summary").compareTo(" ") != 0)
+	    if(!book_param.get("summary").isEmpty())
 	                search_param.put("summary", (String)book_param.get("summary"));
-	    if(book_param.get("TOC").compareTo(" ") != 0)
+	    if(!book_param.get("TOC").isEmpty())
 	                search_param.put("TOC", (String)book_param.get("TOC"));
-	    if(book_param.get("labels").compareTo(" ") != 0)
+	    if(!book_param.get("labels").isEmpty())
 	                search_param.put("labels", (String)book_param.get("labels"));
-	    //EntryToSrv = new CEntry("searchBook",search_param,m_userName,m_UserSessionId);
-		//result = CClientConnector.getInstance().messageToServer(EntryToSrv);
+	    //EntryToSrv = new CEntry("SearchBook",search_param,m_userName,m_UserSessionId);
+		//LinkedList<CBook> result = (LinkedList<CBook>) CClientConnector.getInstance().messageToServer(EntryToSrv);
 	    
 	    // TEMPORARY
 	    LinkedList<CBook> list = new LinkedList<CBook>();
@@ -167,7 +174,10 @@ public abstract class AUser implements Serializable{
 		
 	    list.add(book);
 	    //
-		return list;
+	 return list;
+	 
+	//	return result;
+		
 	}
 	
 	

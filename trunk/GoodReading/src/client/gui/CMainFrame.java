@@ -218,9 +218,22 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 				}
 				else if(GUI_cSearchBookPanel.getLastChoice() == CSearchBookPanel.SBPDecision.SEARCH)
 				{
-					jContentPane.add(getGUI_CSearchResultPanel());
-					GUI_cSearchBookPanel.setVisible(false);
-					GUI_CSearchResultPanel.setVisible(true);
+					try{
+						jContentPane.add(getGUI_CSearchResultPanel());
+						GUI_cSearchBookPanel.setVisible(false);
+						GUI_CSearchResultPanel.setVisible(true);
+					}
+					catch (Exception e)
+					{
+						if(GUI_CSearchResultPanel != null)
+						{
+							jContentPane.remove(GUI_CSearchResultPanel);
+						}
+						GUI_CSearchResultPanel = null;
+						jContentPane.add(GUI_cSearchBookPanel);
+						GUI_cSearchBookPanel.setVisible(true);
+						JOptionPane.showMessageDialog(null, e.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 			else if(source == GUI_CSearchResultPanel)
