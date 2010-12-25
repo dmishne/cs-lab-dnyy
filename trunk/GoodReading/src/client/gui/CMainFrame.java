@@ -40,6 +40,8 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private CSearchResultPanel GUI_CSearchResultPanel = null;
 	private CBookDetailPanel GUI_CBookDetailPanel = null;
 	private CSubmitReviewPanel GUI_CSubmitReviewPanel = null;
+	private COrderBookPanel GUI_COrderBookPanel = null;
+	private CSearchReviewPanel GUI_CSearchReviewPanel = null;
 	/**
 	 * This is the default constructor
 	 */
@@ -200,6 +202,12 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 					GUI_CMainMenuPanel.setVisible(false);
 					GUI_cSearchBookPanel.setVisible(true);
 				}
+				else if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.SEARCHREVIEW)
+				{
+					jContentPane.add(getGUI_CSearchReviewPanel());
+					GUI_CMainMenuPanel.setVisible(false);
+					GUI_CSearchReviewPanel.setVisible(true);
+				}
 				
 			}
 			else if(source == GUI_CArrangePayPanel)
@@ -265,6 +273,12 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 					GUI_CBookDetailPanel.setVisible(false);
 					GUI_CSubmitReviewPanel.setVisible(true);
 				}
+				else if(GUI_CBookDetailPanel.getLastChoice() == CBookDetailPanel.EBDDecision.ORDER)
+				{
+					jContentPane.add(getGUI_COrderBookPanel());
+					GUI_CBookDetailPanel.setVisible(false);
+					GUI_COrderBookPanel.setVisible(true);
+				}
 			}
 			else if(source == GUI_CSubmitReviewPanel)
 			{
@@ -273,6 +287,30 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 					jContentPane.remove(GUI_CSubmitReviewPanel);
 					GUI_CSubmitReviewPanel = null;
 					GUI_CBookDetailPanel.setVisible(true);
+				}
+			}
+			else if (source == GUI_COrderBookPanel)
+			{
+				if(GUI_COrderBookPanel.getLastChoice() == COrderBookPanel.EOBDecision.BACK)
+				{
+					jContentPane.remove(GUI_COrderBookPanel);
+					GUI_COrderBookPanel = null;
+					GUI_CBookDetailPanel.setVisible(true);
+				}
+			}
+			else if (source == GUI_CSearchReviewPanel)
+			{
+				if(GUI_CSearchReviewPanel.getLastChoice() == CSearchReviewPanel.SRPDecision.BACK)
+				{
+					jContentPane.remove(GUI_CSearchReviewPanel);
+					GUI_CSearchReviewPanel = null;
+					GUI_CMainMenuPanel.setVisible(true);
+				}
+				else if(GUI_CSearchReviewPanel.getLastChoice() == CSearchReviewPanel.SRPDecision.SEARCH)
+				{
+					//jContentPane.add();
+					GUI_CSearchReviewPanel.setVisible(false);
+					// ....
 				}
 			}
 		}
@@ -415,6 +453,41 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			GUI_CSubmitReviewPanel.addComponentListener(this);
 		}
 		return GUI_CSubmitReviewPanel;
+	}
+
+	/**
+	 * This method initializes GUI_COrderBookPanel	
+	 * 	
+	 * @return client.gui.COrderBookPanel	
+	 * @throws Exception 
+	 */
+	private COrderBookPanel getGUI_COrderBookPanel() throws Exception {
+		if (GUI_COrderBookPanel == null) {
+			GUI_COrderBookPanel = new COrderBookPanel();
+			GUI_COrderBookPanel.setPreferredSize(new Dimension(700, 600));
+			GUI_COrderBookPanel.setSize(new Dimension(700, 600));
+			GUI_COrderBookPanel.setLocation(new Point(0, 100));
+			GUI_COrderBookPanel.setVisible(false);
+			GUI_COrderBookPanel.addComponentListener(this);
+		}
+		return GUI_COrderBookPanel;
+	}
+
+	/**
+	 * This method initializes GUI_CSearchReviewPanel	
+	 * 	
+	 * @return client.gui.CSearchReviewPanel	
+	 * @throws Exception 
+	 */
+	private CSearchReviewPanel getGUI_CSearchReviewPanel() {
+		if (GUI_CSearchReviewPanel == null) {
+			GUI_CSearchReviewPanel = new CSearchReviewPanel();
+			GUI_CSearchReviewPanel.setLocation(new Point(0, 100));
+			GUI_CSearchReviewPanel.setSize(new Dimension(700, 550));
+			GUI_CSearchReviewPanel.setVisible(false);
+			GUI_CSearchReviewPanel.addComponentListener(this);
+		}
+		return GUI_CSearchReviewPanel;
 	}
 	
 }  //  @jve:decl-index=0:visual-constraint="10,10"
