@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
 
 import common.data.*;
 
@@ -267,49 +268,54 @@ public class CDBInteractionGenerator
 			return ans;
 		ans="WHERE ";
 
+		Set<String> a = params.keySet();
+		for(String arg: a)
+			if (params.get(arg).equals(""))
+				params.remove(arg);
+		
 		if(params.containsKey("title"))
 		{
-			ans=ans+"title CONTAINS "+params.get("title");
+			ans=ans+"title CONTAINS '"+params.get("title")+"'";
 			params.remove("title");
 		}
 		else if(params.containsKey("author"))
 		{
-			ans=ans+"author CONTAINS "+params.get("author");
+			ans=ans+"author CONTAINS '"+params.get("author")+"'";
 			params.remove("author");
 		}
 		else if(params.containsKey("lable"))
 		{
-			ans=ans+"lables CONTAINS "+params.get("lable");
+			ans=ans+"lables CONTAINS '"+params.get("lable")+"'";
 			params.remove("lable");
 		}
 		else if(params.containsKey("isbn"))
 		{
-			ans=ans+"isbn CONTAINS "+params.get("isbn");
+			ans=ans+"isbn CONTAINS '"+params.get("isbn")+"'";
 			params.remove("isbn");
 		}
 		else if(params.containsKey("publisher"))
 		{
-			ans=ans+"publisher CONTAINS "+params.get("publisher");
+			ans=ans+"publisher CONTAINS '"+params.get("publisher")+"'";
 			params.remove("publisher");
 		}
 		else if(params.containsKey("summary"))
 		{
-			ans=ans+"summary CONTAINS "+params.get("summary");
+			ans=ans+"summary CONTAINS '"+params.get("summary")+"'";
 			params.remove("summary");
 		}
 		else if(params.containsKey("topic"))
 		{
-			ans=ans+"topic "+params.get("topic");
+			ans=ans+"topic CONTAINS '"+params.get("topic")+"'";
 			params.remove("topic");
 		}
 		else if(params.containsKey("TOC"))
 		{
-			ans=ans+"TOC "+params.get("TOC");
+			ans=ans+"TOC CONTAINS '"+params.get("TOC")+"'";
 			params.remove("TOC");
 		}
 		else if(params.containsKey("language"))
 		{
-			ans=ans+"language "+params.get("language");
+			ans=ans+"language CONTAINS '"+params.get("language")+"'";
 			params.remove("language");
 		}
 		
@@ -317,47 +323,47 @@ public class CDBInteractionGenerator
 		//now inserting new attributes
 		if(params.containsKey("title"))
 		{
-			ans=ans+" AND title CONTAINS "+params.get("title");
+			ans=ans+" AND title CONTAINS '"+params.get("title")+"'";
 			params.remove("title");
 		}
 		 if(params.containsKey("author"))
 		{
-			ans=ans+" AND author CONTAINS "+params.get("author");
+			ans=ans+" AND author CONTAINS '"+params.get("author")+"'";
 			params.remove("author");
 		}
 		 if(params.containsKey("lable"))
 		{
-			ans=ans+" AND lables CONTAINS "+params.get("lable");
+			ans=ans+" AND lables CONTAINS '"+params.get("lable")+"'";
 			params.remove("lable");
 		}
 		 if(params.containsKey("isbn"))
 		{
-			ans=ans+" AND isbn CONTAINS "+params.get("isbn");
+			ans=ans+" AND isbn CONTAINS '"+params.get("isbn")+"'";
 			params.remove("isbn");
 		}
 		 if(params.containsKey("publisher"))
 		{
-			ans=ans+" AND publisher CONTAINS "+params.get("publisher");
+			ans=ans+" AND publisher CONTAINS '"+params.get("publisher")+"'";
 			params.remove("publisher");
 		}
 		 if(params.containsKey("summary"))
 		{
-			ans=ans+" AND summary CONTAINS "+params.get("summary");
+			ans=ans+" AND summary CONTAINS '"+params.get("summary")+"'";
 			params.remove("summary");
 		}
 		 if(params.containsKey("topic"))
 		{
-			ans=ans+" AND topic "+params.get("topic");
+			ans=ans+" AND topic CONTAINS '"+params.get("topic")+"'";
 			params.remove("topic");
 		}
 		 if(params.containsKey("TOC"))
 		{
-			ans=ans+" AND TOC "+params.get("toc");
+			ans=ans+" AND TOC CONTAINS '"+params.get("toc")+"'";
 			params.remove("toc");
 		}
 		 if(params.containsKey("language"))
 		{
-			ans=ans+" AND language "+params.get("language");
+			ans=ans+" AND language CONTAINS '"+params.get("language")+"'";
 			params.remove("language");
 		}
 		return ans;		
@@ -400,52 +406,57 @@ public class CDBInteractionGenerator
 		if(params.isEmpty())
 			return ans;
 		
+		Set<String> a = params.keySet();
+		for(String arg: a)
+			if (params.get(arg).equals(""))
+				params.remove(arg);
+		
 		ans="WHERE ";
 
 		if(params.containsKey("title"))
 		{
-			ans=ans+"title CONTAINS "+params.get("title");
+			ans=ans+"title CONTAINS '"+params.get("title")+"'";
 			params.remove("title");
 		}
 		else if(params.containsKey("author"))
 		{
-			ans=ans+"author CONTAINS "+params.get("author");
+			ans=ans+"author CONTAINS '"+params.get("author")+"'";
 			params.remove("author");
 		}
 		else if(params.containsKey("isbn"))
 		{
-			ans=ans+"isbn CONTAINS "+params.get("isbn");
+			ans=ans+"isbn CONTAINS '"+params.get("isbn")+"'";
 			params.remove("isbn");
 		}
 		else if(params.containsKey("review"))
 		{
-			ans=ans+"review CONTAINS "+params.get("review");
+			ans=ans+"review CONTAINS '"+params.get("review")+"'";
 			params.remove("review");
 		}
 		else if(params.containsKey("authority"))
 		{
-			ans=ans+"auth_by "+params.get("authority");
+			ans=ans+"auth_by CONTAINS '"+params.get("authority")+"'";
 			params.remove("authority");
 		}
 				
 		
 		//now inserting new attributes
 		if(params.containsKey("title"))
-			ans=ans+" AND title CONTAINS "+params.get("title");
+			ans=ans+" AND title CONTAINS '"+params.get("title")+"'";
 
 		 if(params.containsKey("author"))
-			ans=ans+" AND author CONTAINS "+params.get("author");
+			ans=ans+" AND author CONTAINS '"+params.get("author")+"'";
 
 	
 		 if(params.containsKey("isbn"))
-			ans=ans+" AND isbn CONTAINS "+params.get("isbn");
+			ans=ans+" AND isbn CONTAINS '"+params.get("isbn")+"'";
 	
 	
 		 if(params.containsKey("review"))
-			ans=ans+" AND review CONTAINS "+params.get("review");
+			ans=ans+" AND review CONTAINS '"+params.get("review")+"'";
 	
 		 if(params.containsKey("authority"))
-			ans=ans+" AND auth_by CONTAINS "+params.get("authority");
+			ans=ans+" AND auth_by CONTAINS '"+params.get("authority")+"'";
 	
 		
 		return ans;		
