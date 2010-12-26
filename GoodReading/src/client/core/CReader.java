@@ -104,9 +104,9 @@ public class CReader extends AUser{
 	{
 		CEntry EntryToSrv = null;
 		Map <String,String> Breview = new HashMap<String,String>();
-		if(review.compareTo(" ") != 0)
+		if(review.compareTo(" ") != 0 && !review.isEmpty())
 		{
-			if(reviewTitle.compareTo(" ") != 0)
+			if(reviewTitle.compareTo(" ") != 0  && !reviewTitle.isEmpty())
 			{
 			    Breview.put("Review", review);
 			    Breview.put("ISBN",isbn );
@@ -142,20 +142,28 @@ public class CReader extends AUser{
 		CEntry EntryToSrv = null;
 		Map <String,String> fileType = new HashMap<String,String>();
 		String[] result = new String[5];
-		fileType.put("ISBN",isbn );
-		EntryToSrv = new CEntry("getFileType",fileType,this.getUserName(),this.getUserSessionId());
-		result = (String[]) CClientConnector.getInstance().messageToServer(EntryToSrv);
+		if(isbn.isEmpty())
+			throw new IOException("Book ISBN not located! Action fail");
+		else
+		{
+			fileType.put("ISBN",isbn );
+			EntryToSrv = new CEntry("getFileType",fileType,this.getUserName(),this.getUserSessionId());
+			result = (String[]) CClientConnector.getInstance().messageToServer(EntryToSrv);
+		}
 		return result;
 	}
 	
 	
-	public String orderBook (String isbn, String PayType, String FileType) throws Exception 
+	public String orderBook (String isbn, String PayType) throws Exception 
 	{
 		CEntry EntryToSrv = null;
 		Map <String,String> orderInfo = new HashMap<String,String>();
+		if(isbn.isEmpty())
+			throw new IOException("Book ISBN required for order!"); 
 		orderInfo.put("ISBN", isbn);
+		if(PayType.isEmpty())
+			throw new IOException("Pay type required for order!");
 		orderInfo.put("PayType", PayType);
-		orderInfo.put("FileType", FileType);
 		EntryToSrv = new CEntry("orderBook",orderInfo,this.getUserName(),this.getUserSessionId());
 		String res = (String)CClientConnector.getInstance().messageToServer(EntryToSrv);
 		return res;
@@ -166,10 +174,15 @@ public class CReader extends AUser{
 		CEntry EntryToSrv;
 		Map <String,String> addSc = new HashMap<String,String>();
 		String sc = Integer.toString(score);
-		addSc.put("isbn", isbn);
-		addSc.put("score", sc);
-		EntryToSrv = new CEntry("addscore",addSc,this.getUserName(),this.getUserSessionId());
-	    CClientConnector.getInstance().messageToServer(EntryToSrv);
+		if(isbn.isEmpty())
+			throw new IOException("Book ISBN not located! Update fail");
+		else
+		{
+			addSc.put("isbn", isbn);
+			addSc.put("score", sc);
+			EntryToSrv = new CEntry("addscore",addSc,this.getUserName(),this.getUserSessionId());
+		    CClientConnector.getInstance().messageToServer(EntryToSrv);
+		}
 	}
 	
 	

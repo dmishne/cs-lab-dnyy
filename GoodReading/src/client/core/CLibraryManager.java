@@ -52,15 +52,15 @@ public class CLibraryManager extends CLibrarian{
 	{
 		CEntry entryToSrv ;
 		Map<String,String> newUDetails = new HashMap<String,String>();
-		if(currentUserName.compareTo(" ") != 0)
+		if(!currentUserName.isEmpty())
 		           newUDetails.put("currentusername", currentUserName);
 		else
 			throw new IOException("Error occurred! Update fail");
-		if(firstName.compareTo(" ") != 0)
+		if(!firstName.isEmpty())
 		           newUDetails.put("firstname", firstName);
-		if(lastName.compareTo(" ") != 0)
+		if(!lastName.isEmpty())
 	               newUDetails.put("lastname", lastName);
-		if(userName.compareTo(" ") != 0)
+		if(!userName.isEmpty())
 	               newUDetails.put("username", userName);
 		if(userID != 0)   
 			       newUDetails.put("userid", Integer.toString(userID));
@@ -76,7 +76,10 @@ public class CLibraryManager extends CLibrarian{
 	{
 		CEntry entryToSrv ;
 		Map<String,String> bookStatus = new HashMap<String,String>();
-		bookStatus.put("isbn", isbn);
+		if(isbn.isEmpty())
+			throw new IOException("Book ISBN not located! Update fail");
+		else 
+		    bookStatus.put("isbn", isbn);
 		if(status)
 			bookStatus.put("invisible", "TRUE");
 		else

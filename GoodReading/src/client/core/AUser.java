@@ -121,7 +121,6 @@ public abstract class AUser implements Serializable{
 	}
 	
 	
-	@SuppressWarnings("unchecked")
 	public LinkedList<CBook> searchBook(HashMap<String,String> book_param) throws Exception
 	{
 		//CEntry EntryToSrv =null;
@@ -185,7 +184,14 @@ public abstract class AUser implements Serializable{
 	public LinkedList<CBookReview> searchBookReview(HashMap<String,String> review_param) throws Exception
 	{
 		CEntry EntryToSrv =null;
-		EntryToSrv = new CEntry("searchBookReview",review_param,m_userName,m_UserSessionId);
+		HashMap<String,String> r_search_param = new HashMap<String,String>();
+		if(!review_param.get("title").isEmpty())
+			r_search_param.put("reviewtitle", (String)review_param.get("title"));
+		if(!review_param.get("author").isEmpty())
+			r_search_param.put("reviewauthor", (String)review_param.get("author"));
+		if(!review_param.get("review").isEmpty())
+			r_search_param.put("reviewcaption", (String)review_param.get("review"));
+		EntryToSrv = new CEntry("searchBookReview",r_search_param,m_userName,m_UserSessionId);
 		Object res =   CClientConnector.getInstance().messageToServer(EntryToSrv);
 		@SuppressWarnings("unchecked")
 		LinkedList<CBookReview> result = (LinkedList<CBookReview>)res;
