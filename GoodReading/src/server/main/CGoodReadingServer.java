@@ -75,7 +75,6 @@ public class CGoodReadingServer {
 	*/
 	//	CBook cb = new CBook("978-0785673215", "J.K. Rowling", "Harry Potter 2", "2007-07-07", "Bloomsbury", "The 2nd harry potter book", 8.84, 0, 0, "topic1", "labele1", "toc1", false, "hebrew");
 	//	System.out.print(CDBInteractionGenerator.GetInstance().insertNewBook(cb));
-		
 	//	CBook cb = new CBook("978-0785673215", "J.K. Rowling", "Harry Potter 12", "2007-07-07", "Bloomsbury", "The 2nd harry potter book", 8.84, 0, 0, "topic1", "labele1", "toc1", false, "hebrew");
 	//	System.out.print(CDBInteractionGenerator.GetInstance().editBookDetails(cb));
 		
