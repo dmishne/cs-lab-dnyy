@@ -140,9 +140,9 @@ public abstract class AUser implements Serializable{
 		    	search_param.put("language", lang);
 		    }
 		}
-	    if(book_param.get("topics").compareTo(" ") != 0)
+	    if(book_param.get("topic").compareTo(" ") != 0)
 		{
-	    	topic = (String)book_param.get("topics");
+	    	topic = (String)book_param.get("topic");
 	    	Set<String> avail_topics = CClientConnector.getInstance().getM_listOptions().getM_topics();
 		    if (!avail_topics.contains(topic))
 		    {
@@ -150,7 +150,7 @@ public abstract class AUser implements Serializable{
 		    }
 		    else
 		    {
-		    	search_param.put("topics", topic);
+		    	search_param.put("topic", topic);
 		    }
 		}
 	    if(!book_param.get("title").isEmpty())
