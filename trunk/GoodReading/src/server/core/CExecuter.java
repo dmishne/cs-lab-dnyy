@@ -6,6 +6,7 @@ import common.api.CEntry;
 import common.data.*;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
@@ -272,10 +273,84 @@ public class CExecuter implements Runnable
 									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Not authorized to use function \"SubmitScore()\"");		
 								
 							} //end of SubmitScore	
+						else if(Work.getMsgType().compareTo("AddBook") == 0)
+						{
+							if (Privilage <3 )
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: user must have sufficient privilage to add new book");
+							
+							
+							
+							else 
+							{
+								Map<String,String> arg= Work.getMsgMap();
+								
+								Map<String,String> getb= new HashMap<String,String>();
+								getb.put("isbn", Work.getMsgMap().get("isbn"));
+								
+								if(! db.SearchBook(getb).isEmpty() ) // if book already exists
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "added new book: FAIL - book already exists");
+								
+								//									insertNewBook(String isbn, 		 title, 		 author, 			 release_date, String	 publisher, String 		summary, Double price, int score, int score_count, 			 String topic,		 String lables, String toc, boolean invisible, String language)
+								else if (Work.getMsgMap().size()<13 || !db.insertNewBook(arg.get("isbn"),  arg.get("title"), arg.get("author")  , arg.get("release"), arg.get("publisher"), arg.get("summary"), Double.parseDouble(arg.get("price")), (int)0, (int)0, arg.get("topic"), arg.get("lables"), arg.get("toc"), Boolean.parseBoolean(arg.get("invisible")), arg.get("languages")))
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "added new book: FAIL");
+								else 
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"added new book: OK");
+									
+							}
+						} //end of add book
 						
+						else if(Work.getMsgType().compareTo("EditBook") == 0)
+						{
+							Map<String,String> arg= Work.getMsgMap();
+							if(  !arg.containsKey("isbn"))
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: user must specify ISBN");
+							else {
+								//create new map with only isbn
+								Map<String,String> getb= new HashMap<String,String>();
+								getb.put("isbn", Work.getMsgMap().get("isbn"));
+								
+								if (Privilage <3)
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: user must have sufficient privilage to edit a book");
+								else if(db.SearchBook(getb).isEmpty()) 
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: book does not exist!");
+								else 
+								{
+									CBook a=db.SearchBook(getb).getFirst();
+												//(String m_ISBN, String m_author, String m_title, String m_release, String m_publisher,				 String m_summary,double m_price, long m_score_count,double m_score,String m_topic, String m_lables, String m_TOC,boolean m_invisible, String m_language)
+									//we got book by isbn, now we need to edit data:
+								
+									if(arg.containsKey("title"))
+										a.settitle(arg.get("title"));
+									 if(arg.containsKey("author"))
+										a.setauthor(arg.get("author"));
+									 if(arg.containsKey("lable"))
+										a.setlables(arg.get("lable"));
+									 if(arg.containsKey("publisher"))
+										a.setpublisher(arg.get("publisher"));
+									 if(arg.containsKey("summary"))
+										a.setsummary(arg.get("summary"));
+									 if(arg.containsKey("topic"))
+										 a.settopic(arg.get("topic"));
+									 if(arg.containsKey("TOC"))
+										a.setTOC(arg.get("toc"));
+									 if(arg.containsKey("language"))
+										a.setlanguage(arg.get("language"));
+									 if(arg.containsKey("price"))
+										a.setprice(Double.parseDouble(arg.get("price")));
+									 if(arg.containsKey("invisible"))
+										a.setinvisible(Boolean.parseBoolean(arg.get("invisible")));
+								
+										
+									if (!db.editBookDetails(a))
+										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"edit book: FAIL");
+									else 
+										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"edit book: OK");
+										
+								}
+							}
+						} //end of edit book			
 					} //end of handling Entry
-				}
-					
+				}					
 			}//end of while(forever)
 		}//try 
 		catch (InterruptedException e) 
