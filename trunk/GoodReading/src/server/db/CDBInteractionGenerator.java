@@ -575,41 +575,41 @@ public class CDBInteractionGenerator
 		return false;
 	}
 
-	public boolean insertNewBook(CBook newBook)
+	public boolean insertNewBook(String isbn, String title, String author, String release_date, String publisher, String summary, Double price, int score, int score_count,  String topic, String lables, String toc, boolean invisible, String language)
 	{
 		//TODO handle function
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
-			st.executeUpdate("CALL InsertBook('"+ newBook.getM_ISBN() +"','"+ newBook.getM_title() +"','"+ newBook.getM_author() +"','"+ newBook.getM_release_date() +"','"+ newBook.getM_publisher() +"','"+ newBook.getM_summary() +"',"+ newBook.getM_price() +","+ newBook.getM_score() +","+ newBook.getM_score_count() +",'"+ newBook.getM_topic() +"','"+ newBook.getM_lables() +"','"+ newBook.getM_TOC() +"',"+ 0 +",'"+ newBook.getM_language() +"');");
+			st.executeUpdate("CALL InsertBook('"+ isbn +"','"+ title +"','"+ author +"','"+ release_date +"','"+ publisher +"','"+ summary +"',"+ price +","+ score +","+ score_count +",'"+ topic +"','"+ lables +"','"+ toc +"',"+ invisible +",'"+ language +"');");
 			return true;	
 		} catch (SQLException e) {
 			System.out.println("insertNewBook():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 		return false;
 	}
 	
-	public boolean editBookDetails(CBook aBook)
+	public boolean editBookDetails(String isbn, String title, String author, String release_date, String publisher, String summary, Double price, int score, int score_count,  String topic, String lables, String toc, boolean invisible, String language)
 	{
 		//TODO handle function
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
-			int i = st.executeUpdate("CALL ChangeBookDetails ('"+ aBook.getM_ISBN() +"','"+ aBook.getM_title() +"','"+ aBook.getM_author() +"','"+ aBook.getM_release_date() +"','"+ aBook.getM_publisher() +"','"+ aBook.getM_summary() +"',"+ aBook.getM_price() +","+ aBook.getM_score() +","+ aBook.getM_score_count() +",'"+ aBook.getM_topic() +"','"+ aBook.getM_lables() +"','"+ aBook.getM_TOC() +"',"+ 0 +",'"+ aBook.getM_language() +"');");
+			int i = st.executeUpdate("CALL ChangeBookDetails('"+ isbn +"','"+ title +"','"+ author +"','"+ release_date +"','"+ publisher +"','"+ summary +"',"+ price +","+ score +","+ score_count +",'"+ topic +"','"+ lables +"','"+ toc +"',"+ invisible +",'"+ language +"');");
 			if(i == 1) return true;	
 		} catch (SQLException e) {
 			System.out.println("editBookDetails():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 		return false;
 	}
 	
-/*
-	public boolean editReview(CBookReview review)
+
+	public boolean editReview(String isbn, String author, String title, String review)
 	{
 		//TODO handle function
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
-			int i = st.executeUpdate("CALL ChangeReview ('"+ review.getisbn() +"','"+ review.getauthor() +"','"+ review.gettitle() +"','"+ review.getreview() +"');");
+			int i = st.executeUpdate("CALL ChangeReview ('"+ isbn +"','"+ author +"','"+ title +"','"+ review +"');");
 			if(i == 1) return true;	
 		} catch (SQLException e) {
 			System.out.println("editReview():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 		return false;
 	}
-*/
+
 }
