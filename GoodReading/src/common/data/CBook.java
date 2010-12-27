@@ -176,4 +176,62 @@ public class CBook implements Serializable {
 	}
 
 
+	
+	
+	
+	
+	
+	
+	public void settitle(String a) {
+		m_title=a;
+	}
+	
+	public void setauthor(String a) {
+		m_author=a;
+	}
+	
+
+	public void setrelease_date(String a) {
+		 m_release=a;
+	}
+	
+	
+	public void setpublisher(String a) {
+		 m_publisher=a;
+	}
+	
+
+	public void setsummary(String a) {
+		 m_summary=a;
+	}
+	
+	
+	public void setprice(double a) {
+		 m_price=a;
+	}
+	
+	
+	public void settopic(String a) {
+		 m_topic=a;
+	}
+	
+	
+	public void setlables(String a) {
+		 m_lables=a;
+	}
+	
+	
+	public void setTOC(String a) {
+		 m_TOC=a;
+	}
+	
+
+	public void setinvisible(boolean a) {
+		 m_invisible=a;
+	}
+	
+	
+	public void setlanguage(String a) {
+		 m_language=a;
+	}
 }
