@@ -268,7 +268,7 @@ public class CSearchBookPanel extends JPanel implements ActionListener{
 			m_searchDetails.put("title",m_jTextField_title_SBP.getText());
 			m_searchDetails.put("author",m_jTextField_Author_SBP.getText());
 			m_searchDetails.put("language",(String)m_jComboBox_Language_SBP.getSelectedItem());
-			m_searchDetails.put("topics",(String)m_jComboBox_Topics_SBP.getSelectedItem());
+			m_searchDetails.put("topic",(String)m_jComboBox_Topics_SBP.getSelectedItem());
 			m_searchDetails.put("summary",m_jTextField_Summary_SBP.getText());
 			m_searchDetails.put("TOC",m_jTextField_TOC_SBP.getText());
 			m_searchDetails.put("labels",m_jTextField_Labels_SBP.getText());

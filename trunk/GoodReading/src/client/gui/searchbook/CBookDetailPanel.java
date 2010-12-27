@@ -61,7 +61,7 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 		m_jLabel_Price.setBounds(new Rectangle(226, 420, 257, 45));
 		m_jLabel_Price.setFont(new Font("Freestyle Script", Font.BOLD, 36));
 		m_jLabel_Price.setHorizontalAlignment(SwingConstants.CENTER);
-		m_jLabel_Price.setText("Price: " + m_book.getM_price() + " $USD");
+		m_jLabel_Price.setText("Price: " + ((Double)m_book.getM_price()).intValue() +"." + (int)((m_book.getM_price()-((Double)m_book.getM_price()).intValue())*100) + " $USD");
 		m_jLabel_Author = new JLabel();
 		m_jLabel_Author.setFont(new Font("Freestyle Script", Font.BOLD, 36));
 		m_jLabel_Author.setSize(new Dimension(350, 50));
