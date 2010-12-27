@@ -1,8 +1,14 @@
 package server.main;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.TreeMap;
 
+import common.data.CBook;
+import common.data.CBookReview;
 import common.data.CFile;
 
 import server.core.CExecuter;
@@ -45,6 +51,34 @@ public class CGoodReadingServer {
 	//	System.out.print(CDBInteractionGenerator.GetInstance().submitReview("978-0747532744", "yotam", "title...", "review..."));
 	//	System.out.print(CDBInteractionGenerator.GetInstance().giveScore("1234", "yotam", 3));
 	//	System.out.print(CDBInteractionGenerator.GetInstance().subscriptionPay("YEARLY", "yotam"));
+	/*	Map<String,String> mp = new HashMap<String,String>();
+		mp.put("title", "Wheres Pluto");
+		mp.put("publisher", "Keter");
+		LinkedList<CBook> cb = new LinkedList<CBook>();
+		cb = CDBInteractionGenerator.GetInstance().SearchBook(mp);
+		Iterator<CBook> it = cb.iterator();
+		while(it.hasNext())
+		{
+			System.out.printf(it.next().getM_author());
+		}
+	*/
+	/*	Map<String,String> mp1 = new HashMap<String,String>();
+		mp1.put("title", "the best book...");
+		mp1.put("author", "yotam");
+		LinkedList<CBookReview> cb1 = new LinkedList<CBookReview>();
+		cb1 = CDBInteractionGenerator.GetInstance().SearchReview(mp1);
+		Iterator<CBookReview> it1 = cb1.iterator();
+		while(it1.hasNext())
+		{
+			System.out.printf(it1.next().getreview());
+		}
+	*/
+	//	CBook cb = new CBook("978-0785673215", "J.K. Rowling", "Harry Potter 2", "2007-07-07", "Bloomsbury", "The 2nd harry potter book", 8.84, 0, 0, "topic1", "labele1", "toc1", false, "hebrew");
+	//	System.out.print(CDBInteractionGenerator.GetInstance().insertNewBook(cb));
+		
+	//	CBook cb = new CBook("978-0785673215", "J.K. Rowling", "Harry Potter 12", "2007-07-07", "Bloomsbury", "The 2nd harry potter book", 8.84, 0, 0, "topic1", "labele1", "toc1", false, "hebrew");
+	//	System.out.print(CDBInteractionGenerator.GetInstance().editBookDetails(cb));
+		
 		
 		
 		//at last, we check that everthing is working
