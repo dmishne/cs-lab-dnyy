@@ -121,9 +121,10 @@ public abstract class AUser implements Serializable{
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public LinkedList<CBook> searchBook(HashMap<String,String> book_param) throws Exception
 	{
-		//CEntry EntryToSrv =null;
+		CEntry EntryToSrv =null;
 		HashMap<String,String> search_param = new HashMap<String,String>();
 		String lang, topic;
 		if(book_param.get("language").compareTo(" ") != 0)
@@ -162,20 +163,10 @@ public abstract class AUser implements Serializable{
 	                search_param.put("TOC", (String)book_param.get("TOC"));
 	    if(!book_param.get("labels").isEmpty())
 	                search_param.put("labels", (String)book_param.get("labels"));
-	    //EntryToSrv = new CEntry("SearchBook",search_param,m_userName,m_UserSessionId);
-		//LinkedList<CBook> result = (LinkedList<CBook>) CClientConnector.getInstance().messageToServer(EntryToSrv);
-	    
-	    // TEMPORARY
-	    LinkedList<CBook> list = new LinkedList<CBook>();
-	    CBook book;
-	    book = new CBook("arg101", "JRR Tolkin", "The hobbit", "21.09.1937", "arg", "it's about dwarves and pretty ladies",5.5, 2,9.0,"Fantasy", "arg!", "1 .. 2 .. 3 ..",false, "English"); 
-	 //   //public CBook(String m_ISBN, String m_author, String m_title, String m_release, String m_publisher, String m_summary,double m_price, int m_score_count,long m_score,String m_topic, String m_lables, String m_TOC,boolean m_invisible, String m_language, Date m_release_date) 
-		
-	    list.add(book);
-	    //
-	 return list;
-	 
-	//	return result;
+	    EntryToSrv = new CEntry("SearchBook",search_param,m_userName,m_UserSessionId);
+		LinkedList<CBook> result = (LinkedList<CBook>) CClientConnector.getInstance().messageToServer(EntryToSrv);
+	   
+		return result;
 		
 	}
 	

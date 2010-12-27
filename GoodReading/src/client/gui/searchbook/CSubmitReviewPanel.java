@@ -1,4 +1,4 @@
-package client.gui;
+package client.gui.searchbook;
 
 import java.awt.Color;
 import java.awt.Font;

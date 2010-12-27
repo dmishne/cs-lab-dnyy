@@ -1,4 +1,4 @@
-package client.gui;
+package client.gui.searchbook;
 
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.border.BevelBorder;
 import client.core.*;
+import client.gui.CustomLabel;
 
 public class COrderBookPanel extends JPanel implements ActionListener{
 
@@ -256,7 +257,7 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 		if(source == jButton_Purchase)
 		{
 			try {
-				receipt =((CReader)AUser.getInstance()).orderBook(CBookDetailPanel.getBook().getM_ISBN(),(String)jComboBox_PayType.getSelectedItem(), (String)jComboBox_fileType.getSelectedItem() );	       
+				receipt =((CReader)AUser.getInstance()).orderBook(CBookDetailPanel.getBook().getM_ISBN(),(String)jComboBox_PayType.getSelectedItem() );	       
 				if(receipt.isEmpty() == false)
 	            {
 	            	jButton_Purchase.setVisible(false);
