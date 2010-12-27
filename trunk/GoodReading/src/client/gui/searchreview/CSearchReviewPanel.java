@@ -1,4 +1,4 @@
-package client.gui;
+package client.gui.searchreview;
 
 import java.awt.Dimension;
 import java.awt.Font;

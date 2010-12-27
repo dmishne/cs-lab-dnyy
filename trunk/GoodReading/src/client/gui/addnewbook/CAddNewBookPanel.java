@@ -1,4 +1,4 @@
-package client.gui;
+package client.gui.addnewbook;
 
 import javax.swing.JPanel;
 import java.awt.Color;

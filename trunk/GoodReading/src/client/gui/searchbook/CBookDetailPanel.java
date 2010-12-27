@@ -1,39 +1,27 @@
-package client.gui;
+package client.gui.searchbook;
 
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 
 import client.core.AUser;
 import client.core.CReader;
-import common.data.CBook;
-import javax.swing.JLabel;
-import java.awt.Rectangle;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JTextArea;
 
-import java.awt.Image;
-import java.awt.SystemColor;
-import java.awt.Color;
-import java.awt.GridBagLayout;
-import java.io.File;
-import java.io.IOException;
-import javax.swing.BorderFactory;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.TitledBorder;
+import common.data.CBook;
 
 public class CBookDetailPanel extends JPanel implements MouseListener,ActionListener{
 
@@ -157,6 +145,7 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 			m_jTextArea_Summary.setLineWrap(true);
 			m_jTextArea_Summary.setBackground(new Color(238, 238, 238));
 			//m_jTextArea_Summary.setBorder(BorderFactory.createTitledBorder( BorderFactory.createLineBorder(Color.black), "Summary", TitledBorder.LEFT, TitledBorder.TOP,  new Font("Dialog", Font.PLAIN, 12),Color.BLACK));
+			m_jTextArea_Summary.setWrapStyleWord(true);
 			m_jTextArea_Summary.setText(m_book.getM_summary());
 		}
 		return m_jTextArea_Summary;

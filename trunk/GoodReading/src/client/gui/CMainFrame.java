@@ -1,5 +1,6 @@
 package client.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
@@ -8,9 +9,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.ContainerEvent;
+import java.awt.event.ContainerListener;
+import java.awt.event.FocusListener;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -19,9 +25,19 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
 import client.common.CClientConnector;
 import client.core.AUser;
+import client.gui.searchbook.CBookDetailPanel;
+import client.gui.searchbook.COrderBookPanel;
+import client.gui.searchbook.CSearchBookPanel;
+import client.gui.searchbook.CSearchResultPanel;
+import client.gui.searchbook.CSubmitReviewPanel;
+import client.gui.searchreview.CSearchReviewPanel;
 
 public class CMainFrame extends JFrame implements ActionListener,ComponentListener{
 
@@ -42,6 +58,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private CSubmitReviewPanel GUI_CSubmitReviewPanel = null;
 	private COrderBookPanel GUI_COrderBookPanel = null;
 	private CSearchReviewPanel GUI_CSearchReviewPanel = null;
+	private JButton m_jMenu_goto = null;
 	/**
 	 * This is the default constructor
 	 */
@@ -135,6 +152,8 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			m_jJMenuBar_MenuBar = new JMenuBar();
 			m_jJMenuBar_MenuBar.add(getM_jMenu_Tools());
 			m_jJMenuBar_MenuBar.add(getM_jMenu_About());
+			m_jJMenuBar_MenuBar.add(Box.createHorizontalGlue());
+			m_jJMenuBar_MenuBar.add(getM_jMenu_goto());
 			
 		}
 		return m_jJMenuBar_MenuBar;
@@ -181,6 +200,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 				GUI_CLoginPanel = null;
 				GUI_CMainMenuPanel.initGreeting();
 				GUI_CMainMenuPanel.setVisible(true);
+				getM_jMenu_goto().setEnabled(true);
 			}
 			else if(source == GUI_CMainMenuPanel)
 			{
@@ -188,6 +208,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 				{
 					jContentPane.remove(GUI_CMainMenuPanel);
 					jContentPane.add(getGUI_CLoginPanel());
+					m_jMenu_goto.setEnabled(false);
 					GUI_CLoginPanel.setVisible(true);
 				}
 				else if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.ARRANGE)
@@ -342,8 +363,23 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			else
 			{
 				JOptionPane.showMessageDialog(null, "Wrong input" ,"Error",JOptionPane.ERROR_MESSAGE);
-			}
-			
+			}	
+		}
+		else if(source == m_jMenu_goto)
+		{
+			try {
+				AUser.getInstance();
+				jContentPane.removeAll();
+				jContentPane.add(getGUI_CLoginPanel());
+				jContentPane.add(getGUI_CMainMenuPanel());
+				GUI_CLoginPanel.setVisible(false);
+				GUI_CMainMenuPanel.setVisible(true);
+				pack();
+				validate();
+				}
+			catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Login first" ,"Error",JOptionPane.ERROR_MESSAGE);
+				}
 		}
 	}
 
@@ -488,6 +524,21 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			GUI_CSearchReviewPanel.addComponentListener(this);
 		}
 		return GUI_CSearchReviewPanel;
+	}
+
+	/**
+	 * This method initializes m_jMenu_goto	
+	 * 	
+	 * @return javax.swing.JMenu	
+	 */
+	private JButton getM_jMenu_goto() {
+		if (m_jMenu_goto == null) {
+			m_jMenu_goto = new JButton("Back To Main Menu");
+			m_jMenu_goto.setBorderPainted(false);
+			m_jMenu_goto.addActionListener(this);
+			m_jMenu_goto.setEnabled(false);
+		}
+		return m_jMenu_goto;
 	}
 	
 }  //  @jve:decl-index=0:visual-constraint="10,10"
