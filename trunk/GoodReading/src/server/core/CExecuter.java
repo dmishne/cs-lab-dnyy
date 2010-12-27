@@ -213,7 +213,26 @@ public class CExecuter implements Runnable
 							}//end of reading auth
 						} //end of AddReview
 						
-						
+						else if(Work.getMsgType().compareTo("EditReview") == 0)
+						{	
+								
+							if(Privilage < 3)
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: inappropriate user privilage");
+							else
+							{
+								Map<String,String> arg=Work.getMsgMap();
+								//public boolean editReview(String isbn, String author, String title, String review)
+								
+								if(db.editReview(arg.get("isbn"),arg.get("author"),arg.get("title"),arg.get("review"),Integer.parseInt(arg.get("accepted")),Work.getUserName()))
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Review Submitted");
+
+								else 
+								{
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: failed to submit");
+									System.out.println("failure at executer: adding review");
+								}
+							}//end of reading auth
+						} //end of EditReview
 						else if(Work.getMsgType().compareTo("PurchaseBook") == 0)
 						{
 							if(Privilage <3)
@@ -348,7 +367,8 @@ public class CExecuter implements Runnable
 										
 								}
 							}
-						} //end of edit book			
+						} //end of edit book	
+						
 					} //end of handling Entry
 				}					
 			}//end of while(forever)
@@ -361,7 +381,7 @@ public class CExecuter implements Runnable
 	
 	
 	
-	
+
 	public void add(CClientSession s)
 	{
 		this.m_sessions.add(s);
