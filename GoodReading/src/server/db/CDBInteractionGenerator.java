@@ -612,4 +612,16 @@ public class CDBInteractionGenerator
 		return false;
 	}
 
+	public boolean editReview(String string, String string2, String string3,
+			String string4, int parseInt, String userName) {
+		// TODO Auto-generated method stub	editReview(isbn,author,title,review,accepted,user)
+		
+		return false;
+	}
+
+	public boolean editBookDetails(CBook a) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
