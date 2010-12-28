@@ -7,6 +7,7 @@ import common.data.*;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
@@ -170,9 +171,17 @@ public class CExecuter implements Runnable
 							
 							//if not a librarian, remove invisible books
 							if(Privilage < 3)
-								for(CBook book: rez)
-									if(!book.getM_invisible())
-										rez.remove(book);
+							{
+								Iterator<CBook> it = rez.iterator();
+								while(it.hasNext())
+								{
+									CBook temp = it.next();
+									if(!temp.getM_invisible())
+									{
+										it.remove();
+									}
+								}
+							}
 							
 							//reply to client
 							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), rez);

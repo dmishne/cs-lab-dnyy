@@ -213,18 +213,21 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 				}
 				else if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.ARRANGE)
 				{
+					GUI_CArrangePayPanel = null;
 					jContentPane.add(getGUI_CArrangePayPanel());
 					GUI_CMainMenuPanel.setVisible(false);
 					GUI_CArrangePayPanel.setVisible(true);
 				}
 				else if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.SEARCHBOOK)
 				{
+					GUI_cSearchBookPanel = null;
 					jContentPane.add(getGUI_cSearchBookPanel());
 					GUI_CMainMenuPanel.setVisible(false);
 					GUI_cSearchBookPanel.setVisible(true);
 				}
 				else if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.SEARCHREVIEW)
 				{
+					GUI_CSearchReviewPanel = null;
 					jContentPane.add(getGUI_CSearchReviewPanel());
 					GUI_CMainMenuPanel.setVisible(false);
 					GUI_CSearchReviewPanel.setVisible(true);
@@ -248,6 +251,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 				else if(GUI_cSearchBookPanel.getLastChoice() == CSearchBookPanel.SBPDecision.SEARCH)
 				{
 					try{
+						GUI_CSearchResultPanel = null;
 						jContentPane.add(getGUI_CSearchResultPanel());
 						GUI_cSearchBookPanel.setVisible(false);
 						GUI_CSearchResultPanel.setVisible(true);
@@ -275,6 +279,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 				}
 				else
 				{
+					GUI_CBookDetailPanel = null;
 					jContentPane.add(getGUI_CBookDetailPanel());
 					GUI_CSearchResultPanel.setVisible(false);
 					GUI_CBookDetailPanel.setVisible(true);
@@ -290,12 +295,14 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 				}
 				else if(GUI_CBookDetailPanel.getLastChoice() == CBookDetailPanel.EBDDecision.REVIEW)
 				{
+					GUI_CSubmitReviewPanel = null;
 					jContentPane.add(getGUI_CSubmitReviewPanel());
 					GUI_CBookDetailPanel.setVisible(false);
 					GUI_CSubmitReviewPanel.setVisible(true);
 				}
 				else if(GUI_CBookDetailPanel.getLastChoice() == CBookDetailPanel.EBDDecision.ORDER)
 				{
+					GUI_COrderBookPanel = null;
 					jContentPane.add(getGUI_COrderBookPanel());
 					GUI_CBookDetailPanel.setVisible(false);
 					GUI_COrderBookPanel.setVisible(true);
