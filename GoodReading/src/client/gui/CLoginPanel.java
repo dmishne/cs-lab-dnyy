@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -15,7 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
-public class CLoginPanel extends JPanel implements ActionListener{
+public class CLoginPanel extends JPanel implements ActionListener, KeyListener{
 
 	private static final long serialVersionUID = 1L;
 	private JLabel m_JLabel_Username = null;
@@ -56,7 +57,26 @@ public class CLoginPanel extends JPanel implements ActionListener{
 		this.add(getM_jTextField_Username(), null);
 		this.add(getM_jPasswordField_Password(), null);
 		this.add(getM_jButton_Login(), null);
+		this.addKeyListener(this);
 	}
+	
+	
+	
+	public void keyPressed(KeyEvent e) {
+		char[] inputPasswordField =  m_jPasswordField_Password.getPassword();
+		String Pass = String.valueOf(inputPasswordField, 0, inputPasswordField.length);
+		String User = m_jTextField_Username.getText(); 
+		if(e.getKeyChar() == KeyEvent.VK_ENTER  &&  !Pass.isEmpty()  && !User.isEmpty()) 
+		{
+			try {
+				client.core.AUser.login(User,Pass);
+				this.setVisible(false); 
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);
+			}   
+		}
+	}
+
 
 	/**
 	 * This method initializes m_jTextField_Username	
@@ -67,6 +87,7 @@ public class CLoginPanel extends JPanel implements ActionListener{
 		if (m_jTextField_Username == null) {
 			m_jTextField_Username = new JTextField();
 			m_jTextField_Username.setBounds(new Rectangle(105, 28, 123, 25));
+			m_jTextField_Username.addKeyListener(this);
 		}
 		return m_jTextField_Username;
 	}
@@ -80,6 +101,7 @@ public class CLoginPanel extends JPanel implements ActionListener{
 		if (m_jPasswordField_Password == null) {
 			m_jPasswordField_Password = new JPasswordField();
 			m_jPasswordField_Password.setBounds(new Rectangle(104, 65, 124, 25));
+			m_jPasswordField_Password.addKeyListener(this);
 		}
 		return m_jPasswordField_Password;
 	}
@@ -118,5 +140,17 @@ public class CLoginPanel extends JPanel implements ActionListener{
 				JOptionPane.showMessageDialog(null, e.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);
 			}
 		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }  //  @jve:decl-index=0:visual-constraint="44,10"
