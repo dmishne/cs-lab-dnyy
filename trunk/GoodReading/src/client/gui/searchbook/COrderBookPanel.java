@@ -9,6 +9,7 @@ import java.awt.Rectangle;
 import javax.swing.JLabel;
 
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Point;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -114,18 +115,28 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 		jLabel_DateRelease.setSize(new Dimension(150, 30));
 		jLabel_DateRelease.setLocation(new Point(170, 215));
 		jLabel_DateRelease.setFont(new Font("Eras Bold ITC", Font.BOLD, 12));
+		/*
+		 *   DO NOT CHANGE ORDER OF :
+		 */
+		jLabel_BookTitle = new CustomLabel();
+		jLabel_BookTitle.setPreferredSize(new Dimension(640, 45));
+		jLabel_BookTitle.setLocation(new Point(30, 114));
+		jLabel_BookTitle.setSize(new Dimension(640, 45));
+		String booktitle = CBookDetailPanel.getBook().getM_title();
+		jLabel_BookTitle.setText(booktitle);
+		int title_size = sized(booktitle);
+		jLabel_BookTitle.setFont(new Font("Freestyle Script", Font.BOLD, title_size));
+		jLabel_BookTitle.setForeground(Color.blue);		
+		jLabel_BookTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		jLabel_BookAuthor = new CustomLabel();
-		jLabel_BookAuthor.setText(CBookDetailPanel.getBook().getM_author());
-		jLabel_BookAuthor.setFont(new Font("Freestyle Script", Font.BOLD, 36));
-		jLabel_BookAuthor.setSize(new Dimension(435, 40));
+		jLabel_BookAuthor.setText("by " + CBookDetailPanel.getBook().getM_author());
+		jLabel_BookAuthor.setFont(new Font("Freestyle Script", Font.BOLD, (int)(title_size*36/48)));
+		jLabel_BookAuthor.setSize(new Dimension(435, 35));
 		jLabel_BookAuthor.setLocation(new Point(264, 160));
 		jLabel_BookAuthor.setHorizontalAlignment(SwingConstants.CENTER);
-		jLabel_BookTitle = new CustomLabel();
-		jLabel_BookTitle.setBounds(new Rectangle(81, 114, 540, 45));
-		jLabel_BookTitle.setText(CBookDetailPanel.getBook().getM_title());
-		jLabel_BookTitle.setFont(new Font("Freestyle Script", Font.BOLD, 45));
-		jLabel_BookTitle.setForeground(Color.blue);
-		jLabel_BookTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		/*
+		 *   END OF "DO NOT CHANGE ORDER OF"
+		 */
 		jLabel_screenTitle = new JLabel();
 		jLabel_screenTitle.setText("Order Book Menu");
 		jLabel_screenTitle.setSize(new Dimension(700, 75));
@@ -154,6 +165,16 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 	}
 	
 	
+	private int sized(String labelText) {
+		Font LFont = jLabel_BookTitle.getFont();
+		double widthRatio = (double)jLabel_BookTitle.getWidth() / (double)jLabel_BookTitle.getFontMetrics(LFont).stringWidth(labelText);;
+		int newFontSize = (int)(LFont.getSize() * widthRatio);
+		int componentHeight = jLabel_BookTitle.getHeight();		
+		int fontSizeToUse = Math.min(newFontSize, componentHeight);
+		return fontSizeToUse;
+	}
+
+
 	public void setLastChoice(EOBDecision m_lastChoice) {
 		this.m_lastChoice = m_lastChoice;
 	}
