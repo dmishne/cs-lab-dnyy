@@ -248,7 +248,7 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 	public void mouseClicked(MouseEvent me) {
 		if(me.getSource() == review)
 		{
-			if(review.getText().compareTo(" Add your review here") == 0)
+			if(review.getText().compareTo(" Add your review here") == 0 || review.getText().isEmpty())
 			{
 		                 review.setText("");
 		                 review.setForeground(Color.black);
@@ -256,7 +256,7 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 		}
 		if(me.getSource() == title)
 		{
-			if(title.getText().compareTo(" Add Name to your review") == 0)
+			if(title.getText().compareTo(" Add Name to your review") == 0 || title.getText().isEmpty())
 			{
 				      title.setText("");
 				      title.setForeground(Color.black);
