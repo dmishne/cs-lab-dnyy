@@ -587,40 +587,25 @@ public class CDBInteractionGenerator
 		return false;
 	}
 	
-	public boolean editBookDetails(String isbn, String title, String author, String release_date, String publisher, String summary, Double price, int score, int score_count,  String topic, String lables, String toc, boolean invisible, String language)
+	public boolean editBookDetails(CBook aBook)
 	{
-		//TODO handle function
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
-			int i = st.executeUpdate("CALL ChangeBookDetails('"+ isbn +"','"+ title +"','"+ author +"','"+ release_date +"','"+ publisher +"','"+ summary +"',"+ price +","+ score +","+ score_count +",'"+ topic +"','"+ lables +"','"+ toc +"',"+ invisible +",'"+ language +"');");
-			if(i == 1) return true;	
+			int i = st.executeUpdate("CALL ChangeBookDetails ('"+ aBook.getM_ISBN() +"','"+ aBook.getM_title() +"','"+ aBook.getM_author() +"','"+ aBook.getM_release_date() +"','"+ aBook.getM_publisher() +"','"+ aBook.getM_summary() +"',"+ aBook.getM_price() +","+ aBook.getM_score() +","+ aBook.getM_score_count() +",'"+ aBook.getM_topic() +"','"+ aBook.getM_lables() +"','"+ aBook.getM_TOC() +"',"+ 0 +",'"+ aBook.getM_language() +"');");
+			if(i == 1) return true;
 		} catch (SQLException e) {
-			System.out.println("editBookDetails():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
-		return false;
+			System.out.println("insertNewBook():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
+	return false;
 	}
-	
 
-	public boolean editReview(String isbn, String author, String title, String review)
+	public boolean editReview(String isbn, String author, String title, String review, int accepted, String user)
 	{
-		//TODO handle function
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
-			int i = st.executeUpdate("CALL ChangeReview ('"+ isbn +"','"+ author +"','"+ title +"','"+ review +"');");
+			int i = st.executeUpdate("CALL ChangeReview ('"+ isbn +"','"+ author +"','"+ title +"','"+ review +"',"+ accepted +",'"+ user +"');");
 			if(i == 1) return true;	
 		} catch (SQLException e) {
 			System.out.println("editReview():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
-		return false;
-	}
-
-	public boolean editReview(String string, String string2, String string3,
-			String string4, int parseInt, String userName) {
-		// TODO Auto-generated method stub	editReview(isbn,author,title,review,accepted,user)
-		
-		return false;
-	}
-
-	public boolean editBookDetails(CBook a) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
