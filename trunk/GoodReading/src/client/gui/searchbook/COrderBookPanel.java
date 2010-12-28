@@ -101,7 +101,8 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 		jLabel_BookLanguage.setSize(new Dimension(150, 30));
 		jLabel_BookLanguage.setLocation(new Point(170, 245));
 		jLabel_BookLanguage.setFont(new Font("Eras Bold ITC", Font.BOLD, 12));
-		String price = Double.toString(CBookDetailPanel.getBook().getM_price());
+		Double pricetemp = (CBookDetailPanel.getBook().getM_price());
+		String price = pricetemp.intValue() + "." + (int)((pricetemp-(pricetemp).intValue())*100);
 		jLabel_BookPrice = new JLabel();
 		jLabel_BookPrice.setText(price);
 		jLabel_BookPrice.setSize(new Dimension(150, 30));
