@@ -48,9 +48,10 @@ public class CLibraryManager extends CLibrarian{
 	}
 	
 	
-	public void updateUserDetails (String currentUserName, String firstName, String lastName, String userName, int userID, EActor privilage) throws Exception
+	public void updateUserDetails (String currentUserName, String firstName, String lastName, String userName, int userID, String birthDay, String adress, String[] payType, EActor privilage, boolean suspend) throws Exception
 	{
 		CEntry entryToSrv ;
+		String payChain = new String();
 		Map<String,String> newUDetails = new HashMap<String,String>();
 		if(!currentUserName.isEmpty())
 		           newUDetails.put("currentusername", currentUserName);
@@ -64,8 +65,23 @@ public class CLibraryManager extends CLibrarian{
 	               newUDetails.put("username", userName);
 		if(userID != 0)   
 			       newUDetails.put("userid", Integer.toString(userID));
+		if(!birthDay.isEmpty())
+			       newUDetails.put("birthday", birthDay);
+		if(!adress.isEmpty())
+			       newUDetails.put("adress", adress);
+		if(payType.length != 0)
+		{
+			for(String pt : payType)
+				if(!pt.isEmpty())
+			           payChain =  pt + "-";
+			newUDetails.put("paytypes", payChain);
+		}
 		if(privilage != null)
 	               newUDetails.put("privilage", privilage.toString());
+		if(suspend)
+			   newUDetails.put("suspend", "true");
+		else if (!suspend)
+			   newUDetails.put("suspend", "false");
 		entryToSrv = new CEntry("updateuserdetails",newUDetails, this.getUserName(),this.getUserSessionId());
 		CClientConnector.getInstance().messageToServer(entryToSrv);
 	}

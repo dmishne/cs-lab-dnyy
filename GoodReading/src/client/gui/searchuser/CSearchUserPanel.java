@@ -38,7 +38,7 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 	private JButton jButton_back = null;
 	private JButton jButton_SearchUser = null;
 	private SUDecision m_lastChoice = null;  //  @jve:decl-index=0:
-	private LinkedList<CUser> result = null;
+	private static LinkedList<CUser> result = null;
 	private JLabel jLabel_Prescription = null;
 	
 	
@@ -126,7 +126,7 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 	/**
 	 * @return the result
 	 */
-	public LinkedList<CUser> getResult() {
+	static public LinkedList<CUser> getResult() {
 		return result;
 	}
 
