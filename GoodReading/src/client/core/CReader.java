@@ -100,9 +100,10 @@ public class CReader extends AUser{
 	
 	
 
-	public void submitReview(String reviewTitle , String review , String isbn) throws Exception 
+	public String submitReview(String reviewTitle , String review , String isbn) throws Exception 
 	{
 		CEntry EntryToSrv = null;
+		String fromServer = null;
 		Map <String,String> Breview = new HashMap<String,String>();
 		if(review.compareTo(" ") != 0 && !review.isEmpty())
 		{
@@ -111,9 +112,9 @@ public class CReader extends AUser{
 			    Breview.put("Review", review);
 			    Breview.put("ISBN",isbn );
 				Breview.put("Title",reviewTitle );
-				EntryToSrv = new CEntry("AddBookReview",Breview,this.getUserName(),this.getUserSessionId());
+				EntryToSrv = new CEntry("AddReview",Breview,this.getUserName(),this.getUserSessionId());
 				try {
-					CClientConnector.getInstance().messageToServer(EntryToSrv);
+					fromServer = (String) CClientConnector.getInstance().messageToServer(EntryToSrv);
 				} catch (Exception e) {
 					System.out.println("Can't send to server");
 				}
@@ -124,6 +125,7 @@ public class CReader extends AUser{
 		else
 			throw new Exception("No Review added!");
 		
+		return fromServer;
 	}
 	
 	
@@ -164,7 +166,7 @@ public class CReader extends AUser{
 		if(PayType.isEmpty())
 			throw new IOException("Pay type required for order!");
 		orderInfo.put("PayType", PayType);
-		EntryToSrv = new CEntry("orderBook",orderInfo,this.getUserName(),this.getUserSessionId());
+		EntryToSrv = new CEntry("PurchaseBook",orderInfo,this.getUserName(),this.getUserSessionId());
 		String res = (String)CClientConnector.getInstance().messageToServer(EntryToSrv);
 		return res;
 	}
@@ -180,7 +182,7 @@ public class CReader extends AUser{
 		{
 			addSc.put("isbn", isbn);
 			addSc.put("score", sc);
-			EntryToSrv = new CEntry("addscore",addSc,this.getUserName(),this.getUserSessionId());
+			EntryToSrv = new CEntry("SubmitScore",addSc,this.getUserName(),this.getUserSessionId());
 		    CClientConnector.getInstance().messageToServer(EntryToSrv);
 		}
 	}

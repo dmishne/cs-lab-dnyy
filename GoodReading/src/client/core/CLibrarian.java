@@ -43,7 +43,7 @@ public class CLibrarian extends AUser{
 			          visible = invis;     
 		double Bprice = Double.parseDouble(price);
 		book = new CBook(isbn,author, title, release, publisher, summery, Bprice, 0, 0, topic, lable, TOC, visible,lang );
-		entryToSrv = new CEntry("addnewbook", book, this.getUserName(),this.getUserSessionId());
+		entryToSrv = new CEntry("AddBook", book, this.getUserName(),this.getUserSessionId());
 		CClientConnector.getInstance().messageToServer(entryToSrv);
 	}
 	
@@ -77,7 +77,7 @@ public class CLibrarian extends AUser{
 			upReview.put("title",title);
 			upReview.put("currenttitle",curr_title);
 			upReview.put("review",review);
-			entryToSrv = new CEntry("updateReview", upReview, this.getUserName(), this.getUserSessionId() );
+			entryToSrv = new CEntry("EditReview", upReview, this.getUserName(), this.getUserSessionId() );
 			CClientConnector.getInstance().messageToServer(entryToSrv);
 		}
 	}
