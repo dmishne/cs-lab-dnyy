@@ -7,14 +7,20 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
+
+import client.core.AUser;
+
+import common.data.CBookReview;
 
 public class CSearchReviewPanel extends JPanel implements ActionListener{
 
@@ -35,6 +41,7 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 	private JButton m_jButton_Search_SRP = null;
 	private SRPDecision m_lastChoice = SRPDecision.BACK;  //  @jve:decl-index=0:
 	
+	static private LinkedList<CBookReview> m_reviewsList = null;
 	static private HashMap<String,String> m_searchDetails = null;
 	
 	/**
@@ -100,7 +107,9 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 		this.add(getM_jTextField_keyphrase_SBP(), null);
 		this.add(getM_jButton_Search_SRP(), null);
 	}
-
+	
+	
+	
 	/**
 	 * This method initializes m_jButton_back_SRP	
 	 * 	
@@ -176,6 +185,11 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 				m_searchDetails.put("author",m_jTextField_title_SBP.getText());
 			if(m_jTextField_keyphrase_SBP.getText().length() >0 )
 				m_searchDetails.put("review",m_jTextField_keyphrase_SBP.getText());
+			try {
+				m_reviewsList = AUser.getInstance().searchBookReview(m_searchDetails);
+			} catch (Exception e) {
+				System.out.println("Fail: Can't reach - AUser.searchBookReview()");
+			}
 			this.setLastChoice(SRPDecision.SEARCH);
 			this.setVisible(false);
 		}
@@ -186,6 +200,13 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 	 */
 	static public HashMap<String, String> getSearchDetails() {
 		return m_searchDetails;
+	}
+
+	/**
+	 * @return the m_reviewsList
+	 */
+	public static LinkedList<CBookReview> getReviewsList() {
+		return m_reviewsList;
 	}
 
 	/**
