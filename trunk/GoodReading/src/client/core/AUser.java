@@ -182,7 +182,7 @@ public abstract class AUser implements Serializable{
 			r_search_param.put("reviewauthor", (String)review_param.get("author"));
 		if(!review_param.get("review").isEmpty())
 			r_search_param.put("reviewcaption", (String)review_param.get("review"));
-		EntryToSrv = new CEntry("searchBookReview",r_search_param,m_userName,m_UserSessionId);
+		EntryToSrv = new CEntry("SearchReview",r_search_param,m_userName,m_UserSessionId);
 		Object res =   CClientConnector.getInstance().messageToServer(EntryToSrv);
 		@SuppressWarnings("unchecked")
 		LinkedList<CBookReview> result = (LinkedList<CBookReview>)res;

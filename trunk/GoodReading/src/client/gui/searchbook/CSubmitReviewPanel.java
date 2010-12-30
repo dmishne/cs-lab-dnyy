@@ -213,6 +213,7 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 		{
 			String store_review;
 			String store_title;
+			String answer = null;
 			m_newReview = new HashMap<String,String>();
 			store_review = review.getText();
 			store_title = title.getText();
@@ -233,8 +234,8 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 				m_newReview.put("review", review.getText());
 			}
 			try {
-				((CReader)AUser.getInstance()).submitReview(m_newReview.get("title"),m_newReview.get("review") , CBookDetailPanel.getBook().getM_ISBN());
-				JOptionPane.showMessageDialog(null, "Your review will be added after further review" ,"OK",JOptionPane.ERROR_MESSAGE);
+				answer = (String) ((CReader)AUser.getInstance()).submitReview(m_newReview.get("title"),m_newReview.get("review") , CBookDetailPanel.getBook().getM_ISBN());
+				JOptionPane.showMessageDialog(null, answer ,"OK",JOptionPane.ERROR_MESSAGE);
 				this.setVisible(false);
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, e.getMessage() ,"Error",JOptionPane.ERROR_MESSAGE);
