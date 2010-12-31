@@ -181,8 +181,8 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 			m_searchDetails = new HashMap<String,String>();
 			if(m_jTextField_title_SBP.getText().length() >0 )
 				m_searchDetails.put("title",m_jTextField_title_SBP.getText());
-			if(m_jTextField_title_SBP.getText().length() >0 )
-				m_searchDetails.put("author",m_jTextField_title_SBP.getText());
+			if(m_jTextField_Author_SBP.getText().length() >0 )
+				m_searchDetails.put("author",m_jTextField_Author_SBP.getText());
 			if(m_jTextField_keyphrase_SBP.getText().length() >0 )
 				m_searchDetails.put("review",m_jTextField_keyphrase_SBP.getText());
 			try {
