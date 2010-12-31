@@ -63,7 +63,7 @@ public class CNewReviewsPanel extends JPanel implements ActionListener{
 		jLabel_menuLabel_NR.setHorizontalTextPosition(SwingConstants.LEADING);
 		jLabel_menuLabel_NR.setHorizontalAlignment(SwingConstants.CENTER);
 		jLabel_menuLabel_NR.setFont(new Font("Freestyle Script", Font.BOLD, 36));
-		this.setSize(700, 600);
+		this.setSize(700, 550);
 		this.setLayout(null);
 		try {
 			this.add(getJScrollPane_NewReviewsScrolPane(), null);

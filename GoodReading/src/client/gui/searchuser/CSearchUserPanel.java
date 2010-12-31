@@ -90,7 +90,7 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 		jLabel_SUMainLabel.setLocation(new Point(0, 15));
 		jLabel_SUMainLabel.setSize(new Dimension(700, 75));
 		jLabel_SUMainLabel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-		this.setSize(700, 600);
+		this.setSize(700, 550);
 		this.setLayout(null);
 		this.add(jLabel_SUMainLabel, null);
 		this.add(jLabel_username, null);

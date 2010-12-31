@@ -58,7 +58,7 @@ public class CShowUserListPanel extends JPanel implements ActionListener{
 		jLabel_main_label.setHorizontalAlignment(SwingConstants.CENTER);
 		jLabel_main_label.setFont(new Font("Freestyle Script", Font.BOLD, 36));
 		jLabel_main_label.setSize(new Dimension(700, 35));
-		this.setSize(700, 600);
+		this.setSize(700, 550);
 		this.setLayout(null);
 		this.add(jLabel_main_label, null);
 		this.add(getJScrollPane_UL(), null);

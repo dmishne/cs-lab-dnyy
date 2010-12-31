@@ -142,7 +142,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 		jLabel_mainLabel.setFont(new Font("Freestyle Script", Font.BOLD, 36));
 		jLabel_mainLabel.setSize(new Dimension(700, 35));
 		edit_flag = Boolean.FALSE;
-		this.setSize(700, 600);
+		this.setSize(700, 550);
 		this.setLayout(null);
 		this.add(getJButton_Edit_UD(), null);
 		this.add(getJButton_Back_UD(), null);
@@ -198,7 +198,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 			jButton_Edit_UD = new JButton();
 			jButton_Edit_UD.setText("Edit");
 			jButton_Edit_UD.setSize(new Dimension(130, 34));
-			jButton_Edit_UD.setLocation(new Point(202, 500));
+			jButton_Edit_UD.setLocation(new Point(202, 480));
 			jButton_Edit_UD.addActionListener(this);
 		}
 		return jButton_Edit_UD;
@@ -214,7 +214,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 			jButton_Back_UD = new JButton();
 			jButton_Back_UD.setText("Back");
 			jButton_Back_UD.setSize(new Dimension(130, 34));
-			jButton_Back_UD.setLocation(new Point(36, 500));
+			jButton_Back_UD.setLocation(new Point(36, 480));
 			jButton_Back_UD.addActionListener(this);
 		}
 		return jButton_Back_UD;
@@ -230,7 +230,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 			jButton_showReport_UD = new JButton();
 			jButton_showReport_UD.setText("Show Report");
 			jButton_showReport_UD.setSize(new Dimension(130, 34));
-			jButton_showReport_UD.setLocation(new Point(368, 500));
+			jButton_showReport_UD.setLocation(new Point(368, 480));
 			jButton_showReport_UD.addActionListener(this);
 		}
 		return jButton_showReport_UD;
@@ -246,7 +246,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 			jButton_Save_UD = new JButton();
 			jButton_Save_UD.setText("Save");
 			jButton_Save_UD.setSize(new Dimension(130, 34));
-			jButton_Save_UD.setLocation(new Point(534, 500));
+			jButton_Save_UD.setLocation(new Point(534, 480));
 			jButton_Save_UD.addActionListener(this);
 		}
 		return jButton_Save_UD;
