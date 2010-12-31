@@ -62,9 +62,8 @@ public class CGoodReadingServer {
 			System.out.printf(it.next().getM_author());
 		}
 	*/
-	/*	Map<String,String> mp1 = new HashMap<String,String>();
-		mp1.put("title", "the best book...");
-		mp1.put("author", "yotam");
+		Map<String,String> mp1 = new HashMap<String,String>();
+		mp1.put("author", "J.K");
 		LinkedList<CBookReview> cb1 = new LinkedList<CBookReview>();
 		cb1 = CDBInteractionGenerator.GetInstance().SearchReview(mp1);
 		Iterator<CBookReview> it1 = cb1.iterator();
@@ -72,7 +71,7 @@ public class CGoodReadingServer {
 		{
 			System.out.printf(it1.next().getreview());
 		}
-	*/
+	
 	//	CBook cb = new CBook("978-0785673215", "J.K. Rowling", "Harry Potter 2", "2007-07-07", "Bloomsbury", "The 2nd harry potter book", 8.84, 0, 0, "topic1", "labele1", "toc1", false, "hebrew");
 	//	System.out.print(CDBInteractionGenerator.GetInstance().insertNewBook(cb));
 	//	CBook cb = new CBook("978-0785673215", "J.K. Rowling", "Harry Potter 12", "2007-07-07", "Bloomsbury", "The 2nd harry potter book", 8.84, 0, 0, "topic1", "labele1", "toc1", false, "hebrew");
