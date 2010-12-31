@@ -404,7 +404,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 			jButton_AddBook = new JButton();
 			jButton_AddBook.setText("Add Book");
 			jButton_AddBook.setSize(new Dimension(208, 34));
-			jButton_AddBook.setLocation(new Point(402, 480));
+			jButton_AddBook.setLocation(new Point(396, 480));
 			jButton_AddBook.addActionListener(this);
 		}
 		return jButton_AddBook;

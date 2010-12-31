@@ -179,12 +179,9 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 		else if(source == m_jButton_Search_SRP)
 		{
 			m_searchDetails = new HashMap<String,String>();
-			if(m_jTextField_title_SBP.getText().length() >0 )
-				m_searchDetails.put("title",m_jTextField_title_SBP.getText());
-			if(m_jTextField_Author_SBP.getText().length() >0 )
-				m_searchDetails.put("author",m_jTextField_Author_SBP.getText());
-			if(m_jTextField_keyphrase_SBP.getText().length() >0 )
-				m_searchDetails.put("review",m_jTextField_keyphrase_SBP.getText());
+			m_searchDetails.put("title",m_jTextField_title_SBP.getText());
+			m_searchDetails.put("author",m_jTextField_Author_SBP.getText());
+			m_searchDetails.put("review",m_jTextField_keyphrase_SBP.getText());
 			try {
 				m_reviewsList = AUser.getInstance().searchBookReview(m_searchDetails);
 			} catch (Exception e) {

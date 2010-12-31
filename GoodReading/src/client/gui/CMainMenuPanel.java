@@ -113,6 +113,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 			m_jButton_NewMsgs_MM = new JButton();
 			m_jButton_NewMsgs_MM.setBounds(new Rectangle(408, 216, 174, 75));
 			m_jButton_NewMsgs_MM.setText("New Messages");
+			m_jButton_NewMsgs_MM.addActionListener(this);
 		}
 		return m_jButton_NewMsgs_MM;
 	}
@@ -127,6 +128,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 			m_jButton_AddNewBook_MM = new JButton();
 			m_jButton_AddNewBook_MM.setBounds(new Rectangle(117, 216, 174, 75));
 			m_jButton_AddNewBook_MM.setText("Add New Book");
+			m_jButton_AddNewBook_MM.addActionListener(this);
 		}
 		return m_jButton_AddNewBook_MM;
 	}
@@ -186,19 +188,29 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 			AUser.logout();
 			this.setVisible(false);
 		}
-		if(source == m_jButton_ArrangePayment)
+		else if(source == m_jButton_ArrangePayment)
 		{
 			setLastChoice(EMMDecision.ARRANGE);
 			this.setVisible(false);
 		}
-		if(source == m_jButton_SearchBook_MM)
+		else if(source == m_jButton_SearchBook_MM)
 		{
 			setLastChoice(EMMDecision.SEARCHBOOK);
 			this.setVisible(false);
 		}
-		if(source == m_jButton_SearchReview_MM)
+		else if(source == m_jButton_SearchReview_MM)
 		{
 			setLastChoice(EMMDecision.SEARCHREVIEW);
+			this.setVisible(false);
+		}
+		else if(source == m_jButton_AddNewBook_MM)
+		{
+			setLastChoice(EMMDecision.ADDNEWBOOK);
+			this.setVisible(false);
+		}
+		else if(source == m_jButton_NewMsgs_MM)
+		{
+			setLastChoice(EMMDecision.NEWMSGS);
 			this.setVisible(false);
 		}
 	}

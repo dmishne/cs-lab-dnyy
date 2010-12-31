@@ -38,6 +38,9 @@ import client.gui.searchbook.CSearchBookPanel;
 import client.gui.searchbook.CSearchResultPanel;
 import client.gui.searchbook.CSubmitReviewPanel;
 import client.gui.searchreview.CSearchReviewPanel;
+import client.gui.searchreview.CReviewsListPanel;
+import client.gui.addnewbook.CAddNewBookPanel;
+import client.gui.newmessages.CNewReviewsPanel;
 
 public class CMainFrame extends JFrame implements ActionListener,ComponentListener{
 
@@ -59,6 +62,9 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private COrderBookPanel GUI_COrderBookPanel = null;
 	private CSearchReviewPanel GUI_CSearchReviewPanel = null;
 	private JButton m_jMenu_goto = null;
+	private CReviewsListPanel GUI_CReviewsListPanel = null;
+	private CAddNewBookPanel GUI_CAddNewBookPanel = null;
+	private CNewReviewsPanel GUI_CNewReviewsPanel = null;
 	/**
 	 * This is the default constructor
 	 */
@@ -232,7 +238,20 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 					GUI_CMainMenuPanel.setVisible(false);
 					GUI_CSearchReviewPanel.setVisible(true);
 				}
-				
+				else if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.ADDNEWBOOK)
+				{
+					GUI_CAddNewBookPanel = null;
+					jContentPane.add(getGUI_CAddNewBookPanel());
+					GUI_CMainMenuPanel.setVisible(false);
+					GUI_CAddNewBookPanel.setVisible(true);
+				}
+				else if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.NEWMSGS)
+				{
+					GUI_CNewReviewsPanel = null;
+					jContentPane.add(getGUI_CNewReviewsPanel());
+					GUI_CMainMenuPanel.setVisible(false);
+					GUI_CNewReviewsPanel.setVisible(true);
+				}	
 			}
 			else if(source == GUI_CArrangePayPanel)
 			{
@@ -336,9 +355,50 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 				}
 				else if(GUI_CSearchReviewPanel.getLastChoice() == CSearchReviewPanel.SRPDecision.SEARCH)
 				{
-					//jContentPane.add();
-					GUI_CSearchReviewPanel.setVisible(false);
-					// ....
+					try
+					{
+						GUI_CReviewsListPanel = null;
+						jContentPane.add(getGUI_CReviewsListPanel());
+						GUI_CSearchReviewPanel.setVisible(false);
+						GUI_CReviewsListPanel.setVisible(true);
+					}
+					catch (Exception e)
+					{
+						if(GUI_CReviewsListPanel != null)
+						{
+							jContentPane.remove(GUI_CReviewsListPanel);
+						}
+						GUI_CReviewsListPanel = null;
+						GUI_CSearchReviewPanel.setVisible(true);
+						JOptionPane.showMessageDialog(null, "No reviews available", "Error",JOptionPane.ERROR_MESSAGE);	
+					}
+				}
+			}
+			else if(source == GUI_CReviewsListPanel)
+			{
+				if(GUI_CReviewsListPanel.getLastChoice() == CReviewsListPanel.RLPDecision.BACK)
+				{
+					jContentPane.remove(GUI_CReviewsListPanel);
+					GUI_CReviewsListPanel = null;
+					GUI_CSearchReviewPanel.setVisible(true);
+				}
+			}
+			else if(source == GUI_CAddNewBookPanel)
+			{
+				if(GUI_CAddNewBookPanel.getLastChoice() == CAddNewBookPanel.ANBDecision.BACK)
+				{
+					jContentPane.remove(GUI_CAddNewBookPanel);
+					GUI_CAddNewBookPanel = null;
+					GUI_CMainMenuPanel.setVisible(true);
+				}
+			}
+			else if(source == GUI_CNewReviewsPanel)
+			{
+				if(GUI_CNewReviewsPanel.getLastChoice() == CNewReviewsPanel.NRPDecision.BACK)
+				{
+					jContentPane.remove(GUI_CNewReviewsPanel);
+					GUI_CNewReviewsPanel = null;
+					GUI_CMainMenuPanel.setVisible(true);
 				}
 			}
 		}
@@ -475,7 +535,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			GUI_CBookDetailPanel = new CBookDetailPanel(CSearchResultPanel.getChosenBook());
 			GUI_CBookDetailPanel.setLocation(new Point(0, 100));
 			GUI_CBookDetailPanel.setPreferredSize(new Dimension(700, 600));
-			GUI_CBookDetailPanel.setSize(new Dimension(700, 600));
+			GUI_CBookDetailPanel.setSize(new Dimension(700, 550));
 			GUI_CBookDetailPanel.setVisible(false);
 			GUI_CBookDetailPanel.addComponentListener(this);
 		}
@@ -490,7 +550,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private CSubmitReviewPanel getGUI_CSubmitReviewPanel() {
 		if (GUI_CSubmitReviewPanel == null) {
 			GUI_CSubmitReviewPanel = new CSubmitReviewPanel();
-			GUI_CSubmitReviewPanel.setSize(new Dimension(700, 600));
+			GUI_CSubmitReviewPanel.setSize(new Dimension(700, 550));
 			GUI_CSubmitReviewPanel.setLocation(new Point(0, 100));
 			GUI_CSubmitReviewPanel.setVisible(false);
 			GUI_CSubmitReviewPanel.addComponentListener(this);
@@ -508,7 +568,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		if (GUI_COrderBookPanel == null) {
 			GUI_COrderBookPanel = new COrderBookPanel();
 			GUI_COrderBookPanel.setPreferredSize(new Dimension(700, 600));
-			GUI_COrderBookPanel.setSize(new Dimension(700, 600));
+			GUI_COrderBookPanel.setSize(new Dimension(700, 550));
 			GUI_COrderBookPanel.setLocation(new Point(0, 100));
 			GUI_COrderBookPanel.setVisible(false);
 			GUI_COrderBookPanel.addComponentListener(this);
@@ -546,6 +606,57 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			m_jMenu_goto.setEnabled(false);
 		}
 		return m_jMenu_goto;
+	}
+
+	/**
+	 * This method initializes GUI_CReviewsListPanel	
+	 * 	
+	 * @return client.gui.searchreview.CReviewsListPanel	
+	 */
+	private CReviewsListPanel getGUI_CReviewsListPanel() {
+		if (GUI_CReviewsListPanel == null) {
+			GUI_CReviewsListPanel = new CReviewsListPanel();
+			GUI_CReviewsListPanel.setPreferredSize(new Dimension(700, 600));
+			GUI_CReviewsListPanel.setLocation(new Point(0, 100));
+			GUI_CReviewsListPanel.setSize(new Dimension(700, 550));
+			GUI_CReviewsListPanel.addComponentListener(this);
+			GUI_CReviewsListPanel.setVisible(false);
+		}
+		return GUI_CReviewsListPanel;
+	}
+
+	/**
+	 * This method initializes GUI_CAddNewBookPanel	
+	 * 	
+	 * @return client.gui.addnewbook.CAddNewBookPanel	
+	 */
+	private CAddNewBookPanel getGUI_CAddNewBookPanel() {
+		if (GUI_CAddNewBookPanel == null) {
+			GUI_CAddNewBookPanel = new CAddNewBookPanel();
+			GUI_CAddNewBookPanel.setPreferredSize(new Dimension(700, 600));
+			GUI_CAddNewBookPanel.setSize(new Dimension(700, 550));
+			GUI_CAddNewBookPanel.setLocation(new Point(0, 100));
+			GUI_CAddNewBookPanel.addComponentListener(this);
+			GUI_CAddNewBookPanel.setVisible(false);
+		}
+		return GUI_CAddNewBookPanel;
+	}
+
+	/**
+	 * This method initializes GUI_CNewReviewsPanel	
+	 * 	
+	 * @return client.gui.newmessages.CNewReviewsPanel	
+	 */
+	private CNewReviewsPanel getGUI_CNewReviewsPanel() {
+		if (GUI_CNewReviewsPanel == null) {
+			GUI_CNewReviewsPanel = new CNewReviewsPanel();
+			GUI_CNewReviewsPanel.setSize(new Dimension(700, 550));
+			GUI_CNewReviewsPanel.setPreferredSize(new Dimension(700, 550));
+			GUI_CNewReviewsPanel.setLocation(new Point(0, 100));
+			GUI_CNewReviewsPanel.addComponentListener(this);
+			GUI_CNewReviewsPanel.setVisible(false);
+		}
+		return GUI_CNewReviewsPanel;
 	}
 	
 }  //  @jve:decl-index=0:visual-constraint="10,10"

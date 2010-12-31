@@ -1,6 +1,8 @@
 package common.data;
 
-public class CBookReview 
+import java.io.Serializable;
+
+public class CBookReview implements Serializable
 {
 	 private String m_isbn;
 	 private String m_author;
