@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.LinkedList;
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JButton;
@@ -175,20 +176,27 @@ public class CReviewsListPanel extends JPanel implements ActionListener{
 		}
 		if(source == jButton_showReview_RL)
 		{
-			String res = (String)jList_resultList_RL.getSelectedValue();
-			String[] splitedRes = res.split(" - ");
-			Iterator<CBookReview> it = m_reviewsList.iterator();
-			while(it.hasNext())
+			try
 			{
-				CBookReview temp = it.next();
-				if(temp.gettitle().compareTo(splitedRes[0]) == 0 && temp.getauth_by().compareTo(splitedRes[1]) == 0 && temp.getisbn().compareTo(splitedRes[2]) == 0 && temp.getwrite_date().compareTo(splitedRes[3]) == 0)
+				String res = (String)jList_resultList_RL.getSelectedValue();
+				String[] splitedRes = res.split(" - ");
+				Iterator<CBookReview> it = m_reviewsList.iterator();
+				while(it.hasNext())
 				{
-					m_chosenReview = temp;
-					break;
+					CBookReview temp = it.next();
+					if(temp.gettitle().compareTo(splitedRes[0]) == 0 && temp.getauth_by().compareTo(splitedRes[1]) == 0 && temp.getisbn().compareTo(splitedRes[2]) == 0 && temp.getwrite_date().compareTo(splitedRes[3]) == 0)
+					{
+						m_chosenReview = temp;
+						break;
+					}
 				}
+				this.m_lastChoice = RLPDecision.SHOWREVIEW;
+				this.setVisible(false);
 			}
-			this.m_lastChoice = RLPDecision.SHOWREVIEW;
-			this.setVisible(false);
+			catch (Exception e)
+			{
+				JOptionPane.showMessageDialog(null, "Please choose a review" ,"Error",JOptionPane.ERROR_MESSAGE);
+			}
 		}
 		
 	}
