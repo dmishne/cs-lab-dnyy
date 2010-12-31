@@ -177,11 +177,11 @@ public abstract class AUser implements Serializable{
 		CEntry EntryToSrv =null;
 		HashMap<String,String> r_search_param = new HashMap<String,String>();
 		if(!review_param.get("title").isEmpty())
-			r_search_param.put("reviewtitle", (String)review_param.get("title"));
+			r_search_param.put("title", (String)review_param.get("title"));
 		if(!review_param.get("author").isEmpty())
-			r_search_param.put("reviewauthor", (String)review_param.get("author"));
+			r_search_param.put("author", (String)review_param.get("author"));
 		if(!review_param.get("review").isEmpty())
-			r_search_param.put("reviewcaption", (String)review_param.get("review"));
+			r_search_param.put("review", (String)review_param.get("review"));
 		EntryToSrv = new CEntry("SearchReview",r_search_param,m_userName,m_UserSessionId);
 		Object res =   CClientConnector.getInstance().messageToServer(EntryToSrv);
 		@SuppressWarnings("unchecked")
