@@ -142,7 +142,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 		jLabel_Title.setLocation(new Point(20, 132));
 		jLabel_Title.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
 		jLabel_Title.setSize(new Dimension(90, 20));
-		this.setSize(700, 600);
+		this.setSize(700, 550);
 		this.setLayout(null);
 		this.add(jLabel_Title, null);
 		this.add(jLabel_Auhtor, null);
@@ -303,7 +303,8 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 	private JScrollPane getJScrollPane_summary() {
 		if (jScrollPane_summary == null) {
 			jScrollPane_summary = new JScrollPane();
-			jScrollPane_summary.setBounds(new Rectangle(23, 351, 376, 130));
+			jScrollPane_summary.setLocation(new Point(23, 351));
+			jScrollPane_summary.setSize(new Dimension(376, 97));
 			jScrollPane_summary.setViewportView(getJTextArea_summary());
 			jScrollPane_summary.setBorder(BorderFactory.createLineBorder(Color.black));
 			
@@ -319,6 +320,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 	private JTextArea getJTextArea_summary() {
 		if (jTextArea_summary == null) {
 			jTextArea_summary = new JTextArea();
+			jTextArea_summary.setSize(new Dimension(374, 100));
 		}
 		return jTextArea_summary;
 	}
@@ -331,7 +333,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 	private JScrollPane getJScrollPane_TOC() {
 		if (jScrollPane_TOC == null) {
 			jScrollPane_TOC = new JScrollPane();
-			jScrollPane_TOC.setSize(new Dimension(263, 305));
+			jScrollPane_TOC.setSize(new Dimension(263, 272));
 			jScrollPane_TOC.setLocation(new Point(415, 176));
 			jScrollPane_TOC.setViewportView(getJTextArea_toc());
 			jScrollPane_TOC.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -347,6 +349,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 	private JTextArea getJTextArea_toc() {
 		if (jTextArea_toc == null) {
 			jTextArea_toc = new JTextArea();
+			jTextArea_toc.setSize(new Dimension(261, 270));
 		}
 		return jTextArea_toc;
 	}
@@ -385,7 +388,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 			jButton_back = new JButton();
 			jButton_back.setText("Back");
 			jButton_back.setSize(new Dimension(208, 34));
-			jButton_back.setLocation(new Point(94, 520));
+			jButton_back.setLocation(new Point(94, 480));
 			jButton_back.addActionListener(this);
 		}
 		return jButton_back;
@@ -401,7 +404,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 			jButton_AddBook = new JButton();
 			jButton_AddBook.setText("Add Book");
 			jButton_AddBook.setSize(new Dimension(208, 34));
-			jButton_AddBook.setLocation(new Point(396, 520));
+			jButton_AddBook.setLocation(new Point(402, 480));
 			jButton_AddBook.addActionListener(this);
 		}
 		return jButton_AddBook;

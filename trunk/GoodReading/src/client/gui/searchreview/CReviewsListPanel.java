@@ -58,7 +58,7 @@ public class CReviewsListPanel extends JPanel implements ActionListener{
 		jLabel_mainLabel_RL.setHorizontalAlignment(SwingConstants.CENTER);
 		jLabel_mainLabel_RL.setFont(new Font("Freestyle Script", Font.BOLD, 36));
 		jLabel_mainLabel_RL.setLocation(new Point(0, 0));
-		this.setSize(700, 600);
+		this.setSize(700, 550);
 		this.setLayout(null);
 		this.add(jLabel_mainLabel_RL, null);
 		this.add(getJScrollPane_resultList_RL(), null);
