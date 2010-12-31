@@ -275,47 +275,47 @@ public class CDBInteractionGenerator
 		
 		if(params.containsKey("title"))
 		{
-			ans=ans+"title LIKE '"+params.get("title")+"'";
+			ans=ans+"title LIKE '%"+params.get("title")+"%'";
 			params.remove("title");
 		}
 		else if(params.containsKey("author"))
 		{
-			ans=ans+"author LIKE '"+params.get("author")+"'";
+			ans=ans+"author LIKE '%"+params.get("author")+"%'";
 			params.remove("author");
 		}
 		else if(params.containsKey("lable"))
 		{
-			ans=ans+"lables LIKE '"+params.get("lable")+"'";
+			ans=ans+"lables LIKE '%"+params.get("lable")+"%'";
 			params.remove("lable");
 		}
 		else if(params.containsKey("isbn"))
 		{
-			ans=ans+"isbn LIKE '"+params.get("isbn")+"'";
+			ans=ans+"isbn LIKE '%"+params.get("isbn")+"%'";
 			params.remove("isbn");
 		}
 		else if(params.containsKey("publisher"))
 		{
-			ans=ans+"publisher LIKE '"+params.get("publisher")+"'";
+			ans=ans+"publisher LIKE '%"+params.get("publisher")+"%'";
 			params.remove("publisher");
 		}
 		else if(params.containsKey("summary"))
 		{
-			ans=ans+"summary LIKE '"+params.get("summary")+"'";
+			ans=ans+"summary LIKE '%"+params.get("summary")+"%'";
 			params.remove("summary");
 		}
 		else if(params.containsKey("topic"))
 		{
-			ans=ans+"topic LIKE '"+params.get("topic")+"'";
+			ans=ans+"topic LIKE '%"+params.get("topic")+"%'";
 			params.remove("topic");
 		}
 		else if(params.containsKey("TOC"))
 		{
-			ans=ans+"TOC LIKE '"+params.get("TOC")+"'";
+			ans=ans+"TOC LIKE '%"+params.get("TOC")+"%'";
 			params.remove("TOC");
 		}
 		else if(params.containsKey("language"))
 		{
-			ans=ans+"language LIKE '"+params.get("language")+"'";
+			ans=ans+"language LIKE '%"+params.get("language")+"%'";
 			params.remove("language");
 		}
 		
@@ -323,47 +323,47 @@ public class CDBInteractionGenerator
 		//now inserting new attributes
 		if(params.containsKey("title"))
 		{
-			ans=ans+" AND title LIKE '"+params.get("title")+"'";
+			ans=ans+" AND title LIKE '%"+params.get("title")+"%'";
 			params.remove("title");
 		}
 		 if(params.containsKey("author"))
 		{
-			ans=ans+" AND author LIKE '"+params.get("author")+"'";
+			ans=ans+" AND author LIKE '%"+params.get("author")+"%'";
 			params.remove("author");
 		}
 		 if(params.containsKey("lable"))
 		{
-			ans=ans+" AND lables LIKE '"+params.get("lable")+"'";
+			ans=ans+" AND lables LIKE '%"+params.get("lable")+"%'";
 			params.remove("lable");
 		}
 		 if(params.containsKey("isbn"))
 		{
-			ans=ans+" AND isbn LIKE '"+params.get("isbn")+"'";
+			ans=ans+" AND isbn LIKE '%"+params.get("isbn")+"%'";
 			params.remove("isbn");
 		}
 		 if(params.containsKey("publisher"))
 		{
-			ans=ans+" AND publisher Like '"+params.get("publisher")+"'";
+			ans=ans+" AND publisher Like '%"+params.get("publisher")+"%'";
 			params.remove("publisher");
 		}
 		 if(params.containsKey("summary"))
 		{
-			ans=ans+" AND summary LIKE '"+params.get("summary")+"'";
+			ans=ans+" AND summary LIKE '%"+params.get("summary")+"%'";
 			params.remove("summary");
 		}
 		 if(params.containsKey("topic"))
 		{
-			ans=ans+" AND topic LIKE '"+params.get("topic")+"'";
+			ans=ans+" AND topic LIKE '%"+params.get("topic")+"%'";
 			params.remove("topic");
 		}
 		 if(params.containsKey("TOC"))
 		{
-			ans=ans+" AND TOC LIKE '"+params.get("toc")+"'";
+			ans=ans+" AND TOC LIKE '%"+params.get("toc")+"%'";
 			params.remove("toc");
 		}
 		 if(params.containsKey("language"))
 		{
-			ans=ans+" AND language LIKE '"+params.get("language")+"'";
+			ans=ans+" AND language LIKE '%"+params.get("language")+"%'";
 			params.remove("language");
 		}
 		return ans;		
@@ -415,48 +415,48 @@ public class CDBInteractionGenerator
 
 		if(params.containsKey("title"))
 		{
-			ans=ans+"title LIKE '"+params.get("title")+"'";
+			ans=ans+"title LIKE '%"+params.get("title")+"%'";
 			params.remove("title");
 		}
 		else if(params.containsKey("author"))
 		{
-			ans=ans+"author LIKE '"+params.get("author")+"'";
+			ans=ans+"author LIKE '%"+params.get("author")+"%'";
 			params.remove("author");
 		}
 		else if(params.containsKey("isbn"))
 		{
-			ans=ans+"isbn LIKE '"+params.get("isbn")+"'";
+			ans=ans+"isbn LIKE '%"+params.get("isbn")+"%'";
 			params.remove("isbn");
 		}
 		else if(params.containsKey("review"))
 		{
-			ans=ans+"review LIKE '"+params.get("review")+"'";
+			ans=ans+"review LIKE '%"+params.get("review")+"%'";
 			params.remove("review");
 		}
 		else if(params.containsKey("authority"))
 		{
-			ans=ans+"auth_by LIKE '"+params.get("authority")+"'";
+			ans=ans+"auth_by LIKE '%"+params.get("authority")+"%'";
 			params.remove("authority");
 		}
 				
 		
 		//now inserting new attributes
 		if(params.containsKey("title"))
-			ans=ans+" AND title LIKE '"+params.get("title")+"'";
+			ans=ans+" AND title LIKE '%"+params.get("title")+"%'";
 
 		 if(params.containsKey("author"))
-			ans=ans+" AND author LIKE '"+params.get("author")+"'";
+			ans=ans+" AND author LIKE '%"+params.get("author")+"%'";
 
 	
 		 if(params.containsKey("isbn"))
-			ans=ans+" AND isbn LIKE '"+params.get("isbn")+"'";
+			ans=ans+" AND isbn LIKE '%"+params.get("isbn")+"%'";
 	
 	
 		 if(params.containsKey("review"))
-			ans=ans+" AND review LIKE '"+params.get("review")+"'";
+			ans=ans+" AND review LIKE '%"+params.get("review")+"%'";
 	
 		 if(params.containsKey("authority"))
-			ans=ans+" AND auth_by LIKE '"+params.get("authority")+"'";
+			ans=ans+" AND auth_by LIKE '%"+params.get("authority")+"%'";
 	
 		
 		return ans;		
@@ -537,7 +537,6 @@ public class CDBInteractionGenerator
 	}
 
 	public boolean submitReview(String isbn, String userName, String title, String review) {
-		//TODO verify all values in SP here
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
 			st.executeUpdate("CALL InsertReview('"+ isbn +"','"+ userName +"','"+ title +"','"+ review +"');");
@@ -577,7 +576,6 @@ public class CDBInteractionGenerator
 
 	public boolean insertNewBook(String isbn, String title, String author, String release_date, String publisher, String summary, Double price, int score, int score_count,  String topic, String lables, String toc, boolean invisible, String language)
 	{
-		//TODO handle function
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
 			st.executeUpdate("CALL InsertBook('"+ isbn +"','"+ title +"','"+ author +"','"+ release_date +"','"+ publisher +"','"+ summary +"',"+ price +","+ score +","+ score_count +",'"+ topic +"','"+ lables +"','"+ toc +"',"+ invisible +",'"+ language +"');");
