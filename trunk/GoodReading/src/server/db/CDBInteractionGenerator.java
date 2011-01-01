@@ -578,7 +578,7 @@ public class CDBInteractionGenerator
 	{
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
-			st.executeUpdate("CALL InsertBook('"+ isbn +"','"+ title +"','"+ author +"','"+ "to_date("+release_date+",'YYYYMMDD')" +"','"+ publisher +"','"+ summary +"',"+ price +","+ score +","+ score_count +",'"+ topic +"','"+ lables +"','"+ toc +"',"+ invisible +",'"+ language +"');");
+			st.executeUpdate("CALL InsertBook('"+ isbn +"','"+ title +"','"+ author +"','"+ release_date +"','"+ publisher +"','"+ summary +"',"+ price +","+ score +","+ score_count +",'"+ topic +"','"+ lables +"','"+ toc +"',"+ invisible +",'"+ language +"');");
 			return true;	
 		} catch (SQLException e) {
 			System.out.println("insertNewBook():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
