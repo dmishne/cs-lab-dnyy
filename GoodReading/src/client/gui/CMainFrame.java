@@ -329,12 +329,9 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			}
 			else if(source == GUI_CSubmitReviewPanel)
 			{
-				if(GUI_CSubmitReviewPanel.getLastChoice() == CSubmitReviewPanel.ESRDecision.BACK)
-				{
-					jContentPane.remove(GUI_CSubmitReviewPanel);
-					GUI_CSubmitReviewPanel = null;
-					GUI_CBookDetailPanel.setVisible(true);
-				}
+				jContentPane.remove(GUI_CSubmitReviewPanel);
+				GUI_CSubmitReviewPanel = null;
+				GUI_CBookDetailPanel.setVisible(true);
 			}
 			else if (source == GUI_COrderBookPanel)
 			{
@@ -385,12 +382,9 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			}
 			else if(source == GUI_CAddNewBookPanel)
 			{
-				if(GUI_CAddNewBookPanel.getLastChoice() == CAddNewBookPanel.ANBDecision.BACK)
-				{
 					jContentPane.remove(GUI_CAddNewBookPanel);
 					GUI_CAddNewBookPanel = null;
 					GUI_CMainMenuPanel.setVisible(true);
-				}
 			}
 			else if(source == GUI_CNewReviewsPanel)
 			{
@@ -619,8 +613,8 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			GUI_CReviewsListPanel.setPreferredSize(new Dimension(700, 600));
 			GUI_CReviewsListPanel.setLocation(new Point(0, 100));
 			GUI_CReviewsListPanel.setSize(new Dimension(700, 550));
-			GUI_CReviewsListPanel.addComponentListener(this);
 			GUI_CReviewsListPanel.setVisible(false);
+			GUI_CReviewsListPanel.addComponentListener(this);
 		}
 		return GUI_CReviewsListPanel;
 	}
@@ -636,8 +630,9 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			GUI_CAddNewBookPanel.setPreferredSize(new Dimension(700, 600));
 			GUI_CAddNewBookPanel.setSize(new Dimension(700, 550));
 			GUI_CAddNewBookPanel.setLocation(new Point(0, 100));
-			GUI_CAddNewBookPanel.addComponentListener(this);
 			GUI_CAddNewBookPanel.setVisible(false);
+			GUI_CAddNewBookPanel.addComponentListener(this);
+
 		}
 		return GUI_CAddNewBookPanel;
 	}
@@ -653,8 +648,8 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			GUI_CNewReviewsPanel.setSize(new Dimension(700, 550));
 			GUI_CNewReviewsPanel.setPreferredSize(new Dimension(700, 550));
 			GUI_CNewReviewsPanel.setLocation(new Point(0, 100));
-			GUI_CNewReviewsPanel.addComponentListener(this);
 			GUI_CNewReviewsPanel.setVisible(false);
+			GUI_CNewReviewsPanel.addComponentListener(this);
 		}
 		return GUI_CNewReviewsPanel;
 	}
