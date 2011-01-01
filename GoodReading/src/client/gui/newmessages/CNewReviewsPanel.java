@@ -150,22 +150,28 @@ public class CNewReviewsPanel extends JPanel implements ActionListener{
 		if (jList_NewReviewsList == null) {
 				m_messages = ((CLibrarian)AUser.getInstance()).searchNewReviews();
 				if(m_messages.isEmpty())
-				    JOptionPane.showMessageDialog(null, "No new reviews!" ,"Error",JOptionPane.ERROR_MESSAGE);
-				String[] show = new String[m_messages.size()];
-				int i = 0;
-				for( CBookReview b : m_messages )
 				{
-					show[i] = b.getisbn() + " - " + b.gettitle() + " - " + b.getauthor() + " - " + b.getwrite_date();
-					i++;
-				} 
-			/*
-			 *      stub
-			 *
-			String[] stub = new String[3];;
-			stub[0] = "nt34" + " - " + "my first review" + " - " + " testUser" + " - " + "28.12.2010";
-			stub[1] = "54n4" + " - " + "my second review" + " - " + " test2User" + " - " + "12.12.2010";
-				jList_NewReviewsList = new JList(stub);*/ // end of stub
-			jList_NewReviewsList = new JList(show);
+				    JOptionPane.showMessageDialog(null, "No new reviews!" ,"Error",JOptionPane.ERROR_MESSAGE);
+				    jList_NewReviewsList = new JList();
+				}
+				else
+				{
+					String[] show = new String[m_messages.size()];
+					int i = 0;
+					for( CBookReview b : m_messages )
+					{
+						show[i] = b.getisbn() + " - " + b.gettitle() + " - " + b.getauthor() + " - " + b.getwrite_date();
+						i++;
+					} 
+						/*
+						 *      stub
+						 *
+						String[] stub = new String[3];;
+						stub[0] = "nt34" + " - " + "my first review" + " - " + " testUser" + " - " + "28.12.2010";
+						stub[1] = "54n4" + " - " + "my second review" + " - " + " test2User" + " - " + "12.12.2010";
+							jList_NewReviewsList = new JList(stub);*/ // end of stub
+				   jList_NewReviewsList = new JList(show);
+			   }
 		}
 		return jList_NewReviewsList;
 	}

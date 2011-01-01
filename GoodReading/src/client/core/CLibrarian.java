@@ -23,11 +23,11 @@ public class CLibrarian extends AUser{
 	}
 	
 	
-	public void addNewBook(String title, String author, String isbn, String release, String publisher, String summery, String price, String topic, String lable, String TOC, boolean invis, String lang) throws IOException, Exception
+	public void addNewBook(String title, String author, String isbn, String release, String publisher, String summary, String price, String topic, String lable, String TOC, boolean invis, String lang) throws IOException, Exception
 	{
 		CEntry entryToSrv;
-		CBook book;
-		boolean visible = new Boolean(true);
+		HashMap<String, String> newBook = new HashMap<String, String>();
+		String visible = "true";
 		// check date
 		Pattern pd = Pattern.compile("(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})");
 		Matcher md = pd.matcher(release);
@@ -39,18 +39,45 @@ public class CLibrarian extends AUser{
 			throw new IOException("You have no permition to edit book visibility!");
 			
 		}
-		else if ( this.getPrivilege() == EActor.LibraryManager)
-			          visible = invis;     
-		double Bprice = Double.parseDouble(price);
-		book = new CBook(isbn,author, title, release, publisher, summery, Bprice, 0, 0, topic, lable, TOC, visible,lang );
-		entryToSrv = new CEntry("AddBook", book, this.getUserName(),this.getUserSessionId());
-		CClientConnector.getInstance().messageToServer(entryToSrv);
+		else if ( this.getPrivilege() == EActor.LibraryManager  && invis == false)
+			          visible = "false"; 
+		if(isbn.isEmpty())
+			throw new IOException("Book ISBN is a must!");
+		else if(author.isEmpty())
+			throw new IOException("Book Author is a must!");
+		else if(title.isEmpty())
+			throw new IOException("Book Title is a must!");
+		else if(publisher.isEmpty())
+			throw new IOException("Book Publisher is a must!");
+		else if(topic.isEmpty())
+			throw new IOException("Book Topic is a must!");
+		else if(lang.isEmpty())
+			throw new IOException("Book Language is a must!");
+		else if(price.isEmpty())
+			throw new IOException("Book Price is a must!");
+		else
+		{
+			newBook.put("isbn", isbn);
+			newBook.put("author", author);
+			newBook.put("title", title);
+			newBook.put("release", release);
+			newBook.put("publisher", publisher);
+			newBook.put("summary", summary);
+			newBook.put("price", price);
+			newBook.put("topic", topic);
+			newBook.put("lables", lable);
+			newBook.put("toc", TOC);
+			newBook.put("invisible", visible);
+			newBook.put("languages", lang);
+			entryToSrv = new CEntry("AddBook", newBook, this.getUserName(),this.getUserSessionId());
+			CClientConnector.getInstance().messageToServer(entryToSrv);
+		}
 	}
 	
 	
 	public LinkedList<CBookReview> searchNewReviews() throws Exception
 	{		
-		HashMap<String, String> empty = new HashMap<String, String>();;
+		HashMap<String, String> empty = new HashMap<String, String>();
 		CEntry entryToSrv = new CEntry("getNewReviews", empty, this.getUserName(), this.getUserSessionId() );
 		Object temp = CClientConnector.getInstance().messageToServer(entryToSrv);
 		@SuppressWarnings("unchecked")
