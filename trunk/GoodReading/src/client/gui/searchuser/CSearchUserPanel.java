@@ -19,6 +19,7 @@ import javax.swing.border.BevelBorder;
 
 import client.core.AUser;
 import client.core.CLibraryManager;
+import client.core.EActor;
 import client.gui.CustomLabel;
 
 import common.data.CUser;
@@ -39,9 +40,6 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 	private JButton jButton_SearchUser = null;
 	private SUDecision m_lastChoice = null;  //  @jve:decl-index=0:
 	private static LinkedList<CUser> result = null;
-	private JLabel jLabel_Prescription = null;
-	
-	
 	public enum SUDecision{
 		BACK, SEARCHUSER
 	}
@@ -58,10 +56,6 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 	 * @return void
 	 */
 	private void initialize() {
-		jLabel_Prescription = new CustomLabel();
-		jLabel_Prescription.setBounds(new Rectangle(30, 140, 265, 32));
-		jLabel_Prescription.setText("<html><u>Please Insert One Or More Fields :</u></html>");
-		jLabel_Prescription.setFont(new Font("Times New Roman", Font.ITALIC, 18));
 		jLabel_userID = new JLabel();
 		jLabel_userID.setText("ID (user)");
 		jLabel_userID.setSize(new Dimension(160, 40));
@@ -103,7 +97,6 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 		this.add(getJTextField_LastName(), null);
 		this.add(getJButton_back(), null);
 		this.add(getJButton_SearchUser(), null);
-		this.add(jLabel_Prescription, null);
 	}
 
 
@@ -236,7 +229,11 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 		if(source == jButton_SearchUser)
 		{
 			try {
-				result = ((CLibraryManager)AUser.getInstance()).searchUser(jTextField_UserName.getText(),jTextField_UserID.getText(),jTextField_FirstName.getText(),jTextField_LastName.getText());
+				//result = ((CLibraryManager)AUser.getInstance()).searchUser(jTextField_UserName.getText(),jTextField_UserID.getText(),jTextField_FirstName.getText(),jTextField_LastName.getText());
+				CUser stub = new CUser("Daniel", "Mishne", 1 , "daniel", "29/09/1984","Haifa", null,EActor.LibraryManager, false);
+				LinkedList <CUser> stubll = new LinkedList();
+				stubll.add(stub);
+				result = stubll;
 				this.setlastChoice(SUDecision.SEARCHUSER);
 				this.setVisible(false);
 			    } catch (Exception e) {

@@ -41,6 +41,9 @@ import client.gui.searchreview.CSearchReviewPanel;
 import client.gui.searchreview.CReviewsListPanel;
 import client.gui.addnewbook.CAddNewBookPanel;
 import client.gui.newmessages.CNewReviewsPanel;
+import client.gui.searchuser.CSearchUserPanel;
+import client.gui.searchuser.CShowUserListPanel;
+import client.gui.searchuser.CUserDetailsPanel;
 
 public class CMainFrame extends JFrame implements ActionListener,ComponentListener{
 
@@ -65,6 +68,9 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private CReviewsListPanel GUI_CReviewsListPanel = null;
 	private CAddNewBookPanel GUI_CAddNewBookPanel = null;
 	private CNewReviewsPanel GUI_CNewReviewsPanel = null;
+	private CSearchUserPanel GUI_CSearchUserPanel = null;
+	private CShowUserListPanel GUI_CShowUserListPanel = null;
+	private CUserDetailsPanel GUI_CUserDetailsPanel = null;
 	/**
 	 * This is the default constructor
 	 */
@@ -251,7 +257,14 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 					jContentPane.add(getGUI_CNewReviewsPanel());
 					GUI_CMainMenuPanel.setVisible(false);
 					GUI_CNewReviewsPanel.setVisible(true);
-				}	
+				}
+				else if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.SEARCHUSER)
+				{
+					GUI_CSearchUserPanel = null;
+					jContentPane.add(getGUI_CSearchUserPanel());
+					GUI_CMainMenuPanel.setVisible(false);
+					GUI_CSearchUserPanel.setVisible(true);
+				}
 			}
 			else if(source == GUI_CArrangePayPanel)
 			{
@@ -393,6 +406,36 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 					jContentPane.remove(GUI_CNewReviewsPanel);
 					GUI_CNewReviewsPanel = null;
 					GUI_CMainMenuPanel.setVisible(true);
+				}
+			}
+			else if(source == GUI_CSearchUserPanel)
+			{
+				if(GUI_CSearchUserPanel.getlastChoice() == CSearchUserPanel.SUDecision.BACK)
+				{
+					jContentPane.remove(GUI_CSearchUserPanel);
+					GUI_CSearchUserPanel = null;
+					GUI_CMainMenuPanel.setVisible(true);
+				}
+				else if(GUI_CSearchUserPanel.getlastChoice() == CSearchUserPanel.SUDecision.SEARCHUSER)
+				{
+					jContentPane.add(getGUI_CShowUserListPanel());
+					GUI_CSearchUserPanel.setVisible(false);
+					GUI_CShowUserListPanel.setVisible(true);
+				}
+			}
+			else if(source == GUI_CShowUserListPanel)
+			{
+				if(GUI_CShowUserListPanel.getLastChoice() == CShowUserListPanel.ULPDecision.BACK)
+				{
+					jContentPane.remove(GUI_CShowUserListPanel);
+					GUI_CShowUserListPanel = null;
+					GUI_CSearchUserPanel.setVisible(true);
+				}
+				else if(GUI_CShowUserListPanel.getLastChoice() == CShowUserListPanel.ULPDecision.USERLIST)
+				{
+					jContentPane.add(getGUI_CUserDetailsPanel());
+					GUI_CUserDetailsPanel.setVisible(true);
+					GUI_CSearchUserPanel.setVisible(false);
 				}
 			}
 		}
@@ -652,6 +695,58 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			GUI_CNewReviewsPanel.addComponentListener(this);
 		}
 		return GUI_CNewReviewsPanel;
+	}
+
+	/**
+	 * This method initializes GUI_CSearchUserPanel	
+	 * 	
+	 * @return client.gui.searchuser.CSearchUserPanel	
+	 */
+	private CSearchUserPanel getGUI_CSearchUserPanel() {
+		if (GUI_CSearchUserPanel == null) {
+			GUI_CSearchUserPanel = new CSearchUserPanel();
+			GUI_CSearchUserPanel.setSize(new Dimension(700, 550));
+			GUI_CSearchUserPanel.setLocation(new Point(0, 100));
+			GUI_CSearchUserPanel.setPreferredSize(new Dimension(700, 550));
+			GUI_CSearchUserPanel.setVisible(false);
+			GUI_CSearchUserPanel.addComponentListener(this);
+		}
+		return GUI_CSearchUserPanel;
+	}
+
+	/**
+	 * This method initializes GUI_CShowUserListPanel	
+	 * 	
+	 * @return client.gui.searchuser.CShowUserListPanel	
+	 * @throws Exception 
+	 */
+	private CShowUserListPanel getGUI_CShowUserListPanel(){
+		if (GUI_CShowUserListPanel == null) {
+			GUI_CShowUserListPanel = new CShowUserListPanel();
+			GUI_CShowUserListPanel.setSize(new Dimension(700, 550));
+			GUI_CShowUserListPanel.setPreferredSize(new Dimension(700, 550));
+			GUI_CShowUserListPanel.setLocation(new Point(0, 100));
+			GUI_CShowUserListPanel.setVisible(false);
+			GUI_CShowUserListPanel.addComponentListener(this);
+		}
+		return GUI_CShowUserListPanel;
+	}
+
+	/**
+	 * This method initializes GUI_CUserDetailsPanel	
+	 * 	
+	 * @return client.gui.searchuser.CUserDetailsPanel	
+	 */
+	private CUserDetailsPanel getGUI_CUserDetailsPanel() {
+		if (GUI_CUserDetailsPanel == null) {
+			GUI_CUserDetailsPanel = new CUserDetailsPanel();
+			GUI_CUserDetailsPanel.setSize(new Dimension(700, 550));
+			GUI_CUserDetailsPanel.setPreferredSize(new Dimension(700, 550));
+			GUI_CUserDetailsPanel.setLocation(new Point(0, 100));
+			GUI_CUserDetailsPanel.setVisible(false);
+			GUI_CUserDetailsPanel.addComponentListener(this);
+		}
+		return GUI_CUserDetailsPanel;
 	}
 	
 }  //  @jve:decl-index=0:visual-constraint="10,10"
