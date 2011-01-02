@@ -261,10 +261,9 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 		if (jTextField_userName == null) {
 			jTextField_userName = new JTextField();
 			jTextField_userName.setEditable(false);
-			jTextField_userName.setSize(new Dimension(200, 20));
-			jTextField_userName.setLocation(new Point(120, 85));
-			jTextField_userName.setText("Best Play");  // stub
-			//jTextField_userName.setText(chosenUser.getM_userName());
+			jTextField_userName.setSize(new Dimension(200, 26));
+			jTextField_userName.setLocation(new Point(120, 82));
+			jTextField_userName.setText(chosenUser.getM_userName());
 		}
 		return jTextField_userName;
 	}
@@ -278,11 +277,10 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 		if (jTextField_userID == null) {
 			jTextField_userID = new JTextField();
 			jTextField_userID.setEditable(false);
-			jTextField_userID.setSize(new Dimension(200, 20));
-			jTextField_userID.setLocation(new Point(455, 85));
-			//String userid = Integer.toString(chosenUser.getM_userID());
-			//jTextField_userID.setText(userid);
-			jTextField_userID.setText("3765417"); // stub
+			jTextField_userID.setSize(new Dimension(200, 26));
+			jTextField_userID.setLocation(new Point(455, 82));
+			String userid = Integer.toString(chosenUser.getM_userID());
+			jTextField_userID.setText(userid);
 		}
 		return jTextField_userID;
 	}
@@ -296,10 +294,10 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 		if (jTextField_firstName == null) {
 			jTextField_firstName = new JTextField();
 			jTextField_firstName.setEditable(false);
-			jTextField_firstName.setSize(new Dimension(200, 20));
-			jTextField_firstName.setLocation(new Point(120, 135));
-			//jTextField_firstName.setText(chosenUser.getM_firstName());
-			jTextField_firstName.setText("Daniel"); // stub
+			jTextField_firstName.setSize(new Dimension(200, 26));
+			jTextField_firstName.setLocation(new Point(120, 132));
+			jTextField_firstName.setText(chosenUser.getM_firstName());
+		
 		}
 		return jTextField_firstName;
 	}
@@ -313,10 +311,9 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 		if (jTextField_lastName == null) {
 			jTextField_lastName = new JTextField();
 			jTextField_lastName.setEditable(false);
-			jTextField_lastName.setLocation(new Point(455, 135));
-			jTextField_lastName.setSize(new Dimension(200, 20));
-			//jTextField_lastName.setText(chosenUser.getM_lastName());
-			jTextField_lastName.setText("Mishne"); // stub
+			jTextField_lastName.setLocation(new Point(455, 132));
+			jTextField_lastName.setSize(new Dimension(200, 26));
+			jTextField_lastName.setText(chosenUser.getM_lastName());
 		}
 		return jTextField_lastName;
 	}
@@ -330,10 +327,9 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 		if (jTextField_adress == null) {
 			jTextField_adress = new JTextField();
 			jTextField_adress.setEditable(false);
-			jTextField_adress.setSize(new Dimension(535, 20));
-			jTextField_adress.setLocation(new Point(120, 185));
-			//jTextField_adress.setText(chosenUser.getAdress());
-			jTextField_adress.setText("Asif 58/29, Gvat Ram, Carmiel"); // stub
+			jTextField_adress.setSize(new Dimension(535, 26));
+			jTextField_adress.setLocation(new Point(120, 182));
+			jTextField_adress.setText(chosenUser.getAdress());
 		}
 		return jTextField_adress;
 	}
@@ -347,10 +343,9 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 		if (jTextField_birthDay == null) {
 			jTextField_birthDay = new JTextField();
 			jTextField_birthDay.setEditable(false);
-			jTextField_birthDay.setSize(new Dimension(200, 20));
-			jTextField_birthDay.setLocation(new Point(120, 235));
-			//jTextField_birthDay.setText(chosenUser.getBirthDay());
-			jTextField_birthDay.setText("15.09.1985"); // stub
+			jTextField_birthDay.setSize(new Dimension(200, 26));
+			jTextField_birthDay.setLocation(new Point(120, 232));
+			jTextField_birthDay.setText(chosenUser.getBirthDay());
 		}
 		return jTextField_birthDay;
 	}
@@ -364,8 +359,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 		if (jComboBox_privilage == null) {
 			String[] privilagesToShow = new String[4];
 			String[] privilage = {EActor.Reader.toString(),EActor.User.toString(),EActor.Librarian.toString(),EActor.LibraryManager.toString()};
-			privilagesToShow[0] = "User";  // stub
-			//privilagesToShow[0] = chosenUser.getM_privilege().toString(); 
+			privilagesToShow[0] = chosenUser.getM_privilege().toString(); 
 			int i = 1;
 			for(String pr : privilage)
 			{
@@ -394,8 +388,8 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 			jCheckBox_yearly.setSize(new Dimension(23, 20));
 			jCheckBox_yearly.setEnabled(false);
 			jCheckBox_yearly.setLocation(new Point(210, 287));
-			//for(String pt : chosenUser.getPayTypes())
-			  // if(pt.compareTo("Yearly") == 0)
+			for(String pt : chosenUser.getPayTypes())
+			   if(pt.compareTo("Yearly") == 0)
 				   jCheckBox_yearly.setSelected(true);
 		}
 		return jCheckBox_yearly;
@@ -412,9 +406,9 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 			jCheckBox_monthly.setSize(new Dimension(17, 17));
 			jCheckBox_monthly.setEnabled(false);
 			jCheckBox_monthly.setLocation(new Point(210, 327));
-		//	for(String pt : chosenUser.getPayTypes())
-			//	   if(pt.compareTo("Monthly") == 0)
-				//	   jCheckBox_monthly.setSelected(true);
+			for(String pt : chosenUser.getPayTypes())
+				   if(pt.compareTo("Monthly") == 0)
+					   jCheckBox_monthly.setSelected(true);
 		}
 		return jCheckBox_monthly;
 	}
@@ -430,8 +424,8 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 			jCheckBox_creditCard.setSize(new Dimension(22, 16));
 			jCheckBox_creditCard.setEnabled(false);
 			jCheckBox_creditCard.setLocation(new Point(210, 367));
-			//for(String pt : chosenUser.getPayTypes())
-				//   if(pt.compareTo("CreditCard") == 0)
+			for(String pt : chosenUser.getPayTypes())
+				   if(pt.compareTo("CreditCard") == 0)
 					   jCheckBox_creditCard.setSelected(true);
 		}
 		return jCheckBox_creditCard;
@@ -451,8 +445,8 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 			jCheckBox_suspend.setForeground(Color.red);
 			jCheckBox_suspend.setText("");
 			jCheckBox_suspend.setLocation(new Point(565, 367));
-			//if(chosenUser.isSuspend())
-				//jCheckBox_suspend.setSelected(true);
+		    if(chosenUser.isSuspend())
+				jCheckBox_suspend.setSelected(true);
 		}
 		return jCheckBox_suspend;
 	}
@@ -471,9 +465,9 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 			{
 				jTextField_userName.setEditable(true);
 				jCheckBox_suspend.setEnabled(true);
-			//	String [] pt = chosenUser.getPayTypes();
-			//	for(String cc : pt)
-			//		if(cc.compareTo("CreditCard") == 0)
+				String [] pt = chosenUser.getPayTypes();
+				for(String cc : pt)
+					if(cc.compareTo("CreditCard") == 0)
 						jCheckBox_creditCard.setEnabled(true);				
 				jCheckBox_monthly.setEnabled(true);
 				jCheckBox_yearly.setEnabled(true);

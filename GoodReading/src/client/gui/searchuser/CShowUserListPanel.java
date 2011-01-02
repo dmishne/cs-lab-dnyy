@@ -41,7 +41,7 @@ public class CShowUserListPanel extends JPanel implements ActionListener{
 	/**
 	 * This is the default constructor
 	 */
-	public CShowUserListPanel() throws Exception{
+	public CShowUserListPanel() {
 		super();
 		initialize();
 	}
@@ -51,7 +51,7 @@ public class CShowUserListPanel extends JPanel implements ActionListener{
 	 * 
 	 * @return void
 	 */
-	private void initialize() throws Exception{
+	private void initialize(){
 		jLabel_main_label = new JLabel();
 		jLabel_main_label.setText("Users Result List");
 		jLabel_main_label.setLocation(new Point(0, 0));
@@ -95,7 +95,7 @@ public class CShowUserListPanel extends JPanel implements ActionListener{
 	 * 	
 	 * @return javax.swing.JScrollPane	
 	 */
-	private JScrollPane getJScrollPane_UL() throws Exception{
+	private JScrollPane getJScrollPane_UL(){
 		if (jScrollPane_UL == null) {
 			jScrollPane_UL = new JScrollPane();
 			jScrollPane_UL.setLocation(new Point(50, 50));
@@ -111,7 +111,7 @@ public class CShowUserListPanel extends JPanel implements ActionListener{
 	 * 	
 	 * @return javax.swing.JList	
 	 */
-	private JList getJList_UL() throws Exception{
+	private JList getJList_UL() {
 		if (jList_UL == null) {
 			usersList = CSearchUserPanel.getResult();
 			String []users = new String[usersList.size()];

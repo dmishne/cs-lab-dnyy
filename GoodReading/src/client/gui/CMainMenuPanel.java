@@ -174,6 +174,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 			m_jButton_SearchUser_MM = new JButton();
 			m_jButton_SearchUser_MM.setBounds(new Rectangle(408, 312, 174, 75));
 			m_jButton_SearchUser_MM.setText("Search User");
+			m_jButton_SearchUser_MM.addActionListener(this);
 		}
 		return m_jButton_SearchUser_MM;
 	}
@@ -211,6 +212,11 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 		else if(source == m_jButton_NewMsgs_MM)
 		{
 			setLastChoice(EMMDecision.NEWMSGS);
+			this.setVisible(false);
+		}
+		else if(source == m_jButton_SearchUser_MM)
+		{
+			setLastChoice(EMMDecision.SEARCHUSER);
 			this.setVisible(false);
 		}
 	}
