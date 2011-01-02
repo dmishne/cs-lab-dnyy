@@ -110,15 +110,55 @@ public class CLibrarian extends AUser{
 	}
 	
 	
-	public void updateBookDetails(String isbn, Map<String,String> newDetails) throws Exception
+	public void updateBookDetails(String curr_isbn, String title, String author, String isbn, String release, String publisher, String summary, String price, String topic, String lable, String TOC, boolean invis, String lang) throws Exception
 	{
 		CEntry entryToSrv ;
-		if(isbn.isEmpty())
-			throw new IOException("Book ISBN required!");
+		HashMap<String, String> newBookDetails = new HashMap<String, String>();
+		String visible = "true";
+		Pattern pd = Pattern.compile("(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})");
+		Matcher md = pd.matcher(release);
+		if(!md.matches()){
+			throw new IOException("Invalid Date format!");
+		}
+		if(  !invis      &&       this.getPrivilege() != EActor.LibraryManager  )
+		{
+			throw new IOException("You have no permition to edit book visibility!");
+			
+		}
+		else if ( this.getPrivilege() == EActor.LibraryManager  && invis == false)
+			          visible = "false";
+	    if(curr_isbn.isEmpty())
+			System.out.println("Error: Current ISBN not resived!");
+		else if(isbn.isEmpty())
+			throw new IOException("Book ISBN is a must!");
+		else if(author.isEmpty())
+			throw new IOException("Book Author is a must!");
+		else if(title.isEmpty())
+			throw new IOException("Book Title is a must!");
+		else if(publisher.isEmpty())
+			throw new IOException("Book Publisher is a must!");
+		else if(topic.isEmpty())
+			throw new IOException("Book Topic is a must!");
+		else if(lang.isEmpty())
+			throw new IOException("Book Language is a must!");
+		else if(price.isEmpty())
+			throw new IOException("Book Price is a must!");
 		else
 		{
-			newDetails.put("bookisbn",isbn);
-			entryToSrv = new CEntry("updatebookdetails",newDetails, this.getUserName(),this.getUserSessionId());
+			newBookDetails.put("isbn", isbn);
+			newBookDetails.put("author", author);
+			newBookDetails.put("title", title);
+			newBookDetails.put("release", release);
+			newBookDetails.put("publisher", publisher);
+			newBookDetails.put("summary", summary);
+			newBookDetails.put("price", price);
+			newBookDetails.put("topic", topic);
+			newBookDetails.put("lables", lable);
+			newBookDetails.put("toc", TOC);
+			newBookDetails.put("invisible", visible);
+			newBookDetails.put("languages", lang);
+			newBookDetails.put("bookisbn",curr_isbn);
+			entryToSrv = new CEntry("updatebookdetails",newBookDetails, this.getUserName(),this.getUserSessionId());
 			CClientConnector.getInstance().messageToServer(entryToSrv);
 		}
 	}
