@@ -194,9 +194,18 @@ public abstract class AUser implements Serializable{
 		return m_privilege;
 	}
 
-	/*public void setPrivilege(EActor mPrivilege) {
-		m_privilege = mPrivilege;
-	}*/
+	public void setPrivilege(EActor arg) {
+		m_privilege = arg;
+	}
+	public void setFirstName(String arg) {
+		m_firstName = arg;
+	}	
+	public void setLastName(String arg) {
+		m_lastName = arg;
+	}
+	public void setID(int arg) {
+		m_userID = arg;
+	}
 	
 	 /**
 	 * @return the m_firstName

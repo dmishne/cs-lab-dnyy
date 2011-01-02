@@ -417,11 +417,15 @@ public class CExecuter implements Runnable
 								}
 							}
 						} //end of edit book
+						
+						
 						else if(Work.getMsgType().compareTo("GetPayment") == 0)
 						{
 							LinkedList <String> ans= db.getUserPayments(Work.getUserName());
 							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans.toArray());
 						}//end of GetPayment
+						
+						
 						else if(Work.getMsgType().compareTo("GetFormats") == 0)
 						{
 							LinkedList <String> ans = db.getBookFormats(Work.getMsgMap().get("isbn"));
@@ -429,8 +433,53 @@ public class CExecuter implements Runnable
 							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans.toArray());
 						}//end of GetFormats	
 						
+						
+						else if(Work.getMsgType().compareTo("SearchUser") == 0)
+						{
+							LinkedList<AUser> ans;
+							Map<String,String> arg=Work.getMsgMap();
+							for(String a: arg.keySet())
+								if (arg.get(a).compareTo("")==0)
+									arg.remove(a);
+							ans=db.SearchUser(arg);
+							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans);
+						}//end of SearchUser
+						
+						else if(Work.getMsgType().compareTo("EditUser") == 0)
+						{
+							AUser usr;
+							Map<String,String> arg=Work.getMsgMap();
+							if(!arg.containsKey("username"))
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"no username specified!");
+								else {
+									Map<String,String> n=new HashMap<String,String>();
+									n.put("username", arg.get("username"));
+									usr=db.SearchUser(n).getFirst(); //should only hold 1 user!
+
+									arg.remove("username");
+									for(String a:arg.keySet())
+									{
+										if(a.compareTo("lastname")==0)
+											usr.setLastName(arg.get(a));
+										else if(a.compareTo("firstname")==0)
+											usr.setFirstName(arg.get(a));
+										else if(a.compareTo("id")==0)
+											usr.setID(Integer.parseInt(arg.get(a)));
+									}
+									if( arg.containsKey("privilage"))
+										db.SetUserPriv(usr,Integer.parseInt(arg.get("privilage")));
+									
+									if(db.editUser(usr))
+										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"success");
+									else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"fail");
+									
+								}
+							}//end of EditUser
+						
+						
 						else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Don't know this func");
 						
+					
 					} //end of handling Entry
 				}					
 			}//end of while(forever)
