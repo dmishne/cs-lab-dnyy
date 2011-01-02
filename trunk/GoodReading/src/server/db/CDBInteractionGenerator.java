@@ -634,4 +634,19 @@ public class CDBInteractionGenerator
 		return null;
 	}
 
+	public LinkedList<AUser> SearchUser(Map<String, String> params) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void SetUserPriv(AUser usr, int priv) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean editUser(AUser usr) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
