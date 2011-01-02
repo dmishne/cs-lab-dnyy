@@ -191,6 +191,28 @@ public class CExecuter implements Runnable
 						} //end of Searchbook
 						
 
+						else if(Work.getMsgType().compareTo("DownloadBook") == 0)
+						{
+							//if not a librarian, remove unapproved reviews
+							if(Privilage > 3)
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"user is not a reader!");
+							
+							else if( !Work.getMsgMap().containsKey("isbn") || !Work.getMsgMap().containsKey("format") )
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"not enough params");
+							
+							else if(!db.hasUserBought(Work.getMsgMap().get("isbn"), Work.getUserName(),Work.getSessionID()))
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"user Must buy book first!");
+							
+							//return db.getbook(isbn,format)
+							else 
+								if(!db.getBookFormats(Work.getMsgMap().get("isbn")).contains(Work.getMsgMap().get("format")))
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"no such format for this book");
+								else
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),db.getBook(Work.getMsgMap().get("isbn"),Work.getMsgMap().get("format")));
+							
+						} //end of DownloadBook
+						
+						
 						else if(Work.getMsgType().compareTo("SearchReview") == 0)
 						{
 							//get set

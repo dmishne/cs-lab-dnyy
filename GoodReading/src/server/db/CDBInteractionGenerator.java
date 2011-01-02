@@ -624,4 +624,14 @@ public class CDBInteractionGenerator
 		//adds statistics for this isbn and user (user viewed book at DATE)
 	}
 
+	public boolean hasUserBought(String isbn, String userName, int sessionID) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public CFile getBook(String isbn, String format) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
