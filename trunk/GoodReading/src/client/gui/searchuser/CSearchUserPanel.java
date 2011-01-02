@@ -230,8 +230,8 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 		{
 			try {
 				//result = ((CLibraryManager)AUser.getInstance()).searchUser(jTextField_UserName.getText(),jTextField_UserID.getText(),jTextField_FirstName.getText(),jTextField_LastName.getText());
-				CUser stub = new CUser("Daniel", "Mishne", 1 , "daniel", "29/09/1984","Haifa", null,EActor.LibraryManager, false);
-				LinkedList <CUser> stubll = new LinkedList();
+				CUser stub = new CUser("Daniel", "Mishne", 1 , "daniel", "29/09/1984","Haifa",new String[0] ,EActor.LibraryManager, false);
+				LinkedList <CUser> stubll = new LinkedList<CUser>();
 				stubll.add(stub);
 				result = stubll;
 				this.setlastChoice(SUDecision.SEARCHUSER);

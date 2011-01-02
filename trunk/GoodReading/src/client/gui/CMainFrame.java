@@ -438,6 +438,16 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 					GUI_CSearchUserPanel.setVisible(false);
 				}
 			}
+			else if(source == GUI_CUserDetailsPanel)
+			{
+				if((GUI_CUserDetailsPanel.getLastChoice() == CUserDetailsPanel.UDDecision.BACK)||(GUI_CUserDetailsPanel.getLastChoice() == CUserDetailsPanel.UDDecision.SAVE))
+				{
+					jContentPane.remove(GUI_CUserDetailsPanel);
+					GUI_CUserDetailsPanel = null;
+					GUI_CShowUserListPanel.setVisible(true);
+				}
+				
+			}
 		}
 		catch (Exception e)
 		{
