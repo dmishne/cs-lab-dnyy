@@ -23,7 +23,6 @@ import javax.swing.SwingConstants;
 
 import client.core.AUser;
 import client.core.CReader;
-
 import java.awt.Rectangle;
 
 public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseListener  {
@@ -235,7 +234,8 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 			}
 			try {
 				answer = (String) ((CReader)AUser.getInstance()).submitReview(m_newReview.get("title"),m_newReview.get("review") , CBookDetailPanel.getBook().getM_ISBN());
-				JOptionPane.showMessageDialog(null, answer ,"OK",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, answer ,"OK",JOptionPane.INFORMATION_MESSAGE);
+				this.setLastChoice(ESRDecision.SUBMIT);
 				this.setVisible(false);
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, e.getMessage() ,"Error",JOptionPane.ERROR_MESSAGE);
