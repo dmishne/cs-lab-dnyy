@@ -30,18 +30,29 @@ public class CGoodReadingServer {
 		
 		CDBInteractionGenerator.GetInstance();		//.ServerUpdateLog("Server Started loading at "+ (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime())));
 		if(CStandbyUnit.GetInstance() == null)
-			System.out.println("Problem Instanciating Standby Unit");
+			{
+				System.out.println("Problem Instanciating Standby Unit");
+				CDBInteractionGenerator.GetInstance().ServerUpdateLog("Problem Instanciating Standby Unit");
+			}
 		else {
 			try {
 				CStandbyUnit.GetInstance().listen();
 			} catch (IOException e) {
 				System.out.println("Error - Couldn't listen to client");
+				CDBInteractionGenerator.GetInstance().ServerUpdateLog("Error - Couldn't listen to client");
 			}
 			System.out.println("Standby Unit online and waiting");
+			CDBInteractionGenerator.GetInstance().ServerUpdateLog("Standby Unit online and waiting");
 		}
 		if(CExecuter.GetInstance() == null)
-				System.out.println("Problem Instanciating Executer");
-		else System.out.println("Excecuter online and waiting");
+				{
+					System.out.println("Problem Instanciating Executer");
+					CDBInteractionGenerator.GetInstance().ServerUpdateLog("Problem Instanciating Executer");
+				}
+		else {
+			System.out.println("Excecuter online and waiting");
+			CDBInteractionGenerator.GetInstance().ServerUpdateLog("Excecuter online and waiting");
+		}
 	
 		
 	//	CDBInteractionGenerator.GetInstance().MySQLInsertBlobFile(new CFile("arg.txt").getFilearray().toString());

@@ -103,6 +103,7 @@ public class CExecuter implements Runnable
 							((ConnectionToClient)Work.getClient()).sendToClient("User is not logged or is disabled");
 						}	catch (Exception e) {	
 							System.out.println("Server fail, can't 'wait' in func run via CExecuter");
+							CDBInteractionGenerator.GetInstance().ServerUpdateLog("Server fail, can't 'wait' in func run via CExecuter");
 						}
 					}
 					else
@@ -159,6 +160,7 @@ public class CExecuter implements Runnable
 								CRespondToClient.GetInstance().Remove(Work.getSessionID()).sendToClient("Logout OK");
 							} catch (IOException e) {
 								System.out.println("CExecuter: Error returning msg during logout: "+e.getMessage());
+								CDBInteractionGenerator.GetInstance().ServerUpdateLog("CExecuter: Error returning msg during logout: "+e.getMessage());
 								}
 							
 						}//end of Logout
@@ -204,7 +206,23 @@ public class CExecuter implements Runnable
 							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), rez);
 							
 						} //end of Searchreview
-
+						else if(Work.getMsgType().compareTo("GetUnhandledReviews") == 0)
+						{
+							if(Privilage <3)
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "User not authorized");
+							else {
+								//get set
+								LinkedList<CBookReview> rez=db.SearchReview(Work.getMsgMap());
+								
+								//remove handled reviews
+								for(CBookReview rev: rez)
+									if(rev.getaccepted() ==1)
+										rez.remove(rev);
+								
+								//reply to client
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), rez);
+							}
+						} //end of GetUnhandledReviews
 						else if(Work.getMsgType().compareTo("AddReview") == 0)
 						{
 							Map<String,String> arg=Work.getMsgMap();
@@ -217,7 +235,7 @@ public class CExecuter implements Runnable
 								else 
 								{
 									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: failed to submit");
-									System.out.println("failure at executer: adding review");
+									CDBInteractionGenerator.GetInstance().ServerUpdateLog("Failure at executer: adding review\n");  System.out.println("failure at executer: adding review");
 								}
 							}//end of reading auth
 						} //end of AddReview
@@ -238,9 +256,9 @@ public class CExecuter implements Runnable
 								else 
 								{
 									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: failed to submit");
-									System.out.println("failure at executer: adding review");
+									CDBInteractionGenerator.GetInstance().ServerUpdateLog("Fail: failed to submit");  System.out.println("failure at executer: editting review");
 								}
-							}//end of reading auth
+							}
 						} //end of EditReview
 						else if(Work.getMsgType().compareTo("PurchaseBook") == 0)
 						{
@@ -376,7 +394,20 @@ public class CExecuter implements Runnable
 										
 								}
 							}
-						} //end of edit book	
+						} //end of edit book
+						else if(Work.getMsgType().compareTo("GetPayment") == 0)
+						{
+							LinkedList <String> ans= db.getUserPayments(Work.getUserName());
+							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans.toArray());
+						}//end of GetPayment
+						else if(Work.getMsgType().compareTo("GetFormats") == 0)
+						{
+							LinkedList <String> ans = db.getBookFormats(Work.getMsgMap().get("isbn"));
+							db.StatisticsAddView(Work.getMsgMap().get("isbn"),Work.getUserName());
+							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans.toArray());
+						}//end of GetFormats	
+						
+						else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Don't know this func");
 						
 					} //end of handling Entry
 				}					
@@ -385,6 +416,7 @@ public class CExecuter implements Runnable
 		catch (InterruptedException e) 
 		{
 			System.out.println("Server fail, can't 'wait' in func run via CExecuter");
+			CDBInteractionGenerator.GetInstance().ServerUpdateLog("Server fail, can't wait in func run via CExecuter");
 		}
 	}
 	

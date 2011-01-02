@@ -118,7 +118,7 @@ public class CDBInteractionGenerator
 	
 	
 	
-	public void ServerUpdateLog(String string) 
+	public void ServerUpdateLog(String toLog) 
 	{
 		// TODO Auto-generated method stub
 		
@@ -605,6 +605,23 @@ public class CDBInteractionGenerator
 		} catch (SQLException e) {
 			System.out.println("editReview():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 		return false;
+	}
+
+	public LinkedList<String> getUserPayments(String userName) {
+		// TODO Auto-generated method stub
+		//returns payment types arranged by Username
+		return null;
+	}
+
+	public LinkedList<String> getBookFormats(String isbn) {
+		// TODO Auto-generated method stub
+		//return avail formats for book
+		return null;
+	}
+
+	public void StatisticsAddView(String isbn, String userName) {
+		// TODO Auto-generated method stub
+		//adds statistics for this isbn and user (user viewed book at DATE)
 	}
 
 }
