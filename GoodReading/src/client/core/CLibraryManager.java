@@ -69,13 +69,11 @@ public class CLibraryManager extends CLibrarian{
 			       newUDetails.put("birthday", birthDay);
 		if(!adress.isEmpty())
 			       newUDetails.put("adress", adress);
-		if(payType.length != 0)
-		{
-			for(String pt : payType)
-				if(!pt.isEmpty())
-			           payChain =  pt + "-";
-			newUDetails.put("paytypes", payChain);
-		}
+		for(String pt : payType)
+			if(pt != null)
+		           payChain =  pt + "-";
+		if(!payChain.isEmpty())
+		        newUDetails.put("paytypes", payChain);		
 		if(privilage != null)
 	               newUDetails.put("privilage", privilage.toString());
 		if(suspend)

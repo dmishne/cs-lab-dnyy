@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 public class CBookReview implements Serializable
 {
-	 private String m_isbn;
+	
+	private static final long serialVersionUID = 1L;
+	private String m_isbn;
 	 private String m_author;
 	 private String m_title;
 	 private String m_review;
