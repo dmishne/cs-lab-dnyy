@@ -84,23 +84,4 @@ public class CLibraryManager extends CLibrarian{
 		CClientConnector.getInstance().messageToServer(entryToSrv);
 	}
 	
-	
-	
-	public void updateBookStatus(String isbn, boolean status) throws Exception
-	{
-		CEntry entryToSrv ;
-		Map<String,String> bookStatus = new HashMap<String,String>();
-		if(isbn.isEmpty())
-			throw new IOException("Book ISBN not located! Update fail");
-		else 
-		    bookStatus.put("isbn", isbn);
-		if(status)
-			bookStatus.put("invisible", "TRUE");
-		else
-			bookStatus.put("invisible", "FALSE");
-		entryToSrv = new CEntry("bookstatus",bookStatus, this.getUserName(),this.getUserSessionId());
-		CClientConnector.getInstance().messageToServer(entryToSrv);
-	}
-	
-	
 }
