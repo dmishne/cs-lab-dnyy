@@ -426,7 +426,7 @@ public class CExecuter implements Runnable
 							if(ans == null)
 							      CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),a);
 							else
-							      CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans.toArray());
+							      CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans.toArray(new String[ans.size()]));
 						}//end of GetPayment
 						
 						
@@ -438,7 +438,7 @@ public class CExecuter implements Runnable
 							if(ans == null)
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),a);
 							else
-							    CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans.toArray());
+							    CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans.toArray(new String[ans.size()]));
 						}//end of GetFormats	
 						
 						

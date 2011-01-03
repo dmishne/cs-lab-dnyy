@@ -5,23 +5,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
-
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JList;
-
 import client.core.*;
-import client.gui.searchbook.CSearchBookPanel;
 import common.data.*;
 
 public class CNewReviewsPanel extends JPanel implements ActionListener{
@@ -92,6 +87,20 @@ public class CNewReviewsPanel extends JPanel implements ActionListener{
 	}
 
 	
+	/**
+	 * @return the m_chosen_message
+	 */
+	public static CBookReview getChosen_message() {
+		return m_chosen_message;
+	}
+
+	/**
+	 * @param m_chosen_message the m_chosen_message to set
+	 */
+	public static void setChosen_message(CBookReview m_chosen_message) {
+		CNewReviewsPanel.m_chosen_message = m_chosen_message;
+	}
+
 	/**
 	 * This method initializes jScrollPane_NewReviewsScrolPane	
 	 * 	

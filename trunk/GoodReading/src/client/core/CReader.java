@@ -132,8 +132,11 @@ public class CReader extends AUser{
 	public String[] getPaymentType() throws Exception
 	{
 		CEntry EntryToSrv = null;
+		String[] fail = {"No payment type"};
 		EntryToSrv = new CEntry("GetPayment",null,this.getUserName(),this.getUserSessionId());
-		String[] result = (String[])CClientConnector.getInstance().messageToServer(EntryToSrv);
+		String[] result = (String[])CClientConnector.getInstance().messageToServer(EntryToSrv);	
+		if(result == null)
+			return fail;
 		return result;		
 	}
 	
@@ -143,6 +146,7 @@ public class CReader extends AUser{
 		CEntry EntryToSrv = null;
 		Map <String,String> fileType = new HashMap<String,String>();
 		String[] result = new String[5];
+		String[] fail = {"No file formats"};
 		if(isbn.isEmpty())
 			throw new IOException("Book ISBN not located! Action fail");
 		else
@@ -151,6 +155,8 @@ public class CReader extends AUser{
 			EntryToSrv = new CEntry("GetFormats",fileType,this.getUserName(),this.getUserSessionId());
 			result = (String[]) CClientConnector.getInstance().messageToServer(EntryToSrv);
 		}
+		if(result == null)
+			 return fail;
 		return result;
 	}
 	
