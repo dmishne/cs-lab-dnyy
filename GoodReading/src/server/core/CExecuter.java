@@ -82,6 +82,7 @@ public class CExecuter implements Runnable
 					handleLogin(Work);			
 					
 				}//end of login handling
+				
 				else 
 				{
 					//first off we lowercase everything in msgmap
@@ -121,7 +122,12 @@ public class CExecuter implements Runnable
 					}
 					else
 					{
-						//TODO: update responder to contain NEW connection
+						if(Privilage >-1)
+							{	// update responder to contain NEW connection
+								CRespondToClient.GetInstance().Remove(Work.getSessionID());
+								CRespondToClient.GetInstance().InsertOutstream(Work.getSessionID(),Work.getClient());
+								Work.setClient(null);
+							}
 						
 						//getting an instance as "db" will make things easier for this part
 						CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
@@ -548,12 +554,12 @@ public class CExecuter implements Runnable
 
 
 	public void Kill(CEntry work) {
-		// TODO Auto-generated method stub
-		
+		CRespondToClient.GetInstance().Remove(work.getSessionID()); //remove from Client list
+		this.m_sessions.remove(work);								//remove from sessions
 	}
 
 	public Thread getThread() {
-		// TODO Auto-generated method stub, might not be needed**!!
+		// @param this function will only really be relevant if we want to expand the activity (to have 2 or more executers running) 
 		return m_ThreadHolder;
 	}
 	
