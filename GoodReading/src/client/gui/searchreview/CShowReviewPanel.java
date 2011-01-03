@@ -17,7 +17,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JTextArea;
+import common.data.CBookReview;
 import client.core.*;
+import client.gui.newmessages.CNewReviewsPanel;
 
 
 public class CShowReviewPanel extends JPanel implements ActionListener{
@@ -41,6 +43,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	private AUser user = null;
 	private boolean E_flag = false;
 	private SRPDecision m_lastChoice = null;
+	private CBookReview review = null;  
 
 	public enum SRPDecision
 	{
@@ -49,10 +52,18 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	/**
 	 * This is the default constructor
 	 */
-	public CShowReviewPanel() {
+	public CShowReviewPanel(String from) {
 		super();
 		try {
 			user = AUser.getInstance();
+			if(from.compareTo("RLP") == 0)
+			{
+				this.setReview(CReviewsListPanel.getChosenReview());
+			}
+			else if(from.compareTo("NRP") == 0)
+			{
+				this.setReview(CNewReviewsPanel.getChosen_message());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -137,13 +148,27 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 
 
 	/**
+	 * @return the review
+	 */
+	public CBookReview getReview() {
+		return review;
+	}
+
+	/**
+	 * @param review the review to set
+	 */
+	public void setReview(CBookReview review) {
+		this.review = review;
+	}
+
+	/**
 	 * This method initializes jTextField_title_SR	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
 	private JTextField getJTextField_title_SR() {
 		if (jTextField_title_SR == null) {
-			jTextField_title_SR = new JTextField(CReviewsListPanel.getChosenReview().gettitle());
+			jTextField_title_SR = new JTextField(this.getReview().gettitle());
 			jTextField_title_SR.setSize(new Dimension(580, 27));
 			jTextField_title_SR.setLocation(new Point(100, 65));
 			jTextField_title_SR.setEditable(false);
@@ -159,7 +184,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	 */
 	private JTextField getJTextField_reviewAuthor_SR() {
 		if (jTextField_reviewAuthor_SR == null) {
-			jTextField_reviewAuthor_SR = new JTextField(CReviewsListPanel.getChosenReview().getauth_by());
+			jTextField_reviewAuthor_SR = new JTextField(this.getReview().getauth_by());
 			jTextField_reviewAuthor_SR.setSize(new Dimension(580, 27));
 			jTextField_reviewAuthor_SR.setEditable(false);
 			jTextField_reviewAuthor_SR.setLocation(new Point(100, 95));
@@ -174,7 +199,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	 */
 	private JTextField getjTextField_bookISBN_SR() {
 		if (jTextField_bookISBN_SR == null) {
-			jTextField_bookISBN_SR = new JTextField(CReviewsListPanel.getChosenReview().getisbn());
+			jTextField_bookISBN_SR = new JTextField(this.getReview().getisbn());
 			jTextField_bookISBN_SR.setSize(new Dimension(580, 27));
 			jTextField_bookISBN_SR.setEditable(false);
 			jTextField_bookISBN_SR.setLocation(new Point(100, 124));
@@ -263,7 +288,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	 */
 	private JTextArea getJTextArea_review_SR() {
 		if (jTextArea_review_SR == null) {
-			jTextArea_review_SR = new JTextArea(CReviewsListPanel.getChosenReview().getreview());
+			jTextArea_review_SR = new JTextArea(this.getReview().getreview());
 			jTextArea_review_SR.setEditable(false);
 			jTextArea_review_SR.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 			jTextArea_review_SR.setWrapStyleWord(true);
@@ -325,7 +350,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 		if(source == jButton_Save_SR)
 		{
 			try {
-				((CLibrarian)AUser.getInstance()).updateReview(jTextField_bookISBN_SR.getText(), jTextField_reviewAuthor_SR.getText(), jTextField_title_SR.getText(), CReviewsListPanel.getChosenReview().gettitle(), jTextArea_review_SR.getText());
+				((CLibrarian)AUser.getInstance()).updateReview(jTextField_bookISBN_SR.getText(), jTextField_reviewAuthor_SR.getText(), jTextField_title_SR.getText(), this.getReview().gettitle(), jTextArea_review_SR.getText());
 				JOptionPane.showMessageDialog(null, "Review updated!" ,"Ok",JOptionPane.INFORMATION_MESSAGE);
 			    this.setLastChoice(SRPDecision.SAVE);
 			    this.setVisible(false);
