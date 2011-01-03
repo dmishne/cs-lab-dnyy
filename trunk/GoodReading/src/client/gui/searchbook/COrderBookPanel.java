@@ -37,7 +37,8 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 	private JLabel jLabel_labelPrice = null;
 	private JLabel jLabel_choosePayment = null;
 	private JLabel jLabel_chooseFile = null;
-	private EOBDecision m_lastChoice = null;  //  @jve:decl-index=0:
+	private EOBDecision m_lastChoice = null;  
+	private static String chosenFileType = null;  //  @jve:decl-index=0:
 	
 
 	
@@ -179,6 +180,29 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 		return m_lastChoice;
 	}
 
+	
+
+
+	
+	
+
+
+	/**
+	 * @return the chosenFileType
+	 */
+	public static String getChosenFileType() {
+		return chosenFileType;
+	}
+
+
+	/**
+	 * @param chosenFileType the chosenFileType to set
+	 */
+	public static void setChosenFileType(String chosenFileType) {
+		COrderBookPanel.chosenFileType = chosenFileType;
+	}
+
+
 	/**
 	 * This method initializes jButton_Back	
 	 * 	
@@ -273,6 +297,7 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 		if(source == jButton_Purchase)
 		{
 			try {
+				chosenFileType = jComboBox_fileType.getSelectedItem().toString();
 				receipt =((CReader)AUser.getInstance()).orderBook(CBookDetailPanel.getBook().getM_ISBN(),(String)jComboBox_PayType.getSelectedItem() );	       
 				if(receipt.isEmpty() == false)
 	            {
