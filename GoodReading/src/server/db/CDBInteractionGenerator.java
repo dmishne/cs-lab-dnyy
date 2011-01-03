@@ -610,13 +610,22 @@ public class CDBInteractionGenerator
 	public LinkedList<String> getUserPayments(String userName) {
 		// TODO Auto-generated method stub
 		//returns payment types arranged by Username
-		return null;
+		LinkedList<String>ans=new LinkedList<String>();
+		ans.add("Credit Card");
+		ans.add("Monthly Subscription");
+		ans.add("Yearly Subscription");
+		
+		return ans;
 	}
 
 	public LinkedList<String> getBookFormats(String isbn) {
 		// TODO Auto-generated method stub
 		//return avail formats for book
-		return null;
+		LinkedList<String>ans=new LinkedList<String>();
+		ans.add("arg");
+		ans.add("blah");
+		ans.add("mooore");
+		return ans ;
 	}
 
 	public void StatisticsAddView(String isbn, String userName) {
