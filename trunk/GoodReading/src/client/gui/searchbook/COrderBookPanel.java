@@ -4,18 +4,14 @@ import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
 import java.awt.Rectangle;
 import javax.swing.JLabel;
-
 import java.awt.Color;
-import java.awt.FontMetrics;
 import java.awt.Point;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.border.BevelBorder;
@@ -224,8 +220,7 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 	 */
 	private JComboBox getJComboBox_PayType() throws Exception {
 		if (jComboBox_PayType == null) {
-			jComboBox_PayType = new JComboBox(); //stub
-			//jComboBox_PayType = new JComboBox(((CReader)AUser.getInstance()).getPaymentType());
+			jComboBox_PayType = new JComboBox(((CReader)AUser.getInstance()).getPaymentType());
 			jComboBox_PayType.setLocation(new Point(387, 377));
 			jComboBox_PayType.setSize(new Dimension(230, 27));
 		}
@@ -241,8 +236,7 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 	 */
 	private JComboBox getJComboBox_fileType() throws Exception {
 		if (jComboBox_fileType == null) {
-			jComboBox_fileType = new JComboBox(); //stub
-			//jComboBox_fileType = new JComboBox(((CReader)AUser.getInstance()).getFileType(CBookDetailPanel.getBook().getM_ISBN()));
+			jComboBox_fileType = new JComboBox(((CReader)AUser.getInstance()).getFileType(CBookDetailPanel.getBook().getM_ISBN()));
 			jComboBox_fileType.setLocation(new Point(80, 377));
 			jComboBox_fileType.setSize(new Dimension(230, 27));
 		}

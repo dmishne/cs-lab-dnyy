@@ -78,7 +78,7 @@ public class CLibrarian extends AUser{
 	public LinkedList<CBookReview> searchNewReviews() throws Exception
 	{		
 		HashMap<String, String> empty = new HashMap<String, String>();
-		CEntry entryToSrv = new CEntry("getNewReviews", empty, this.getUserName(), this.getUserSessionId() );
+		CEntry entryToSrv = new CEntry("GetUnhandledReviews", empty, this.getUserName(), this.getUserSessionId() );
 		Object temp = CClientConnector.getInstance().messageToServer(entryToSrv);
 		@SuppressWarnings("unchecked")
 		LinkedList<CBookReview> booksReview = (LinkedList<CBookReview>) temp;
@@ -87,7 +87,7 @@ public class CLibrarian extends AUser{
 	
 	public void updateReview(String isbn, String author, String title, String curr_title, String review) throws Exception
 	{
-		Map<String, String> upReview = new HashMap<String, String>();
+		HashMap<String, String> upReview = new HashMap<String, String>();
 		CEntry entryToSrv ;
 		if(isbn.isEmpty())
 			throw new IOException("Book ISBN required!");
@@ -158,7 +158,7 @@ public class CLibrarian extends AUser{
 			newBookDetails.put("invisible", visible);
 			newBookDetails.put("languages", lang);
 			newBookDetails.put("bookisbn",curr_isbn);
-			entryToSrv = new CEntry("updatebookdetails",newBookDetails, this.getUserName(),this.getUserSessionId());
+			entryToSrv = new CEntry("EditBook",newBookDetails, this.getUserName(),this.getUserSessionId());
 			CClientConnector.getInstance().messageToServer(entryToSrv);
 		}
 	}

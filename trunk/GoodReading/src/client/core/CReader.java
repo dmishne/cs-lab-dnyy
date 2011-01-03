@@ -132,10 +132,9 @@ public class CReader extends AUser{
 	public String[] getPaymentType() throws Exception
 	{
 		CEntry EntryToSrv = null;
-		String[] result = new String[5];
-		EntryToSrv = new CEntry("getPaymentType",null,this.getUserName(),this.getUserSessionId());
-		result = (String[]) CClientConnector.getInstance().messageToServer(EntryToSrv);
-		return result;
+		EntryToSrv = new CEntry("GetPayment",null,this.getUserName(),this.getUserSessionId());
+		String[] result = (String[])CClientConnector.getInstance().messageToServer(EntryToSrv);
+		return result;		
 	}
 	
 	
@@ -148,8 +147,8 @@ public class CReader extends AUser{
 			throw new IOException("Book ISBN not located! Action fail");
 		else
 		{
-			fileType.put("ISBN",isbn );
-			EntryToSrv = new CEntry("getFileType",fileType,this.getUserName(),this.getUserSessionId());
+			fileType.put("isbn",isbn );
+			EntryToSrv = new CEntry("GetFormats",fileType,this.getUserName(),this.getUserSessionId());
 			result = (String[]) CClientConnector.getInstance().messageToServer(EntryToSrv);
 		}
 		return result;
