@@ -40,7 +40,7 @@ public class CLibraryManager extends CLibrarian{
 		{
 			userParam.put("lastname", LastName);
 		}
-		entryToSrv = new CEntry("searchuser",userParam, this.getUserName(),this.getUserSessionId());
+		entryToSrv = new CEntry("SearchUser",userParam, this.getUserName(),this.getUserSessionId());
 		Object res = CClientConnector.getInstance().messageToServer(entryToSrv);
 		@SuppressWarnings("unchecked")
 		LinkedList<CUser> result = (LinkedList<CUser>)res;
@@ -80,7 +80,7 @@ public class CLibraryManager extends CLibrarian{
 			   newUDetails.put("suspend", "true");
 		else if (!suspend)
 			   newUDetails.put("suspend", "false");
-		entryToSrv = new CEntry("updateuserdetails",newUDetails, this.getUserName(),this.getUserSessionId());
+		entryToSrv = new CEntry("EditUser",newUDetails, this.getUserName(),this.getUserSessionId());
 		CClientConnector.getInstance().messageToServer(entryToSrv);
 	}
 	

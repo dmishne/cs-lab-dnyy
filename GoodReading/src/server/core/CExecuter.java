@@ -422,15 +422,23 @@ public class CExecuter implements Runnable
 						else if(Work.getMsgType().compareTo("GetPayment") == 0)
 						{
 							LinkedList <String> ans= db.getUserPayments(Work.getUserName());
-							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans.toArray());
+							String[] a = {"No affordable pay types"};
+							if(ans == null)
+							      CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),a);
+							else
+							      CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans.toArray());
 						}//end of GetPayment
 						
 						
 						else if(Work.getMsgType().compareTo("GetFormats") == 0)
 						{
+							String[] a = {"No affordable file formats"};
 							LinkedList <String> ans = db.getBookFormats(Work.getMsgMap().get("isbn"));
 							db.StatisticsAddView(Work.getMsgMap().get("isbn"),Work.getUserName());
-							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans.toArray());
+							if(ans == null)
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),a);
+							else
+							    CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans.toArray());
 						}//end of GetFormats	
 						
 						
