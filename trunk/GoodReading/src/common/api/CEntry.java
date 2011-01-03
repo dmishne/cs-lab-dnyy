@@ -90,4 +90,9 @@ public class CEntry implements Serializable{
 		 }
 		 return false;
 	 }
+
+
+	public void setMsgMap(Map<String, String> tmp) {
+		this.m_msgMap=(HashMap<String, String>) tmp;
+	}
 }
