@@ -109,9 +109,9 @@ public class CReader extends AUser{
 		{
 			if(reviewTitle.compareTo(" ") != 0  && !reviewTitle.isEmpty())
 			{
-			    Breview.put("Review", review);
-			    Breview.put("ISBN",isbn );
-				Breview.put("Title",reviewTitle );
+			    Breview.put("review", review);
+			    Breview.put("isbn",isbn );
+				Breview.put("title",reviewTitle );
 				EntryToSrv = new CEntry("AddReview",Breview,this.getUserName(),this.getUserSessionId());
 				try {
 					fromServer = (String) CClientConnector.getInstance().messageToServer(EntryToSrv);
@@ -167,10 +167,10 @@ public class CReader extends AUser{
 		Map <String,String> orderInfo = new HashMap<String,String>();
 		if(isbn.isEmpty())
 			throw new IOException("Book ISBN required for order!"); 
-		orderInfo.put("ISBN", isbn);
+		orderInfo.put("isbn", isbn);
 		if(PayType.isEmpty())
 			throw new IOException("Pay type required for order!");
-		orderInfo.put("PayType", PayType);
+		orderInfo.put("paytype", PayType);
 		EntryToSrv = new CEntry("PurchaseBook",orderInfo,this.getUserName(),this.getUserSessionId());
 		String res = (String)CClientConnector.getInstance().messageToServer(EntryToSrv);
 		return res;
