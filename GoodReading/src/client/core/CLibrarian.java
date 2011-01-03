@@ -1,6 +1,8 @@
 package client.core;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,6 +36,7 @@ public class CLibrarian extends AUser{
 		if(!md.matches()){
 			throw new IOException("Invalid Date format!");
 		}
+		String date = release.substring(6, 10)+"-"+release.substring(3, 5)+"-"+release.substring(0, 2);
 		if(  !invis      &&       this.getPrivilege() != EActor.LibraryManager  )
 		{
 			throw new IOException("You have no permition to edit book visibility!");
@@ -55,12 +58,15 @@ public class CLibrarian extends AUser{
 			throw new IOException("Book Language is a must!");
 		else if(price.isEmpty())
 			throw new IOException("Book Price is a must!");
+		else if(!isValidDate(date))
+			throw new IOException("Wrong date!");
 		else
 		{
+			
 			newBook.put("isbn", isbn);
 			newBook.put("author", author);
 			newBook.put("title", title);
-			newBook.put("release", release);
+			newBook.put("release", date);
 			newBook.put("publisher", publisher);
 			newBook.put("summary", summary);
 			newBook.put("price", price);
@@ -120,6 +126,7 @@ public class CLibrarian extends AUser{
 		if(!md.matches()){
 			throw new IOException("Invalid Date format!");
 		}
+		String date = release.substring(6, 10)+"-"+release.substring(3, 5)+"-"+release.substring(0, 2);
 		if(  !invis      &&       this.getPrivilege() != EActor.LibraryManager  )
 		{
 			throw new IOException("You have no permition to edit book visibility!");
@@ -143,12 +150,14 @@ public class CLibrarian extends AUser{
 			throw new IOException("Book Language is a must!");
 		else if(price.isEmpty())
 			throw new IOException("Book Price is a must!");
+		else if(!isValidDate(date))
+			throw new IOException("Wrong date!");
 		else
 		{
 			newBookDetails.put("isbn", isbn);
 			newBookDetails.put("author", author);
 			newBookDetails.put("title", title);
-			newBookDetails.put("release", release);
+			newBookDetails.put("release", date);
 			newBookDetails.put("publisher", publisher);
 			newBookDetails.put("summary", summary);
 			newBookDetails.put("price", price);
@@ -179,6 +188,30 @@ public class CLibrarian extends AUser{
 			CClientConnector.getInstance().messageToServer(entryToSrv);	
 		}
 	}
+	
+	
+	public boolean isValidDate(String inDate) {
+
+	    if (inDate == null)
+	      return false;
+
+	    //set the format to use as a constructor argument
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	    
+	    if (inDate.trim().length() != dateFormat.toPattern().length())
+	      return false;
+
+	    dateFormat.setLenient(false);
+	    
+	    try {
+	      //parse the inDate parameter
+	      dateFormat.parse(inDate.trim());
+	    }
+	    catch (ParseException pe) {
+	      return false;
+	    }
+	    return true;
+	  }
 	
 	
 	
