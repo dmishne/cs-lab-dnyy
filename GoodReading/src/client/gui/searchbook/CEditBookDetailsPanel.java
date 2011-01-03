@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import common.data.CBook;
+import common.data.EFileType;
 import client.core.AUser;
 import client.core.CLibrarian;
 import client.core.EActor;
@@ -57,6 +58,13 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	private JLabel jLabel_toc = null;
 	private JLabel jLabel_label = null;
 	private JTextField jTextField_label = null;
+	private JLabel jLabel_FileTypes = null;
+	private JLabel jLabel_Type_pdf = null;
+	private JLabel jLabel_Type_fb2 = null;
+	private JLabel jLabel_Type_doc = null;
+	private JCheckBox jCheckBox_pdf = null;
+	private JCheckBox jCheckBox_fb2 = null;
+	private JCheckBox jCheckBox_doc = null;
 	private CBook m_book = null;
 	
 	
@@ -83,6 +91,26 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	 * @return void
 	 */
 	private void initialize() {
+		jLabel_Type_doc = new JLabel();
+		jLabel_Type_doc.setText("DOC");
+		jLabel_Type_doc.setSize(new Dimension(30, 20));
+		jLabel_Type_doc.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
+		jLabel_Type_doc.setLocation(new Point(631, 125));
+		jLabel_Type_fb2 = new JLabel();
+		jLabel_Type_fb2.setText("FB2");
+		jLabel_Type_fb2.setSize(new Dimension(30, 20));
+		jLabel_Type_fb2.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
+		jLabel_Type_fb2.setLocation(new Point(571, 125));
+		jLabel_Type_pdf = new JLabel();
+		jLabel_Type_pdf.setText("PDF");
+		jLabel_Type_pdf.setSize(new Dimension(30, 20));
+		jLabel_Type_pdf.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
+		jLabel_Type_pdf.setLocation(new Point(511, 125));
+		jLabel_FileTypes = new JLabel();
+		jLabel_FileTypes.setText("File Type :");
+		jLabel_FileTypes.setSize(new Dimension(60, 20));
+		jLabel_FileTypes.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
+		jLabel_FileTypes.setLocation(new Point(431, 125));
 		jLabel_label = new JLabel();
 		jLabel_label.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
 		jLabel_label.setSize(new Dimension(90, 26));
@@ -90,7 +118,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 		jLabel_label.setText("Labels");
 		jLabel_toc = new JLabel();
 		jLabel_toc.setText("Table Of Contents");
-		jLabel_toc.setLocation(new Point(482, 164));
+		jLabel_toc.setLocation(new Point(476, 185));
 		jLabel_toc.setFont(new Font("Eras Light ITC", Font.BOLD, 14));
 		jLabel_toc.setSize(new Dimension(140, 22));
 		jLabel_summary = new JLabel();
@@ -107,9 +135,9 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 		jLabel_visibility = new JLabel();
 		jLabel_visibility.setText("    Visible");
 		jLabel_visibility.setBorder(BorderFactory.createLineBorder(Color.black));
-		jLabel_visibility.setLocation(new Point(477, 90));
+		jLabel_visibility.setLocation(new Point(482, 80));
 		jLabel_visibility.setFont(new Font("Eras Light ITC", Font.BOLD, 16));
-		jLabel_visibility.setSize(new Dimension(146, 35));
+		jLabel_visibility.setSize(new Dimension(135, 32));
 		jLabel_Price = new JLabel();
 		jLabel_Price.setText("Price  :");
 		jLabel_Price.setLocation(new Point(20, 304));
@@ -179,6 +207,13 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 		this.add(jLabel_toc, null);
 		this.add(jLabel_label, null);
 		this.add(getJTextField_label(), null);
+		this.add(jLabel_FileTypes, null);
+		this.add(jLabel_Type_pdf, null);
+		this.add(jLabel_Type_fb2, null);
+		this.add(jLabel_Type_doc, null);
+		this.add(getJCheckBox_pdf(), null);
+		this.add(getJCheckBox_fb2(), null);
+		this.add(getJCheckBox_doc(), null);
 	}
 
 	
@@ -358,8 +393,8 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	private JScrollPane getJScrollPane_TOC() {
 		if (jScrollPane_TOC == null) {
 			jScrollPane_TOC = new JScrollPane();
-			jScrollPane_TOC.setSize(new Dimension(263, 272));
-			jScrollPane_TOC.setLocation(new Point(415, 185));
+			jScrollPane_TOC.setSize(new Dimension(263, 251));
+			jScrollPane_TOC.setLocation(new Point(415, 206));
 			jScrollPane_TOC.setViewportView(getJTextArea_toc());
 			jScrollPane_TOC.setBorder(BorderFactory.createLineBorder(Color.black));
 		}
@@ -388,7 +423,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 		if (jCheckBox_visibilityCheck == null) {
 			jCheckBox_visibilityCheck = new JCheckBox();
 			jCheckBox_visibilityCheck.setPreferredSize(new Dimension(27, 27));
-			jCheckBox_visibilityCheck.setLocation(new Point(582, 94));
+			jCheckBox_visibilityCheck.setLocation(new Point(582, 84));
 			if(m_book.getM_invisible())
 			      jCheckBox_visibilityCheck.setSelected(true);
 			else if (!m_book.getM_invisible())
@@ -457,8 +492,52 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	}
 	
 	
+	/**
+	 * This method initializes jCheckBox_pdf	
+	 * 	
+	 * @return javax.swing.JCheckBox	
+	 */
+	private JCheckBox getJCheckBox_pdf() {
+		if (jCheckBox_pdf == null) {
+			jCheckBox_pdf = new JCheckBox();
+			jCheckBox_pdf.setSize(new Dimension(19, 17));
+			jCheckBox_pdf.setLocation(new Point(515, 150));
+		}
+		return jCheckBox_pdf;
+	}
+
+	/**
+	 * This method initializes jCheckBox_fb2	
+	 * 	
+	 * @return javax.swing.JCheckBox	
+	 */
+	private JCheckBox getJCheckBox_fb2() {
+		if (jCheckBox_fb2 == null) {
+			jCheckBox_fb2 = new JCheckBox();
+			jCheckBox_fb2.setSize(new Dimension(18, 18));
+			jCheckBox_fb2.setLocation(new Point(575, 150));
+		}
+		return jCheckBox_fb2;
+	}
+
+	/**
+	 * This method initializes jCheckBox_doc	
+	 * 	
+	 * @return javax.swing.JCheckBox	
+	 */
+	private JCheckBox getJCheckBox_doc() {
+		if (jCheckBox_doc == null) {
+			jCheckBox_doc = new JCheckBox();
+			jCheckBox_doc.setSize(new Dimension(22, 16));
+			jCheckBox_doc.setLocation(new Point(635, 150));
+		}
+		return jCheckBox_doc;
+	}
+	
+	
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
+		EFileType[] fileType = new EFileType[3];
 		if(source == jButton_back_EBD)
 		{
 			setLastChoice(EBDDecision.BACK);
@@ -467,7 +546,13 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 		if(source == jButton_Save_EBD)
 		{ 		
 				try {
-					((CLibrarian)AUser.getInstance()).updateBookDetails(m_book.getM_ISBN(),jTextField_title.getText(), jTextField_author.getText(), jTextField_isbn.getText(), jTextField_r_date.getText(), jTextField_publisher.getText(), jTextArea_summary.getText(),jTextField_price.getText(), jTextField_topic.getText(), jTextField_label.getText(), jTextArea_toc.getText(), jCheckBox_visibilityCheck.isSelected(), jTextField_lang.getText());
+					if(jCheckBox_pdf.isSelected())
+						fileType[0] = EFileType.PDF;
+					if(jCheckBox_fb2.isSelected())
+						fileType[1] = EFileType.FB2;
+					if(jCheckBox_doc.isSelected())
+						fileType[2] = EFileType.DOC;
+					((CLibrarian)AUser.getInstance()).updateBookDetails(m_book.getM_ISBN(),jTextField_title.getText(), jTextField_author.getText(), jTextField_isbn.getText(), jTextField_r_date.getText(), jTextField_publisher.getText(), jTextArea_summary.getText(),jTextField_price.getText(), jTextField_topic.getText(), jTextField_label.getText(), jTextArea_toc.getText(), jCheckBox_visibilityCheck.isSelected(), jTextField_lang.getText(), fileType);
 					setLastChoice(EBDDecision.SAVE);
 					this.setVisible(false);
 					} catch (Exception e) {

@@ -11,6 +11,7 @@ import client.common.CClientConnector;
 import common.api.CEntry;
 import common.data.CBook;
 import common.data.CBookReview;
+import common.data.EFileType;
 
 public class CLibrarian extends AUser{
 
@@ -25,11 +26,12 @@ public class CLibrarian extends AUser{
 	}
 	
 	
-	public void addNewBook(String title, String author, String isbn, String release, String publisher, String summary, String price, String topic, String lable, String TOC, boolean invis, String lang) throws IOException, Exception
+	public void addNewBook(String title, String author, String isbn, String release, String publisher, String summary, String price, String topic, String lable, String TOC, boolean invis, String lang, EFileType[] type) throws IOException, Exception
 	{
 		CEntry entryToSrv;
 		HashMap<String, String> newBook = new HashMap<String, String>();
 		String visible = "true";
+		String types;
 		// check date
 		Pattern pd = Pattern.compile("(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})");
 		Matcher md = pd.matcher(release);
@@ -60,6 +62,8 @@ public class CLibrarian extends AUser{
 			throw new IOException("Book Price is a must!");
 		else if(!isValidDate(date))
 			throw new IOException("Wrong date!");
+		else if(type.length < 1 || type[0] == null)
+			throw new IOException("Books File Type is a must!");
 		else
 		{
 			
@@ -75,6 +79,11 @@ public class CLibrarian extends AUser{
 			newBook.put("toc", TOC);
 			newBook.put("invisible", visible);
 			newBook.put("languages", lang);
+			types = type[0].toString();
+			for(int i = 1 ; i<type.length ; i++)
+				if(type[i] != null)
+				     types = types + "," + type[i].toString();
+			newBook.put("filetype", types);
 			entryToSrv = new CEntry("AddBook", newBook, this.getUserName(),this.getUserSessionId());
 			CClientConnector.getInstance().messageToServer(entryToSrv);
 		}
@@ -116,11 +125,12 @@ public class CLibrarian extends AUser{
 	}
 	
 	
-	public void updateBookDetails(String curr_isbn, String title, String author, String isbn, String release, String publisher, String summary, String price, String topic, String lable, String TOC, boolean invis, String lang) throws Exception
+	public void updateBookDetails(String curr_isbn, String title, String author, String isbn, String release, String publisher, String summary, String price, String topic, String lable, String TOC, boolean invis, String lang,EFileType[] type) throws Exception
 	{
 		CEntry entryToSrv ;
 		HashMap<String, String> newBookDetails = new HashMap<String, String>();
 		String visible = "true";
+		String types;
 		Pattern pd = Pattern.compile("(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})");
 		Matcher md = pd.matcher(release);
 		if(!md.matches()){
@@ -167,6 +177,11 @@ public class CLibrarian extends AUser{
 			newBookDetails.put("invisible", visible);
 			newBookDetails.put("languages", lang);
 			newBookDetails.put("bookisbn",curr_isbn);
+			types = type[0].toString();
+			for(int i = 1 ; i<type.length ; i++)
+				if(type[i] != null)
+				     types = types + "," + type[i].toString();
+			newBookDetails.put("filetype", types);
 			entryToSrv = new CEntry("EditBook",newBookDetails, this.getUserName(),this.getUserSessionId());
 			CClientConnector.getInstance().messageToServer(entryToSrv);
 		}
