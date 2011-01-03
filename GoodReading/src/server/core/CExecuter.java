@@ -84,6 +84,19 @@ public class CExecuter implements Runnable
 				}//end of login handling
 				else 
 				{
+					//first off we lowercase everything in msgmap
+					Map<String,String> tmp=new HashMap<String,String>(Work.getMsgMap());
+					String v;
+					for(String k:Work.getMsgMap().keySet())
+					{
+						v=tmp.get(k);
+						tmp.remove(k);
+						tmp.put(k.toLowerCase(), v);
+					}
+					Work.setMsgMap(tmp);
+					//end of lower casing
+					
+					//start
 					int Privilage=-1;
 					
 					for(CClientSession s : this.m_sessions) //find session
