@@ -43,11 +43,12 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	private AUser user = null;
 	private boolean E_flag = false;
 	private SRPDecision m_lastChoice = null;
-	private CBookReview review = null;  
+	private CBookReview review = null;
+	private JButton jButton_DeleteReview_SR = null;  
 
 	public enum SRPDecision
 	{
-		BACK,SAVE
+		BACK,DELETEREVIEW,SAVE
 	}
 	/**
 	 * This is the default constructor
@@ -129,6 +130,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 		this.add(getJCheckBox_confirm_SR(), null);
 		this.add(getJButton_editReview_SR(), null);
 		this.add(jLabel, null);
+		this.add(getJButton_DeleteReview_SR(), null);
 	}
 	
 	
@@ -295,6 +297,26 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 		}
 		return jTextArea_review_SR;
 	}
+	
+	
+	/**
+	 * This method initializes jButton_DeleteReview_SR	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getJButton_DeleteReview_SR() {
+		if (jButton_DeleteReview_SR == null) {
+			jButton_DeleteReview_SR = new JButton();
+			jButton_DeleteReview_SR.setText("Delete Review");
+			jButton_DeleteReview_SR.setSize(new Dimension(150, 34));
+			jButton_DeleteReview_SR.setLocation(new Point(485, 430));
+			if(user.getPrivilege() == EActor.Librarian || user.getPrivilege() == EActor.LibraryManager)
+			{
+				jButton_DeleteReview_SR.setVisible(false);
+			}
+		}
+		return jButton_DeleteReview_SR;
+	}
 
 	/**
 	 * This method initializes jButton_editReview_SR	
@@ -347,6 +369,17 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 			   E_flag = false;
 			}
 		}
+		if(source == jButton_DeleteReview_SR)
+		{
+			try {
+				setLastChoice(SRPDecision.DELETEREVIEW);
+				((CLibrarian)AUser.getInstance()).deleteReview(this.getReview().gettitle(),this.getReview().getauthor() , this.getReview().getisbn());
+				JOptionPane.showMessageDialog(null, "Review Deleted!" ,"Ok",JOptionPane.INFORMATION_MESSAGE);
+				this.setVisible(false);
+			} catch (Exception e) {
+				System.out.println("client.core.CLibrarian.deleteReview Exception");
+			}
+		}
 		if(source == jButton_Save_SR)
 		{
 			try {
@@ -360,6 +393,8 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 			}
 		}
 	}
+
+	
 
 	
 }
