@@ -608,23 +608,44 @@ public class CDBInteractionGenerator
 	}
 
 	public LinkedList<String> getUserPayments(String userName) {
-		// TODO Auto-generated method stub
-		//returns payment types arranged by Username
+		ResultSet cc;
 		LinkedList<String>ans=new LinkedList<String>();
-		ans.add("Credit Card");
-		ans.add("Monthly Subscription");
-		ans.add("Yearly Subscription");
-		
+		try {
+			cc = this.MySQLQuery("CALL CheckSubscription ('"+ userName +"');");
+			while(cc.next())
+				{
+					if(cc.getString("type").equalsIgnoreCase("monthly"))
+							ans.add("Monthly Subscription");								
+					else if (cc.getString("type").equalsIgnoreCase("yearly"))
+						ans.add("Yearly Subscription");
+				}
+			cc = null;
+			cc = this.MySQLQuery("CALL CheckCC ('"+ userName +"');");
+			if(cc.next())
+			{
+				ans.add("Credit Card");	
+			}
+		} catch (Exception e) 
+		{	 System.out.println("getUserPayments():SQL exception: "+e.getMessage());	}
 		return ans;
 	}
 
 	public LinkedList<String> getBookFormats(String isbn) {
-		// TODO Auto-generated method stub
-		//return avail formats for book
+		ResultSet formats;
 		LinkedList<String>ans=new LinkedList<String>();
-		ans.add("arg");
-		ans.add("blah");
-		ans.add("mooore");
+		try {
+			formats = this.MySQLQuery("CALL GetBookFormats ('"+ isbn +"');");
+			while(formats.next())
+				{
+					if(formats.getString("type").equalsIgnoreCase("doc"))
+							ans.add("doc");								
+					else if (formats.getString("type").equalsIgnoreCase("pdf"))
+						ans.add("pdf");
+					else if (formats.getString("type").equalsIgnoreCase("fb2"))
+						ans.add("fb2");
+				}
+		} catch (Exception e) 
+		{	 System.out.println("getBookFormats():SQL exception: "+e.getMessage());	}
 		return ans ;
 	}
 

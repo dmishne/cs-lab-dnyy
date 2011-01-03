@@ -88,7 +88,22 @@ public class CGoodReadingServer {
 	//	CBook cb = new CBook("978-0785673215", "J.K. Rowling", "Harry Potter 12", "2007-07-07", "Bloomsbury", "The 2nd harry potter book", 8.84, 0, 0, "topic1", "labele1", "toc1", false, "hebrew");
 	//	System.out.print(CDBInteractionGenerator.GetInstance().editBookDetails(cb));
 	//	System.out.print(CDBInteractionGenerator.GetInstance().editReview("1234", "Yotam", "The book is awfull", "Cant read the book at all...", 0,"someone"));
-		
+	/*	LinkedList<String> lst = new LinkedList<String>();
+		lst = CDBInteractionGenerator.GetInstance().getBookFormats("1234");
+		Iterator<String> it = lst.iterator();
+		while(it.hasNext())
+		{
+			System.out.println(it.next());
+		}
+	*/
+	/*	LinkedList<String> lst = new LinkedList<String>();
+		lst = CDBInteractionGenerator.GetInstance().getUserPayments("yotam");
+		Iterator<String> it = lst.iterator();
+		while(it.hasNext())
+		{
+			System.out.println(it.next());
+		}
+	*/	
 		
 		//at last, we check that everthing is working
 	/*
