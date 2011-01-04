@@ -8,6 +8,7 @@ import common.data.*;
 import ocsf.server.ConnectionToClient;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
@@ -38,7 +39,7 @@ public class CExecuter implements Runnable
 	private CExecuter()
 	{
 	    //Instance is configured inside init()
-		this.m_sessions=new TreeSet<CClientSession>();
+		this.m_sessions=new HashSet<CClientSession>();
 	}
 	
 	private static void init()
@@ -587,9 +588,16 @@ public class CExecuter implements Runnable
 	}
 
 
-	public void Kill(CEntry work) {
-		//CRespondToClient.GetInstance().Remove(work.getSessionID()); //remove from Client list
-		//this.m_sessions.remove(work.getSessionID());								//remove from sessions
+	public void Kill(CEntry work) 
+	{
+		if(m_sessions.isEmpty())
+			return;
+		for(CClientSession c:this.m_sessions)
+			if(work.getSessionID() != c.getSessionID() && work.getUserName().compareTo(c.getUsername()) == 0)
+				{
+					m_sessions.remove(c);//remove from sessions
+					CRespondToClient.GetInstance().Remove(c.getSessionID()); //remove from Client list
+				}
 	//TODO: fix this falldown
 	}
 
@@ -609,7 +617,7 @@ public class CExecuter implements Runnable
 			//create session and add to Executer's session list
 			CClientSession newSession=new CClientSession(Work.getSessionID(),Work.getUserName(),CDBInteractionGenerator.GetInstance().MySQLGetAuth(Work.getMsgMap().get("user"))); 
 			CExecuter.GetInstance().add(newSession);
-			
+			Work.setSessionID(newSession.getSessionID());
 			
 			//create instance
 			AUser feedback=CDBInteractionGenerator.GetInstance().getUserInstance(Work.getUserName(),Work.getSessionID());

@@ -265,7 +265,7 @@ public class CDBInteractionGenerator
 
 	
 	private String buildSearchBookWhere(Map<String,String> params)
-	{
+	{  ///TODO: add sub catagories
 		String ans="";
 		if(params.isEmpty())
 			return ans;
@@ -468,12 +468,11 @@ public class CDBInteractionGenerator
 
 	public double getPrice(String isbn) {
 		ResultSet price=null;
-		Double p = null;
 		try {
 			price = this.MySQLQuery("CALL GetPriceByISBN ('"+ isbn +"');");
 			if(price.next())
 				{
-					return p.parseDouble((price.getString("price")));
+					return Double.parseDouble((price.getString("price")));
 				}
 		} catch (Exception e) 
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}	
@@ -797,7 +796,7 @@ public class CDBInteractionGenerator
 
 	public Set<String> getLangs() {
 		// TODO Auto-generated method stub
-		Set m_langueges = new HashSet<String>();
+		Set<String> m_langueges = new HashSet<String>();
 		m_langueges.add("Hebrew");
 		m_langueges.add("English");
 		m_langueges.add("Russian");
@@ -806,7 +805,7 @@ public class CDBInteractionGenerator
 
 	public Set<String> getTopics() {
 		// TODO Auto-generated method stub
-		Set m_topics = new HashSet<String>();		
+		Set<String> m_topics = new HashSet<String>();		
 		m_topics.add("Action");
 		m_topics.add("Drama");
 		m_topics.add("Comedy");	
