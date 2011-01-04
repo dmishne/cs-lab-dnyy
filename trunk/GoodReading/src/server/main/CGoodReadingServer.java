@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import client.core.AUser;
+
 import common.data.CBook;
 import common.data.CBookReview;
 import common.data.CFile;
@@ -108,6 +110,19 @@ public class CGoodReadingServer {
 	//	System.out.print("stat view added");
 	//	System.out.print(CDBInteractionGenerator.GetInstance().hasUserBought("1234", "test2", 12345));
 	//	System.out.print(CDBInteractionGenerator.GetInstance().getBookViews("1234", null, null).toString());
+	/*	Map<String,String> mp1 = new HashMap<String,String>();
+		mp1.put("lastname", "mishne");
+		LinkedList<AUser> cb1 = new LinkedList<AUser>();
+		cb1 = CDBInteractionGenerator.GetInstance().SearchUser(mp1);
+		Iterator<AUser> it1 = cb1.iterator();
+		while(it1.hasNext())
+		{
+			System.out.printf(it1.next().toString());
+		}
+	*/	
+		
+		
+		
 		
 		//at last, we check that everthing is working
 	/*

@@ -679,15 +679,16 @@ public class CDBInteractionGenerator
 	}
 
 	public LinkedList<AUser> SearchUser(Map<String, String> params) {
-		//TODO need to check compatability of keys in search.
-		// also cant instance AUser, also session ID changes...
+		// cant instance AUser, also session ID changes...
 		LinkedList<AUser> res = new LinkedList<AUser>();
 		ResultSet data=null;
 		try {
-			data = this.MySQLQuery("SELECT * FROM users "+this.buildSearchUserWhere(params)+";");
-		//	while(data.next())
-		//		res.add( new AUser( data.getString("first_name"),data.getString("last_name"),data.getInt("ID"),data.getString("user"),data.getString("authorization")  ,data.getInt(6)));
+			data = this.MySQLQuery("SELECT * FROM users "+ this.buildSearchUserWhere(params) +";");
+			while(data.next())
+			{
+			//	res.add( new AUser( data.getString("first_name"),data.getString("last_name"),data.getInt("ID"),data.getString("user"),data.getString("authorization")  ,data.getInt(6)));
 		//     AUser(				String FirstName, 				String LastName, 			int UserId, 	  String UserName,	 		EActor Privilege, 			int SessionID)
+			}
 			} catch (Exception e) 
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}	
 		return res;
@@ -708,40 +709,40 @@ public class CDBInteractionGenerator
 
 		if(params.containsKey("username"))
 		{
-			ans=ans+"title LIKE '%"+params.get("username")+"%'";
+			ans=ans+"user LIKE '%"+params.get("username")+"%'";
 			params.remove("username");
 		}
 		else if(params.containsKey("id"))
 		{
-			ans=ans+"author LIKE '%"+params.get("userid")+"%'";
+			ans=ans+"ID LIKE '%"+params.get("userid")+"%'";
 			params.remove("id");
 		}
-		else if(params.containsKey("firstName"))
+		else if(params.containsKey("firstname"))
 		{
-			ans=ans+"isbn LIKE '%"+params.get("firstName")+"%'";
-			params.remove("firstName");
+			ans=ans+"first_name LIKE '%"+params.get("firstname")+"%'";
+			params.remove("firstname");
 		}
-		else if(params.containsKey("lastNmae"))
+		else if(params.containsKey("lastname"))
 		{
-			ans=ans+"review LIKE '%"+params.get("lastNmae")+"%'";
-			params.remove("lastNmae");
+			ans=ans+"last_name LIKE '%"+params.get("lastname")+"%'";
+			params.remove("lastname");
 		}
 				
 		
 		//now inserting new attributes
 		if(params.containsKey("username"))
-			ans=ans+" AND title LIKE '%"+params.get("username")+"%'";
+			ans=ans+" AND user LIKE '%"+params.get("username")+"%'";
 
 		 if(params.containsKey("id"))
-			ans=ans+" AND author LIKE '%"+params.get("id")+"%'";
+			ans=ans+" AND ID LIKE '%"+params.get("id")+"%'";
 
 	
-		 if(params.containsKey("firstName"))
-			ans=ans+" AND isbn LIKE '%"+params.get("firstName")+"%'";
+		 if(params.containsKey("firstname"))
+			ans=ans+" AND first_name LIKE '%"+params.get("firstname")+"%'";
 	
 	
-		 if(params.containsKey("lastNmae"))
-			ans=ans+" AND review LIKE '%"+params.get("lastNmae")+"%'";
+		 if(params.containsKey("lastname"))
+			ans=ans+" AND last_name LIKE '%"+params.get("lastname")+"%'";
 
 		return ans;		
 	}
