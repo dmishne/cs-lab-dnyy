@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
@@ -792,6 +793,24 @@ public class CDBInteractionGenerator
 	public boolean deleteReview(String isbn, String userName) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public Set<String> getLangs() {
+		// TODO Auto-generated method stub
+		Set m_langueges = new HashSet<String>();
+		m_langueges.add("Hebrew");
+		m_langueges.add("English");
+		m_langueges.add("Russian");
+		return m_langueges;
+	}
+
+	public Set<String> getTopics() {
+		// TODO Auto-generated method stub
+		Set m_topics = new HashSet<String>();		
+		m_topics.add("Action");
+		m_topics.add("Drama");
+		m_topics.add("Comedy");	
+		return m_topics;
 	}
 
 }

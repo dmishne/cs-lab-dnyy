@@ -3,6 +3,7 @@ package server.core;
 import client.core.AUser;
 
 import common.api.CEntry;
+import common.api.CListOptions;
 import common.data.*;
 
 import java.io.IOException;
@@ -82,6 +83,17 @@ public class CExecuter implements Runnable
 					handleLogin(Work);			
 					
 				}//end of login handling
+				
+				
+				else if(Work.getMsgType().compareTo("GetList") == 0)
+				{
+					Set<String> lang=CDBInteractionGenerator.GetInstance().getLangs();
+					Set<String> topics=CDBInteractionGenerator.GetInstance().getTopics();
+					
+					CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),CListOptions.CListOptionsInit(lang, topics));
+				}//end CListOptions
+				
+				
 				
 				else 
 				{
@@ -477,8 +489,7 @@ public class CExecuter implements Runnable
 							else
 							    CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans.toArray(new String[ans.size()]));
 						}//end of GetFormats	
-						
-						
+											
 						else if(Work.getMsgType().compareTo("SearchUser") == 0)
 						{
 							LinkedList<AUser> ans;
