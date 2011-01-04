@@ -5,7 +5,7 @@ import client.core.AUser;
 import common.api.CEntry;
 import common.api.CListOptions;
 import common.data.*;
-
+import ocsf.server.ConnectionToClient;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -89,8 +89,13 @@ public class CExecuter implements Runnable
 				{
 					Set<String> lang=CDBInteractionGenerator.GetInstance().getLangs();
 					Set<String> topics=CDBInteractionGenerator.GetInstance().getTopics();
-					
-					CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),CListOptions.CListOptionsInit(lang, topics));
+
+					try {
+						((ConnectionToClient)Work.getClient()).sendToClient(CListOptions.CListOptionsInit(lang, topics));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}//end CListOptions
 				
 				
