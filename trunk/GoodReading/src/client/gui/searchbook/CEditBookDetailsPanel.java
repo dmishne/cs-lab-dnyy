@@ -306,7 +306,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	private JTextField getJTextField_topic() {
 		if (jTextField_topic == null) {
 			String topics = null;
-			String[] t = m_book.getM_topic();
+			String[] t = m_book.gettopics();
 			for(String s : t)
 			{
 				topics = topics + s + ",";
@@ -577,7 +577,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	private JTextField getJTextField_subtopic() {
 		if (jTextField_subtopic == null) {
 			String subtopic = null;
-			String[] st = m_book.getSubtopic();
+			String[] st = m_book.getSubtopics();
 			for(String s : st)
 			{
 				subtopic = subtopic + s + ",";

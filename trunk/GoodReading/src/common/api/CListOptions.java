@@ -1,14 +1,15 @@
-package client.common;
+package common.api;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 
-public class CListOptions {
+public class CListOptions implements Serializable{
 	
 	private Set<String> m_langueges;
 	private Set<String> m_topics;
-	
+	private static CListOptions m_hold;
 	
 	/**
 	 * @param m_langueges
@@ -21,22 +22,24 @@ public class CListOptions {
 	
 	
 	
-	public CListOptions() {
-		CListOptionsInit();
+	private CListOptions() {
+	//	CListOptionsInit();
 	}
 	
-	
-	public void CListOptionsInit()
+	public CListOptions getInstance()
 	{
-		m_langueges = new HashSet<String>();
-		m_topics = new HashSet<String>();
+		if(m_hold == null)
+			m_hold=new CListOptions();
+		return m_hold;
+	}
+	public static CListOptions CListOptionsInit(Set a,Set b)
+	{
+		if(m_hold == null)
+			m_hold=new CListOptions();
+		m_hold.m_langueges = new HashSet<String>(a);
+		m_hold.m_topics = new HashSet<String>(b);
 		
-		m_langueges.add("Hebrew");
-		m_langueges.add("English");
-		m_langueges.add("Russian");
-		m_topics.add("Action");
-		m_topics.add("Drama");
-		m_topics.add("Comedy");	
+		return m_hold;
 	}
 	
 
