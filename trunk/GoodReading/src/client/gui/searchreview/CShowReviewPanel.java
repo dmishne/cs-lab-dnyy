@@ -409,7 +409,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 		if(source == jButton_Save_SR)
 		{
 			try {
-				((CLibrarian)AUser.getInstance()).updateReview(jTextField_bookISBN_SR.getText(), jTextField_reviewAuthor_SR.getText(), jTextField_title_SR.getText(), this.getReview().gettitle(), jTextArea_review_SR.getText());
+				((CLibrarian)AUser.getInstance()).updateReview(jTextField_bookISBN_SR.getText(), jTextField_reviewAuthor_SR.getText(), jTextField_title_SR.getText(), this.getReview().gettitle(), jTextArea_review_SR.getText(),jCheckBox_confirm_SR.isSelected());
 				JOptionPane.showMessageDialog(null, "Review updated!" ,"Ok",JOptionPane.INFORMATION_MESSAGE);
 			    this.setLastChoice(SRPDecision.SAVE);
 			    this.setVisible(false);

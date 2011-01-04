@@ -15,7 +15,8 @@ public class CBook implements Serializable {
 	private double m_price;
 	private double m_score=0;
 	private long m_score_count=0;
-	private String m_topic;
+	private String[] m_topic;
+	private String[] m_subtopic;
 	private String m_lables;
 	private String m_TOC;
 	private boolean m_invisible;
@@ -44,7 +45,7 @@ public class CBook implements Serializable {
 	 * @param m_release_date 
 	 */
 	
-	public CBook(String m_ISBN, String m_author, String m_title, String m_release, String m_publisher, String m_summary,double m_price, long m_score_count,double m_score,String m_topic, String m_lables, String m_TOC,boolean m_invisible, String m_language) 
+	public CBook(String m_ISBN, String m_author, String m_title, String m_release, String m_publisher, String m_summary,double m_price, long m_score_count,double m_score,String[] m_topic, String[] m_subtopic, String m_lables, String m_TOC,boolean m_invisible, String m_language) 
 	{   
 		//  TODO : add date to constructor
 		this.m_title = m_title;
@@ -55,6 +56,7 @@ public class CBook implements Serializable {
 		this.m_summary = m_summary;
 		this.m_price = m_price;
 		this.m_topic = m_topic;
+		this.m_subtopic = m_subtopic;
 		this.m_lables = m_lables;
 		this.m_TOC = m_TOC;
 		this.m_invisible = m_invisible;
@@ -131,7 +133,7 @@ public class CBook implements Serializable {
 	/**
 	 * @return the m_topic
 	 */
-	public String getM_topic() {
+	public String[] getM_topic() {
 		return m_topic;
 	}
 	
@@ -175,6 +177,10 @@ public class CBook implements Serializable {
 		return (double) this.m_score/this.m_score_count;
 	}
 
+	
+	public String[] getSubtopic() {
+		return m_subtopic;
+	}
 
 	
 	
@@ -211,7 +217,7 @@ public class CBook implements Serializable {
 	}
 	
 	
-	public void settopic(String a) {
+	public void settopic(String[] a) {
 		 m_topic=a;
 	}
 	
@@ -234,4 +240,14 @@ public class CBook implements Serializable {
 	public void setlanguage(String a) {
 		 m_language=a;
 	}
+
+
+	public void setSubtopic(String m_subtopic[]) {
+		this.m_subtopic = m_subtopic;
+	}
+
+
+
+	
+	
 }

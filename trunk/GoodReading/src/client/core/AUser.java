@@ -170,6 +170,19 @@ public abstract class AUser implements Serializable{
 		
 	}
 	
+	public String[] getSubTopics(String topic) throws Exception
+	{
+		//CEntry EntryToSrv =null;
+		HashMap<String,String> search_subtopics = new HashMap<String,String>();
+		search_subtopics.put("topic", topic);
+		//EntryToSrv = new CEntry("SearchSubtopics",search_subtopics,m_userName,m_UserSessionId);
+		//String[] subtopics = (String[])CClientConnector.getInstance().messageToServer(EntryToSrv);
+		 
+		/* stub*/ String[] subtopics = {"kjafg","jkhfs","hdsag"};
+		
+		return subtopics;
+	}
+	
 	
 	
 	public LinkedList<CBookReview> searchBookReview(HashMap<String,String> review_param) throws Exception

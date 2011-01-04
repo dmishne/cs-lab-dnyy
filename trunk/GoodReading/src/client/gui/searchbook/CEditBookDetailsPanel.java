@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
@@ -19,7 +18,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import common.data.CBook;
-import common.data.EFileType;
 import client.core.AUser;
 import client.core.CLibrarian;
 import client.core.EActor;
@@ -66,6 +64,8 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	private JCheckBox jCheckBox_fb2 = null;
 	private JCheckBox jCheckBox_doc = null;
 	private CBook m_book = null;
+	private JLabel jLabel_subtopic = null;
+	private JTextField jTextField_subtopic = null;
 	
 	
 	public enum EBDDecision
@@ -91,6 +91,11 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	 * @return void
 	 */
 	private void initialize() {
+		jLabel_subtopic = new JLabel();
+		jLabel_subtopic.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
+		jLabel_subtopic.setLocation(new Point(20, 220));
+		jLabel_subtopic.setSize(new Dimension(90, 26));
+		jLabel_subtopic.setText("Subtopic :");
 		jLabel_Type_doc = new JLabel();
 		jLabel_Type_doc.setText("DOC");
 		jLabel_Type_doc.setSize(new Dimension(30, 20));
@@ -114,7 +119,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 		jLabel_label = new JLabel();
 		jLabel_label.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
 		jLabel_label.setSize(new Dimension(90, 26));
-		jLabel_label.setLocation(new Point(20, 276));
+		jLabel_label.setLocation(new Point(20, 304));
 		jLabel_label.setText("Labels");
 		jLabel_toc = new JLabel();
 		jLabel_toc.setText("Table Of Contents");
@@ -122,8 +127,9 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 		jLabel_toc.setFont(new Font("Eras Light ITC", Font.BOLD, 14));
 		jLabel_toc.setSize(new Dimension(140, 22));
 		jLabel_summary = new JLabel();
-		jLabel_summary.setBounds(new Rectangle(67, 346, 91, 22));
 		jLabel_summary.setFont(new Font("Eras Light ITC", Font.BOLD, 14));
+		jLabel_summary.setSize(new Dimension(91, 22));
+		jLabel_summary.setLocation(new Point(63, 368));
 		jLabel_summary.setText("Summary");
 		jLabel_MainLabel = new JLabel();
 		jLabel_MainLabel.setText("Edit Book Details");
@@ -140,17 +146,17 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 		jLabel_visibility.setSize(new Dimension(135, 32));
 		jLabel_Price = new JLabel();
 		jLabel_Price.setText("Price  :");
-		jLabel_Price.setLocation(new Point(20, 304));
+		jLabel_Price.setLocation(new Point(20, 332));
 		jLabel_Price.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
 		jLabel_Price.setSize(new Dimension(90, 26));
 		jLabel_Publisher = new JLabel();
 		jLabel_Publisher.setText("Publisher  :");
-		jLabel_Publisher.setLocation(new Point(20, 248));
+		jLabel_Publisher.setLocation(new Point(20, 276));
 		jLabel_Publisher.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
 		jLabel_Publisher.setSize(new Dimension(90, 26));
 		jLabel_ReleaseDate = new JLabel();
 		jLabel_ReleaseDate.setText("Release Date  :");
-		jLabel_ReleaseDate.setLocation(new Point(20, 220));
+		jLabel_ReleaseDate.setLocation(new Point(20, 248));
 		jLabel_ReleaseDate.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
 		jLabel_ReleaseDate.setSize(new Dimension(90, 26));
 		jLabel_Topic = new JLabel();
@@ -214,6 +220,8 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 		this.add(getJCheckBox_pdf(), null);
 		this.add(getJCheckBox_fb2(), null);
 		this.add(getJCheckBox_doc(), null);
+		this.add(jLabel_subtopic, null);
+		this.add(getJTextField_subtopic(), null);
 	}
 
 	
@@ -297,7 +305,13 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	 */
 	private JTextField getJTextField_topic() {
 		if (jTextField_topic == null) {
-			jTextField_topic = new JTextField(m_book.getM_topic());
+			String topics = null;
+			String[] t = m_book.getM_topic();
+			for(String s : t)
+			{
+				topics = topics + s + ",";
+			}
+			jTextField_topic = new JTextField(topics);
 			jTextField_topic.setSize(new Dimension(280, 27));
 			jTextField_topic.setPreferredSize(new Dimension(280, 24));
 			jTextField_topic.setFont(new Font("Times New Roman", Font.PLAIN, 14));
@@ -317,7 +331,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 			jTextField_r_date.setSize(new Dimension(280, 27));
 			jTextField_r_date.setPreferredSize(new Dimension(280, 24));
 			jTextField_r_date.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-			jTextField_r_date.setLocation(new Point(115, 220));
+			jTextField_r_date.setLocation(new Point(115, 248));
 		}
 		return jTextField_r_date;
 	}
@@ -333,7 +347,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 			jTextField_publisher.setSize(new Dimension(280, 27));
 			jTextField_publisher.setPreferredSize(new Dimension(280, 24));
 			jTextField_publisher.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-			jTextField_publisher.setLocation(new Point(115, 248));
+			jTextField_publisher.setLocation(new Point(115, 276));
 		}
 		return jTextField_publisher;
 	}
@@ -350,7 +364,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 			jTextField_price.setSize(new Dimension(120, 27));
 			jTextField_price.setPreferredSize(new Dimension(120, 24));
 			jTextField_price.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-			jTextField_price.setLocation(new Point(114, 304));
+			jTextField_price.setLocation(new Point(114, 332));
 		}
 		return jTextField_price;
 	}
@@ -363,8 +377,8 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	private JScrollPane getJScrollPane_summary() {
 		if (jScrollPane_summary == null) {
 			jScrollPane_summary = new JScrollPane();
-			jScrollPane_summary.setLocation(new Point(23, 367));
-			jScrollPane_summary.setSize(new Dimension(376, 90));
+			jScrollPane_summary.setLocation(new Point(23, 390));
+			jScrollPane_summary.setSize(new Dimension(376, 67));
 			jScrollPane_summary.setViewportView(getJTextArea_summary());
 			jScrollPane_summary.setBorder(BorderFactory.createLineBorder(Color.black));
 			
@@ -486,7 +500,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 			jTextField_label.setSize(new Dimension(280, 27));
 			jTextField_label.setPreferredSize(new Dimension(280, 24));
 			jTextField_label.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-			jTextField_label.setLocation(new Point(114, 276));
+			jTextField_label.setLocation(new Point(114, 304));
 		}
 		return jTextField_label;
 	}
@@ -537,7 +551,6 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
-		EFileType[] fileType = new EFileType[3];
 		if(source == jButton_back_EBD)
 		{
 			setLastChoice(EBDDecision.BACK);
@@ -546,19 +559,34 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 		if(source == jButton_Save_EBD)
 		{ 		
 				try {
-					if(jCheckBox_pdf.isSelected())
-						fileType[0] = EFileType.PDF;
-					if(jCheckBox_fb2.isSelected())
-						fileType[1] = EFileType.FB2;
-					if(jCheckBox_doc.isSelected())
-						fileType[2] = EFileType.DOC;
-					((CLibrarian)AUser.getInstance()).updateBookDetails(m_book.getM_ISBN(),jTextField_title.getText(), jTextField_author.getText(), jTextField_isbn.getText(), jTextField_r_date.getText(), jTextField_publisher.getText(), jTextArea_summary.getText(),jTextField_price.getText(), jTextField_topic.getText(), jTextField_label.getText(), jTextArea_toc.getText(), jCheckBox_visibilityCheck.isSelected(), jTextField_lang.getText(), fileType);
+					
+					((CLibrarian)AUser.getInstance()).updateBookDetails(m_book.getM_ISBN(),jTextField_title.getText(), jTextField_author.getText(), jTextField_isbn.getText(), jTextField_r_date.getText(), jTextField_publisher.getText(), jTextArea_summary.getText(),jTextField_price.getText(), jTextField_topic.getText(), jTextField_label.getText(), jTextArea_toc.getText(), jCheckBox_visibilityCheck.isSelected(), jTextField_lang.getText());
 					setLastChoice(EBDDecision.SAVE);
 					this.setVisible(false);
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, e.getMessage() ,"Error",JOptionPane.ERROR_MESSAGE);
 					}			
 		}
+	}
+
+	/**
+	 * This method initializes jTextField_subtopic	
+	 * 	
+	 * @return javax.swing.JTextField	
+	 */
+	private JTextField getJTextField_subtopic() {
+		if (jTextField_subtopic == null) {
+			String subtopic = null;
+			String[] st = m_book.getSubtopic();
+			for(String s : st)
+			{
+				subtopic = subtopic + s + ",";
+			}
+			jTextField_subtopic = new JTextField(subtopic);
+			jTextField_subtopic.setLocation(new Point(115, 220));
+			jTextField_subtopic.setSize(new Dimension(280, 27));
+		}
+		return jTextField_subtopic;
 	}
 
 
