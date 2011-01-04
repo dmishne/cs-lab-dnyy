@@ -379,7 +379,7 @@ public class CDBInteractionGenerator
 		try {
 			data = this.MySQLQuery("SELECT * FROM books "+this.buildSearchBookWhere(msgMap)+";");
 			while(data.next())
-				arg.add(new CBook(data.getString(1),data.getString(2),data.getString(3),data.getString(4),data.getString(5),data.getString(6),data.getFloat(7),data.getInt(8),data.getLong(9),data.getString(10),data.getString(11),data.getString(12),data.getBoolean(13),data.getString(14)));
+				arg.add(new CBook(data.getString(1),data.getString(2),data.getString(3),data.getString(4),data.getString(5),data.getString(6),data.getFloat(7),data.getInt(8),data.getLong(9),data.getString(10),data.getString(11),data.getString(12),data.getBoolean(13),data.getString(14),"arg")); //TODO: replace "arg" with data.getString(15)
 		
 			} catch (Exception e) 
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}	
@@ -787,6 +787,11 @@ public class CDBInteractionGenerator
 		} catch (Exception e) 
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
 		return mp;
+	}
+
+	public boolean deleteReview(String isbn, String userName) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
