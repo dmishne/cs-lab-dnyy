@@ -5,9 +5,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
 
 import common.data.*;
 
@@ -650,7 +652,6 @@ public class CDBInteractionGenerator
 	}
 
 	public void StatisticsAddView(String isbn, String userName) {
-		// maybe this method should return boolean??
 		//adds statistics for this isbn and user (user viewed book at DATE)
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
@@ -660,7 +661,6 @@ public class CDBInteractionGenerator
 	}
 
 	public boolean hasUserBought(String isbn, String userName, int sessionID) {
-		// TODO Auto-generated method stub
 		ResultSet bought;
 		try {
 			bought = this.MySQLQuery("CALL CheckUserBought ('"+ isbn +"','"+ userName +"',"+ sessionID +");");
@@ -679,18 +679,105 @@ public class CDBInteractionGenerator
 	}
 
 	public LinkedList<AUser> SearchUser(Map<String, String> params) {
-		// TODO Auto-generated method stub
-		return null;
+		//TODO need to check compatability of keys in search.
+		// also cant instance AUser, also session ID changes...
+		LinkedList<AUser> res = new LinkedList<AUser>();
+		ResultSet data=null;
+		try {
+			data = this.MySQLQuery("SELECT * FROM users "+this.buildSearchUserWhere(params)+";");
+		//	while(data.next())
+		//		res.add( new AUser( data.getString("first_name"),data.getString("last_name"),data.getInt("ID"),data.getString("user"),data.getString("authorization")  ,data.getInt(6)));
+		//     AUser(				String FirstName, 				String LastName, 			int UserId, 	  String UserName,	 		EActor Privilege, 			int SessionID)
+			} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}	
+		return res;
+	}
+	
+	private String buildSearchUserWhere(Map<String, String> params) {
+		String ans="";
+		
+		if(params.isEmpty())
+			return ans;
+		
+		Set<String> a = params.keySet();
+		for(String arg: a)
+			if (params.get(arg).equals(""))
+				params.remove(arg);
+		
+		ans="WHERE ";
+
+		if(params.containsKey("user"))
+		{
+			ans=ans+"title LIKE '%"+params.get("user")+"%'";
+			params.remove("user");
+		}
+		else if(params.containsKey("id"))
+		{
+			ans=ans+"author LIKE '%"+params.get("id")+"%'";
+			params.remove("id");
+		}
+		else if(params.containsKey("firstName"))
+		{
+			ans=ans+"isbn LIKE '%"+params.get("firstName")+"%'";
+			params.remove("firstName");
+		}
+		else if(params.containsKey("lastNmae"))
+		{
+			ans=ans+"review LIKE '%"+params.get("lastNmae")+"%'";
+			params.remove("lastNmae");
+		}
+				
+		
+		//now inserting new attributes
+		if(params.containsKey("user"))
+			ans=ans+" AND title LIKE '%"+params.get("user")+"%'";
+
+		 if(params.containsKey("id"))
+			ans=ans+" AND author LIKE '%"+params.get("id")+"%'";
+
+	
+		 if(params.containsKey("firstName"))
+			ans=ans+" AND isbn LIKE '%"+params.get("firstName")+"%'";
+	
+	
+		 if(params.containsKey("lastNmae"))
+			ans=ans+" AND review LIKE '%"+params.get("lastNmae")+"%'";
+
+		return ans;		
 	}
 
 	public void SetUserPriv(AUser usr, int priv) {
-		// TODO Auto-generated method stub
-		
+		try {
+			Statement st = this.m_DB_Connection.createStatement();
+			st.executeUpdate("CALL SetUserPrivilege ('"+ usr +"',"+ priv +");");
+		} catch (SQLException e) {
+			System.out.println("SetUserPriv():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 	}
 
 	public boolean editUser(AUser usr) {
-		// TODO Auto-generated method stub
+		// TODO what about address and birthday fields??
+		try {
+			Statement st = this.m_DB_Connection.createStatement();
+			int i = st.executeUpdate("CALL EditUser ('"+ usr.getUserName() +"',"+ usr.getUserID() +",'"+ usr.getFirstName() +"','"+ usr.getLastName() +"');");
+			if(i == 1) return true;	
+		} catch (SQLException e) {
+			System.out.println("editUser():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 		return false;
+	}
+	
+	public Map<String,Integer> getBookViews(String isbn, String from_date, String to_date)
+	{
+		Map<String,Integer> mp = new HashMap<String,Integer>();
+		ResultSet rs;
+		try {
+			rs = this.MySQLQuery("CALL GetBookViewsByDate ('"+ isbn +"','"+ from_date +"','"+ to_date +");");
+			while(rs.next())
+				{
+					mp.put(rs.getString("date"), rs.getInt("amount"));
+				}
+		} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
+		return mp;
 	}
 
 }
