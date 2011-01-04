@@ -210,8 +210,8 @@ public class CExecuter implements Runnable
 							
 							//if not a librarian, remove invisible books
 							if(Privilage < 3)
-							{
-								Iterator<CBook> it = rez.iterator();
+							{ //TODO: test searchBook
+								Iterator<CBook> it = (new LinkedList<CBook>(rez)).iterator();
 								while(it.hasNext())
 								{
 									CBook temp = it.next();
@@ -256,11 +256,16 @@ public class CExecuter implements Runnable
 							LinkedList<CBookReview> rez=db.SearchReview(Work.getMsgMap());
 							
 							//if not a librarian, remove unapproved reviews
-							if(Privilage < 3)
-								for(CBookReview rev: rez)
+							if(Privilage < 3 && !rez.isEmpty())
+							{
+								Iterator<CBookReview> a=(new LinkedList<CBookReview>(rez)).iterator();
+								while(a.hasNext())
+								{
+									CBookReview rev=(CBookReview) a.next();
 									if(rev.getaccepted() <1)
 										rez.remove(rev);
-							
+								}
+							}
 							//reply to client
 							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), rez);
 							
