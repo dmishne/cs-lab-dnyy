@@ -290,8 +290,10 @@ public class CExecuter implements Runnable
 							{
 								Map<String,String> arg=Work.getMsgMap();
 								//public boolean editReview(String isbn, String author, String title, String review)
-								
-								if(db.editReview(arg.get("isbn"),arg.get("author"),arg.get("title"),arg.get("review"),Integer.parseInt(arg.get("accepted")),Work.getUserName()))
+								int i="true".compareTo(arg.get("confirm"));
+								if( i <1 )
+									i=0;
+								if(db.editReview(arg.get("isbn"),arg.get("author"),arg.get("title"),arg.get("review"), i  ,Work.getUserName()))
 									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Review Submitted");
 
 								else 
