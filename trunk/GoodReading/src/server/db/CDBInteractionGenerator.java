@@ -661,6 +661,15 @@ public class CDBInteractionGenerator
 
 	public boolean hasUserBought(String isbn, String userName, int sessionID) {
 		// TODO Auto-generated method stub
+		ResultSet bought;
+		try {
+			bought = this.MySQLQuery("CALL CheckUserBought ('"+ isbn +"','"+ userName +"',"+ sessionID +");");
+			if(bought.next())
+				{
+					return true;
+				}
+		} catch (Exception e) 
+		{	 System.out.println("hasUserBought():SQL exception: "+e.getMessage());	}
 		return false;
 	}
 
