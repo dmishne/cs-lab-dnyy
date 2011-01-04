@@ -280,6 +280,22 @@ public class CExecuter implements Runnable
 								}
 							}//end of reading auth
 						} //end of AddReview
+						else if(Work.getMsgType().compareTo("DeleteReview") == 0)
+						{
+							Map<String,String> arg=Work.getMsgMap();
+							if(Privilage <3)
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: user must have proper privilage");
+							else
+							{//we're here because client has read the book
+								if(db.deleteReview(arg.get("isbn"),Work.getUserName()))
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Review Deleted");
+								else 
+								{
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: failed to delete");
+									CDBInteractionGenerator.GetInstance().ServerUpdateLog("Failure at executer: deleting review\n");  System.out.println("failure at executer: adding review");
+								}
+							}//end of reading auth
+						} //end of AddReview
 						
 						else if(Work.getMsgType().compareTo("EditReview") == 0)
 						{	
