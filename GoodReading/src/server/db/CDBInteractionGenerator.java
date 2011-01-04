@@ -812,4 +812,14 @@ public class CDBInteractionGenerator
 		return m_topics;
 	}
 
+	public LinkedList<String> getSubTopics(String topic) {
+		// TODO Auto-generated method stub
+		LinkedList<String> arg=new LinkedList<String>();
+
+		arg.add("kjafg");
+		arg.add("jkhfs");
+		arg.add("hdsag");
+		return arg;
+	}
+
 }
