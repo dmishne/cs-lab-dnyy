@@ -15,8 +15,8 @@ public class CBook implements Serializable {
 	private double m_price;
 	private double m_score=0;
 	private long m_score_count=0;
-	private String[] m_topic;
-	private String[] m_subtopic;
+	private String m_topic;
+	private String m_subtopic;
 	private String m_lables;
 	private String m_TOC;
 	private boolean m_invisible;
@@ -45,7 +45,7 @@ public class CBook implements Serializable {
 	 * @param m_release_date 
 	 */
 	
-	public CBook(String m_ISBN, String m_author, String m_title, String m_release, String m_publisher, String m_summary,double m_price, long m_score_count,double m_score,String[] m_topic, String[] m_subtopic, String m_lables, String m_TOC,boolean m_invisible, String m_language) 
+	public CBook(String m_ISBN, String m_author, String m_title, String m_release, String m_publisher, String m_summary,double m_price, long m_score_count,double m_score,String m_topic, String m_lables, String m_TOC,boolean m_invisible, String m_language, String m_subtopic) 
 	{   
 		//  TODO : add date to constructor
 		this.m_title = m_title;
@@ -133,7 +133,7 @@ public class CBook implements Serializable {
 	/**
 	 * @return the m_topic
 	 */
-	public String[] getM_topic() {
+	public String getM_topic() {
 		return m_topic;
 	}
 	
@@ -178,7 +178,7 @@ public class CBook implements Serializable {
 	}
 
 	
-	public String[] getSubtopic() {
+	public String getSubtopic() {
 		return m_subtopic;
 	}
 
@@ -217,7 +217,7 @@ public class CBook implements Serializable {
 	}
 	
 	
-	public void settopic(String[] a) {
+	public void settopic(String a) {
 		 m_topic=a;
 	}
 	
@@ -242,12 +242,21 @@ public class CBook implements Serializable {
 	}
 
 
-	public void setSubtopic(String m_subtopic[]) {
+	public void setSubtopic(String m_subtopic) {
 		this.m_subtopic = m_subtopic;
 	}
 
+	
+	public String[] gettopics()
+	{
+		return m_topic.split(",");
+	}
+	
 
-
+	public String[] getSubtopics()
+	{
+		return m_subtopic.split(",");
+	}
 	
 	
 }
