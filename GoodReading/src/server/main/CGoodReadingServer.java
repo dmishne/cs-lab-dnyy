@@ -2,10 +2,13 @@ package server.main;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import client.core.AUser;
 
@@ -120,8 +123,15 @@ public class CGoodReadingServer {
 			System.out.printf(it1.next().toString());
 		}
 	*/	
-		
-		
+	/*	Set<String> s = new TreeSet<String>();
+		s = CDBInteractionGenerator.GetInstance().getLangs();
+		Iterator<String> it = s.iterator();
+		while(it.hasNext())
+		{
+			System.out.println(it.next());
+		}
+	*/
+	//	System.out.print(CDBInteractionGenerator.GetInstance().deleteReview("1234", "nir"));
 		
 		
 		//at last, we check that everthing is working
