@@ -94,8 +94,9 @@ public class CExecuter implements Runnable
 					try {
 						((ConnectionToClient)Work.getClient()).sendToClient(CListOptions.CListOptionsInit(lang, topics));
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						System.out.println("CExecuter: Error returning msg during GetList: "+e.getMessage());
+						CDBInteractionGenerator.GetInstance().ServerUpdateLog("CExecuter: Error returning msg during GetList: "+e.getMessage());
+					
 					}
 				}//end CListOptions
 				
@@ -202,6 +203,11 @@ public class CExecuter implements Runnable
 							
 						}//end of Logout
 						
+						else if(Work.getMsgType().compareTo("SearchSubtopics") == 0)
+						{
+							LinkedList<String> rez=db.getSubTopics(Work.getMsgMap().get("topic"));
+							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), rez.toArray());
+						}//end of SearchSubtopics
 						
 						else if(Work.getMsgType().compareTo("SearchBook") == 0)
 						{
@@ -603,7 +609,6 @@ public class CExecuter implements Runnable
 					m_sessions.remove(c);//remove from sessions
 					CRespondToClient.GetInstance().Remove(c.getSessionID()); //remove from Client list
 				}
-	//TODO: fix this falldown
 	}
 
 	public Thread getThread() {
