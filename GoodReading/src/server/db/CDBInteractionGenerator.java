@@ -650,8 +650,13 @@ public class CDBInteractionGenerator
 	}
 
 	public void StatisticsAddView(String isbn, String userName) {
-		// TODO Auto-generated method stub
+		// maybe this method should return boolean??
 		//adds statistics for this isbn and user (user viewed book at DATE)
+		try {
+			Statement st = this.m_DB_Connection.createStatement();
+			st.executeUpdate("CALL AddStatsView ('"+ isbn +"','"+ userName +"');");
+		} catch (SQLException e) {
+			System.out.println("StatisticsAddView():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 	}
 
 	public boolean hasUserBought(String isbn, String userName, int sessionID) {
