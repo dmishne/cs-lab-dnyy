@@ -44,6 +44,7 @@ import client.gui.newmessages.CNewReviewsPanel;
 import client.gui.searchuser.CSearchUserPanel;
 import client.gui.searchuser.CShowUserListPanel;
 import client.gui.searchuser.CUserDetailsPanel;
+import client.gui.searchreview.CShowReviewPanel;
 
 public class CMainFrame extends JFrame implements ActionListener,ComponentListener{
 
@@ -71,6 +72,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private CSearchUserPanel GUI_CSearchUserPanel = null;
 	private CShowUserListPanel GUI_CShowUserListPanel = null;
 	private CUserDetailsPanel GUI_CUserDetailsPanel = null;
+	private CShowReviewPanel GUI_CShowReviewPanel = null;
 	/**
 	 * This is the default constructor
 	 */
@@ -207,6 +209,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		{
 			if(source == GUI_CLoginPanel)
 			{
+				GUI_CMainMenuPanel = null;
 				jContentPane.add(getGUI_CMainMenuPanel());
 				jContentPane.remove(GUI_CLoginPanel);
 				GUI_CLoginPanel = null;
@@ -392,6 +395,12 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 					GUI_CReviewsListPanel = null;
 					GUI_CSearchReviewPanel.setVisible(true);
 				}
+				else if(GUI_CReviewsListPanel.getLastChoice() == CReviewsListPanel.RLPDecision.SHOWREVIEW)
+				{
+					jContentPane.add(getGUI_CShowReviewPanel("RLP"));
+					GUI_CReviewsListPanel.setVisible(false);
+					GUI_CShowReviewPanel.setVisible(true);
+				}
 			}
 			else if(source == GUI_CAddNewBookPanel)
 			{
@@ -406,6 +415,13 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 					jContentPane.remove(GUI_CNewReviewsPanel);
 					GUI_CNewReviewsPanel = null;
 					GUI_CMainMenuPanel.setVisible(true);
+				}
+				else if(GUI_CNewReviewsPanel.getLastChoice() == CNewReviewsPanel.NRPDecision.SHOWMESSAGE)
+				{
+					GUI_CShowReviewPanel = null;
+					jContentPane.add(getGUI_CShowReviewPanel("NRP"));
+					GUI_CNewReviewsPanel.setVisible(false);
+					GUI_CShowReviewPanel.setVisible(true);
 				}
 			}
 			else if(source == GUI_CSearchUserPanel)
@@ -448,10 +464,28 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 				}
 				
 			}
+			else if(source == GUI_CShowReviewPanel)
+			{
+				if(GUI_CShowReviewPanel.getFromWhere() == CShowReviewPanel.SRPFrom.NRP)
+				{
+					jContentPane.remove(GUI_CShowReviewPanel);
+					GUI_CShowReviewPanel = null;
+					GUI_CNewReviewsPanel.setVisible(true);
+				}
+				else if(GUI_CShowReviewPanel.getFromWhere() == CShowReviewPanel.SRPFrom.RLP)
+				{
+					jContentPane.remove(GUI_CShowReviewPanel);
+					GUI_CShowReviewPanel = null;
+					GUI_CSearchReviewPanel.research();
+					GUI_CReviewsListPanel = null;
+					jContentPane.add(getGUI_CReviewsListPanel());
+					GUI_CReviewsListPanel.setVisible(true);
+				}
+			}
 		}
 		catch (Exception e)
 		{
-			JOptionPane.showMessageDialog(null, e.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);	
+			JOptionPane.showMessageDialog(null, e.getMessage() + e.getClass(), "Error",JOptionPane.ERROR_MESSAGE);	
 		}
 		pack();
 		validate();		
@@ -484,10 +518,10 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			try {
 				AUser.getInstance();
 				jContentPane.removeAll();
-				jContentPane.add(getGUI_CLoginPanel());
+				GUI_CMainMenuPanel = null;
 				jContentPane.add(getGUI_CMainMenuPanel());
-				GUI_CLoginPanel.setVisible(false);
 				GUI_CMainMenuPanel.setVisible(true);
+				GUI_CMainMenuPanel.requestFocus();
 				pack();
 				validate();
 				}
@@ -757,6 +791,22 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			GUI_CUserDetailsPanel.addComponentListener(this);
 		}
 		return GUI_CUserDetailsPanel;
+	}
+
+	/**
+	 * This method initializes GUI_CShowReviewPanel	
+	 * 	
+	 * @return client.gui.searchreview.CShowReviewPanel	
+	 */
+	private CShowReviewPanel getGUI_CShowReviewPanel(String from) {
+		GUI_CShowReviewPanel = null;
+		GUI_CShowReviewPanel = new CShowReviewPanel(from);
+		GUI_CShowReviewPanel.setSize(new Dimension(700, 550));
+		GUI_CShowReviewPanel.setPreferredSize(new Dimension(700, 550));
+		GUI_CShowReviewPanel.setLocation(new Point(0, 100));
+		GUI_CShowReviewPanel.setVisible(false);
+		GUI_CShowReviewPanel.addComponentListener(this);
+		return GUI_CShowReviewPanel;
 	}
 	
 }  //  @jve:decl-index=0:visual-constraint="10,10"

@@ -29,8 +29,7 @@ public class CNewReviewsPanel extends JPanel implements ActionListener{
 	private JList jList_NewReviewsList = null;
 	private NRPDecision m_lastChoice = null;
 	private LinkedList<CBookReview> m_messages = null;
-	private static CBookReview m_chosen_message =null;
-	
+	private static CBookReview m_chosen_message = null;
 	
 	public enum NRPDecision
 	{

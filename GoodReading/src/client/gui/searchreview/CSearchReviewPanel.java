@@ -192,6 +192,11 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 		}
 	}
 
+	public void research() throws Exception
+	{
+		m_reviewsList = AUser.getInstance().searchBookReview(m_searchDetails);
+	}
+	
 	/**
 	 * @return the m_searchDetails
 	 */
