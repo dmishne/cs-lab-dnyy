@@ -104,6 +104,10 @@ public class CGoodReadingServer {
 			System.out.println(it.next());
 		}
 	*/	
+	//	CDBInteractionGenerator.GetInstance().StatisticsAddView("1234", "yotam1");
+	//	System.out.print("stat view added");
+		
+		
 		
 		//at last, we check that everthing is working
 	/*
