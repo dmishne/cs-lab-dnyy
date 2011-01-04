@@ -6,12 +6,12 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import common.api.CEntry;
+import common.api.CListOptions;
 import common.data.CBook;
 import common.data.CBookReview;
-
 import client.common.CClientConnector;
+
 
 public abstract class AUser implements Serializable{
 	
@@ -23,6 +23,7 @@ public abstract class AUser implements Serializable{
 		   private String  m_userName;
 		   private EActor  m_privilege;
 		   private int 	   m_UserSessionId;
+		   
 		   
 		
 
@@ -43,6 +44,7 @@ public abstract class AUser implements Serializable{
 		 /*
 		  *  Username && Password input validation 
 		 */
+		
 		Pattern pu = Pattern.compile("(\\p{Alpha})+((\\p{Digit})*(\\p{Alpha})*)*");
 		Pattern pp = Pattern.compile("(((\\p{Digit})+(\\p{Alpha})*)+|((\\p{Digit})*(\\p{Alpha})+)+)+");
 		Matcher mu = pu.matcher(username);
@@ -61,10 +63,15 @@ public abstract class AUser implements Serializable{
 		UP.put("password", password);
 		CEntry clientEntry = new CEntry("Login",UP,username,-1);
 		Object result = CClientConnector.getInstance().messageToServer(clientEntry);
+		//		
 		if(result instanceof AUser )
 		{
 			setActor(result);
 			System.out.println("Connection was successful");
+			HashMap<String,String> listoption = new HashMap<String,String>();
+			CEntry ListOption = new CEntry("GetList",listoption,username,-1);
+			CListOptions ListOptions = (CListOptions) CClientConnector.getInstance().messageToServer(ListOption);
+			CListOptions.CListOptionsInit(ListOptions.getM_langueges(),ListOptions.getM_topics());
 			return(m_actor.getPrivilege());
 		}
 		throw new IOException("Incorrect Username/Password");
@@ -177,9 +184,7 @@ public abstract class AUser implements Serializable{
 		search_subtopics.put("topic", topic);
 		//EntryToSrv = new CEntry("SearchSubtopics",search_subtopics,m_userName,m_UserSessionId);
 		//String[] subtopics = (String[])CClientConnector.getInstance().messageToServer(EntryToSrv);
-		 
-		/* stub*/ String[] subtopics = {"kjafg","jkhfs","hdsag"};
-		
+		String[] subtopics = {"2010","2009","2008"};
 		return subtopics;
 	}
 	
@@ -254,5 +259,7 @@ public abstract class AUser implements Serializable{
 	public int getUserSessionId() {
 		return m_UserSessionId;
 	}
+
+	
 
 }

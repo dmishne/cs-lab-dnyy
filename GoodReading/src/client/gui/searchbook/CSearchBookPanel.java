@@ -8,12 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.EventListener;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -52,6 +54,7 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 	static private HashMap<String,String> m_searchDetails = null;
 	private JLabel jLabel_Subtopics_SBR = null;
 	private JComboBox jComboBox_Subtopics_SBR = null;
+	private boolean s_flag = false;
 	
 	/**
 	 * @return the m_lastChoice
@@ -283,8 +286,9 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 			m_searchDetails.put("language",(String)m_jComboBox_Language_SBP.getSelectedItem());
 			m_searchDetails.put("topic",(String)m_jComboBox_Topics_SBP.getSelectedItem());
 			m_searchDetails.put("summary",m_jTextField_Summary_SBP.getText());
-			m_searchDetails.put("TOC",m_jTextField_TOC_SBP.getText());
+			m_searchDetails.put("toc",m_jTextField_TOC_SBP.getText());
 			m_searchDetails.put("labels",m_jTextField_Labels_SBP.getText());
+			m_searchDetails.put("subtopic",jComboBox_Subtopics_SBR.getSelectedItem().toString());
 			this.setLastChoice(SBPDecision.SEARCH);
 			this.setVisible(false);
 		}
@@ -320,26 +324,33 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 	 */
 	private JComboBox getJComboBox_Subtopics_SBR() {
 		if (jComboBox_Subtopics_SBR == null) {
-			jComboBox_Subtopics_SBR.setEditable(false);
 			jComboBox_Subtopics_SBR = new JComboBox();
+			jComboBox_Subtopics_SBR.setEnabled(false);
 			jComboBox_Subtopics_SBR.setBounds(new Rectangle(200, 350, 400, 30));
 		}
 		return jComboBox_Subtopics_SBR;
 	}
 	
 	public void itemStateChanged(ItemEvent ie) {
-	    if (ie.getStateChange() == ItemEvent.SELECTED) {
-	       try {
-			String[] subtopics = AUser.getInstance().getSubTopics(m_jComboBox_Topics_SBP.getSelectedItem().toString());
-			jComboBox_Subtopics_SBR.setEditable(true);
-			jComboBox_Subtopics_SBR = new JComboBox(subtopics);
-	       } catch (Exception e) {
-			System.out.println("getSubTopics fail");
-		}
-	       
-	    } else {
-	    	jComboBox_Subtopics_SBR.setEditable(false);
-			jComboBox_Subtopics_SBR = new JComboBox();
+	    if (ie.getItemSelectable() == m_jComboBox_Topics_SBP  &&  s_flag == false) {
+	    	if(m_jComboBox_Topics_SBP.getSelectedItem().toString().compareTo(" ") != 0)
+	    	{
+		       try {
+				String[] subtopics = AUser.getInstance().getSubTopics(m_jComboBox_Topics_SBP.getSelectedItem().toString());
+				jComboBox_Subtopics_SBR.setEnabled(true);
+				for(String s : subtopics)
+				      jComboBox_Subtopics_SBR.addItem(s);
+				s_flag = true;
+		       } catch (Exception e) {
+				System.out.println("getSubTopics fail");
+			   }
+	    	} 
+	    }
+	    else if (ie.getItemSelectable() == m_jComboBox_Topics_SBP  &&  s_flag == true  &&  m_jComboBox_Topics_SBP.getSelectedItem().toString().compareTo(" ") == 0)
+	    {
+	    	jComboBox_Subtopics_SBR.removeAllItems(); 
+	    	jComboBox_Subtopics_SBR.setEnabled(false);
+			s_flag = false;	
 	    }
 	}
 
