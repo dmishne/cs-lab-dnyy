@@ -706,14 +706,14 @@ public class CDBInteractionGenerator
 		
 		ans="WHERE ";
 
-		if(params.containsKey("user"))
+		if(params.containsKey("username"))
 		{
-			ans=ans+"title LIKE '%"+params.get("user")+"%'";
-			params.remove("user");
+			ans=ans+"title LIKE '%"+params.get("username")+"%'";
+			params.remove("username");
 		}
 		else if(params.containsKey("id"))
 		{
-			ans=ans+"author LIKE '%"+params.get("id")+"%'";
+			ans=ans+"author LIKE '%"+params.get("userid")+"%'";
 			params.remove("id");
 		}
 		else if(params.containsKey("firstName"))
@@ -729,8 +729,8 @@ public class CDBInteractionGenerator
 				
 		
 		//now inserting new attributes
-		if(params.containsKey("user"))
-			ans=ans+" AND title LIKE '%"+params.get("user")+"%'";
+		if(params.containsKey("username"))
+			ans=ans+" AND title LIKE '%"+params.get("username")+"%'";
 
 		 if(params.containsKey("id"))
 			ans=ans+" AND author LIKE '%"+params.get("id")+"%'";
@@ -769,11 +769,19 @@ public class CDBInteractionGenerator
 	{
 		Map<String,Integer> mp = new HashMap<String,Integer>();
 		ResultSet rs;
+		String tdate = to_date;
+		String fdate = from_date;
+		if(to_date == null) tdate = "2200-12-12";
+		if(from_date == null) fdate = "1700-01-01";
 		try {
-			rs = this.MySQLQuery("CALL GetBookViewsByDate ('"+ isbn +"','"+ from_date +"','"+ to_date +");");
+			rs = this.MySQLQuery("CALL GetBookViewsByDate ('"+ isbn +"','"+ fdate +"','"+ tdate +"');");
 			while(rs.next())
 				{
-					mp.put(rs.getString("date"), rs.getInt("amount"));
+					if(mp.containsKey(rs.getString("date")))
+					{
+						mp.put(rs.getString("date"), mp.get(rs.getString("date"))+rs.getInt("amount"));
+					}
+					else mp.put(rs.getString("date"), rs.getInt("amount"));
 				}
 		} catch (Exception e) 
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
