@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.TreeSet;
 
 import common.data.*;
 
@@ -790,16 +791,31 @@ public class CDBInteractionGenerator
 	}
 
 	public boolean deleteReview(String isbn, String userName) {
-		// TODO Auto-generated method stub
+		try {
+			Statement st = this.m_DB_Connection.createStatement();
+			int i = st.executeUpdate("CALL DeleteReview ('"+ isbn +"','"+ userName +"');");
+			if(i == 1) return true;	
+		} catch (SQLException e) {
+			System.out.println("deleteReview():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 		return false;
 	}
 
 	public Set<String> getLangs() {
-		// TODO Auto-generated method stub
-		Set<String> m_langueges = new HashSet<String>();
-		m_langueges.add("Hebrew");
-		m_langueges.add("English");
-		m_langueges.add("Russian");
+		ResultSet langs;
+		Set<String> m_langueges = new TreeSet<String>();
+		try {
+			langs = this.MySQLQuery("CALL GetLanguages ();");
+			while(langs.next())
+				{
+					if(langs.getString("language").equalsIgnoreCase("Hebrew"))
+						m_langueges.add("Hebrew");								
+					else if (langs.getString("language").equalsIgnoreCase("English"))
+						m_langueges.add("English");
+					else if (langs.getString("language").equalsIgnoreCase("Russian"))
+						m_langueges.add("Russian");
+				}
+		} catch (Exception e) 
+		{	 System.out.println("getLangs():SQL exception: "+e.getMessage());	}
 		return m_langueges;
 	}
 
