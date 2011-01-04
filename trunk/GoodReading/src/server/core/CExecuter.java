@@ -554,8 +554,9 @@ public class CExecuter implements Runnable
 
 
 	public void Kill(CEntry work) {
-		CRespondToClient.GetInstance().Remove(work.getSessionID()); //remove from Client list
-		this.m_sessions.remove(work);								//remove from sessions
+		//CRespondToClient.GetInstance().Remove(work.getSessionID()); //remove from Client list
+		//this.m_sessions.remove(work.getSessionID());								//remove from sessions
+	//TODO: fix this falldown
 	}
 
 	public Thread getThread() {
