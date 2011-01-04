@@ -2,6 +2,8 @@ package client.common;
 
 import java.util.*;
 
+import common.api.CListOptions;
+
 import ocsf.client.AbstractClient;
 
 public class CClientConnector extends AbstractClient {
@@ -20,7 +22,7 @@ public class CClientConnector extends AbstractClient {
 			super(host,port);
 			this.m_clientSessionID = -1;
 			m_change = false;
-			this. m_listOptions = new CListOptions(); 
+			this. m_listOptions = CListOptions.getInstance(); 
 		}
 		
 		public static CClientConnector getInstance() throws Exception
