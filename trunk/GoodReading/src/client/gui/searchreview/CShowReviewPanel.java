@@ -24,6 +24,16 @@ import client.gui.newmessages.CNewReviewsPanel;
 
 public class CShowReviewPanel extends JPanel implements ActionListener{
 
+	public enum SRPDecision
+	{
+		BACK,DELETEREVIEW,SAVE
+	}
+	
+	public enum SRPFrom
+	{
+		RLP,NRP
+	}
+	
 	private static final long serialVersionUID = 1L;
 	private JLabel jLabel_mainLabel_SR = null;
 	private JLabel jLabel_title_SR = null;
@@ -43,18 +53,25 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	private AUser user = null;
 	private boolean E_flag = false;
 	private SRPDecision m_lastChoice = null;
+	private SRPFrom m_fromWhere = null;
 	private CBookReview review = null;
 	private JButton jButton_DeleteReview_SR = null;  
+	private String m_from;
 
-	public enum SRPDecision
-	{
-		BACK,DELETEREVIEW,SAVE
+	
+	/**
+	 * @return the m_fromWhere
+	 */
+	public SRPFrom getFromWhere() {
+		return m_fromWhere;
 	}
+
 	/**
 	 * This is the default constructor
 	 */
 	public CShowReviewPanel(String from) {
 		super();
+		m_from = from;
 		try {
 			user = AUser.getInstance();
 			if(from.compareTo("RLP") == 0)
@@ -312,8 +329,9 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 			jButton_DeleteReview_SR.setLocation(new Point(485, 430));
 			if(user.getPrivilege() == EActor.Librarian || user.getPrivilege() == EActor.LibraryManager)
 			{
-				jButton_DeleteReview_SR.setVisible(false);
+				jButton_DeleteReview_SR.setVisible(true);
 			}
+			jButton_DeleteReview_SR.addActionListener(this);
 		}
 		return jButton_DeleteReview_SR;
 	}
@@ -342,8 +360,16 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
-		if(source == jButton_Back_SR)
+		if(m_from.compareTo("NRP") == 0)
 		{
+			m_fromWhere = SRPFrom.NRP;
+		}
+		else
+		{
+			m_fromWhere = SRPFrom.RLP;
+		}
+		if(source == jButton_Back_SR)
+		{	
 			setLastChoice(SRPDecision.BACK);
 			this.setVisible(false);
 		}

@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import client.core.AUser;
+import client.core.EActor;
 
 public class CMainMenuPanel extends JPanel implements ActionListener {
 
@@ -107,13 +108,20 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	 * This method initializes m_jButton_NewMsgs_MM	
 	 * 	
 	 * @return javax.swing.JButton	
+	 * @throws Exception 
 	 */
-	private JButton getM_jButton_NewMsgs_MM() {
+	private JButton getM_jButton_NewMsgs_MM() throws Exception {
 		if (m_jButton_NewMsgs_MM == null) {
 			m_jButton_NewMsgs_MM = new JButton();
 			m_jButton_NewMsgs_MM.setBounds(new Rectangle(408, 216, 174, 75));
 			m_jButton_NewMsgs_MM.setText("New Messages");
 			m_jButton_NewMsgs_MM.addActionListener(this);
+		}
+		if(AUser.getInstance().getPrivilege() == EActor.User ||
+		   AUser.getInstance().getPrivilege() == EActor.Reader)
+		{
+			m_jButton_NewMsgs_MM.setVisible(false);
+			m_jButton_NewMsgs_MM.setEnabled(false);
 		}
 		return m_jButton_NewMsgs_MM;
 	}
@@ -122,14 +130,22 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	 * This method initializes m_jButton_AddNewBook_MM	
 	 * 	
 	 * @return javax.swing.JButton	
+	 * @throws Exception 
 	 */
-	private JButton getM_jButton_AddNewBook_MM() {
+	private JButton getM_jButton_AddNewBook_MM() throws Exception {
 		if (m_jButton_AddNewBook_MM == null) {
 			m_jButton_AddNewBook_MM = new JButton();
 			m_jButton_AddNewBook_MM.setBounds(new Rectangle(117, 216, 174, 75));
 			m_jButton_AddNewBook_MM.setText("Add New Book");
 			m_jButton_AddNewBook_MM.addActionListener(this);
 		}
+		if(AUser.getInstance().getPrivilege() == EActor.User ||
+		   AUser.getInstance().getPrivilege() == EActor.Reader)
+		{
+			m_jButton_AddNewBook_MM.setVisible(false);
+			m_jButton_AddNewBook_MM.setEnabled(false);
+		}
+		
 		return m_jButton_AddNewBook_MM;
 	}
 
@@ -137,12 +153,20 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	 * This method initializes m_jButton_Report_MM	
 	 * 	
 	 * @return javax.swing.JButton	
+	 * @throws Exception 
 	 */
-	private JButton getM_jButton_Report_MM() {
+	private JButton getM_jButton_Report_MM() throws Exception {
 		if (m_jButton_Report_MM == null) {
 			m_jButton_Report_MM = new JButton();
 			m_jButton_Report_MM.setBounds(new Rectangle(117, 312, 174, 75));
 			m_jButton_Report_MM.setText("Generate Report");
+		}
+		if(AUser.getInstance().getPrivilege() == EActor.User ||
+		   AUser.getInstance().getPrivilege() == EActor.Reader ||
+		   AUser.getInstance().getPrivilege() == EActor.Librarian)
+		{
+			m_jButton_Report_MM.setVisible(false);
+			m_jButton_Report_MM.setEnabled(false);
 		}
 		return m_jButton_Report_MM;
 	}
@@ -168,13 +192,21 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	 * This method initializes m_jButton_SearchUser_MM	
 	 * 	
 	 * @return javax.swing.JButton	
+	 * @throws Exception 
 	 */
-	private JButton getM_jButton_SearchUser_MM() {
+	private JButton getM_jButton_SearchUser_MM() throws Exception {
 		if (m_jButton_SearchUser_MM == null) {
 			m_jButton_SearchUser_MM = new JButton();
 			m_jButton_SearchUser_MM.setBounds(new Rectangle(408, 312, 174, 75));
 			m_jButton_SearchUser_MM.setText("Search User");
 			m_jButton_SearchUser_MM.addActionListener(this);
+		}
+		if(AUser.getInstance().getPrivilege() == EActor.User ||
+		   AUser.getInstance().getPrivilege() == EActor.Reader ||
+		   AUser.getInstance().getPrivilege() == EActor.Librarian)
+		{
+			m_jButton_SearchUser_MM.setVisible(false);
+			m_jButton_SearchUser_MM.setEnabled(false);
 		}
 		return m_jButton_SearchUser_MM;
 	}
