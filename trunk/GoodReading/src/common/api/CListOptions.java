@@ -23,21 +23,23 @@ public class CListOptions implements Serializable{
 	
 	
 	private CListOptions() {
-	//	CListOptionsInit();
+		m_langueges = new HashSet<String>();
+		m_topics = new HashSet<String>();
 	}
 	
-	public CListOptions getInstance()
+	public static CListOptions getInstance()
 	{
 		if(m_hold == null)
 			m_hold=new CListOptions();
 		return m_hold;
 	}
-	public static CListOptions CListOptionsInit(Set a,Set b)
+	
+	public static CListOptions CListOptionsInit(Set lang,Set topics)
 	{
 		if(m_hold == null)
 			m_hold=new CListOptions();
-		m_hold.m_langueges = new HashSet<String>(a);
-		m_hold.m_topics = new HashSet<String>(b);
+		m_hold.m_langueges = new HashSet<String>(lang);
+		m_hold.m_topics = new HashSet<String>(topics);
 		
 		return m_hold;
 	}
