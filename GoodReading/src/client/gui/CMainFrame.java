@@ -45,6 +45,7 @@ import client.gui.searchuser.CSearchUserPanel;
 import client.gui.searchuser.CShowUserListPanel;
 import client.gui.searchuser.CUserDetailsPanel;
 import client.gui.searchreview.CShowReviewPanel;
+import client.gui.searchbook.CEditBookDetailsPanel;
 
 public class CMainFrame extends JFrame implements ActionListener,ComponentListener{
 
@@ -73,6 +74,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private CShowUserListPanel GUI_CShowUserListPanel = null;
 	private CUserDetailsPanel GUI_CUserDetailsPanel = null;
 	private CShowReviewPanel GUI_CShowReviewPanel = null;
+	private CEditBookDetailsPanel GUI_CEditBookDetailsPanel = null;
 	/**
 	 * This is the default constructor
 	 */
@@ -342,6 +344,13 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 					GUI_CBookDetailPanel.setVisible(false);
 					GUI_COrderBookPanel.setVisible(true);
 				}
+				else if(GUI_CBookDetailPanel.getLastChoice() == CBookDetailPanel.EBDDecision.EDITBOOK)
+				{
+					GUI_CEditBookDetailsPanel = null;
+					jContentPane.add(getGUI_CEditBookDetailsPanel());
+					GUI_CBookDetailPanel.setVisible(false);
+					GUI_CEditBookDetailsPanel.setVisible(true);
+				}
 			}
 			else if(source == GUI_CSubmitReviewPanel)
 			{
@@ -482,6 +491,12 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 					GUI_CReviewsListPanel.setVisible(true);
 				}
 			}
+			else if(source == GUI_CEditBookDetailsPanel)
+			{
+				jContentPane.remove(GUI_CEditBookDetailsPanel);
+				GUI_CEditBookDetailsPanel = null;
+				GUI_CEditBookDetailsPanel.setVisible(true);
+			}
 		}
 		catch (Exception e)
 		{
@@ -610,8 +625,9 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	 * This method initializes GUI_CBookDetailPanel	
 	 * 	
 	 * @return client.gui.CBookDetailPanel	
+	 * @throws Exception 
 	 */
-	private CBookDetailPanel getGUI_CBookDetailPanel() {
+	private CBookDetailPanel getGUI_CBookDetailPanel() throws Exception {
 		if (GUI_CBookDetailPanel == null) {
 			GUI_CBookDetailPanel = new CBookDetailPanel(CSearchResultPanel.getChosenBook());
 			GUI_CBookDetailPanel.setLocation(new Point(0, 100));
@@ -807,6 +823,23 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		GUI_CShowReviewPanel.setVisible(false);
 		GUI_CShowReviewPanel.addComponentListener(this);
 		return GUI_CShowReviewPanel;
+	}
+
+	/**
+	 * This method initializes GUI_CEditBookDetailsPanel	
+	 * 	
+	 * @return client.gui.searchbook.CEditBookDetailsPanel	
+	 */
+	private CEditBookDetailsPanel getGUI_CEditBookDetailsPanel() {
+		if (GUI_CEditBookDetailsPanel == null) {
+			GUI_CEditBookDetailsPanel = new CEditBookDetailsPanel();
+			GUI_CEditBookDetailsPanel.setSize(new Dimension(700, 550));
+			GUI_CEditBookDetailsPanel.setPreferredSize(new Dimension(700, 550));
+			GUI_CEditBookDetailsPanel.setLocation(new Point(0, 100));
+			GUI_CEditBookDetailsPanel.setVisible(false);
+			GUI_CEditBookDetailsPanel.addComponentListener(this);
+		}
+		return GUI_CEditBookDetailsPanel;
 	}
 	
 }  //  @jve:decl-index=0:visual-constraint="10,10"
