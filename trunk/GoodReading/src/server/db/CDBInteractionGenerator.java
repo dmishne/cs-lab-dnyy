@@ -10,7 +10,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedMap;
 import java.util.TreeSet;
 
 import common.data.*;
@@ -727,19 +726,20 @@ public class CDBInteractionGenerator
 		return null;
 	}
 
-	public LinkedList<AUser> SearchUser(Map<String, String> params) {
+	public LinkedList<CUser> SearchUser(Map<String, String> params) {
 		// cant instance AUser, also session ID changes...
-		LinkedList<AUser> res = new LinkedList<AUser>();
+		LinkedList<CUser> res = new LinkedList<CUser>();
 		ResultSet data=null;
 		try {
 			data = this.MySQLQuery("SELECT * FROM users "+ this.buildSearchUserWhere(params) +";");
 			while(data.next())
 			{
-			//	res.add( new AUser( data.getString("first_name"),data.getString("last_name"),data.getInt("ID"),data.getString("user"),data.getString("authorization")  ,data.getInt(6)));
-		//     AUser(				String FirstName, 				String LastName, 			int UserId, 	  String UserName,	 		EActor Privilege, 			int SessionID)
+				res.add( new CUser(data,null) );//TODO: replace with actual type array
 			}
-			} catch (Exception e) 
-		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}	
+			data.close();
+		} catch (Exception e){	
+			System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	
+			}	
 		return res;
 	}
 	
@@ -796,7 +796,7 @@ public class CDBInteractionGenerator
 		return ans;		
 	}
 
-	public void SetUserPriv(AUser usr, int priv) {
+	public void SetUserPriv(CUser usr, int priv) {
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
 			st.executeUpdate("CALL SetUserPrivilege ('"+ usr +"',"+ priv +");");
@@ -804,11 +804,11 @@ public class CDBInteractionGenerator
 			System.out.println("SetUserPriv():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 	}
 
-	public boolean editUser(AUser usr) {
-		// TODO what about address and birthday fields??
+	public boolean editUser(CUser usr) {
+		// TODO what about address and birthday fields?? NEED to add more
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
-			int i = st.executeUpdate("CALL EditUser ('"+ usr.getUserName() +"',"+ usr.getUserID() +",'"+ usr.getFirstName() +"','"+ usr.getLastName() +"');");
+			int i = st.executeUpdate("CALL EditUser ('"+ usr.getM_userName() +"',"+ usr.getM_userID() +",'"+ usr.getM_firstName() +"','"+ usr.getM_lastName() +"');");
 			if(i == 1) return true;	
 		} catch (SQLException e) {
 			System.out.println("editUser():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
@@ -898,4 +898,51 @@ public class CDBInteractionGenerator
 		return false;
 	}
 
+	
+	
+	
+	
+
+	public AUser getUserInstance(ResultSet rs)
+	{
+		try{
+		//ResultSet rs;		
+		AUser arg;
+		switch (rs.getInt(3))
+		{
+		case (0):
+			return null;
+		case (1): //User level
+			arg=new CReader(rs.getString(7), rs.getString(8), rs.getInt(5), rs.getString(1), -1, EActor.User);
+	//		rs.close();
+			return arg;
+		case (2): //Reader level
+			arg=new CReader(rs.getString(7), rs.getString(8), rs.getInt(5), rs.getString(1), -1, EActor.Reader);
+	//		rs.close();
+			return arg;
+		case (3): //Librarian level
+			arg=new CLibrarian(rs.getString(7), rs.getString(8), rs.getInt(5),rs.getString(1), -1 );
+	//		rs.close();
+			return arg;
+		case (5): //Manager level
+			arg=new CLibraryManager(rs.getString(7), rs.getString(8), rs.getInt(5), rs.getString(1), -1);
+	//		rs.close();
+			return arg;
+		default:
+			return null;
+		}
+		} catch(Exception e)
+		{ 
+			//TODO: add blahhhh
+			System.out.println("exception during userInstanceFactory: "+e.getMessage());
+		}
+		
+		return null;
+		
+	}
+
+
+	
+	
+	
 }

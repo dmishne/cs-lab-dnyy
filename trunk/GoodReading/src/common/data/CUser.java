@@ -1,6 +1,8 @@
 package common.data;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.util.LinkedList;
 
 import client.core.EActor;
 
@@ -8,15 +10,16 @@ public class CUser implements Serializable{
 	
 	static private final long serialVersionUID = 1L;
 	
-		   private String  m_firstName;
-		   private String  m_lastName;
-		   private int     m_userID;
-		   private String  m_userName;
-		   private String  m_birthDay;
-		   private String  m_adress;
-		   private String[] m_payTypes;
-		   private EActor  m_privilege;
-		   private boolean b_suspend;
+	private String  m_firstName;
+	private String  m_lastName;
+	private int     m_userID;
+	private String  m_userName;
+	private String  m_birthDay;
+	private String  m_adress;
+	private String  m_pass;
+	private EActor  m_privilege;
+	private boolean b_suspend;
+	private String[] PayTypes;
 		
 
     public CUser(String FirstName, String LastName, int UserId, String UserName, String birthday, String adress,String[] payTypes, EActor Privilege, boolean suspend)
@@ -27,10 +30,58 @@ public class CUser implements Serializable{
     	m_userName      = UserName;
     	m_birthDay      = birthday;
     	m_adress        = adress;
-    	m_payTypes      = payTypes;
     	m_privilege     = Privilege;
     	b_suspend       = suspend;
     }
+
+
+	public CUser(ResultSet data,String[] arg) {
+		try{
+    	m_firstName     = data.getString(7) ;
+    	m_lastName      = data.getString(8) ;
+    	m_userID        = data.getInt(5) ;
+    	m_userName      = data.getString(1) ;
+    	m_birthDay      = data.getString(4) ;
+    	m_adress        = data.getString(6) ;
+    	setM_pass(data.getString(2)) ;
+    	//PayTypes=arg;
+    	PayTypesInit();
+       	b_suspend=false;
+    	switch(data.getInt(3))
+    	{
+	    	case(-1):
+	    		//user ban
+	    		b_suspend=true;
+	    		m_privilege=EActor.None;
+	    		break;
+	    	case(1):
+	    		m_privilege=EActor.User;
+	    		break;
+	    	case(2):
+	    		m_privilege=EActor.Reader;
+	    		break;
+	    	case(3):
+	    		m_privilege=EActor.Librarian;
+	    		break;
+	    	case(5):
+	    		m_privilege=EActor.LibraryManager;
+	    		break;
+	    	default:	
+	    		m_privilege=EActor.User;
+	    		break;
+	    		
+    	}
+    	//b_suspend       = data.getString() ;
+		} catch(Exception e){ System.out.println("SQL error while oppening params from search users: "+e.getMessage());}
+	}
+
+
+
+	private void PayTypesInit() {
+		// TODO Auto-generated method stub
+		String[] arg={"CreditCard","Monthly","Yearly"};
+		PayTypes=arg;
+	}
 
 
 	/**
@@ -121,21 +172,78 @@ public class CUser implements Serializable{
 	}
 
 
-	/**
-	 * @param m_payTypes the m_payTypes to set
-	 */
-	public void setPayTypes(String[] m_payTypes) {
-		this.m_payTypes = m_payTypes;
+	public void setM_pass(String m_pass) {
+		this.m_pass = m_pass;
 	}
 
 
-	/**
-	 * @return the m_payTypes
-	 */
+	public String getM_pass() {
+		return m_pass;
+	}
+
+
+	public String getM_birthDay() {
+		return m_birthDay;
+	}
+
+
+	public void setM_birthDay(String m_birthDay) {
+		this.m_birthDay = m_birthDay;
+	}
+
+
+	public String getM_adress() {
+		return m_adress;
+	}
+
+
+	public void setM_adress(String m_adress) {
+		this.m_adress = m_adress;
+	}
+
+
+	public boolean isB_suspend() {
+		return b_suspend;
+	}
+
+
+	public void setB_suspend(boolean b_suspend) {
+		this.b_suspend = b_suspend;
+	}
+
+
+	public void setM_firstName(String m_firstName) {
+		this.m_firstName = m_firstName;
+	}
+
+
+	public void setM_lastName(String m_lastName) {
+		this.m_lastName = m_lastName;
+	}
+
+
+	public void setM_userID(int m_userID) {
+		this.m_userID = m_userID;
+	}
+
+
+	public void setM_userName(String m_userName) {
+		this.m_userName = m_userName;
+	}
+
+
+	public void setM_privilege(EActor m_privilege) {
+		this.m_privilege = m_privilege;
+	}
+
+
+	public void setPayTypes(String[] payTypes) {
+		PayTypes = payTypes;
+	}
+
+
 	public String[] getPayTypes() {
-		return m_payTypes;
+		return PayTypes;
 	}
-	
-	
-
+		
 }
