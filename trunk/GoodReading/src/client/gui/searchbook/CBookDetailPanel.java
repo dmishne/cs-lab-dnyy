@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 
 import client.core.AUser;
 import client.core.CReader;
+import client.core.EActor;
 
 import common.data.CBook;
 
@@ -27,7 +28,7 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 
 	public enum EBDDecision
 	{
-		BACK,REVIEW,ORDER
+		BACK,REVIEW,ORDER,EDITBOOK
 	}
 	
 	private static final long serialVersionUID = 1L;
@@ -41,11 +42,13 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 	private JButton m_jButton_Purchase_BDP = null;
 	private JButton m_jButton_publishReview = null;
 	private EBDDecision m_lastChoice = EBDDecision.BACK;  //  @jve:decl-index=0:
+	private JButton m_jButton_EditBook = null;
 
 	/**
 	 * This is the default constructor
+	 * @throws Exception 
 	 */
-	public CBookDetailPanel(CBook book) {
+	public CBookDetailPanel(CBook book) throws Exception {
 		super();
 		m_book = CSearchResultPanel.getChosenBook();
 		initialize();
@@ -55,8 +58,9 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 	 * This method initializes this
 	 * 
 	 * @return void
+	 * @throws Exception 
 	 */
-	private void initialize() {
+	private void initialize() throws Exception {
 		m_jLabel_Price = new JLabel();
 		m_jLabel_Price.setBounds(new Rectangle(226, 420, 257, 45));
 		m_jLabel_Price.setFont(new Font("Freestyle Script", Font.BOLD, 36));
@@ -82,9 +86,18 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 		this.add(m_jLabel_Author, null);
 		this.add(getM_jTextArea_Summary(), null);
 		this.add(getM_cFiveStarPanel(), null);
-		this.add(m_jLabel_Price, null);
-		this.add(getM_jButton_Purchase_BDP(), null);
-		this.add(getM_jButton_publishReview(), null);
+		this.add(m_jLabel_Price, null);		
+		if(AUser.getInstance().getPrivilege() == EActor.User ||
+		   AUser.getInstance().getPrivilege() == EActor.Reader )
+		{
+			this.add(getM_jButton_publishReview(), null);
+			this.add(getM_jButton_Purchase_BDP(), null);
+		}
+		else if(AUser.getInstance().getPrivilege() == EActor.Librarian ||
+				AUser.getInstance().getPrivilege() == EActor.LibraryManager )
+		{
+			this.add(getM_jButton_EditBook(), null);
+		}
 	}
 
 	/**
@@ -126,6 +139,11 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 		else if(source == m_jButton_Purchase_BDP)
 		{
 			this.setLastChoice(EBDDecision.ORDER);
+			this.setVisible(false);
+		}
+		else if(source == m_jButton_EditBook)
+		{
+			this.setLastChoice(EBDDecision.EDITBOOK);
 			this.setVisible(false);
 		}
 	}
@@ -221,7 +239,7 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 		if (m_jButton_Purchase_BDP == null) {
 			m_jButton_Purchase_BDP = new JButton();
 			m_jButton_Purchase_BDP.setBounds(new Rectangle(486, 480, 150, 34));
-			m_jButton_Purchase_BDP.setText("Order");
+			m_jButton_Purchase_BDP.setText("Purchase");
 			m_jButton_Purchase_BDP.setPreferredSize(new Dimension(150, 34));
 			m_jButton_Purchase_BDP.addActionListener(this);
 		}
@@ -256,5 +274,21 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 	public EBDDecision getLastChoice() {
 		return m_lastChoice;
 	}
+
+	/**
+	 * This method initializes m_jButton_EditBook	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getM_jButton_EditBook() {
+		if (m_jButton_EditBook == null) {
+			m_jButton_EditBook = new JButton();
+			m_jButton_EditBook.setBounds(new Rectangle(486, 480, 150, 34));
+			m_jButton_EditBook.setText("Edit Book");
+			m_jButton_EditBook.addActionListener(this);
+		}
+		return m_jButton_EditBook;
+	}
 	
 }  //  @jve:decl-index=0:visual-constraint="20,-195"
+
