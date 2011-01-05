@@ -133,7 +133,8 @@ public class CReader extends AUser{
 	{
 		CEntry EntryToSrv = null;
 		String[] fail = {"No payment type"};
-		EntryToSrv = new CEntry("GetPayment",null,this.getUserName(),this.getUserSessionId());
+		Map <String,String> PayType = new HashMap<String,String>();
+		EntryToSrv = new CEntry("GetPayment",PayType,this.getUserName(),this.getUserSessionId());
 		String[] result = (String[])CClientConnector.getInstance().messageToServer(EntryToSrv);	
 		if(result == null)
 			return fail;

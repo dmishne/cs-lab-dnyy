@@ -19,6 +19,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
 import client.core.*;
+import javax.swing.JComboBox;
 
 public class CAddNewBookPanel extends JPanel implements ActionListener{
 
@@ -54,14 +55,9 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 	private JLabel jLabel_label = null;
 	private JTextField jTextField_label = null;
 	private JLabel jLabel_FileTypes = null;
-	private JLabel jLabel_Type_pdf = null;
-	private JLabel jLabel_Type_fb2 = null;
-	private JLabel jLabel_Type_doc = null;
-	private JCheckBox jCheckBox_pdf = null;
-	private JCheckBox jCheckBox_fb2 = null;
-	private JCheckBox jCheckBox_doc = null;
 	private JLabel jLabel_subtopic = null;
 	private JTextField jTextField_subtopic = null;
+	private JComboBox jComboBox_fileType = null;
 	
 	
 	public enum ANBDecision
@@ -89,26 +85,11 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 		jLabel_subtopic.setSize(new Dimension(90, 26));
 		jLabel_subtopic.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
 		jLabel_subtopic.setLocation(new Point(20, 220));
-		jLabel_Type_doc = new JLabel();
-		jLabel_Type_doc.setText("DOC");
-		jLabel_Type_doc.setSize(new Dimension(30, 20));
-		jLabel_Type_doc.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
-		jLabel_Type_doc.setLocation(new Point(631, 125));
-		jLabel_Type_fb2 = new JLabel();
-		jLabel_Type_fb2.setText("FB2");
-		jLabel_Type_fb2.setSize(new Dimension(30, 20));
-		jLabel_Type_fb2.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
-		jLabel_Type_fb2.setLocation(new Point(571, 125));
-		jLabel_Type_pdf = new JLabel();
-		jLabel_Type_pdf.setText("PDF");
-		jLabel_Type_pdf.setSize(new Dimension(30, 20));
-		jLabel_Type_pdf.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
-		jLabel_Type_pdf.setLocation(new Point(511, 125));
 		jLabel_FileTypes = new JLabel();
 		jLabel_FileTypes.setText("File Type :");
-		jLabel_FileTypes.setSize(new Dimension(60, 20));
+		jLabel_FileTypes.setSize(new Dimension(60, 24));
 		jLabel_FileTypes.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
-		jLabel_FileTypes.setLocation(new Point(431, 125));
+		jLabel_FileTypes.setLocation(new Point(450, 140));
 		jLabel_label = new JLabel();
 		jLabel_label.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
 		jLabel_label.setSize(new Dimension(90, 26));
@@ -207,14 +188,9 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 		this.add(jLabel_label, null);
 		this.add(getJTextField_label(), null);
 		this.add(jLabel_FileTypes, null);
-		this.add(jLabel_Type_pdf, null);
-		this.add(jLabel_Type_fb2, null);
-		this.add(jLabel_Type_doc, null);
-		this.add(getJCheckBox_pdf(), null);
-		this.add(getJCheckBox_fb2(), null);
-		this.add(getJCheckBox_doc(), null);
 		this.add(jLabel_subtopic, null);
 		this.add(getJTextField_subtopic(), null);
+		this.add(getJComboBox_fileType(), null);
 	}
 
 	
@@ -489,49 +465,6 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 	}
 	
 	
-	/**
-	 * This method initializes jCheckBox_pdf	
-	 * 	
-	 * @return javax.swing.JCheckBox	
-	 */
-	private JCheckBox getJCheckBox_pdf() {
-		if (jCheckBox_pdf == null) {
-			jCheckBox_pdf = new JCheckBox();
-			jCheckBox_pdf.setSize(new Dimension(19, 17));
-			jCheckBox_pdf.setLocation(new Point(515, 150));
-		}
-		return jCheckBox_pdf;
-	}
-
-	/**
-	 * This method initializes jCheckBox_fb2	
-	 * 	
-	 * @return javax.swing.JCheckBox	
-	 */
-	private JCheckBox getJCheckBox_fb2() {
-		if (jCheckBox_fb2 == null) {
-			jCheckBox_fb2 = new JCheckBox();
-			jCheckBox_fb2.setSize(new Dimension(18, 18));
-			jCheckBox_fb2.setLocation(new Point(575, 150));
-		}
-		return jCheckBox_fb2;
-	}
-
-	/**
-	 * This method initializes jCheckBox_doc	
-	 * 	
-	 * @return javax.swing.JCheckBox	
-	 */
-	private JCheckBox getJCheckBox_doc() {
-		if (jCheckBox_doc == null) {
-			jCheckBox_doc = new JCheckBox();
-			jCheckBox_doc.setSize(new Dimension(22, 16));
-			jCheckBox_doc.setLocation(new Point(635, 150));
-		}
-		return jCheckBox_doc;
-	}
-	
-	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
@@ -544,7 +477,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 		{ 		
 				try {
 					
-					((CLibrarian)AUser.getInstance()).addNewBook(jTextField_title.getText(), jTextField_author.getText(), jTextField_isbn.getText(), jTextField_r_date.getText(), jTextField_publisher.getText(), jTextArea_summary.getText(),jTextField_price.getText(), jTextField_topic.getText(),jTextField_subtopic.getText() ,jTextField_label.getText(), jTextArea_toc.getText(), jCheckBox_visibilityCheck.isSelected(), jTextField_lang.getText());
+					((CLibrarian)AUser.getInstance()).addNewBook(jTextField_title.getText(), jTextField_author.getText(), jTextField_isbn.getText(), jTextField_r_date.getText(), jTextField_publisher.getText(), jTextArea_summary.getText(),jTextField_price.getText(), jTextField_topic.getText(),jTextField_subtopic.getText() ,jTextField_label.getText(), jTextArea_toc.getText(), jCheckBox_visibilityCheck.isSelected(), jTextField_lang.getText(),jComboBox_fileType.getSelectedItem().toString());
 					setLastChoice(ANBDecision.ADDBOOK);
 					this.setVisible(false);
 					} catch (Exception e) {
@@ -565,6 +498,22 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 			jTextField_subtopic.setSize(new Dimension(280, 27));
 		}
 		return jTextField_subtopic;
+	}
+
+	/**
+	 * This method initializes jComboBox_fileType	
+	 * 	
+	 * @return javax.swing.JComboBox	
+	 */
+	private JComboBox getJComboBox_fileType() {
+		if (jComboBox_fileType == null) {
+			String[] ft = {"PDF","FB2","DOC"};
+			jComboBox_fileType = new JComboBox(ft);
+			jComboBox_fileType.setPreferredSize(new Dimension(30, 26));
+			jComboBox_fileType.setLocation(new Point(515, 140));
+			jComboBox_fileType.setSize(new Dimension(130, 25));
+		}
+		return jComboBox_fileType;
 	}
 
 	

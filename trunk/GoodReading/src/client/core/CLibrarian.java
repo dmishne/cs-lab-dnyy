@@ -23,7 +23,7 @@ public class CLibrarian extends AUser{
 	}
 	
 	
-	public void addNewBook(String title, String author, String isbn, String release, String publisher, String summary, String price, String topic, String subtopic, String lable, String TOC, boolean invis, String lang) throws IOException, Exception
+	public void addNewBook(String title, String author, String isbn, String release, String publisher, String summary, String price, String topic, String subtopic, String lable, String TOC, boolean invis, String lang, String fileType) throws IOException, Exception
 	{
 		CEntry entryToSrv;
 		HashMap<String, String> newBook = new HashMap<String, String>();
@@ -60,6 +60,8 @@ public class CLibrarian extends AUser{
 			throw new IOException("Book Price is a must!");
 		else if(!isValidDate(date))
 			throw new IOException("Wrong date!");
+		else if(fileType.isEmpty())
+			throw new IOException("Book's File Type is a must!");
 		else
 		{
 			
@@ -76,6 +78,7 @@ public class CLibrarian extends AUser{
 			newBook.put("toc", TOC);
 			newBook.put("invisible", visible);
 			newBook.put("languages", lang);
+			newBook.put("filetype", fileType);
 			entryToSrv = new CEntry("AddBook", newBook, this.getUserName(),this.getUserSessionId());
 			CClientConnector.getInstance().messageToServer(entryToSrv);
 		}
@@ -123,7 +126,7 @@ public class CLibrarian extends AUser{
 	}
 	
 	
-	public void updateBookDetails(String curr_isbn, String title, String author, String isbn, String release, String publisher, String summary, String price, String topic, String lable, String TOC, boolean invis, String lang) throws Exception
+	public void updateBookDetails(String curr_isbn, String title, String author, String isbn, String release, String publisher, String summary, String price, String topic, String lable, String TOC, boolean invis, String lang, String fileType) throws Exception
 	{
 		CEntry entryToSrv ;
 		HashMap<String, String> newBookDetails = new HashMap<String, String>();
@@ -159,6 +162,8 @@ public class CLibrarian extends AUser{
 			throw new IOException("Book Price is a must!");
 		else if(!isValidDate(date))
 			throw new IOException("Wrong date!");
+		else if(fileType.isEmpty())
+			throw new IOException("Book's File Type is a must!");
 		else
 		{
 			newBookDetails.put("isbn", isbn);
@@ -174,7 +179,7 @@ public class CLibrarian extends AUser{
 			newBookDetails.put("invisible", visible);
 			newBookDetails.put("languages", lang);
 			newBookDetails.put("bookisbn",curr_isbn);
-	
+			newBookDetails.put("filetype", fileType);
 			entryToSrv = new CEntry("EditBook",newBookDetails, this.getUserName(),this.getUserSessionId());
 			CClientConnector.getInstance().messageToServer(entryToSrv);
 		}
@@ -196,6 +201,24 @@ public class CLibrarian extends AUser{
 			delReview.put("isbn", isbn);
 			entryToSrv = new CEntry("deletereview",delReview, this.getUserName(),this.getUserSessionId());
 			CClientConnector.getInstance().messageToServer(entryToSrv);	
+		}
+	}
+	
+	
+	public void deleteBook(String isbn, String fileType) throws Exception
+	{
+		CEntry entryToSrv ;
+		Map<String, String> delBook = new HashMap<String, String>();
+		if(isbn.isEmpty())
+			throw new IOException("Book ISBN is a must!");
+		else if(fileType.isEmpty())
+			throw new IOException("Book's File Type is a must!");
+		else
+		{
+			delBook.put("isbn", isbn);
+			delBook.put("filetype", fileType);
+			entryToSrv = new CEntry("DeleteBook", delBook, this.getUserName(), this.getUserSessionId());
+			CClientConnector.getInstance().messageToServer(entryToSrv);
 		}
 	}
 	

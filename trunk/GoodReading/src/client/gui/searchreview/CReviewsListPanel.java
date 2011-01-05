@@ -122,7 +122,7 @@ public class CReviewsListPanel extends JPanel implements ActionListener{
 			int i = 0;
 			for(CBookReview cb : m_reviewsList)
 			{
-				result[i] = cb.gettitle() + " - " + cb.getauth_by() + " - " + cb.getisbn() + " - " + cb.getwrite_date();
+				result[i] = cb.gettitle() + " - " + cb.getauthor() + " - " + cb.getisbn() + " - " + cb.getwrite_date();
 			    i++;
 			}
 			jList_resultList_RL = new JList(result);
@@ -184,7 +184,7 @@ public class CReviewsListPanel extends JPanel implements ActionListener{
 				while(it.hasNext())
 				{
 					CBookReview temp = it.next();
-					if(temp.gettitle().compareTo(splitedRes[0]) == 0 && temp.getauth_by().compareTo(splitedRes[1]) == 0 && temp.getisbn().compareTo(splitedRes[2]) == 0 && temp.getwrite_date().compareTo(splitedRes[3]) == 0)
+					if(temp.gettitle().compareTo(splitedRes[0]) == 0 && temp.getauthor().compareTo(splitedRes[1]) == 0 && temp.getisbn().compareTo(splitedRes[2]) == 0 && temp.getwrite_date().compareTo(splitedRes[3]) == 0)
 					{
 						m_chosenReview = temp;
 						break;
