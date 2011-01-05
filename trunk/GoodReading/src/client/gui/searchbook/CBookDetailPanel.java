@@ -209,7 +209,8 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 			score = 5;
 		}
 		try {
-			((CReader)AUser.getInstance()).addScore(m_book.getM_ISBN(),score);
+			String ans = ((CReader)AUser.getInstance()).addScore(m_book.getM_ISBN(),score);
+			JOptionPane.showMessageDialog(null, ans, "Server Answer :",JOptionPane.INFORMATION_MESSAGE);
 		}
 		catch(Exception e)
 		{
