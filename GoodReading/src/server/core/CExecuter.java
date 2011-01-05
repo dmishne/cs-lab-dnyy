@@ -548,7 +548,7 @@ public class CExecuter implements Runnable
 											
 						else if(Work.getMsgType().compareTo("SearchUser") == 0)
 						{
-							LinkedList<AUser> ans;
+							LinkedList<CUser> ans;
 							Map<String,String> arg=Work.getMsgMap();
 							for(String a: arg.keySet())
 								if (arg.get(a).compareTo("")==0)
@@ -563,7 +563,7 @@ public class CExecuter implements Runnable
 						
 						else if(Work.getMsgType().compareTo("EditUser") == 0)
 						{
-							AUser usr;
+							CUser usr;
 							Map<String,String> arg=Work.getMsgMap();
 							if(!arg.containsKey("username"))
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"no username specified!");
@@ -574,13 +574,17 @@ public class CExecuter implements Runnable
 
 									arg.remove("username");
 									for(String a:arg.keySet())
-									{
+									{//TODO: add more options from CUser
 										if(a.compareTo("lastname")==0)
-											usr.setLastName(arg.get(a));
+											usr.setM_lastName(arg.get(a));
 										else if(a.compareTo("firstname")==0)
-											usr.setFirstName(arg.get(a));
+											usr.setM_firstName(arg.get(a));
 										else if(a.compareTo("id")==0)
-											usr.setID(Integer.parseInt(arg.get(a)));
+											usr.setM_userID(Integer.parseInt(arg.get(a)));
+										else if(a.compareTo("password")==0)
+											usr.setM_pass(arg.get("password"));
+										else if(a.compareTo("username")==0)
+											usr.setM_userName(arg.get("username"));
 									}
 									if( arg.containsKey("privilage"))
 										db.SetUserPriv(usr,Integer.parseInt(arg.get("privilage")));
