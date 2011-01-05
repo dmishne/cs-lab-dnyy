@@ -886,4 +886,16 @@ public class CDBInteractionGenerator
 		return arg;
 	}
 
+	public boolean deleteBook(String isbn) {
+		// TODO Auto-generated method stub
+		///delete book from DB
+		return false;
+	}
+
+	public boolean deleteFile(String isbn, String format) {
+		// TODO Auto-generated method stub
+		///delete book FILE from DB
+		return false;
+	}
+
 }

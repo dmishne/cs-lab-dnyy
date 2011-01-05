@@ -320,16 +320,48 @@ public class CExecuter implements Runnable
 							if(Privilage <3)
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: user must have proper privilage");
 							else
-							{//we're here because client has read the book
+							{//we're here because client has privilage
 								if(db.deleteReview(arg.get("isbn"),Work.getUserName()))
 									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Review Deleted");
 								else 
 								{
 									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: failed to delete");
-									CDBInteractionGenerator.GetInstance().ServerUpdateLog("Failure at executer: deleting review\n");  System.out.println("failure at executer: adding review");
+									CDBInteractionGenerator.GetInstance().ServerUpdateLog("Failure at executer: deleting review\n");  System.out.println("failure at executer: delete review");
 								}
 							}//end of reading auth
-						} //end of AddReview
+						} //end of DeleteReview
+						else if(Work.getMsgType().compareTo("DeleteBook") == 0)
+						{
+							Map<String,String> arg=Work.getMsgMap();
+							if(Privilage <3)
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: user must have proper privilage");
+							else
+							{//we're here because client has privilage
+								if(db.deleteBook(arg.get("isbn")))
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Book Deleted");
+								else 
+								{
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: failed to delete");
+									CDBInteractionGenerator.GetInstance().ServerUpdateLog("Failure at executer: deleting Book\n");  System.out.println("failure at executer: delete Book");
+								}
+							}//end of reading auth
+						} //end of DeleteBook
+						else if(Work.getMsgType().compareTo("DeleteFile") == 0)
+						{
+							Map<String,String> arg=Work.getMsgMap();
+							if(Privilage <3)
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: user must have proper privilage");
+							else
+							{//we're here because client has privilage
+								if(db.deleteFile(arg.get("isbn"),arg.get("format")))
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "File Deleted");
+								else 
+								{
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: failed to delete");
+									CDBInteractionGenerator.GetInstance().ServerUpdateLog("Failure at executer: deleting File\n");  System.out.println("failure at executer: delete File");
+								}
+							}//end of reading auth
+						} //end of DeleteFile
 						
 						else if(Work.getMsgType().compareTo("EditReview") == 0)
 						{	
@@ -340,8 +372,10 @@ public class CExecuter implements Runnable
 							{
 								Map<String,String> arg=Work.getMsgMap();
 								//public boolean editReview(String isbn, String author, String title, String review)
-								int i="true".compareTo(arg.get("confirm"));
-								if( i <1 )
+								int i=arg.get("confirm").compareTo("true");
+								if( i ==0 )
+									i=1;
+								else
 									i=0;
 								if(db.editReview(arg.get("isbn"),arg.get("author"),arg.get("title"),arg.get("review"), i  ,Work.getUserName()))
 									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Review Submitted");
@@ -519,8 +553,12 @@ public class CExecuter implements Runnable
 							for(String a: arg.keySet())
 								if (arg.get(a).compareTo("")==0)
 									arg.remove(a);
-							ans=db.SearchUser(arg);
-							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans);
+							if(Privilage >3)
+							{
+								ans=db.SearchUser(arg);
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans);
+							}
+							else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"no privilage!");
 						}//end of SearchUser
 						
 						else if(Work.getMsgType().compareTo("EditUser") == 0)
