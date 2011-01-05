@@ -40,8 +40,6 @@ public class CListOptions implements Serializable{
 			m_hold=new CListOptions();
 		m_hold.m_langueges = new HashSet<String>(lang);
 		m_hold.m_topics = new HashSet<String>(topics);
-		m_hold.m_langueges.add("");
-		m_hold.m_topics.add("");
 		return m_hold;
 	}
 	

@@ -166,7 +166,7 @@ public abstract class AUser implements Serializable{
 	                search_param.put("author", (String)book_param.get("author"));
 	    if(!book_param.get("summary").isEmpty())
 	                search_param.put("summary", (String)book_param.get("summary"));
-	    if(!book_param.get("TOC").isEmpty())
+	    if(!book_param.get("toc").isEmpty())
 	                search_param.put("TOC", (String)book_param.get("TOC"));
 	    if(!book_param.get("labels").isEmpty())
 	                search_param.put("labels", (String)book_param.get("labels"));
