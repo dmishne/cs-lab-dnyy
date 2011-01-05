@@ -43,7 +43,7 @@ public class CDBInteractionGenerator
 	
 	public ResultSet MySQLQuery(String query) throws SQLException
 	{
-		return this.m_DB_Connection.createStatement().executeQuery(query);
+		return this.m_DB_Connection.createStatement().executeQuery(query);	
 	}
 
 	public int MySQLGetAuth(String user)  
@@ -528,15 +528,28 @@ public class CDBInteractionGenerator
 
 	public boolean hasUserRead(String isbn, String userName) {
 		ResultSet check = null;
+	//nir's sql
 		try {
-			check = this.MySQLQuery("CALL CheckReceiptByUserNameAndISBN ('"+ isbn + "','"+ userName +"');");
+			check = this.MySQLQuery("SELECT * FROM receipts r WHERE r.user like '"+userName+"' AND r.isbn like '"+isbn+"';");
+			if(check.next())
+				{
+					return true;
+				}
+		} catch (Exception e) 
+		{	}// System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}		
+	
+		
+		/*
+		  try {
+		 
+			check = this.MySQLQuery( "CALL CheckReceiptByUserNameAndISBN ('"+ isbn + "','"+ userName +"');");
 			if(check.next())
 				{
 					return true;
 				}
 		} catch (Exception e) 
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}		
-		return false;
+	*/	return false;
 	}
 
 	public boolean submitReview(String isbn, String userName, String title, String review) {
@@ -613,6 +626,24 @@ public class CDBInteractionGenerator
 	public LinkedList<String> getUserPayments(String userName) {
 		ResultSet cc;
 		LinkedList<String>ans=new LinkedList<String>();
+		//Nir's SQL
+		try {
+			cc=this.MySQLQuery("Select type FROM subscriptions WHERE user like '"+userName+"';");
+	
+			while(cc.next())
+			{
+			 ans.add(cc.getString(1));	
+			}
+			cc.close();
+			cc=this.MySQLQuery("Select * FROM credit_card_details WHERE user like '"+userName+"';");
+			if(cc.next())
+				ans.add("Credit Card");
+			cc.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*
 		try {
 			cc = this.MySQLQuery("CALL CheckSubscription ('"+ userName +"');");
 			while(cc.next())
@@ -629,14 +660,31 @@ public class CDBInteractionGenerator
 				ans.add("Credit Card");	
 			}
 		} catch (Exception e) 
-		{	 System.out.println("getUserPayments():SQL exception: "+e.getMessage());	}
+		{	 System.out.println("getUserPayments():SQL exception: "+e.getMessage());	} 
+		*/
 		return ans;
 	}
 
 	public LinkedList<String> getBookFormats(String isbn) {
-		ResultSet formats;
+		ResultSet cc;
 		LinkedList<String>ans=new LinkedList<String>();
+		// Nir's sql
 		try {
+			cc=this.MySQLQuery("SELECT * FROM files WHERE isbn like '"+isbn+"';");
+	
+			while(cc.next())
+			{
+			 ans.add(cc.getString(2));	
+			}
+			cc.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		/*try {
 			formats = this.MySQLQuery("CALL GetBookFormats ('"+ isbn +"');");
 			while(formats.next())
 				{
@@ -648,7 +696,7 @@ public class CDBInteractionGenerator
 						ans.add("fb2");
 				}
 		} catch (Exception e) 
-		{	 System.out.println("getBookFormats():SQL exception: "+e.getMessage());	}
+		{	 System.out.println("getBookFormats():SQL exception: "+e.getMessage());	}*/
 		return ans ;
 	}
 

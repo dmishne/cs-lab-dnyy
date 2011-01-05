@@ -104,6 +104,9 @@ public class CExecuter implements Runnable
 				
 				else 
 				{
+					if(Work.getMsgMap() == null)
+						Work.setMsgMap(new HashMap());
+					
 					//first off we lowercase everything in msgmap
 					Map<String,String> tmp=new HashMap<String,String>(Work.getMsgMap());
 					String v;
@@ -189,8 +192,9 @@ public class CExecuter implements Runnable
 						
 						else if(Work.getMsgType().compareTo("Logout") == 0)
 						{
+							Set <CClientSession> temp=new HashSet<CClientSession>(m_sessions);
 							//remove from sessions
-							for(CClientSession s : this.m_sessions) //find session
+							for(CClientSession s : temp) //find session
 								if(s.getSessionID() == Work.getSessionID()) //sessionID match
 									this.m_sessions.remove(s);
 							//remove from responder and RESPOND
@@ -283,9 +287,10 @@ public class CExecuter implements Runnable
 							else {
 								//get set
 								LinkedList<CBookReview> rez=db.SearchReview(Work.getMsgMap());
+								LinkedList<CBookReview> temp=new LinkedList(rez);
 								
 								//remove handled reviews
-								for(CBookReview rev: rez)
+								for(CBookReview rev: temp)
 									if(rev.getaccepted() ==1)
 										rez.remove(rev);
 								
@@ -397,7 +402,7 @@ public class CExecuter implements Runnable
 								
 								else//we're here because client has read the book
 								{
-									if(db.giveScore(arg.get("isbn"),Work.getUserName(),Integer.reverse(Integer.getInteger(arg.get("score")))))
+									if(db.giveScore(arg.get("isbn"),Work.getUserName(),Integer.parseInt(arg.get("score"))))
 										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "success");
 									else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Failed to comply");
 								}
@@ -487,9 +492,9 @@ public class CExecuter implements Runnable
 						
 						else if(Work.getMsgType().compareTo("GetPayment") == 0)
 						{
-							LinkedList <String> ans= db.getUserPayments(Work.getUserName());
+							LinkedList <String> ans= db.getUserPayments(Work.getUserName()) ;
 							String[] a = {"No affordable pay types"};
-							if(ans == null)
+							if(ans.isEmpty())
 							      CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),a);
 							else
 							      CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans.toArray(new String[ans.size()]));
@@ -603,7 +608,8 @@ public class CExecuter implements Runnable
 	{
 		if(m_sessions.isEmpty())
 			return;
-		for(CClientSession c:this.m_sessions)
+		Set<CClientSession> arg=new HashSet(m_sessions);
+		for(CClientSession c:arg)
 			if(work.getSessionID() != c.getSessionID() && work.getUserName().compareTo(c.getUsername()) == 0)
 				{
 					m_sessions.remove(c);//remove from sessions
