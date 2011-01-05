@@ -203,7 +203,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	 */
 	private JTextField getJTextField_reviewAuthor_SR() {
 		if (jTextField_reviewAuthor_SR == null) {
-			jTextField_reviewAuthor_SR = new JTextField(this.getReview().getauth_by());
+			jTextField_reviewAuthor_SR = new JTextField(this.getReview().getauthor());
 			jTextField_reviewAuthor_SR.setSize(new Dimension(580, 27));
 			jTextField_reviewAuthor_SR.setEditable(false);
 			jTextField_reviewAuthor_SR.setLocation(new Point(100, 95));

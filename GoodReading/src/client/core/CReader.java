@@ -177,11 +177,12 @@ public class CReader extends AUser{
 		return res;
 	}
 	
-	public void addScore(String isbn, int score) throws Exception
+	public String addScore(String isbn, int score) throws Exception
 	{
 		CEntry EntryToSrv;
 		Map <String,String> addSc = new HashMap<String,String>();
 		String sc = Integer.toString(score);
+		String answer;
 		if(isbn.isEmpty())
 			throw new IOException("Book ISBN not located! Update fail");
 		else
@@ -189,7 +190,8 @@ public class CReader extends AUser{
 			addSc.put("isbn", isbn);
 			addSc.put("score", sc);
 			EntryToSrv = new CEntry("SubmitScore",addSc,this.getUserName(),this.getUserSessionId());
-		    CClientConnector.getInstance().messageToServer(EntryToSrv);
+		    answer = (String)CClientConnector.getInstance().messageToServer(EntryToSrv);
+		   return answer;
 		}
 	}
 	

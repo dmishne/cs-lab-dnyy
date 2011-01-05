@@ -217,7 +217,7 @@ public class CLibrarian extends AUser{
 		{
 			delBook.put("isbn", isbn);
 			delBook.put("filetype", fileType);
-			entryToSrv = new CEntry("DeleteBook", delBook, this.getUserName(), this.getUserSessionId());
+			entryToSrv = new CEntry("DeleteFile", delBook, this.getUserName(), this.getUserSessionId());
 			CClientConnector.getInstance().messageToServer(entryToSrv);
 		}
 	}
