@@ -510,7 +510,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 					setLastChoice(EBDDecision.SAVE);
 					this.setVisible(false);
 					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, e.getMessage() ,"Error",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, e.getMessage() + e.getClass() ,"Error",JOptionPane.ERROR_MESSAGE);
 					}			
 		}
 	}
