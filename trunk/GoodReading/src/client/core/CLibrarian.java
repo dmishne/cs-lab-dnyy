@@ -65,10 +65,14 @@ public class CLibrarian extends AUser{
 			throw new IOException("Book's File Type is a must!");
 		else if (fileType.length > 0)
 		{
-			format = fileType[0];
-			for(int i = 1; i< fileType.length ; i++)
+			format = "";
+			for(int i = 0; i< fileType.length ; i++)
 			{
-				format = format + "," + fileType[i];
+				if(fileType[i] != null)
+					if(format.equals(""))
+						format = format + fileType[i];				
+					else
+						format = format + "," + fileType[i];
 			}
 			
 			newBook.put("isbn", isbn);
