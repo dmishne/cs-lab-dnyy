@@ -58,7 +58,7 @@ public class CGoodReadingServer {
 			System.out.println("Excecuter online and waiting");
 			CDBInteractionGenerator.GetInstance().ServerUpdateLog("Excecuter online and waiting");
 		}
-	
+//	CFile arg=new CFile("c:/library/asd.pdf");
 		
 	//	CDBInteractionGenerator.GetInstance().MySQLInsertBlobFile(new CFile("arg.txt").getFilearray().toString());
 	//	System.out.print(CDBInteractionGenerator.GetInstance().getPrice("1234"));

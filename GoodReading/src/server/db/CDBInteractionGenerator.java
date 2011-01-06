@@ -962,6 +962,7 @@ public class CDBInteractionGenerator
 
 	public boolean UploadFile(String isbn, String tyle, CFile file) {
 		// TODO Auto-generated method stub
+	
 		return false;
 	}
 

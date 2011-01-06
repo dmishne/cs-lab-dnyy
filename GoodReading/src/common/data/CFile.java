@@ -21,17 +21,17 @@ public class CFile implements Serializable
 	private static byte[] getFile(String path)
 	{
 		try {
-		File myFile = new File (path); //get "File"
-	    byte [] mybytearray  = new byte [(int)myFile.length()]; //allocate space for file
-	    
-	    BufferedInputStream bis = new BufferedInputStream(new FileInputStream(myFile)); //get Buffered Stream
-	    
-	    bis.read(mybytearray,0,mybytearray.length); // read file into array
-	  
-	    bis.close();
-	    
-	    return mybytearray;	//return array
-		
+			File myFile = new File (path); //get "File"
+		    byte [] mybytearray  = new byte [(int)myFile.length()]; //allocate space for file
+		    
+		    BufferedInputStream bis = new BufferedInputStream(new FileInputStream(myFile)); //get Buffered Stream
+		    
+		    bis.read(mybytearray,0,mybytearray.length); // read file into array
+		  
+		    bis.close();
+		    
+		    return mybytearray;	//return array
+			
 		} catch (FileNotFoundException e) {
 			System.out.println("Error getting file "+ path+": "+e.getMessage());		
 		} catch(IOException e) {
