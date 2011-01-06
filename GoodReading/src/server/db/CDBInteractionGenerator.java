@@ -723,7 +723,16 @@ public class CDBInteractionGenerator
 	}
 
 	public CFile getBook(String isbn, String format) {
-		// TODO Auto-generated method stub
+		CFile cf = new CFile(format);
+		ResultSet rs;
+		try {
+			rs = this.MySQLQuery("CALL GetBook ('"+ isbn +"','"+ format +"');");
+			if(rs.next())
+				{
+					cf.setChars(rs.getBlob("book").getBytes(0, (int)(rs.getBlob("book").length())));
+				}
+		} catch (Exception e) 
+		{	 System.out.println("GetBook() Exception while reading data from result set (FactoryData() "+e.getMessage());	}
 		return null;
 	}
 
