@@ -222,7 +222,6 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 			jTextField_bookISBN_SR.setSize(new Dimension(580, 27));
 			jTextField_bookISBN_SR.setEditable(false);
 			jTextField_bookISBN_SR.setLocation(new Point(100, 124));
-			jTextField_bookISBN_SR.setEditable(false);
 		}
 		return jTextField_bookISBN_SR;
 	}
@@ -380,8 +379,6 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 			if(!E_flag)
 			{
 			   jTextArea_review_SR.setEditable(true);
-			   jTextField_bookISBN_SR.setEditable(true);
-			   jTextField_reviewAuthor_SR.setEditable(true);
 			   jTextField_title_SR.setEditable(true);
 			   jCheckBox_confirm_SR.setEnabled(true);
 			   E_flag = true;
@@ -390,8 +387,6 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 			else if (E_flag)
 			{
 			   jTextArea_review_SR.setEditable(false);
-			   jTextField_bookISBN_SR.setEditable(false);
-			   jTextField_reviewAuthor_SR.setEditable(false);
 			   jTextField_title_SR.setEditable(false);
 			   jCheckBox_confirm_SR.setEnabled(false);
 			   E_flag = false;

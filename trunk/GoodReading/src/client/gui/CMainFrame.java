@@ -32,6 +32,8 @@ import javax.swing.event.MenuListener;
 
 import client.common.CClientConnector;
 import client.core.AUser;
+import client.core.CLibrarian;
+import client.core.EActor;
 import client.gui.searchbook.CBookDetailPanel;
 import client.gui.searchbook.COrderBookPanel;
 import client.gui.searchbook.CSearchBookPanel;
@@ -67,6 +69,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private COrderBookPanel GUI_COrderBookPanel = null;
 	private CSearchReviewPanel GUI_CSearchReviewPanel = null;
 	private JButton m_jMenu_goto = null;
+	private JButton m_jMenu_messages = null;
 	private CReviewsListPanel GUI_CReviewsListPanel = null;
 	private CAddNewBookPanel GUI_CAddNewBookPanel = null;
 	private CNewReviewsPanel GUI_CNewReviewsPanel = null;
@@ -75,6 +78,8 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private CUserDetailsPanel GUI_CUserDetailsPanel = null;
 	private CShowReviewPanel GUI_CShowReviewPanel = null;
 	private CEditBookDetailsPanel GUI_CEditBookDetailsPanel = null;
+	private msgChecker m_msgchk = null;
+	
 	/**
 	 * This is the default constructor
 	 */
@@ -169,6 +174,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			m_jJMenuBar_MenuBar.add(getM_jMenu_Tools());
 			m_jJMenuBar_MenuBar.add(getM_jMenu_About());
 			m_jJMenuBar_MenuBar.add(Box.createHorizontalGlue());
+			m_jJMenuBar_MenuBar.add(getM_jMenu_messages());
 			m_jJMenuBar_MenuBar.add(getM_jMenu_goto());
 			
 		}
@@ -218,6 +224,14 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 				GUI_CMainMenuPanel.initGreeting();
 				GUI_CMainMenuPanel.setVisible(true);
 				getM_jMenu_goto().setEnabled(true);
+				if(AUser.getInstance().getPrivilege() == EActor.Librarian ||
+				   AUser.getInstance().getPrivilege() == EActor.LibraryManager)
+				{
+					m_msgchk = new msgChecker();
+					m_msgchk.start();
+					getM_jMenu_messages().setVisible(true);
+					getM_jMenu_messages().setEnabled(true);
+				}
 			}
 			else if(source == GUI_CMainMenuPanel)
 			{
@@ -227,6 +241,15 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 					jContentPane.add(getGUI_CLoginPanel());
 					m_jMenu_goto.setEnabled(false);
 					GUI_CLoginPanel.setVisible(true);
+					
+					if(m_msgchk != null)
+					{
+						m_msgchk.Stop();
+						getM_jMenu_messages().setVisible(false);
+						getM_jMenu_messages().setEnabled(false);
+					}
+					
+					
 				}
 				else if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.ARRANGE)
 				{
@@ -544,6 +567,25 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 				JOptionPane.showMessageDialog(null, "Login first" ,"Error",JOptionPane.ERROR_MESSAGE);
 				}
 		}
+		else if(source == m_jMenu_messages)
+		{
+			try
+			{
+				jContentPane.removeAll();
+				GUI_CMainMenuPanel = null;
+				GUI_CNewReviewsPanel = null;
+				jContentPane.add(getGUI_CMainMenuPanel());
+				jContentPane.add(getGUI_CNewReviewsPanel());
+				GUI_CMainMenuPanel.setVisible(false);
+				GUI_CNewReviewsPanel.setVisible(true);
+				pack();
+				validate();
+			}
+			catch(Exception e)
+			{
+				JOptionPane.showMessageDialog(null, "Unexpected Error" ,"Error",JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 
 	/**
@@ -693,7 +735,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	/**
 	 * This method initializes m_jMenu_goto	
 	 * 	
-	 * @return javax.swing.JMenu	
+	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jMenu_goto() {
 		if (m_jMenu_goto == null) {
@@ -705,6 +747,28 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		return m_jMenu_goto;
 	}
 
+		
+	
+	/**
+	 * This method initializes m_jMenu_goto	
+	 * 	
+	 * @return javax.swing.JButton
+	 */
+	private JButton getM_jMenu_messages() {
+		if (m_jMenu_messages == null) {
+			m_jMenu_messages = new JButton("0 Messages");
+			m_jMenu_messages.setBorderPainted(false);
+			m_jMenu_messages.addActionListener(this);
+			m_jMenu_messages.setEnabled(false);
+			m_jMenu_messages.setVisible(false);
+			m_jMenu_messages.addActionListener(this);
+		}
+		return m_jMenu_messages;
+	}
+	
+	
+	
+	
 	/**
 	 * This method initializes GUI_CReviewsListPanel	
 	 * 	
@@ -841,5 +905,47 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		}
 		return GUI_CEditBookDetailsPanel;
 	}
+	
+	/**
+	 * Class msgChecker
+	 * Extends Thread
+	 * 
+	 * Description: This thread class will check and update
+	 * if there any new messages. 
+	 */
+	class msgChecker extends Thread
+	{
+		boolean checker;
+		
+		public msgChecker()
+		{
+			super();
+			checker = true;
+		}
+		
+		public void run()
+		{
+			while(checker)
+			{
+				try {
+					m_jMenu_messages.setText(String.valueOf(((CLibrarian)AUser.getInstance()).isMessages()) + " Messages");
+					Thread.sleep(60000);
+				} catch (InterruptedException e) {			
+				}
+				catch(Exception e)
+				{
+					JOptionPane.showMessageDialog(null, "Unexpected - " + e.getMessage() ,"Error",JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
+		
+		public void Stop()
+		{
+			checker = false;
+			m_msgchk.interrupt();
+		}
+	}
+
+	
 	
 }  //  @jve:decl-index=0:visual-constraint="10,10"
