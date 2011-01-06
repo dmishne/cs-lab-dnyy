@@ -464,8 +464,6 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 				jTextField_adress.setEditable(true);
 				jTextField_lastName.setEditable(true);
 				jTextField_firstName.setEditable(true);
-				jTextField_userID.setEditable(true);
-				jTextField_userName.setEditable(true);
 				edit_flag = Boolean.TRUE;
 			}
 			else if(edit_flag)
@@ -478,8 +476,6 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 				jTextField_adress.setEditable(false);
 				jTextField_lastName.setEditable(false);
 				jTextField_firstName.setEditable(false);
-				jTextField_userID.setEditable(false);
-				jTextField_userName.setEditable(false);
 				edit_flag = Boolean.FALSE;
 			}
 		}

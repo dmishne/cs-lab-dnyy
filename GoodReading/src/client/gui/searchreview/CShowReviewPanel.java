@@ -40,8 +40,8 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	private JLabel jLabel_reviewAuthor_SR = null;
 	private JTextField jTextField_title_SR = null;
 	private JTextField jTextField_reviewAuthor_SR = null;
-	private JLabel jLabel_bookISBN_SR = null;
-	private JTextField jTextField_bookISBN_SR = null;
+	private JLabel jLabel_bookName_SR = null;
+	private JTextField jTextField_bookName_SR = null;
 	private JScrollPane jScrollPane_revie_SR = null;
 	private JButton jButton_Back_SR = null;
 	private JButton jButton_Save_SR = null;
@@ -108,11 +108,11 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 		{
 			jLabel_confirm_SR.setVisible(true);
 		}
-		jLabel_bookISBN_SR = new JLabel();
-		jLabel_bookISBN_SR.setText("Book ");
-		jLabel_bookISBN_SR.setSize(new Dimension(70, 26));
-		jLabel_bookISBN_SR.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
-		jLabel_bookISBN_SR.setLocation(new Point(20, 123));
+		jLabel_bookName_SR = new JLabel();
+		jLabel_bookName_SR.setText("Book ");
+		jLabel_bookName_SR.setSize(new Dimension(70, 26));
+		jLabel_bookName_SR.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
+		jLabel_bookName_SR.setLocation(new Point(20, 123));
 		jLabel_reviewAuthor_SR = new JLabel();
 		jLabel_reviewAuthor_SR.setText("Author");
 		jLabel_reviewAuthor_SR.setLocation(new Point(20, 94));
@@ -138,8 +138,8 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 		this.add(jLabel_reviewAuthor_SR, null);
 		this.add(getJTextField_title_SR(), null);
 		this.add(getJTextField_reviewAuthor_SR(), null);
-		this.add(jLabel_bookISBN_SR, null);
-		this.add(getjTextField_bookISBN_SR(), null);
+		this.add(jLabel_bookName_SR, null);
+		this.add(getjTextField_bookName_SR(), null);
 		this.add(getJScrollPane_revie_SR(), null);
 		this.add(getJButton_Back_SR(), null);
 		this.add(getJButton_Save_SR(), null);
@@ -212,18 +212,19 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jTextField_bookISBN_SR	
+	 * This method initializes jTextField_bookName_SR	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
-	private JTextField getjTextField_bookISBN_SR() {
-		if (jTextField_bookISBN_SR == null) {
-			jTextField_bookISBN_SR = new JTextField(this.getReview().getisbn());
-			jTextField_bookISBN_SR.setSize(new Dimension(580, 27));
-			jTextField_bookISBN_SR.setEditable(false);
-			jTextField_bookISBN_SR.setLocation(new Point(100, 124));
+
+	private JTextField getjTextField_bookName_SR() {
+		if (jTextField_bookName_SR == null) {
+			jTextField_bookName_SR = new JTextField(this.getReview().getBookName());
+			jTextField_bookName_SR.setSize(new Dimension(580, 27));
+			jTextField_bookName_SR.setEditable(false);
+			jTextField_bookName_SR.setLocation(new Point(100, 124));
 		}
-		return jTextField_bookISBN_SR;
+		return jTextField_bookName_SR;
 	}
 
 	/**
@@ -406,7 +407,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 		if(source == jButton_Save_SR)
 		{
 			try {
-				((CLibrarian)AUser.getInstance()).updateReview(jTextField_bookISBN_SR.getText(), jTextField_reviewAuthor_SR.getText(), jTextField_title_SR.getText(), this.getReview().gettitle(), jTextArea_review_SR.getText(),jCheckBox_confirm_SR.isSelected());
+				((CLibrarian)AUser.getInstance()).updateReview(review.getisbn(), jTextField_reviewAuthor_SR.getText(), jTextField_title_SR.getText(), this.getReview().gettitle(), jTextArea_review_SR.getText(),jCheckBox_confirm_SR.isSelected());
 				JOptionPane.showMessageDialog(null, "Review updated!" ,"Ok",JOptionPane.INFORMATION_MESSAGE);
 			    this.setLastChoice(SRPDecision.SAVE);
 			    this.setVisible(false);

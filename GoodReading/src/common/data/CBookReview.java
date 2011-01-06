@@ -14,10 +14,11 @@ public class CBookReview implements Serializable
 	 private int m_accepted; //values -1 rejected, 0 unhandled, 1 approved
 	 private String m_checkout_date;
 	 private String m_auth_by;
+	 private String m_bookName;
 
 		//no setter for ISBN or author! (keys of review at DB)
 	 
-	 public CBookReview(String isbn,String author,String title,String review,String writedate,int accepted,String Checkdate,String authUser)
+	 public CBookReview(String isbn,String author,String title,String review,String writedate,int accepted,String Checkdate,String authUser, String bookname)
 	 {
 		 m_isbn=isbn;
 		 m_author=author;
@@ -27,6 +28,7 @@ public class CBookReview implements Serializable
 		 m_accepted=accepted;
 		 m_checkout_date=Checkdate;
 		 m_auth_by=authUser;
+		 m_bookName = bookname;
 	 }
 	 
 	 
@@ -36,6 +38,16 @@ public class CBookReview implements Serializable
 
 	public String getauthor() {
 		return m_author;
+	}
+	
+	public String getauth_by() {
+		return m_auth_by;
+	}
+
+
+	
+	public String getBookName() {
+		return m_bookName;
 	}
 
 
@@ -89,8 +101,9 @@ public class CBookReview implements Serializable
 		this.m_auth_by = m_auth_by;
 	}
 
-	public String getauth_by() {
-		return m_auth_by;
+	
+	public void setBookName(String m_bookName) {
+		this.m_bookName = m_bookName;
 	}
 	 
 } //end of class
