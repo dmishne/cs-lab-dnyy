@@ -321,7 +321,7 @@ public class CExecuter implements Runnable
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: user must have proper privilage");
 							else
 							{//we're here because client has privilage
-								if(db.deleteReview(arg.get("isbn"),Work.getUserName()))
+								if(db.deleteReview(arg.get("isbn"),arg.get("author")))
 									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Review Deleted");
 								else 
 								{
