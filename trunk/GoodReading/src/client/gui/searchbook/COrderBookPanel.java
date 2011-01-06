@@ -260,7 +260,7 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 	 */
 	private JComboBox getJComboBox_fileType() throws Exception {
 		if (jComboBox_fileType == null) {
-			jComboBox_fileType = new JComboBox(((CReader)AUser.getInstance()).getFileType(CBookDetailPanel.getBook().getM_ISBN()));
+			jComboBox_fileType = new JComboBox(AUser.getInstance().getFileType(CBookDetailPanel.getBook().getM_ISBN()));
 			jComboBox_fileType.setLocation(new Point(80, 377));
 			jComboBox_fileType.setSize(new Dimension(230, 27));
 		}

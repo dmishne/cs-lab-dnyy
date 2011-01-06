@@ -20,10 +20,8 @@ import javax.swing.border.BevelBorder;
 import common.data.CBook;
 import client.core.AUser;
 import client.core.CLibrarian;
-import client.core.CReader;
 import client.core.EActor;
 import javax.swing.JComboBox;
-import java.awt.Rectangle;
 
 
 public class CEditBookDetailsPanel extends JPanel implements ActionListener{
@@ -545,7 +543,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	private JComboBox getJComboBox_fileTypes() {
 		if (jComboBox_fileTypes == null) {
 			try {
-				String[] bookFileTypes = ((CReader)AUser.getInstance()).getFileType(m_book.getM_ISBN());
+				String[] bookFileTypes = AUser.getInstance().getFileType(m_book.getM_ISBN());
 				jComboBox_fileTypes = new JComboBox(bookFileTypes);
 				jComboBox_fileTypes.setSize(new Dimension(130, 25));
 				jComboBox_fileTypes.setLocation(new Point(515, 140));
