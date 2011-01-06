@@ -532,9 +532,24 @@ public class CExecuter implements Runnable
 										
 									if (!db.editBookDetails(a))
 										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"edit book: FAIL");
-									else 
-										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"edit book: OK");
-										
+									else {
+										//first we clear all files of this book
+										db.clearFiles(arg.get("isbn"));
+										int count=0;
+										//now we check if we have new files to add
+										if(arg.containsKey("format"))
+										{
+											count=arg.get("format").split(",").length;
+											for(String s: arg.get("format").split(","))
+												if( db.UploadFile(arg.get("isbn"),s,new CFile("c:/library/"+arg.get("isbn")+"."+s)) )
+													count--;
+										}
+										if(count == 0)
+											CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Edit new book: SUCCESS");
+										else 
+											CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Edit book: OK, problems uploading files");
+										 
+									}		
 								}
 							}
 						} //end of edit book

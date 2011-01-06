@@ -972,6 +972,13 @@ public class CDBInteractionGenerator
 		return 0;
 	}
 
+	public void clearFiles(String isbn) {
+		// TODO Auto-generated method stub
+		LinkedList<String> arg=getBookFormats(isbn);
+		for(String s:arg)
+			this.deleteFile(isbn, s);
+	}
+
 
 	
 	
