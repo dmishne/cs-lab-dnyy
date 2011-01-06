@@ -497,7 +497,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 				paytypes[2] = "CreditCard";
 		    if(jComboBox_privilage.getSelectedItem().toString() == "Reader")
 				privilage = EActor.Reader;
-			else if(jComboBox_privilage.getSelectedItem().toString() == "Library Manager")
+			else if(jComboBox_privilage.getSelectedItem().toString() == "LibraryManager")
 				privilage = EActor.LibraryManager;
 			else if(jComboBox_privilage.getSelectedItem().toString() == "Librarian")
 				privilage = EActor.Librarian;			
