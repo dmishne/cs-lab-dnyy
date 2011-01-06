@@ -395,8 +395,8 @@ public class CDBInteractionGenerator
 		try {
 			data = this.MySQLQuery("SELECT * FROM reviews "+this.buildSearchBookReviewWhere(msgMap)+";");
 			while(data.next())
-				arg.add( new CBookReview( data.getString(1),data.getString(2),data.getString(3),data.getString(4),data.getString(5)  ,data.getInt(6),data.getString(8) ,data.getString(9),"stub" ) );   // TODO: Evgeny's Stub for "book name" in CBookReview !!! 
-		//      public CBookReview(       String isbn,       String author,  String title,        String review,  String writedate,         int accepted,     String Checkdate,   String authUser)
+				arg.add( new CBookReview( data.getString(1),data.getString(2),data.getString(3),data.getString(4),data.getString(5)  ,data.getInt(6),data.getString(8) ,data.getString(9),data.getString(10) ) ); 
+		//      public CBookReview(       String isbn,       String author,  String title,        String review,  String writedate,         int accepted,     String Checkdate,   String authUser	,String book_name)
 			} catch (Exception e) 
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}	
 	
@@ -441,6 +441,11 @@ public class CDBInteractionGenerator
 			ans=ans+"auth_by LIKE '%"+params.get("authority")+"%'";
 			params.remove("authority");
 		}
+		else if(params.containsKey("bookname"))
+		{
+			ans=ans+"book_name LIKE '%"+params.get("bookname")+"%'";
+			params.remove("bookname");
+		}
 				
 		
 		//now inserting new attributes
@@ -461,6 +466,8 @@ public class CDBInteractionGenerator
 		 if(params.containsKey("authority"))
 			ans=ans+" AND auth_by LIKE '%"+params.get("authority")+"%'";
 	
+		 if(params.containsKey("bookname"))
+				ans=ans+" AND book_name LIKE '%"+params.get("bookname")+"%'";
 		
 		return ans;		
 	}
@@ -967,7 +974,6 @@ public class CDBInteractionGenerator
 	}
 
 	public int CountMessages() {
-		// TODO Auto-generated method stub
 		//count unhandled reviews
 		ResultSet ms;
 		try {
