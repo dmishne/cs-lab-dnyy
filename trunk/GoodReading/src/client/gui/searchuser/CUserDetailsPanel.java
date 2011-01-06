@@ -365,7 +365,8 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 			jComboBox_privilage = new JComboBox(privilagesToShow);
 			jComboBox_privilage.setEnabled(false);
 			jComboBox_privilage.setSize(new Dimension(200, 20));
-			jComboBox_privilage.setLocation(new Point(455, 235));		
+			jComboBox_privilage.setLocation(new Point(455, 235));
+			jComboBox_privilage.setSelectedItem(privilagesToShow[0]);
 		}
 		return jComboBox_privilage;
 	}
