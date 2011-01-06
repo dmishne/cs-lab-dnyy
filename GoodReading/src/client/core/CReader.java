@@ -141,25 +141,7 @@ public class CReader extends AUser{
 		return result;		
 	}
 	
-	
-	public String[] getFileType(String isbn) throws Exception
-	{
-		CEntry EntryToSrv = null;
-		Map <String,String> fileType = new HashMap<String,String>();
-		String[] result = new String[5];
-		String[] fail = {"No file formats"};
-		if(isbn.isEmpty())
-			throw new IOException("Book ISBN not located! Action fail");
-		else
-		{
-			fileType.put("isbn",isbn );
-			EntryToSrv = new CEntry("GetFormats",fileType,this.getUserName(),this.getUserSessionId());
-			result = (String[]) CClientConnector.getInstance().messageToServer(EntryToSrv);
-		}
-		if(result == null)
-			 return fail;
-		return result;
-	}
+
 	
 	
 	public String orderBook (String isbn, String PayType) throws Exception 
