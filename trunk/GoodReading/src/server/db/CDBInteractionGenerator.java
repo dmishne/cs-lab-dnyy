@@ -809,7 +809,7 @@ public class CDBInteractionGenerator
 	public void SetUserPriv(CUser usr, int priv) {
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
-			st.executeUpdate("CALL SetUserPrivilege ('"+ usr +"',"+ priv +");");
+			st.executeUpdate("CALL SetUserPrivilege ('"+ usr.getM_userName() +"',"+ priv +");");
 		} catch (SQLException e) {
 			System.out.println("SetUserPriv():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 	}
@@ -817,7 +817,7 @@ public class CDBInteractionGenerator
 	public boolean editUser(CUser usr) {
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
-			int i = st.executeUpdate("CALL EditUser ('"+ usr.getM_userName() +"',"+ usr.getAdress() +",'"+ usr.getM_firstName() +"','"+ usr.getM_lastName() +"','"+ usr.getBirthDay() +"');");
+			int i = st.executeUpdate("CALL EditUser ('"+ usr.getM_userName() +"','"+ usr.getAdress() +"','"+ usr.getM_firstName() +"','"+ usr.getM_lastName() +"','"+ usr.getBirthDay() +"');");
 			if(i == 1) return true;	
 		} catch (SQLException e) {
 			System.out.println("editUser():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}

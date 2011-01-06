@@ -613,23 +613,22 @@ public class CExecuter implements Runnable
 									usr=db.SearchUser(n).getFirst(); //should only hold 1 user!
 
 									arg.remove("username");
+									if(!arg.keySet().isEmpty())
 									for(String a:arg.keySet())
 									{//TODO: add more options from CUser
 										if(a.compareTo("lastname")==0)
 											usr.setM_lastName(arg.get(a));
 										else if(a.compareTo("firstname")==0)
 											usr.setM_firstName(arg.get(a));
-										else if(a.compareTo("id")==0)
-											usr.setM_userID(Integer.parseInt(arg.get(a)));
-										else if(a.compareTo("password")==0)
-											usr.setM_pass(arg.get("password"));
-										else if(a.compareTo("username")==0)
-											usr.setM_userName(arg.get("username"));
+										else if(a.compareTo("adress")==0)
+											usr.setAdress(arg.get(a));
+										else if(a.compareTo("birthday")==0)
+											usr.setBirthDay(arg.get(a));
 									}
 									if( arg.containsKey("privilage"))
 									{
 										int p = 0;
-										if(arg.get("privilage").compareTo("Library Manager") == 0)
+										if(arg.get("privilage").compareTo("LibraryManager") == 0)
 										{
 											p = 5;
 										}else if(arg.get("privilage").compareTo("Librarian") == 0)
