@@ -846,14 +846,14 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	 * @throws Exception 
 	 */
 	private CShowUserListPanel getGUI_CShowUserListPanel(){
-		if (GUI_CShowUserListPanel == null) {
+		//if (GUI_CShowUserListPanel == null) {
 			GUI_CShowUserListPanel = new CShowUserListPanel();
 			GUI_CShowUserListPanel.setSize(new Dimension(700, 550));
 			GUI_CShowUserListPanel.setPreferredSize(new Dimension(700, 550));
 			GUI_CShowUserListPanel.setLocation(new Point(0, 100));
 			GUI_CShowUserListPanel.setVisible(false);
 			GUI_CShowUserListPanel.addComponentListener(this);
-		}
+		//}
 		return GUI_CShowUserListPanel;
 	}
 

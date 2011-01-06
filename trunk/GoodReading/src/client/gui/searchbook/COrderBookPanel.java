@@ -297,13 +297,20 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 		if(source == jButton_Purchase)
 		{
 			try {
-				chosenFileType = jComboBox_fileType.getSelectedItem().toString();
-				receipt =((CReader)AUser.getInstance()).orderBook(CBookDetailPanel.getBook().getM_ISBN(),(String)jComboBox_PayType.getSelectedItem() );	       
-				if(receipt.isEmpty() == false)
-	            {
-	            	jButton_Purchase.setVisible(false);
-	            	jButton_ShowReceipt.setVisible(true);	
-	            }
+				if(jComboBox_fileType.getItemCount() != 0)
+				{
+					chosenFileType = jComboBox_fileType.getSelectedItem().toString();
+					receipt =((CReader)AUser.getInstance()).orderBook(CBookDetailPanel.getBook().getM_ISBN(),(String)jComboBox_PayType.getSelectedItem() );	       
+					if(receipt.isEmpty() == false)
+					{
+						jButton_Purchase.setVisible(false);
+						jButton_ShowReceipt.setVisible(true);	
+					}
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null,"You can't buy this book at the moment" ,"Sorry",JOptionPane.ERROR_MESSAGE);
+				}
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, e.getMessage() ,"Error",JOptionPane.ERROR_MESSAGE);
 			}
