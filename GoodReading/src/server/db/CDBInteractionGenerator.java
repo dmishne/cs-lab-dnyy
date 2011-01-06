@@ -815,7 +815,6 @@ public class CDBInteractionGenerator
 	}
 
 	public boolean editUser(CUser usr) {
-		// TODO what about address and birthday fields?? NEED to add more
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
 			int i = st.executeUpdate("CALL EditUser ('"+ usr.getM_userName() +"',"+ usr.getAdress() +",'"+ usr.getM_firstName() +"','"+ usr.getM_lastName() +"','"+ usr.getBirthDay() +"');");

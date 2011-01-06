@@ -612,7 +612,23 @@ public class CExecuter implements Runnable
 											usr.setM_userName(arg.get("username"));
 									}
 									if( arg.containsKey("privilage"))
-										db.SetUserPriv(usr,Integer.parseInt(arg.get("privilage")));
+									{
+										int p = 0;
+										if(arg.get("privilage").compareTo("Library Manager") == 0)
+										{
+											p = 5;
+										}else if(arg.get("privilage").compareTo("Librarian") == 0)
+										{
+											p = 3;
+										}else if(arg.get("privilage").compareTo("User") == 0)
+										{
+											p = 2;											
+										}else if(arg.get("privilage").compareTo("Reader") == 0)
+										{
+											p = 1;										
+										}
+										db.SetUserPriv(usr,p);
+									}
 									
 									if(db.editUser(usr))
 										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"success");
