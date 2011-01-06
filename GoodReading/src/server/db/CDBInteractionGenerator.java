@@ -518,7 +518,7 @@ public class CDBInteractionGenerator
 			rs = this.MySQLQuery("CALL CreateReciept('"+ userName +"','"+ isbn +"','"+ type+"');");
 			if(rs.next())
 				{
-					return (rs.getInt("reciept_ID"));
+					return (rs.getInt("receipt_ID"));
 				}
 		} catch (Exception e) 
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}		
@@ -648,10 +648,10 @@ public class CDBInteractionGenerator
 			cc = this.MySQLQuery("CALL CheckSubscription ('"+ userName +"');");
 			while(cc.next())
 				{
-					if(cc.getString("type").equalsIgnoreCase("monthly"))
-							ans.add("Monthly Subscription");								
-					else if (cc.getString("type").equalsIgnoreCase("yearly"))
-						ans.add("Yearly Subscription");
+					if(cc.getString("type").equalsIgnoreCase("Monthly"))
+							ans.add("Monthly");								
+					else if (cc.getString("type").equalsIgnoreCase("Yearly"))
+						ans.add("Yearly");
 				}
 			cc = null;
 			cc = this.MySQLQuery("CALL CheckCC ('"+ userName +"');");
