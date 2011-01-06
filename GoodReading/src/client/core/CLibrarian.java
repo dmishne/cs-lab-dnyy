@@ -262,5 +262,12 @@ public class CLibrarian extends AUser{
 	  }
 	
 	
-	
+	public int isMessages() throws Exception
+	{
+		CEntry entryToSrv ;
+		Map<String, String> temp = new HashMap<String, String>();
+		entryToSrv = new CEntry("CountMessages", temp , this.getUserName(), this.getUserSessionId());
+		Integer Count = (Integer)CClientConnector.getInstance().messageToServer(entryToSrv);
+		return Count.intValue();
+	}
 }
