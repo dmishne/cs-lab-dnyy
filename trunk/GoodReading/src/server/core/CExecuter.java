@@ -549,6 +549,15 @@ public class CExecuter implements Runnable
 							else
 							      CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans.toArray(new String[ans.size()]));
 						}//end of GetPayment
+						else if(Work.getMsgType().compareTo("CountMessages") == 0)
+						{
+							if(Privilage <3)
+							      CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),new Integer(0));
+							else
+								{
+							      CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),new Integer(db.CountMessages()));
+								}
+						}//end of CountMessages
 						
 						
 						else if(Work.getMsgType().compareTo("GetFormats") == 0)

@@ -966,6 +966,12 @@ public class CDBInteractionGenerator
 		return false;
 	}
 
+	public int CountMessages() {
+		// TODO Auto-generated method stub
+		//count unhandled reviews
+		return 0;
+	}
+
 
 	
 	
