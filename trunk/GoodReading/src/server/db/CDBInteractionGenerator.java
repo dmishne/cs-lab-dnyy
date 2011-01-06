@@ -818,7 +818,7 @@ public class CDBInteractionGenerator
 		// TODO what about address and birthday fields?? NEED to add more
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
-			int i = st.executeUpdate("CALL EditUser ('"+ usr.getM_userName() +"',"+ usr.getAdress() +",'"+ usr.getM_firstName() +"','"+ usr.getM_lastName() +"');");
+			int i = st.executeUpdate("CALL EditUser ('"+ usr.getM_userName() +"',"+ usr.getAdress() +",'"+ usr.getM_firstName() +"','"+ usr.getM_lastName() +"','"+ usr.getBirthDay() +"');");
 			if(i == 1) return true;	
 		} catch (SQLException e) {
 			System.out.println("editUser():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
