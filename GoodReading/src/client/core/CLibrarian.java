@@ -205,7 +205,7 @@ public class CLibrarian extends AUser{
 			delReview.put("title", title);
 			delReview.put("author", author);
 			delReview.put("isbn", isbn);
-			entryToSrv = new CEntry("deletereview",delReview, this.getUserName(),this.getUserSessionId());
+			entryToSrv = new CEntry("DeleteReview",delReview, this.getUserName(),this.getUserSessionId());
 			CClientConnector.getInstance().messageToServer(entryToSrv);	
 		}
 	}
