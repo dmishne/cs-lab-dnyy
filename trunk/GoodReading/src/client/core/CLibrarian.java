@@ -23,11 +23,12 @@ public class CLibrarian extends AUser{
 	}
 	
 	
-	public void addNewBook(String title, String author, String isbn, String release, String publisher, String summary, String price, String topic, String subtopic, String lable, String TOC, boolean invis, String lang, String fileType) throws IOException, Exception
+	public void addNewBook(String title, String author, String isbn, String release, String publisher, String summary, String price, String topic, String subtopic, String lable, String TOC, boolean invis, String lang, String[] fileType) throws IOException, Exception
 	{
 		CEntry entryToSrv;
 		HashMap<String, String> newBook = new HashMap<String, String>();
 		String visible = "true";
+		String format = "";
 		// check date
 		Pattern pd = Pattern.compile("(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})");
 		Matcher md = pd.matcher(release);
@@ -60,8 +61,16 @@ public class CLibrarian extends AUser{
 			throw new IOException("Book Price is a must!");
 		else if(!isValidDate(date))
 			throw new IOException("Wrong date!");
-		else if(fileType.isEmpty())
+		else if(fileType.length < 1)
 			throw new IOException("Book's File Type is a must!");
+		else if (fileType.length > 0)
+		{
+			format = fileType[0];
+		for(int i = 1; i< fileType.length ; i++)
+		{
+			format = format + "," + fileType[i];
+		}
+		}	
 		else
 		{
 			
@@ -78,7 +87,7 @@ public class CLibrarian extends AUser{
 			newBook.put("toc", TOC);
 			newBook.put("invisible", visible);
 			newBook.put("languages", lang);
-			newBook.put("filetype", fileType);
+			newBook.put("format", format);
 			entryToSrv = new CEntry("AddBook", newBook, this.getUserName(),this.getUserSessionId());
 			CClientConnector.getInstance().messageToServer(entryToSrv);
 		}
