@@ -48,21 +48,19 @@ public class CLibraryManager extends CLibrarian{
 	}
 	
 	
-	public void updateUserDetails (String currentUserName, String firstName, String lastName, String userName, int userID, String birthDay, String adress, String[] payType, EActor privilage, boolean suspend) throws Exception
+	public void updateUserDetails (String UserName, String firstName, String lastName, int userID, String birthDay, String adress, String[] payType, EActor privilage, boolean suspend) throws Exception
 	{
 		CEntry entryToSrv ;
 		String payChain = new String();
 		Map<String,String> newUDetails = new HashMap<String,String>();
-		if(!currentUserName.isEmpty())
-		           newUDetails.put("currentusername", currentUserName);
+		if(!UserName.isEmpty())
+		           newUDetails.put("username", UserName);
 		else
 			throw new IOException("Error occurred! Update fail");
 		if(!firstName.isEmpty())
 		           newUDetails.put("firstname", firstName);
 		if(!lastName.isEmpty())
 	               newUDetails.put("lastname", lastName);
-		if(!userName.isEmpty())
-	               newUDetails.put("username", userName);
 		if(userID != 0)   
 			       newUDetails.put("userid", Integer.toString(userID));
 		if(!birthDay.isEmpty())

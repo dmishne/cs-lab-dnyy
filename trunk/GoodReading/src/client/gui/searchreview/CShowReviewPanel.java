@@ -222,6 +222,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 			jTextField_bookISBN_SR.setSize(new Dimension(580, 27));
 			jTextField_bookISBN_SR.setEditable(false);
 			jTextField_bookISBN_SR.setLocation(new Point(100, 124));
+			jTextField_bookISBN_SR.setEditable(false);
 		}
 		return jTextField_bookISBN_SR;
 	}

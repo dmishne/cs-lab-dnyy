@@ -224,6 +224,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 			jTextField_isbn.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 			jTextField_isbn.setPreferredSize(new Dimension(280, 22));
 			jTextField_isbn.setLocation(new Point(115, 80));
+			jTextField_isbn.setEditable(false);
 		}
 		return jTextField_isbn;
 	}
@@ -505,7 +506,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 		{ 		
 				try {
 					
-					((CLibrarian)AUser.getInstance()).updateBookDetails(m_book.getM_ISBN(),jTextField_title.getText(), jTextField_author.getText(), jTextField_isbn.getText(), jTextField_r_date.getText(), jTextField_publisher.getText(), jTextArea_summary.getText(),jTextField_price.getText(), jTextField_topic.getText(), jTextField_label.getText(), jTextArea_toc.getText(), jCheckBox_visibilityCheck.isSelected(), jTextField_lang.getText(),jComboBox_fileTypes.getSelectedItem().toString());
+					((CLibrarian)AUser.getInstance()).updateBookDetails(m_book.getM_ISBN(),jTextField_title.getText(), jTextField_author.getText(), jTextField_r_date.getText(), jTextField_publisher.getText(), jTextArea_summary.getText(),jTextField_price.getText(), jTextField_topic.getText(), jTextField_label.getText(), jTextArea_toc.getText(), jCheckBox_visibilityCheck.isSelected(), jTextField_lang.getText(),jComboBox_fileTypes.getSelectedItem().toString());
 					setLastChoice(EBDDecision.SAVE);
 					this.setVisible(false);
 					} catch (Exception e) {
