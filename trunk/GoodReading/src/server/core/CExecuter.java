@@ -476,7 +476,7 @@ public class CExecuter implements Runnable
 									{
 										count=arg.get("format").split(",").length;
 										for(String a: arg.get("format").split(","))
-											if( db.UploadFile(arg.get("isbn"),a,new CFile("c:\\library\\"+arg.get("isbn")+"."+a)) )
+											if( db.UploadFile(arg.get("isbn"),a,new CFile("c:/library/"+arg.get("isbn")+"."+a)) )
 												count--;
 									}
 									if(count == 0)
