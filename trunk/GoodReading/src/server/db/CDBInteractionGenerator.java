@@ -528,7 +528,7 @@ public class CDBInteractionGenerator
 	public boolean hasUserRead(String isbn, String userName) {
 		ResultSet check = null;
 	//nir's sql
-		try {
+	/*	try {
 			check = this.MySQLQuery("SELECT * FROM receipts r WHERE r.user like '"+userName+"' AND r.isbn like '"+isbn+"';");
 			if(check.next())
 				{
@@ -537,8 +537,8 @@ public class CDBInteractionGenerator
 		} catch (Exception e) 
 		{	}// System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}		
 	
+	*/	
 		
-		/*
 		  try {
 		 
 			check = this.MySQLQuery( "CALL CheckReceiptByUserNameAndISBN ('"+ isbn + "','"+ userName +"');");
@@ -548,7 +548,7 @@ public class CDBInteractionGenerator
 				}
 		} catch (Exception e) 
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}		
-	*/	return false;
+		return false;
 	}
 
 	public boolean submitReview(String isbn, String userName, String title, String review) {
@@ -626,7 +626,7 @@ public class CDBInteractionGenerator
 		ResultSet cc;
 		LinkedList<String>ans=new LinkedList<String>();
 		//Nir's SQL
-		try {
+		/*try {
 			cc=this.MySQLQuery("Select type FROM subscriptions WHERE user like '"+userName+"';");
 	
 			while(cc.next())
@@ -642,7 +642,8 @@ public class CDBInteractionGenerator
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		/*
+		*/
+		
 		try {
 			cc = this.MySQLQuery("CALL CheckSubscription ('"+ userName +"');");
 			while(cc.next())
@@ -660,15 +661,15 @@ public class CDBInteractionGenerator
 			}
 		} catch (Exception e) 
 		{	 System.out.println("getUserPayments():SQL exception: "+e.getMessage());	} 
-		*/
+		
 		return ans;
 	}
 
 	public LinkedList<String> getBookFormats(String isbn) {
-		ResultSet cc;
+		ResultSet formats;
 		LinkedList<String>ans=new LinkedList<String>();
 		// Nir's sql
-		try {
+		/*try {
 			cc=this.MySQLQuery("SELECT * FROM files WHERE isbn like '"+isbn+"';");
 	
 			while(cc.next())
@@ -682,8 +683,8 @@ public class CDBInteractionGenerator
 		}
 		
 		
-		
-		/*try {
+		*/
+		try {
 			formats = this.MySQLQuery("CALL GetBookFormats ('"+ isbn +"');");
 			while(formats.next())
 				{
@@ -695,7 +696,7 @@ public class CDBInteractionGenerator
 						ans.add("fb2");
 				}
 		} catch (Exception e) 
-		{	 System.out.println("getBookFormats():SQL exception: "+e.getMessage());	}*/
+		{	 System.out.println("getBookFormats():SQL exception: "+e.getMessage());	}
 		return ans ;
 	}
 
@@ -727,9 +728,9 @@ public class CDBInteractionGenerator
 	}
 
 	public LinkedList<CUser> SearchUser(Map<String, String> params) {
-		// cant instance AUser, also session ID changes...
 		LinkedList<CUser> res = new LinkedList<CUser>();
 		ResultSet data=null;
+		//String[] args = {"","","",""};
 		try {
 			data = this.MySQLQuery("SELECT * FROM users "+ this.buildSearchUserWhere(params) +";");
 			while(data.next())
@@ -887,14 +888,24 @@ public class CDBInteractionGenerator
 	}
 
 	public boolean deleteBook(String isbn) {
-		// TODO Auto-generated method stub
 		///delete book from DB
+		try {
+			Statement st = this.m_DB_Connection.createStatement();
+			int i = st.executeUpdate("CALL DeleteBook ('"+ isbn +"');");
+			if(i == 1) return true;	
+		} catch (SQLException e) {
+			System.out.println("deleteBook():SQL exception: "+e.getErrorCode()+" "+e.getMessage());  }
 		return false;
 	}
 
 	public boolean deleteFile(String isbn, String format) {
-		// TODO Auto-generated method stub
 		///delete book FILE from DB
+		try {
+			Statement st = this.m_DB_Connection.createStatement();
+			int i = st.executeUpdate("CALL DeleteFile ('"+ isbn +"','"+ format +");");
+			if(i == 1) return true;	
+		} catch (SQLException e) {
+			System.out.println("deleteFile():SQL exception: "+e.getErrorCode()+" "+e.getMessage());  }
 		return false;
 	}
 

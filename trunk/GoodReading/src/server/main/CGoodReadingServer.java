@@ -62,10 +62,10 @@ public class CGoodReadingServer {
 		
 	//	CDBInteractionGenerator.GetInstance().MySQLInsertBlobFile(new CFile("arg.txt").getFilearray().toString());
 	//	System.out.print(CDBInteractionGenerator.GetInstance().getPrice("1234"));
-	//	System.out.print(CDBInteractionGenerator.GetInstance().hasUserRead("1234", "yotam"));
+	//	System.out.print(CDBInteractionGenerator.GetInstance().hasUserRead("1234", "test2"));
 	//	System.out.print(CDBInteractionGenerator.GetInstance().createReciept("yotam", "1234", "YEARLY"));
 	//	System.out.print(CDBInteractionGenerator.GetInstance().submitReview("978-0747532744", "yotam", "title...", "review..."));
-	//	System.out.print(CDBInteractionGenerator.GetInstance().giveScore("1234", "yotam", 3));
+	//	System.out.print(CDBInteractionGenerator.GetInstance().giveScore("1234", "daniel", 9));
 	//	System.out.print(CDBInteractionGenerator.GetInstance().subscriptionPay("YEARLY", "yotam"));
 	/*	Map<String,String> mp = new HashMap<String,String>();
 		mp.put("title", "Wheres Pluto");
@@ -102,7 +102,7 @@ public class CGoodReadingServer {
 		}
 	*/
 	/*	LinkedList<String> lst = new LinkedList<String>();
-		lst = CDBInteractionGenerator.GetInstance().getUserPayments("yotam");
+		lst = CDBInteractionGenerator.GetInstance().getUserPayments("test2");
 		Iterator<String> it = lst.iterator();
 		while(it.hasNext())
 		{
