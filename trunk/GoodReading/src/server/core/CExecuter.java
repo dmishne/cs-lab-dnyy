@@ -465,10 +465,26 @@ public class CExecuter implements Runnable
 								
 								//									insertNewBook(String isbn, 		 title, 		 author, 			 release_date, String	 publisher, String 		summary, Double price, int score, int score_count, 			 String topic,		 String lables, String toc, boolean invisible, String language)
 								else if (Work.getMsgMap().size()<12 || !db.insertNewBook(arg.get("isbn"),  arg.get("title"), arg.get("author")  , arg.get("release"), arg.get("publisher"), arg.get("summary"), Double.parseDouble(arg.get("price")), (int)0, (int)0, arg.get("topic"), arg.get("lables"), arg.get("toc"), Boolean.parseBoolean(arg.get("invisible")), arg.get("languages")))
-									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "added new book: FAIL");
+									{		
+										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "added new book: FAIL");
+									}
 								else 
-									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"added new book: OK");
-									
+								{
+									int count=0;
+									//now we check if we have new files to add
+									if(arg.containsKey("format"))
+									{
+										count=arg.get("format").split(",").length;
+										for(String a: arg.get("format").split(","))
+											if( db.UploadFile(arg.get("isbn"),a,new CFile("c:\\library\\"+arg.get("isbn")+"."+a)) )
+												count--;
+									}
+									if(count == 0)
+										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"added new book: SUCCESS");
+									else 
+										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"added new book: OK, problems uploading files");
+									 
+								}	
 							}
 						} //end of add book
 						
