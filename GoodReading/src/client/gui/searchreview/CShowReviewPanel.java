@@ -328,6 +328,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 			jButton_DeleteReview_SR.setText("Delete Review");
 			jButton_DeleteReview_SR.setSize(new Dimension(150, 34));
 			jButton_DeleteReview_SR.setLocation(new Point(485, 430));
+			jButton_DeleteReview_SR.setVisible(false);
 			if(user.getPrivilege() == EActor.Librarian || user.getPrivilege() == EActor.LibraryManager)
 			{
 				jButton_DeleteReview_SR.setVisible(true);

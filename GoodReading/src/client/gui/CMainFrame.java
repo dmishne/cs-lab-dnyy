@@ -495,7 +495,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			{
 				jContentPane.remove(GUI_CEditBookDetailsPanel);
 				GUI_CEditBookDetailsPanel = null;
-				GUI_CEditBookDetailsPanel.setVisible(true);
+				GUI_CBookDetailPanel.setVisible(true);
 			}
 		}
 		catch (Exception e)
