@@ -1,7 +1,10 @@
 package common.data;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CBook implements Serializable {
 	
@@ -92,6 +95,12 @@ public class CBook implements Serializable {
 	 * @return the m_release_date
 	 */
 	public String getM_release_date() {
+		Pattern pd = Pattern.compile("(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})");
+		Matcher md = pd.matcher(m_release);
+		if(!md.matches()){
+			String date = m_release.substring(8, 10)+"-"+m_release.substring(5, 7)+"-"+m_release.substring(0, 4);
+			return date;
+		}
 		return m_release;
 	}
 	
