@@ -66,10 +66,10 @@ public class CLibrarian extends AUser{
 		else if (fileType.length > 0)
 		{
 			format = fileType[0];
-		for(int i = 1; i< fileType.length ; i++)
-		{
-			format = format + "," + fileType[i];
-		}
+			for(int i = 1; i< fileType.length ; i++)
+			{
+				format = format + "," + fileType[i];
+			}
 		}	
 		else
 		{
@@ -135,11 +135,12 @@ public class CLibrarian extends AUser{
 	}
 	
 	
-	public void updateBookDetails(String isbn, String title, String author, String release, String publisher, String summary, String price, String topic, String lable, String TOC, boolean invis, String lang, String fileType) throws Exception
+	public void updateBookDetails(String isbn, String title, String author, String release, String publisher, String summary, String price, String topic, String lable, String TOC, boolean invis, String lang, String[] fileType) throws Exception
 	{
 		CEntry entryToSrv ;
 		HashMap<String, String> newBookDetails = new HashMap<String, String>();
 		String visible = "true";
+		String format = "";
 		Pattern pd = Pattern.compile("(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})");
 		Matcher md = pd.matcher(release);
 		if(!md.matches()){
@@ -169,8 +170,16 @@ public class CLibrarian extends AUser{
 			throw new IOException("Book Price is a must!");
 		else if(!isValidDate(date))
 			throw new IOException("Wrong date!");
-		else if(fileType.isEmpty())
+		else if(fileType.length < 1)
 			throw new IOException("Book's File Type is a must!");
+		else if (fileType.length > 0)
+		{
+			format = fileType[0];
+			for(int i = 1; i< fileType.length ; i++)
+			{
+				format = format + "," + fileType[i];
+			}
+		}
 		else
 		{
 			newBookDetails.put("isbn", isbn);
@@ -185,7 +194,7 @@ public class CLibrarian extends AUser{
 			newBookDetails.put("toc", TOC);
 			newBookDetails.put("invisible", visible);
 			newBookDetails.put("languages", lang);
-			newBookDetails.put("filetype", fileType);
+			newBookDetails.put("format", format);
 			entryToSrv = new CEntry("EditBook",newBookDetails, this.getUserName(),this.getUserSessionId());
 			CClientConnector.getInstance().messageToServer(entryToSrv);
 		}
@@ -211,18 +220,27 @@ public class CLibrarian extends AUser{
 	}
 	
 	
-	public void deleteBook(String isbn, String fileType) throws Exception
+	public void deleteBook(String isbn, String[] fileType) throws Exception
 	{
 		CEntry entryToSrv ;
 		Map<String, String> delBook = new HashMap<String, String>();
+		String format = "";
 		if(isbn.isEmpty())
 			throw new IOException("Book ISBN is a must!");
-		else if(fileType.isEmpty())
+		else if(fileType.length < 1)
 			throw new IOException("Book's File Type is a must!");
+		else if (fileType.length > 0)
+		{
+			format = fileType[0];
+			for(int i = 1; i< fileType.length ; i++)
+			{
+				format = format + "," + fileType[i];
+			}
+		}
 		else
 		{
 			delBook.put("isbn", isbn);
-			delBook.put("filetype", fileType);
+			delBook.put("format", format);
 			entryToSrv = new CEntry("DeleteFile", delBook, this.getUserName(), this.getUserSessionId());
 			CClientConnector.getInstance().messageToServer(entryToSrv);
 		}
