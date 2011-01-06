@@ -969,6 +969,15 @@ public class CDBInteractionGenerator
 	public int CountMessages() {
 		// TODO Auto-generated method stub
 		//count unhandled reviews
+		ResultSet ms;
+		try {
+			ms = this.MySQLQuery("CALL CountMessages ();");
+			if(ms.next())
+				{
+					return ms.getInt(1);
+				}
+		} catch (Exception e) 
+		{	 System.out.println("CountMessages():SQL exception: "+e.getMessage());	}
 		return 0;
 	}
 
