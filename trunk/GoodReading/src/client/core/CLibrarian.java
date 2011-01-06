@@ -111,7 +111,7 @@ public class CLibrarian extends AUser{
 		CEntry entryToSrv ;
 		
 	    if(isbn.isEmpty())
-			throw new IOException("Book ISBN required!");
+			throw new IOException("Error: Book ISBN not found!");
 		else if(author.isEmpty())
 			throw new IOException("Review author required!");
 		else if(curr_title.isEmpty())
