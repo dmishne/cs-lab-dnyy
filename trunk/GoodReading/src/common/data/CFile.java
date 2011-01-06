@@ -42,6 +42,14 @@ public class CFile implements Serializable
 	}
 	
 	
+	public byte[] getChars() {
+		return m_file;
+	}
+
+	public void setChars(byte[] m_file) {
+		this.m_file = m_file;
+	}
+
 	public static boolean saveFile(String path, byte[] mybytearray)
 	{
 		try {
