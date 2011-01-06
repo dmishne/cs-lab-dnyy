@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import javax.swing.JButton;
 
 import java.awt.Color;
-import java.awt.Rectangle;
 import java.awt.Point;
 
 import javax.swing.JLabel;
@@ -13,19 +12,13 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.peer.ChoicePeer;
-
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
-import javax.swing.JMenu;
-
 import client.core.AUser;
 import client.core.CLibraryManager;
 import client.core.EActor;
-import client.gui.searchbook.CBookDetailPanel.EBDDecision;
-
 import common.data.CUser;
 
 
@@ -463,12 +456,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 		{
 			if(!edit_flag)
 			{
-				jTextField_userName.setEditable(true);
-				jCheckBox_suspend.setEnabled(true);
-				String [] pt = chosenUser.getPayTypes();
-				for(String cc : pt)
-					if(cc.compareTo("CreditCard") == 0)
-						jCheckBox_creditCard.setEnabled(true);				
+				jCheckBox_suspend.setEnabled(true);				
 				jCheckBox_monthly.setEnabled(true);
 				jCheckBox_yearly.setEnabled(true);
 				jComboBox_privilage.setEnabled(true);
@@ -482,9 +470,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 			}
 			else if(edit_flag)
 			{
-				jTextField_userName.setEditable(false);
 				jCheckBox_suspend.setEnabled(false);
-				jCheckBox_creditCard.setEnabled(false);
 				jCheckBox_monthly.setEnabled(false);
 				jCheckBox_yearly.setEnabled(false);
 				jComboBox_privilage.setEnabled(false);
@@ -519,7 +505,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 			else if(jComboBox_privilage.getSelectedItem().toString() == "Librarian")
 				privilage = EActor.Librarian;			
 				try {
-					((CLibraryManager)AUser.getInstance()).updateUserDetails(chosenUser.getM_userName(), jTextField_firstName.getText(), jTextField_lastName.getText(), jTextField_userName.getText(), Integer.parseInt(jTextField_userID.getText()), jTextField_birthDay.getText(), jTextField_adress.getText(), paytypes, privilage, jCheckBox_suspend.isSelected());
+					((CLibraryManager)AUser.getInstance()).updateUserDetails(chosenUser.getM_userName(), jTextField_firstName.getText(), jTextField_lastName.getText(), Integer.parseInt(jTextField_userID.getText()), jTextField_birthDay.getText(), jTextField_adress.getText(), paytypes, privilage, jCheckBox_suspend.isSelected());
 				} catch (NumberFormatException e) {
 					System.out.println("Can't convert from String to Integer");
 				} catch (Exception e) {

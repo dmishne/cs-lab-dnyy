@@ -126,7 +126,7 @@ public class CLibrarian extends AUser{
 	}
 	
 	
-	public void updateBookDetails(String curr_isbn, String title, String author, String isbn, String release, String publisher, String summary, String price, String topic, String lable, String TOC, boolean invis, String lang, String fileType) throws Exception
+	public void updateBookDetails(String isbn, String title, String author, String release, String publisher, String summary, String price, String topic, String lable, String TOC, boolean invis, String lang, String fileType) throws Exception
 	{
 		CEntry entryToSrv ;
 		HashMap<String, String> newBookDetails = new HashMap<String, String>();
@@ -144,10 +144,8 @@ public class CLibrarian extends AUser{
 		}
 		else if ( this.getPrivilege() == EActor.LibraryManager  && invis == false)
 			          visible = "false";
-	    if(curr_isbn.isEmpty())
-			System.out.println("Error: Current ISBN not resived!");
-		else if(isbn.isEmpty())
-			throw new IOException("Book ISBN is a must!");
+	    if(isbn.isEmpty())
+			System.out.println("Error: ISBN not resived!");
 		else if(author.isEmpty())
 			throw new IOException("Book Author is a must!");
 		else if(title.isEmpty())
@@ -178,7 +176,6 @@ public class CLibrarian extends AUser{
 			newBookDetails.put("toc", TOC);
 			newBookDetails.put("invisible", visible);
 			newBookDetails.put("languages", lang);
-			newBookDetails.put("bookisbn",curr_isbn);
 			newBookDetails.put("filetype", fileType);
 			entryToSrv = new CEntry("EditBook",newBookDetails, this.getUserName(),this.getUserSessionId());
 			CClientConnector.getInstance().messageToServer(entryToSrv);
