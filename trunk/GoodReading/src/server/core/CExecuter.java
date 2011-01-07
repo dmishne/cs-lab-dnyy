@@ -503,9 +503,15 @@ public class CExecuter implements Runnable
 								else if(db.SearchBook(getb).isEmpty()) 
 									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: book does not exist!");
 								else 
-								{
-									CBook a=db.SearchBook(getb).getFirst();
-												//(String m_ISBN, String m_author, String m_title, String m_release, String m_publisher,				 String m_summary,double m_price, long m_score_count,double m_score,String m_topic, String m_lables, String m_TOC,boolean m_invisible, String m_language)
+								{try {
+									LinkedList<CBook> lama=db.SearchBook(getb);
+									CBook a=null;
+									
+									for(CBook b:lama)
+										if( b.getM_ISBN().compareTo(Work.getMsgMap().get("isbn")) == 0)
+										 a=b;
+									
+									//(String m_ISBN, String m_author, String m_title, String m_release, String m_publisher,				 String m_summary,double m_price, long m_score_count,double m_score,String m_topic, String m_lables, String m_TOC,boolean m_invisible, String m_language)
 									//we got book by isbn, now we need to edit data:
 								
 									if(arg.containsKey("title"))
@@ -548,8 +554,13 @@ public class CExecuter implements Runnable
 											CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Edit new book: SUCCESS");
 										else 
 											CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Edit book: OK, problems uploading files");
-										 
-									}		
+									} 		
+								}catch(NullPointerException e)
+								{
+								System.out.println("Can't find book");	
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Edit book: FAIL, couldn't find book");
+								
+								}
 								}
 							}
 						} //end of edit book
