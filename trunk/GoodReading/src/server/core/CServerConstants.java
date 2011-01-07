@@ -22,15 +22,18 @@ public class CServerConstants {
 	public static void Config()
 	{
 		System.out.println("Loading all properties");
-		ResourceBundle arg=ResourceBundle.getBundle("server.core.config");
-
-		m_POP_WINDOW=Boolean.parseBoolean(arg.getString("m_POP_WINDOW"));
-		m_DEFAULT_Global_Library_Path=arg.getString("m_DEFAULT_Global_Library_Path");
-		m_YEARLY_AMMOUNT=Integer.parseInt(arg.getString("m_YEARLY_AMMOUNT"));
-		m_MONTHLY_AMMOUNT=Integer.parseInt(arg.getString("m_MONTHLY_AMMOUNT"));
-		m_DEFAULTHOST=arg.getString("m_DEFAULTHOST");
-		m_DEFAULTUSER=arg.getString("m_DEFAULTUSER");
-		m_DEFAULTPASS=arg.getString("m_DEFAULTPASS");
+		ResourceBundle arg=null;
+		try{
+			arg=ResourceBundle.getBundle("server.core.config");
+		}catch(Exception e) {
+		System.out.println("Failed to load properties, using defaults!");	}
+		m_POP_WINDOW=Boolean.parseBoolean(arg.getString("POP_WINDOW"));
+		m_DEFAULT_Global_Library_Path=arg.getString("DEFAULT_Global_Library_Path");
+		m_YEARLY_AMMOUNT=Integer.parseInt(arg.getString("YEARLY_AMMOUNT"));
+		m_MONTHLY_AMMOUNT=Integer.parseInt(arg.getString("MONTHLY_AMMOUNT"));
+		m_DEFAULTHOST=arg.getString("DEFAULTHOST");
+		m_DEFAULTUSER=arg.getString("DEFAULTUSER");
+		m_DEFAULTPASS=arg.getString("DEFAULTPASS");
 	}
 	public static void Config(String path)
 	{
