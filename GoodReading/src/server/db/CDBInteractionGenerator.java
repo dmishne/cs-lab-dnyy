@@ -629,7 +629,7 @@ public class CDBInteractionGenerator
 			System.out.println("editReview():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 		return false;
 	}
-
+	
 	public LinkedList<String> getUserPayments(String userName) {
 		ResultSet cc;
 		LinkedList<String>ans=new LinkedList<String>();
@@ -747,12 +747,13 @@ public class CDBInteractionGenerator
 	public LinkedList<CUser> SearchUser(Map<String, String> params) {
 		LinkedList<CUser> res = new LinkedList<CUser>();
 		ResultSet data=null;
-		//String[] args = {"","","",""};
 		try {
 			data = this.MySQLQuery("SELECT * FROM users "+ this.buildSearchUserWhere(params) +";");
 			while(data.next())
 			{
-				res.add( new CUser(data,null) );//TODO: replace with actual type array
+				try{	res.add( new CUser(data,getUserPayments(data.getString(1))) );//TODO: replace with actual type array
+				
+				}catch(Exception e) { System.out.println("DBIG: Problem resolving user, giving him up on list, plz check on users table in DB");}
 			}
 			data.close();
 		} catch (Exception e){	

@@ -2,6 +2,7 @@ package common.data;
 
 import java.io.Serializable;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 
 import client.core.EActor;
@@ -19,7 +20,7 @@ public class CUser implements Serializable{
 	private String  m_pass;
 	private EActor  m_privilege;
 	private boolean b_suspend;
-	private String[] PayTypes;
+	private LinkedList<String> PayTypes;
 		
 
     public CUser(String FirstName, String LastName, int UserId, String UserName, String birthday, String adress,String[] payTypes, EActor Privilege, boolean suspend)
@@ -34,18 +35,16 @@ public class CUser implements Serializable{
     	b_suspend       = suspend;
     }
 
-
-	public CUser(ResultSet data,String[] arg) {
-		try{
-    	m_firstName     = data.getString(7) ;
+//factory for DBIG
+	public CUser(ResultSet data,LinkedList<String> arg) throws SQLException {
+		m_firstName     = data.getString(7) ;
     	m_lastName      = data.getString(8) ;
     	m_userID        = data.getInt(5) ;
     	m_userName      = data.getString(1) ;
     	m_birthDay      = data.getString(4) ;
     	m_adress        = data.getString(6) ;
     	setM_pass(data.getString(2)) ;
-    	//PayTypes=arg;
-    	PayTypesInit();
+    	PayTypes=arg;
        	b_suspend=false;
     	switch(data.getInt(3))
     	{
@@ -69,19 +68,10 @@ public class CUser implements Serializable{
 	    	default:	
 	    		m_privilege=EActor.User;
 	    		break;
-	    		
     	}
-    	//b_suspend       = data.getString() ;
-		} catch(Exception e){ System.out.println("SQL error while oppening params from search users: "+e.getMessage());}
-	}
+	    		
+    }
 
-
-
-	private void PayTypesInit() {
-		// TODO Auto-generated method stub
-		String[] arg={"CreditCard","Monthly","Yearly"};
-		PayTypes=arg;
-	}
 
 
 	/**
@@ -237,12 +227,7 @@ public class CUser implements Serializable{
 	}
 
 
-	public void setPayTypes(String[] payTypes) {
-		PayTypes = payTypes;
-	}
-
-
-	public String[] getPayTypes() {
+	public LinkedList<String> getPayTypes() {
 		return PayTypes;
 	}
 		
