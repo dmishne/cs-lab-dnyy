@@ -159,7 +159,7 @@ public class CNewReviewsPanel extends JPanel implements ActionListener{
 				m_messages = ((CLibrarian)AUser.getInstance()).searchNewReviews();
 				if(m_messages.isEmpty())
 				{
-				    JOptionPane.showMessageDialog(null, "No new reviews!" ,"Error",JOptionPane.ERROR_MESSAGE);
+				    JOptionPane.showMessageDialog(null, "No new reviews!" ,"Message :",JOptionPane.INFORMATION_MESSAGE);
 				    jList_NewReviewsList = new JList();
 				}
 				else

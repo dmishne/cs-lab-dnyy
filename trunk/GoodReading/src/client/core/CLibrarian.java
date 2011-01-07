@@ -23,11 +23,11 @@ public class CLibrarian extends AUser{
 	}
 	
 	
-	public void addNewBook(String title, String author, String isbn, String release, String publisher, String summary, String price, String topic, String subtopic, String lable, String TOC, boolean invis, String lang, String[] fileType) throws IOException, Exception
+	public void addNewBook(String title, String author, String isbn, String release, String publisher, String summary, String price, String topic, String subtopic, String lable, String TOC, boolean vis, String lang, String[] fileType) throws IOException, Exception
 	{
 		CEntry entryToSrv;
 		HashMap<String, String> newBook = new HashMap<String, String>();
-		String visible = "true";
+		String invisible = "false";
 		String format = "";
 		// check date
 		Pattern pd = Pattern.compile("(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})");
@@ -36,13 +36,13 @@ public class CLibrarian extends AUser{
 			throw new IOException("Invalid Date format!");
 		}
 		String date = release.substring(6, 10)+"-"+release.substring(3, 5)+"-"+release.substring(0, 2);
-		if(  !invis      &&       this.getPrivilege() != EActor.LibraryManager  )
+		if(  !vis      &&       this.getPrivilege() != EActor.LibraryManager  )
 		{
 			throw new IOException("You have no permition to edit book visibility!");
 			
 		}
-		else if ( this.getPrivilege() == EActor.LibraryManager  && invis == false)
-			          visible = "false"; 
+		else if ( this.getPrivilege() == EActor.LibraryManager  && vis == false)
+			          invisible = "true"; 
 		if(isbn.isEmpty())
 			throw new IOException("Book ISBN is a must!");
 		else if(author.isEmpty())
@@ -86,7 +86,7 @@ public class CLibrarian extends AUser{
 			newBook.put("subtopic", subtopic);
 			newBook.put("lables", lable);
 			newBook.put("toc", TOC);
-			newBook.put("invisible", visible);
+			newBook.put("invisible", invisible);
 			newBook.put("languages", lang);
 			newBook.put("format", format);
 			entryToSrv = new CEntry("AddBook", newBook, this.getUserName(),this.getUserSessionId());
@@ -136,11 +136,11 @@ public class CLibrarian extends AUser{
 	}
 	
 	
-	public void updateBookDetails(String isbn, String title, String author, String release, String publisher, String summary, String price, String topic, String lable, String TOC, boolean invis, String lang, String[] fileType) throws Exception
+	public void updateBookDetails(String isbn, String title, String author, String release, String publisher, String summary, String price, String topic, String lable, String TOC, boolean vis, String lang, String[] fileType) throws Exception
 	{
 		CEntry entryToSrv ;
 		HashMap<String, String> newBookDetails = new HashMap<String, String>();
-		String visible = "true";
+		String invisible = "false";
 		String format = "";
 		Pattern pd = Pattern.compile("(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})");
 		Matcher md = pd.matcher(release);
@@ -148,13 +148,13 @@ public class CLibrarian extends AUser{
 			throw new IOException("Invalid Date format!");
 		}
 		String date = release.substring(6, 10)+"-"+release.substring(3, 5)+"-"+release.substring(0, 2);
-		if(  !invis      &&       this.getPrivilege() != EActor.LibraryManager  )
+		if(  !vis      &&       this.getPrivilege() != EActor.LibraryManager  )
 		{
 			throw new IOException("You have no permition to edit book visibility!");
 			
 		}
-		else if ( this.getPrivilege() == EActor.LibraryManager  && invis == false)
-			          visible = "false";
+		else if ( this.getPrivilege() == EActor.LibraryManager  && vis == false)
+			          invisible = "true";
 	    if(isbn.isEmpty())
 			System.out.println("Error: ISBN not resived!");
 		else if(author.isEmpty())
@@ -194,7 +194,7 @@ public class CLibrarian extends AUser{
 			newBookDetails.put("topic", topic);
 			newBookDetails.put("lables", lable);
 			newBookDetails.put("toc", TOC);
-			newBookDetails.put("invisible", visible);
+			newBookDetails.put("invisible", invisible);
 			newBookDetails.put("languages", lang);
 			newBookDetails.put("format", format);
 			entryToSrv = new CEntry("EditBook",newBookDetails, this.getUserName(),this.getUserSessionId());

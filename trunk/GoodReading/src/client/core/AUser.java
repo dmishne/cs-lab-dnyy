@@ -91,17 +91,17 @@ public abstract class AUser implements Serializable{
 	
 	final static public void logout()
 	{
-	
-		
 		try
 	    {
 			HashMap<String,String> Logout = new HashMap<String,String>();
 			CEntry dropconnection = new CEntry("Logout",Logout,AUser.getInstance().m_userName,AUser.getInstance().getUserSessionId());
 			CClientConnector.getInstance().messageToServer(dropconnection);
 			CClientConnector.getInstance().closeConnection();
+			m_actor = null;
+			System.out.println("Logout was successful");
 	    }
 	    catch(Exception e) {
-	    	System.out.println("logout wasn't successful");
+	    	System.out.println("Logout wasn't successful");
 	    }    
 		m_actor = null;
 	}
