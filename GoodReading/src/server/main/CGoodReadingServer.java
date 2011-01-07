@@ -66,8 +66,12 @@ public class CGoodReadingServer {
 			System.out.println("Excecuter online and waiting");
 			CDBInteractionGenerator.GetInstance().ServerUpdateLog("Excecuter online and waiting");
 		}
-		CServerInfo info = new CServerInfo("GoodReadingServer V" + Version + "." + Revision);
-		info.setVisible(true);
+		if (CDBInteractionGenerator.m_POP_WINDOW)
+			{try {
+			 CServerInfo info = new CServerInfo("GoodReadingServer V" + Version + "." + Revision);
+ 			 info.setVisible(true);
+			} catch(Exception e) { System.out.println("Can't get ip address: "+e.getMessage()); }
+			}
 		
 		//	CFile arg=new CFile("c:/library/asd.pdf");
 		

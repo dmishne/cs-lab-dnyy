@@ -23,6 +23,7 @@ import client.core.EActor;
 
 public class CDBInteractionGenerator 
 {
+	public static final boolean m_POP_WINDOW=false; //TODO: toggle to true before presentation
 	public static String m_DEFAULT_Global_Library_Path="c:/library/";
 	private static CDBInteractionGenerator m_obj;
 	private Connection m_DB_Connection;
