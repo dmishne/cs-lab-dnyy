@@ -12,6 +12,9 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -22,7 +25,7 @@ import client.core.EActor;
 import common.data.CUser;
 
 
-public class CUserDetailsPanel extends JPanel implements ActionListener{
+public class CUserDetailsPanel extends JPanel implements ActionListener,ItemListener{
 
 	private static final long serialVersionUID = 1L;
 	private JButton jButton_Edit_UD = null;
@@ -367,6 +370,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 			jComboBox_privilage.setSize(new Dimension(200, 20));
 			jComboBox_privilage.setLocation(new Point(455, 235));
 			jComboBox_privilage.setSelectedItem(privilagesToShow[0]);
+			jComboBox_privilage.addItemListener(this);
 		}
 		return jComboBox_privilage;
 	}
@@ -515,6 +519,37 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 			this.setLastChoice(UDDecision.SAVE);
 			this.setVisible(false);
 		}
+		
+	}
+
+	
+	public void itemStateChanged(ItemEvent pe) {
+		 if (pe.getItemSelectable() == jComboBox_privilage)
+		 {
+			 String priv = jComboBox_privilage.getSelectedItem().toString();
+			 if( (priv.compareTo(EActor.Librarian.toString()) == 0 || priv.compareTo(EActor.LibraryManager.toString()) == 0))
+			 {
+				 jCheckBox_monthly.setSelected(false);
+				 jCheckBox_monthly.setEnabled(false);
+				 jCheckBox_yearly.setSelected(false);
+				 jCheckBox_yearly.setEnabled(false);
+				 jCheckBox_creditCard.setSelected(false);
+			 }
+			 else if((priv.compareTo(EActor.Reader.toString()) == 0 || priv.compareTo(EActor.User.toString()) == 0))
+			 {
+				 for(String pt : chosenUser.getPayTypes())
+				 {
+					   if(pt.compareTo("Yearly") == 0)
+						   jCheckBox_yearly.setSelected(true);
+					   if(pt.compareTo("Monthly") == 0)
+						   jCheckBox_monthly.setSelected(true);
+					   if(pt.compareTo("CreditCard") == 0)
+						   jCheckBox_creditCard.setSelected(true);
+				 }
+				 jCheckBox_monthly.setEnabled(true);
+				 jCheckBox_yearly.setEnabled(true);
+			 }
+		 }
 		
 	}
 

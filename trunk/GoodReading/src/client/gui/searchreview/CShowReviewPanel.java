@@ -290,8 +290,11 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 		if (jCheckBox_confirm_SR == null) {
 			jCheckBox_confirm_SR = new JCheckBox();
 			jCheckBox_confirm_SR.setBounds(new Rectangle(98, 438, 18, 14));
-			jCheckBox_confirm_SR.setEnabled(false);
-			jCheckBox_confirm_SR.setSelected(false);
+			jCheckBox_confirm_SR.setEnabled(false);	
+			if(review.getaccepted() == 1)
+				jCheckBox_confirm_SR.setSelected(true);
+			else
+				jCheckBox_confirm_SR.setSelected(false);
 			jCheckBox_confirm_SR.setVisible(false);
 			if(user.getPrivilege() == EActor.Librarian || user.getPrivilege() == EActor.LibraryManager)
 			{
