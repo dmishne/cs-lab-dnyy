@@ -378,7 +378,7 @@ public class CExecuter implements Runnable
 								else
 									i=0;
 								if(db.editReview(arg.get("isbn"),arg.get("author"),arg.get("title"),arg.get("review"), i  ,Work.getUserName()))
-									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Review Submitted");
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Review Eddited.");
 
 								else 
 								{
@@ -643,27 +643,32 @@ public class CExecuter implements Runnable
 											if(db.editUser(usr))
 												CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"success");
 										}
-									else if( arg.containsKey("privilage"))
-									{
-										int p = 0;
-										if(arg.get("privilage").compareTo("LibraryManager") == 0)
-										{
-											p = 5;
-										}else if(arg.get("privilage").compareTo("Librarian") == 0)
-										{
-											p = 3;
-										}else if(arg.get("privilage").compareTo("User") == 0)
-										{
-											p = 2;											
-										}else if(arg.get("privilage").compareTo("Reader") == 0)
-										{
-											p = 1;										
-										}
-										db.SetUserPriv(usr,p);
-									}
+							
 									
 									if(db.editUser(usr))
+										{
+										if( arg.containsKey("privilage"))
+											{
+											String temp=arg.get("privilage");
+												int p = 0;
+												if(temp.compareTo("LibraryManager") == 0)
+												{
+													p = 5;
+												}else if(temp.compareTo("Librarian") == 0)
+												{
+													p = 3;
+												}else if(temp.compareTo("User") == 0)
+												{
+													p = 1;											
+												}else if(temp.compareTo("Reader") == 0)
+												{
+													p = 2;										
+												}
+												db.SetUserPriv(usr,p);
+											}
+										
 										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"success");
+										}
 									else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"fail");
 									
 								}
