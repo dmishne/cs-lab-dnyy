@@ -15,11 +15,9 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import java.util.TreeSet;
 
 import server.db.CDBInteractionGenerator;
 
-import ocsf.server.ConnectionToClient;
 
 public class CExecuter implements Runnable
 {
@@ -106,7 +104,7 @@ public class CExecuter implements Runnable
 				else 
 				{
 					if(Work.getMsgMap() == null)
-						Work.setMsgMap(new HashMap());
+						Work.setMsgMap(new HashMap<String,String>());//@SuppressWarnings 'unchecked'
 					
 					//first off we lowercase everything in msgmap
 					Map<String,String> tmp=new HashMap<String,String>(Work.getMsgMap());
@@ -287,7 +285,7 @@ public class CExecuter implements Runnable
 							else {
 								//get set
 								LinkedList<CBookReview> rez=db.SearchReview(Work.getMsgMap());
-								LinkedList<CBookReview> temp=new LinkedList(rez);
+								LinkedList<CBookReview> temp=new LinkedList<CBookReview>(rez);
 								
 								//remove handled reviews
 								for(CBookReview rev: temp)
@@ -547,7 +545,7 @@ public class CExecuter implements Runnable
 										{
 											count=arg.get("format").split(",").length;
 											for(String s: arg.get("format").split(","))
-												if( db.UploadFile(arg.get("isbn"),s,new CFile(db.m_DEFAULT_Global_Library_Path+arg.get("isbn")+"."+s)) )
+												if( db.UploadFile(arg.get("isbn"),s,new CFile(CServerConstants.DEFAULT_Global_Library_Path()+arg.get("isbn")+"."+s)) )
 													count--;
 										}
 										if(count == 0)
@@ -728,7 +726,7 @@ public class CExecuter implements Runnable
 	{
 		if(m_sessions.isEmpty())
 			return;
-		Set<CClientSession> arg=new HashSet(m_sessions);
+		Set<CClientSession> arg=new HashSet<CClientSession>(m_sessions);
 		for(CClientSession c:arg)
 			if(work.getSessionID() != c.getSessionID() && work.getUserName().compareTo(c.getUsername()) == 0)
 				{
