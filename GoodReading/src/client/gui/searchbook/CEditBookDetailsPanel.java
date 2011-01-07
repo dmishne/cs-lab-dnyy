@@ -362,7 +362,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	 */
 	private JTextField getJTextField_price() {
 		if (jTextField_price == null) {
-			String price = Double.toString(m_book.getM_price());
+			String price = String.format("%.2f%n",m_book.getM_price());
 			jTextField_price = new JTextField(price);
 			jTextField_price.setSize(new Dimension(120, 27));
 			jTextField_price.setPreferredSize(new Dimension(120, 24));
