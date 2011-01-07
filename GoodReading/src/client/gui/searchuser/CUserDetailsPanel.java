@@ -457,9 +457,12 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 		{
 			if(!edit_flag)
 			{
-				jCheckBox_suspend.setEnabled(true);				
-				jCheckBox_monthly.setEnabled(true);
-				jCheckBox_yearly.setEnabled(true);
+				jCheckBox_suspend.setEnabled(true);
+				if(chosenUser.getM_privilege() == EActor.Reader  || chosenUser.getM_privilege() == EActor.User)
+				{
+					jCheckBox_monthly.setEnabled(true);
+				    jCheckBox_yearly.setEnabled(true);
+				}
 				jComboBox_privilage.setEnabled(true);
 				jTextField_birthDay.setEditable(true);
 				jTextField_adress.setEditable(true);
