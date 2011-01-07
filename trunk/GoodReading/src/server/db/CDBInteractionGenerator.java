@@ -23,7 +23,7 @@ import client.core.EActor;
 
 public class CDBInteractionGenerator 
 {
-	
+	public static String m_DEFAULT_Global_Library_Path="c:/library/";
 	private static CDBInteractionGenerator m_obj;
 	private Connection m_DB_Connection;
 	/*
@@ -988,7 +988,6 @@ public class CDBInteractionGenerator
 	}
 
 	public void clearFiles(String isbn) {
-		// TODO Auto-generated method stub
 		LinkedList<String> arg=getBookFormats(isbn);
 		for(String s:arg)
 			this.deleteFile(isbn, s);

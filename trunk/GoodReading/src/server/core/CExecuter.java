@@ -1,6 +1,7 @@
 package server.core;
 
 import client.core.AUser;
+import client.core.EActor;
 
 import common.api.CEntry;
 import common.api.CListOptions;
@@ -198,12 +199,15 @@ public class CExecuter implements Runnable
 								if(s.getSessionID() == Work.getSessionID()) //sessionID match
 									this.m_sessions.remove(s);
 							//remove from responder and RESPOND
-							try {
+							try 
+							{
 								CRespondToClient.GetInstance().Remove(Work.getSessionID()).sendToClient("Logout OK");
-							} catch (IOException e) {
+							} 
+							catch (IOException e)
+							{
 								System.out.println("CExecuter: Error returning msg during logout: "+e.getMessage());
 								CDBInteractionGenerator.GetInstance().ServerUpdateLog("CExecuter: Error returning msg during logout: "+e.getMessage());
-								}
+							}
 							
 						}//end of Logout
 						
@@ -373,7 +377,7 @@ public class CExecuter implements Runnable
 								Map<String,String> arg=Work.getMsgMap();
 								//public boolean editReview(String isbn, String author, String title, String review)
 								int i=arg.get("confirm").compareTo("true");
-								if( i ==0 )
+								if( i ==0 ) //confirm = true
 									i=1;
 								else
 									i=0;
@@ -541,7 +545,7 @@ public class CExecuter implements Runnable
 										{
 											count=arg.get("format").split(",").length;
 											for(String s: arg.get("format").split(","))
-												if( db.UploadFile(arg.get("isbn"),s,new CFile("c:/library/"+arg.get("isbn")+"."+s)) )
+												if( db.UploadFile(arg.get("isbn"),s,new CFile(db.m_DEFAULT_Global_Library_Path+arg.get("isbn")+"."+s)) )
 													count--;
 										}
 										if(count == 0)
@@ -615,7 +619,7 @@ public class CExecuter implements Runnable
 									arg.remove("username");
 									if(!arg.keySet().isEmpty())
 									for(String a:arg.keySet())
-									{//TODO: add more options from CUser
+									{
 										if(a.compareTo("lastname")==0)
 											usr.setM_lastName(arg.get(a));
 										else if(a.compareTo("firstname")==0)
@@ -624,8 +628,15 @@ public class CExecuter implements Runnable
 											usr.setAdress(arg.get(a));
 										else if(a.compareTo("birthday")==0)
 											usr.setBirthDay(arg.get(a));
+										
 									}
-									if( arg.containsKey("privilage"))
+									if(arg.containsKey("suspend") && Boolean.parseBoolean(arg.get("suspend")))
+										{
+											db.SetUserPriv(usr,0);
+											if(db.editUser(usr))
+												CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"success");
+										}
+									else if( arg.containsKey("privilage"))
 									{
 										int p = 0;
 										if(arg.get("privilage").compareTo("LibraryManager") == 0)
@@ -728,7 +739,7 @@ public class CExecuter implements Runnable
 		{	
 			
 			//create session and add to Executer's session list
-			CClientSession newSession=new CClientSession(Work.getSessionID(),Work.getUserName(),CDBInteractionGenerator.GetInstance().MySQLGetAuth(Work.getMsgMap().get("user"))); 
+			CClientSession newSession=new CClientSession(Work.getSessionID(),Work.getUserName(),CDBInteractionGenerator.GetInstance().MySQLGetAuth(Work.getUserName())); 
 			CExecuter.GetInstance().add(newSession);
 			Work.setSessionID(newSession.getSessionID());
 			
