@@ -609,9 +609,9 @@ public class CDBInteractionGenerator
 		
 			int i;		
 			if(aBook.getM_invisible())
-				i = st.executeUpdate("CALL ChangeBookDetails ('"+ aBook.getM_ISBN() +"','"+ aBook.getM_title() +"','"+ aBook.getM_author() +"','"+ a +"','"+ aBook.getM_publisher() +"','"+ aBook.getM_summary() +"',"+ aBook.getM_price() +","+ aBook.getM_score() +","+ aBook.getM_score_count() +",'"+ aBook.getM_topic() +"','"+ aBook.getM_lables() +"','"+ aBook.getM_TOC() +"',0,'"+ aBook.getM_language() +"');");
-			else
 				i = st.executeUpdate("CALL ChangeBookDetails ('"+ aBook.getM_ISBN() +"','"+ aBook.getM_title() +"','"+ aBook.getM_author() +"','"+ a +"','"+ aBook.getM_publisher() +"','"+ aBook.getM_summary() +"',"+ aBook.getM_price() +","+ aBook.getM_score() +","+ aBook.getM_score_count() +",'"+ aBook.getM_topic() +"','"+ aBook.getM_lables() +"','"+ aBook.getM_TOC() +"',1,'"+ aBook.getM_language() +"');");
+			else
+				i = st.executeUpdate("CALL ChangeBookDetails ('"+ aBook.getM_ISBN() +"','"+ aBook.getM_title() +"','"+ aBook.getM_author() +"','"+ a +"','"+ aBook.getM_publisher() +"','"+ aBook.getM_summary() +"',"+ aBook.getM_price() +","+ aBook.getM_score() +","+ aBook.getM_score_count() +",'"+ aBook.getM_topic() +"','"+ aBook.getM_lables() +"','"+ aBook.getM_TOC() +"',0,'"+ aBook.getM_language() +"');");
 			
 			if(i == 1) return true;
 		} catch (SQLException e) {

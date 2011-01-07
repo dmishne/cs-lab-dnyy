@@ -526,8 +526,8 @@ public class CExecuter implements Runnable
 										a.setlanguage(arg.get("language"));
 									 if(arg.containsKey("price"))
 										a.setprice(Double.parseDouble(arg.get("price")));
-									 if(arg.containsKey("invisible"))
-										a.setinvisible(Boolean.parseBoolean(arg.get("invisible")));
+									 if(arg.containsKey("invisible") && Privilage >3)
+										a.setinvisible( Boolean.parseBoolean(arg.get("invisible")) );
 								
 										
 									if (!db.editBookDetails(a))
