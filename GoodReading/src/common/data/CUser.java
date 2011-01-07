@@ -230,5 +230,4 @@ public class CUser implements Serializable{
 	public LinkedList<String> getPayTypes() {
 		return PayTypes;
 	}
-		
 }
