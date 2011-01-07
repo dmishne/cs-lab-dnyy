@@ -91,7 +91,7 @@ public abstract class AUser implements Serializable{
 	
 	final static public void logout()
 	{
-		m_actor = null;
+	
 		
 		try
 	    {
@@ -103,7 +103,7 @@ public abstract class AUser implements Serializable{
 	    catch(Exception e) {
 	    	System.out.println("logout wasn't successful");
 	    }    
-		
+		m_actor = null;
 	}
 	
 	static private void setActor(Object pri)

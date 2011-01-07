@@ -32,21 +32,15 @@ public class CRespondToClient {
 	//send response
 	public void SendResponse(int i, Object msg)
 	{
-		try 
-		{
-			System.out.println("Sending message to client @ "+((ConnectionToClient)m_connections.get(i)).getName()+" "+((ConnectionToClient)m_connections.get(i)).getInetAddress());
-			System.out.println(msg.toString());
-		}
-		catch (NullPointerException e)
-		{
-			System.out.println(e.toString());
-		}
+		System.out.println("Sending message to client @ "+((ConnectionToClient)m_connections.get(i)).getName());
+		if(msg==null)
+			System.out.println("null");
+		else System.out.println(msg.toString());
 		try{
-			if(msg != null)
-			((ConnectionToClient)m_connections.get(i)).sendToClient(msg);
+			if(msg==null)
+				((ConnectionToClient)m_connections.get(i)).sendToClient("null");
 			else
-			((ConnectionToClient)m_connections.get(i)).sendToClient("null");
-			
+				((ConnectionToClient)m_connections.get(i)).sendToClient(msg);	
 		}
 		catch (Exception e) {	// TODO Auto-generated catch block
 			System.out.println("\nResponse Unit failed to send msg to "+i+": "+e.getMessage());

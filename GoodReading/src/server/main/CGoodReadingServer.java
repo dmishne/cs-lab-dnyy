@@ -1,6 +1,7 @@
 package server.main;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,6 +11,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
+import ocsf.client.ObservableClient;
 
 import client.core.AUser;
 
@@ -63,13 +66,10 @@ public class CGoodReadingServer {
 			System.out.println("Excecuter online and waiting");
 			CDBInteractionGenerator.GetInstance().ServerUpdateLog("Excecuter online and waiting");
 		}
-		
-		
 		CServerInfo info = new CServerInfo("GoodReadingServer V" + Version + "." + Revision);
 		info.setVisible(true);
 		
-		
-//	CFile arg=new CFile("c:/library/asd.pdf");
+		//	CFile arg=new CFile("c:/library/asd.pdf");
 		
 	//	CDBInteractionGenerator.GetInstance().MySQLInsertBlobFile(new CFile("arg.txt").getFilearray().toString());
 	//	System.out.print(CDBInteractionGenerator.GetInstance().getPrice("1234"));
