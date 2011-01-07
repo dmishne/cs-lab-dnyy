@@ -397,7 +397,7 @@ public class CExecuter implements Runnable
 									if (db.subscriptionPay("Monthly",Work.getUserName()))
 										{ 
 										int rID=db.createReciept(Work.getUserName(),arg.get("isbn"),"Monthly");//generate reciept
-										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Success "+rID);//response to client
+										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),new Integer(rID));//response to client
 										}
 									else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "failed operation");
 								
@@ -405,7 +405,7 @@ public class CExecuter implements Runnable
 									if (db.subscriptionPay("Yearly",Work.getUserName()))
 									{ 
 										int rID=db.createReciept(Work.getUserName(),arg.get("isbn"),"Yearly");//generate reciept
-										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Success "+Integer.toString(rID));//response to client
+										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),new Integer(rID));//response to client
 									}
 									else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "failed operation");
 								
@@ -413,7 +413,7 @@ public class CExecuter implements Runnable
 									if (db.ccPay(Work.getUserName(),db.getPrice(arg.get("isbn")),arg.get("isbn")))
 									{ 
 										int rID=db.createReciept(Work.getUserName(),arg.get("isbn"),"Credit Card");//generate reciept
-										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Success "+Integer.toString(rID));//response to client
+										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), new Integer(rID));//response to client
 									}
 									else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "failed operation");
 				
