@@ -113,7 +113,7 @@ public class CExecuter implements Runnable
 					String v;
 					for(String k:Work.getMsgMap().keySet())
 					{
-						v=tmp.get(k);
+						v=tmp.get(k).replace("\\", "/").replace("\'", "'").replace("'", "\\'");
 						tmp.remove(k);
 						tmp.put(k.toLowerCase(), v);
 					}
@@ -515,19 +515,19 @@ public class CExecuter implements Runnable
 									//we got book by isbn, now we need to edit data:
 								
 									if(arg.containsKey("title"))
-										a.settitle(arg.get("title").replace("'", "\\'"));
+										a.settitle(arg.get("title"));
 									 if(arg.containsKey("author"))
-										a.setauthor(arg.get("author").replace("'", "\\'"));
+										a.setauthor(arg.get("author"));
 									 if(arg.containsKey("lable"))
-										a.setlables(arg.get("lable").replace("'", "\\'"));
+										a.setlables(arg.get("lable"));
 									 if(arg.containsKey("publisher"))
-										a.setpublisher(arg.get("publisher").replace("'", "\\'"));
+										a.setpublisher(arg.get("publisher"));
 									 if(arg.containsKey("summary"))
-										a.setsummary(arg.get("summary").replace("'", "\\'"));
+										a.setsummary(arg.get("summary"));
 									 if(arg.containsKey("topic"))
-										 a.settopic(arg.get("topic").replace("'", "\\'"));
+										 a.settopic(arg.get("topic"));
 									 if(arg.containsKey("TOC"))
-										a.setTOC(arg.get("toc").replace("'", "\\'"));
+										a.setTOC(arg.get("toc"));
 									 if(arg.containsKey("language"))
 										a.setlanguage(arg.get("language"));
 									 if(arg.containsKey("price"))
