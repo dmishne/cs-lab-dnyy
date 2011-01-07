@@ -503,6 +503,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener{
 				privilage = EActor.Librarian;			
 				try {
 					((CLibraryManager)AUser.getInstance()).updateUserDetails(chosenUser.getM_userName(), jTextField_firstName.getText(), jTextField_lastName.getText(), Integer.parseInt(jTextField_userID.getText()), jTextField_birthDay.getText(), jTextField_adress.getText(), paytypes, privilage, jCheckBox_suspend.isSelected());
+					
 				} catch (NumberFormatException e) {
 					System.out.println("Can't convert from String to Integer");
 				} catch (Exception e) {

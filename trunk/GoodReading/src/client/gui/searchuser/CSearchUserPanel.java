@@ -242,4 +242,12 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 		}
 		
 	}
+	
+	
+	public void research() throws Exception
+	{
+		result = ((CLibraryManager)AUser.getInstance()).searchUser(jTextField_UserName.getText(),jTextField_UserID.getText(),jTextField_FirstName.getText(),jTextField_LastName.getText());
+	}
+	
+	
 }
