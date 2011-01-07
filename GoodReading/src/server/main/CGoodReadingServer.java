@@ -1,6 +1,7 @@
 package server.main;
 
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -22,6 +23,10 @@ import server.db.CDBInteractionGenerator;
 
 public class CGoodReadingServer {
 
+	
+	final public static int Version = 0;
+	final public static int Revision = 1;
+	
 	/**
 	 * @param args
 	 */
@@ -58,6 +63,12 @@ public class CGoodReadingServer {
 			System.out.println("Excecuter online and waiting");
 			CDBInteractionGenerator.GetInstance().ServerUpdateLog("Excecuter online and waiting");
 		}
+		
+		
+		CServerInfo info = new CServerInfo("GoodReadingServer V" + Version + "." + Revision);
+		info.setVisible(true);
+		
+		
 //	CFile arg=new CFile("c:/library/asd.pdf");
 		
 	//	CDBInteractionGenerator.GetInstance().MySQLInsertBlobFile(new CFile("arg.txt").getFilearray().toString());
