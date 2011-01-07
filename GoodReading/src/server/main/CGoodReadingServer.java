@@ -42,6 +42,7 @@ public class CGoodReadingServer {
 		 *	TODO:	next we should ??  
 		 */
 		CServerConstants.Config(); //load all properties
+	
 		CDBInteractionGenerator.GetInstance();		//.ServerUpdateLog("Server Started loading at "+ (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime())));
 		if(CStandbyUnit.GetInstance() == null)
 			{

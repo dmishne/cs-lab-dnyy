@@ -1,5 +1,5 @@
 package server.core;
-import java.io.IOException;
+
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -34,8 +34,8 @@ public class CRespondToClient {
 	{
 		System.out.println("Sending message to client @ "+((ConnectionToClient)m_connections.get(i)).getName());
 		if(msg==null)
-			System.out.println("null");
-		else System.out.println(msg.toString());
+			System.out.print("	null");
+		else System.out.print("	"+msg.toString());
 		try{
 			if(msg==null)
 				((ConnectionToClient)m_connections.get(i)).sendToClient("null");
@@ -43,7 +43,7 @@ public class CRespondToClient {
 				((ConnectionToClient)m_connections.get(i)).sendToClient(msg);	
 		}
 		catch (Exception e) {	// TODO Auto-generated catch block
-			System.out.println("\nResponse Unit failed to send msg to "+i+": "+e.getMessage());
+			System.out.println("Response Unit failed to send msg to "+i+": "+e.getMessage());
 		}
 	}
 	
