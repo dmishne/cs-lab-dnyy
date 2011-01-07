@@ -225,15 +225,11 @@ public class CExecuter implements Runnable
 							//if not a librarian, remove invisible books
 							if(Privilage < 3)
 							{ //TODO: test searchBook
-								Iterator<CBook> it = (new LinkedList<CBook>(rez)).iterator();
-								while(it.hasNext())
-								{
-									CBook temp = it.next();
-									if(!temp.getM_invisible())
-									{
-										it.remove();
-									}
-								}
+								Object[] it= rez.toArray();
+								for(Object b: it)
+									if(((CBook)b).getM_invisible())
+										rez.remove(b);
+								
 							}
 							
 							//reply to client
