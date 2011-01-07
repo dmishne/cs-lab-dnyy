@@ -293,7 +293,7 @@ public class CDBInteractionGenerator
 		}
 		else if(params.containsKey("isbn"))
 		{
-			ans=ans+"isbn LIKE '%"+params.get("isbn")+"%'";
+			ans=ans+"isbn LIKE '"+params.get("isbn")+"'";
 			params.remove("isbn");
 		}
 		else if(params.containsKey("publisher"))
@@ -323,51 +323,44 @@ public class CDBInteractionGenerator
 		}
 		
 		
+		
+		
 		//now inserting new attributes
 		if(params.containsKey("title"))
 		{
 			ans=ans+" AND title LIKE '%"+params.get("title")+"%'";
-			params.remove("title");
 		}
 		 if(params.containsKey("author"))
 		{
 			ans=ans+" AND author LIKE '%"+params.get("author")+"%'";
-			params.remove("author");
 		}
 		 if(params.containsKey("lable"))
 		{
 			ans=ans+" AND lables LIKE '%"+params.get("lable")+"%'";
-			params.remove("lable");
 		}
 		 if(params.containsKey("isbn"))
 		{
-			ans=ans+" AND isbn LIKE '%"+params.get("isbn")+"%'";
-			params.remove("isbn");
+			ans=ans+" AND isbn LIKE '"+params.get("isbn")+"'";
 		}
 		 if(params.containsKey("publisher"))
 		{
 			ans=ans+" AND publisher Like '%"+params.get("publisher")+"%'";
-			params.remove("publisher");
 		}
 		 if(params.containsKey("summary"))
 		{
 			ans=ans+" AND summary LIKE '%"+params.get("summary")+"%'";
-			params.remove("summary");
 		}
 		 if(params.containsKey("topic"))
 		{
 			ans=ans+" AND topic LIKE '%"+params.get("topic")+"%'";
-			params.remove("topic");
 		}
 		 if(params.containsKey("TOC"))
 		{
 			ans=ans+" AND TOC LIKE '%"+params.get("toc")+"%'";
-			params.remove("toc");
 		}
 		 if(params.containsKey("language"))
 		{
 			ans=ans+" AND language LIKE '%"+params.get("language")+"%'";
-			params.remove("language");
 		}
 		return ans;		
 	}
@@ -428,7 +421,7 @@ public class CDBInteractionGenerator
 		}
 		else if(params.containsKey("isbn"))
 		{
-			ans=ans+"isbn LIKE '%"+params.get("isbn")+"%'";
+			ans=ans+"isbn LIKE '"+params.get("isbn")+"'";
 			params.remove("isbn");
 		}
 		else if(params.containsKey("review"))
@@ -457,7 +450,7 @@ public class CDBInteractionGenerator
 
 	
 		 if(params.containsKey("isbn"))
-			ans=ans+" AND isbn LIKE '%"+params.get("isbn")+"%'";
+			ans=ans+" AND isbn LIKE '"+params.get("isbn")+"'";
 	
 	
 		 if(params.containsKey("review"))
