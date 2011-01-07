@@ -515,19 +515,19 @@ public class CExecuter implements Runnable
 									//we got book by isbn, now we need to edit data:
 								
 									if(arg.containsKey("title"))
-										a.settitle(arg.get("title"));
+										a.settitle(arg.get("title").replace("'", "\\'"));
 									 if(arg.containsKey("author"))
-										a.setauthor(arg.get("author"));
+										a.setauthor(arg.get("author").replace("'", "\\'"));
 									 if(arg.containsKey("lable"))
-										a.setlables(arg.get("lable"));
+										a.setlables(arg.get("lable").replace("'", "\\'"));
 									 if(arg.containsKey("publisher"))
-										a.setpublisher(arg.get("publisher"));
+										a.setpublisher(arg.get("publisher").replace("'", "\\'"));
 									 if(arg.containsKey("summary"))
-										a.setsummary(arg.get("summary"));
+										a.setsummary(arg.get("summary").replace("'", "\\'"));
 									 if(arg.containsKey("topic"))
-										 a.settopic(arg.get("topic"));
+										 a.settopic(arg.get("topic").replace("'", "\\'"));
 									 if(arg.containsKey("TOC"))
-										a.setTOC(arg.get("toc"));
+										a.setTOC(arg.get("toc").replace("'", "\\'"));
 									 if(arg.containsKey("language"))
 										a.setlanguage(arg.get("language"));
 									 if(arg.containsKey("price"))
