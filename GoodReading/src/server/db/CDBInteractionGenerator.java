@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import server.core.CServerConstants;
+
 import common.data.*;
 
 
@@ -23,23 +25,8 @@ import client.core.EActor;
 
 public class CDBInteractionGenerator 
 {
-	public static final boolean m_POP_WINDOW=false; //TODO: toggle to true before presentation
-	public static String m_DEFAULT_Global_Library_Path="c:/library/";
-	private static CDBInteractionGenerator m_obj;
 	private Connection m_DB_Connection;
-	/*
-	final private static String m_DEFAULTHOST="jdbc:mysql://remote-mysql4.servage.net/cslabdnyy";
-	final private static String m_DEFAULTUSER="cslabdnyy";
-	final private static String m_DEFAULTPASS="q1w2e3r4";
-	*/
-	final private int m_MONTHLY_AMMOUNT=5;
-	final private int m_YEARLY_AMMOUNT=150;
-	
-	
-	final private static String m_DEFAULTHOST="jdbc:mysql://localhost/cslabdnyy";
-	final private static String m_DEFAULTUSER="root";
-	final private static String m_DEFAULTPASS="m00nkey";
-	
+	private static CDBInteractionGenerator m_obj;
 	
 	public ResultSet MySQLQuery(String query) throws SQLException
 	{
@@ -109,7 +96,7 @@ public class CDBInteractionGenerator
 		try 
 		{
 	    	Class.forName("com.mysql.jdbc.Driver").newInstance();	
-	        m_DB_Connection=DriverManager.getConnection(m_DEFAULTHOST,m_DEFAULTUSER,m_DEFAULTPASS);
+	        m_DB_Connection=DriverManager.getConnection(CServerConstants.DEFAULTHOST(),CServerConstants.DEFAULTUSER(),CServerConstants.DEFAULTPASS());
             System.out.println("SQL connection succeed");
 	 	} 
 		catch (Exception ex) 
@@ -232,10 +219,10 @@ public class CDBInteractionGenerator
 			ResultSet rs=MySQLQuery("SELECT * FROM subscriptions s WHERE s.type LIKE 'monthly' AND s.user LIKE '"+userName+"';");
 			if(rs.next())
 				//if there is a row already in table, then update
-				this.MySQLExecute("UPDATE subscriptions SET ammount="+(this.m_MONTHLY_AMMOUNT+rs.getInt(3))+" WHERE type LIKE 'monthly' AND user LIKE '"+userName+"';");
+				this.MySQLExecute("UPDATE subscriptions SET ammount="+(CServerConstants.MONTHLY_AMMOUNT()+rs.getInt(3))+" WHERE type LIKE 'monthly' AND user LIKE '"+userName+"';");
 			else
 				//else, we need to insert
-				this.MySQLExecute("INSERT INTO subscriptions VALUES ('"+userName+"','monthly',"+this.m_MONTHLY_AMMOUNT+");");
+				this.MySQLExecute("INSERT INTO subscriptions VALUES ('"+userName+"','monthly',"+CServerConstants.MONTHLY_AMMOUNT()+");");
 			this.MySQLExecute("UPDATE users SET authorization=2 WHERE user LIKE '"+userName+"';");
 			rs.close();
 		} catch (SQLException e) {
@@ -250,10 +237,10 @@ public class CDBInteractionGenerator
 			ResultSet rs=MySQLQuery("SELECT * FROM subscriptions s WHERE s.type LIKE 'yearly' AND s.user LIKE '"+userName+"';");
 			if(rs.next())
 				//if there is a row already in table, then update
-				this.MySQLExecute("UPDATE subscriptions SET ammount="+(this.m_YEARLY_AMMOUNT+rs.getInt(3))+" WHERE type LIKE 'yearly' AND user LIKE '"+userName+"';");
+				this.MySQLExecute("UPDATE subscriptions SET ammount="+(CServerConstants.YEARLY_AMMOUNT()+rs.getInt(3))+" WHERE type LIKE 'yearly' AND user LIKE '"+userName+"';");
 			else
 				//else, we need to insert
-				this.MySQLExecute("INSERT INTO subscriptions VALUES ('"+userName+"','yearly',"+this.m_YEARLY_AMMOUNT+");");
+				this.MySQLExecute("INSERT INTO subscriptions VALUES ('"+userName+"','yearly',"+CServerConstants.YEARLY_AMMOUNT()+");");
 			this.MySQLExecute("UPDATE users SET authorization=2 WHERE user LIKE '"+userName+"';");
 			rs.close();
 		} catch (SQLException e) {

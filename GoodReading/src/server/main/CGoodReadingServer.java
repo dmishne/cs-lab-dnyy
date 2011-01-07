@@ -21,6 +21,7 @@ import common.data.CBookReview;
 import common.data.CFile;
 
 import server.core.CExecuter;
+import server.core.CServerConstants;
 import server.core.CStandbyUnit;
 import server.db.CDBInteractionGenerator;
 
@@ -40,7 +41,7 @@ public class CGoodReadingServer {
 		 *  		second comes in the CStandbyUnit, Executer SHOULD go after standby unit, for he calls for an instance of it, however there is no limitation currently, it will justmake some of the code redundant to call it first
 		 *	TODO:	next we should ??  
 		 */
-		
+		CServerConstants.Config(); //load all properties
 		CDBInteractionGenerator.GetInstance();		//.ServerUpdateLog("Server Started loading at "+ (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime())));
 		if(CStandbyUnit.GetInstance() == null)
 			{
@@ -66,7 +67,7 @@ public class CGoodReadingServer {
 			System.out.println("Excecuter online and waiting");
 			CDBInteractionGenerator.GetInstance().ServerUpdateLog("Excecuter online and waiting");
 		}
-		if (CDBInteractionGenerator.m_POP_WINDOW)
+		if (CServerConstants.POP_WINDOW())
 			{try {
 			 CServerInfo info = new CServerInfo("GoodReadingServer V" + Version + "." + Revision);
  			 info.setVisible(true);
