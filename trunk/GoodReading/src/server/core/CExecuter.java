@@ -347,7 +347,7 @@ public class CExecuter implements Runnable
 							}//end of reading auth
 						} //end of DeleteBook
 						else if(Work.getMsgType().compareTo("DeleteFile") == 0)
-						{
+						{	//this function is not implemented in GUI, but it is usefull in order to delete book files in DB and it's par func on DBIG is actually used a few times.
 							Map<String,String> arg=Work.getMsgMap();
 							if(Privilage <3)
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: user must have proper privilage");

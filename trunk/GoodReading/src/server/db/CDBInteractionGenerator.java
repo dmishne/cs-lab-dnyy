@@ -917,7 +917,7 @@ public class CDBInteractionGenerator
 		///delete book FILE from DB
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
-			int i = st.executeUpdate("CALL DeleteFile ('"+ isbn +"','"+ format +");");
+			int i = st.executeUpdate("CALL DeleteFile ('"+ isbn +"','"+ format +"');");
 			if(i == 1) return true;	
 		} catch (SQLException e) {
 			System.out.println("deleteFile():SQL exception: "+e.getErrorCode()+" "+e.getMessage());  }

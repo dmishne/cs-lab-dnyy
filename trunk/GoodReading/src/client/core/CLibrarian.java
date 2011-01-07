@@ -243,8 +243,8 @@ public class CLibrarian extends AUser{
 						format = format + "," + fileType[i];
 			}
 			delBook.put("isbn", isbn);
-			delBook.put("format", format);
-			entryToSrv = new CEntry("DeleteFile", delBook, this.getUserName(), this.getUserSessionId());
+		//	delBook.put("format", format);
+			entryToSrv = new CEntry("DeleteBook", delBook, this.getUserName(), this.getUserSessionId());
 			CClientConnector.getInstance().messageToServer(entryToSrv);
 		}
 	}
