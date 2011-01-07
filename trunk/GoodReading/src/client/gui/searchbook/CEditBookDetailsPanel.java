@@ -485,9 +485,9 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 			jCheckBox_visibilityCheck.setPreferredSize(new Dimension(27, 27));
 			jCheckBox_visibilityCheck.setLocation(new Point(582, 84));
 			if(m_book.getM_invisible())
-			      jCheckBox_visibilityCheck.setSelected(true);
+			      jCheckBox_visibilityCheck.setSelected(false);
 			else if (!m_book.getM_invisible())
-				  jCheckBox_visibilityCheck.setSelected(false);
+				  jCheckBox_visibilityCheck.setSelected(true);
 			jCheckBox_visibilityCheck.setSize(new Dimension(27, 27));
 			try {
 				if(AUser.getInstance().getPrivilege().compareTo(EActor.LibraryManager) != 0)

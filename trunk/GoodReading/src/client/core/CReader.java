@@ -148,6 +148,7 @@ public class CReader extends AUser{
 	{
 		CEntry EntryToSrv = null;
 		Map <String,String> orderInfo = new HashMap<String,String>();
+		String receipt_num; 
 		if(isbn.isEmpty())
 			throw new IOException("Book ISBN required for order!"); 
 		orderInfo.put("isbn", isbn);
@@ -155,8 +156,15 @@ public class CReader extends AUser{
 			throw new IOException("Pay type required for order!");
 		orderInfo.put("paytype", PayType);
 		EntryToSrv = new CEntry("PurchaseBook",orderInfo,this.getUserName(),this.getUserSessionId());
-		String res = (String)CClientConnector.getInstance().messageToServer(EntryToSrv);
-		return res;
+		Object res = (String)CClientConnector.getInstance().messageToServer(EntryToSrv);
+		if(res instanceof Integer)
+		{
+		       receipt_num = ((Integer)res).toString();
+		       return receipt_num;
+		}
+		else if(res instanceof String)
+			   return (String)res;
+		return "Fail";
 	}
 	
 	public String addScore(String isbn, int score) throws Exception
