@@ -673,7 +673,6 @@ public class CDBInteractionGenerator
 			}
 			cc.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -738,7 +737,7 @@ public class CDBInteractionGenerator
 			data = this.MySQLQuery("SELECT * FROM users "+ this.buildSearchUserWhere(params) +";");
 			while(data.next())
 			{
-				try{	res.add( new CUser(data,getUserPayments(data.getString(1))) );//TODO: replace with actual type array
+				try{	res.add( new CUser(data,getUserPayments(data.getString(1))) );
 				
 				}catch(Exception e) { System.out.println("DBIG: Problem resolving user, giving him up on list, plz check on users table in DB");}
 			}
@@ -820,34 +819,7 @@ public class CDBInteractionGenerator
 		return false;
 	}
 	
-	public Map<String,Integer> getBookViews(String isbn, String from_date, String to_date)
-	{
-		Map<String,Integer> mp = new HashMap<String,Integer>();
-		ResultSet rs;
-		String tdate = to_date;
-		String fdate = from_date;
-		if(to_date == null) tdate = "2200-12-12";
-		if(from_date == null) fdate = "1700-01-01";
-		try {
-			rs = this.MySQLQuery("CALL GetBookViewsByDate ('"+ isbn +"','"+ fdate +"','"+ tdate +"');");
-			while(rs.next())
-				{
-					if(mp.containsKey(rs.getString("date")))
-					{
-						mp.put(rs.getString("date"), mp.get(rs.getString("date"))+rs.getInt("amount"));
-					}
-					else mp.put(rs.getString("date"), rs.getInt("amount"));
-				}
-		} catch (Exception e) 
-		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
-		return mp;
-	}
-
-
-	public Set<CBookStats> getFullBookViews(String isbn, String year) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	public Map<String,Integer> getBookViews(String isbn, String year)
 	{
@@ -1009,7 +981,6 @@ public class CDBInteractionGenerator
 	}
 
 	public void deleteSubscription(String m_userName, String type) throws Exception {
-		// TODO Auto-generated method stub
 		//method deletes subscription for username, type = mothly / yearly
 		//on fail THROW EXCEPTION. (counting on it in executer)
 		int i = 0;
@@ -1024,7 +995,6 @@ public class CDBInteractionGenerator
 	}
 
 	public void deleteCC(String m_userName) throws Exception{
-		// TODO Auto-generated method stub
 		//method deletes Credit card for user.
 		//on fail THROW EXCEPTION. (counting on it in executer)
 		int i = 0;
@@ -1032,26 +1002,53 @@ public class CDBInteractionGenerator
 			Statement st = this.m_DB_Connection.createStatement();
 			i = st.executeUpdate("CALL DeleteCC ('"+ m_userName +"');");	
 		} catch (SQLException e) {
-			System.out.println("deleteSubscription():SQL exception: "+e.getErrorCode()+" "+e.getMessage());  }
+			System.out.println("deleteCC():SQL exception: "+e.getErrorCode()+" "+e.getMessage());  }
 		//throw new Exception("arg");
 		if(i == 1) return;
 		throw new Exception("deleteCC() failed!");
 	}
 
+	public Map<String,Integer> getBookViews(String isbn, String from_date, String to_date)
+	{
+		Map<String,Integer> mp = new HashMap<String,Integer>();
+		ResultSet rs;
+		String tdate = to_date;
+		String fdate = from_date;
+		if(to_date == null) tdate = "2200-12-12";
+		if(from_date == null) fdate = "1700-01-01";
+		try {
+			rs = this.MySQLQuery("CALL GetBookViewsByDate ('"+ isbn +"','"+ fdate +"','"+ tdate +"');");
+			while(rs.next())
+				{
+					if(mp.containsKey(rs.getString("date")))
+					{
+						mp.put(rs.getString("date"), mp.get(rs.getString("date"))+rs.getInt("amount"));
+					}
+					else mp.put(rs.getString("date"), rs.getInt("amount"));
+				}
+		} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
+		return mp;
+	}
 
-	public Set<CPurchaseStats> getFullUserPurchases(String username, String year) {
+
+	public Set<CBookStats> getFullBookViews(String isbn, String year) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	public Map<String, Integer> getBookSales(String isbn, String year) {
+		// TODO Auto-generated method stub
+		//return short version of report (for histogram
+		return null;
+	}
 	public Set<CBookStats> getFullBookSales(String isbn, String year) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Map<String, Integer> getBookSales(String isbn, String year) {
+	public Set<CPurchaseStats> getFullUserPurchases(String username, String year) {
 		// TODO Auto-generated method stub
-		//return short version of report (for histogram
 		return null;
 	}
 
