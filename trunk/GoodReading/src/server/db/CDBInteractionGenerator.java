@@ -983,6 +983,20 @@ public class CDBInteractionGenerator
 			this.deleteFile(isbn, s);
 	}
 
+	public void deleteSubscription(String m_userName, String type) throws Exception {
+		// TODO Auto-generated method stub
+		//method deletes subscription for username, type = mothly / yearly
+		//on fail THROW EXCEPTION. (counting on it in executer)
+		throw new Exception("arg");
+	}
+
+	public void deleteCC(String m_userName) throws Exception{
+		// TODO Auto-generated method stub
+		//method deletes Credit card for user.
+		//on fail THROW EXCEPTION. (counting on it in executer)
+		throw new Exception("arg");
+	}
+
 
 	
 	
