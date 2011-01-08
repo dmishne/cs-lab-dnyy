@@ -844,6 +844,27 @@ public class CDBInteractionGenerator
 		return mp;
 	}
 
+	public Map<String,Integer> getBookViews(String isbn, String year)
+	{
+		Map<String,Integer> mp = new HashMap<String,Integer>();
+		ResultSet rs;
+		String fdate = year+"-01-01";
+		String tdate = year+"-12-31";
+		try {
+			rs = this.MySQLQuery("CALL GetBookViewsByDate ('"+ isbn +"','"+ fdate +"','"+ tdate +"');");
+			while(rs.next())
+				{
+					if(mp.containsKey(rs.getString("date")))
+					{
+						mp.put(rs.getString("date"), mp.get(rs.getString("date"))+rs.getInt("amount"));
+					}
+					else mp.put(rs.getString("date"), rs.getInt("amount"));
+				}
+		} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
+		return mp;
+	}
+	
 	public boolean deleteReview(String isbn, String userName) {
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
@@ -914,11 +935,6 @@ public class CDBInteractionGenerator
 		return false;
 	}
 
-	
-	
-	
-	
-
 	public AUser getUserInstance(ResultSet rs)
 	{
 		try{
@@ -957,9 +973,13 @@ public class CDBInteractionGenerator
 		
 	}
 
-	public boolean UploadFile(String isbn, String tyle, CFile file) {
-		// TODO Auto-generated method stub
-	
+	public boolean UploadFile(String isbn, String format, CFile file) {
+		try {
+			Statement st = this.m_DB_Connection.createStatement();
+			int i = st.executeUpdate("CALL InsertFile ('"+ isbn +"','"+ format +"','"+ file.getChars() +"');");
+			if(i == 1) return true;	
+		} catch (SQLException e) {
+			System.out.println("UploadFile():SQL exception: "+e.getErrorCode()+" "+e.getMessage());  }
 		return false;
 	}
 
@@ -997,8 +1017,4 @@ public class CDBInteractionGenerator
 		throw new Exception("arg");
 	}
 
-
-	
-	
-	
 }
