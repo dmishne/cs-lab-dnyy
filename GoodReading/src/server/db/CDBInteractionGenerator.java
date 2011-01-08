@@ -819,29 +819,6 @@ public class CDBInteractionGenerator
 		return false;
 	}
 	
-	
-
-	public Map<String,Integer> getBookViews(String isbn, String year)
-	{
-		Map<String,Integer> mp = new HashMap<String,Integer>();
-		ResultSet rs;
-		String fdate = year+"-01-01";
-		String tdate = year+"-12-31";
-		try {
-			rs = this.MySQLQuery("CALL GetBookViewsByDate ('"+ isbn +"','"+ fdate +"','"+ tdate +"');");
-			while(rs.next())
-				{
-					if(mp.containsKey(rs.getString("date")))
-					{
-						mp.put(rs.getString("date"), mp.get(rs.getString("date"))+rs.getInt("amount"));
-					}
-					else mp.put(rs.getString("date"), rs.getInt("amount"));
-				}
-		} catch (Exception e) 
-		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
-		return mp;
-	}
-	
 	public boolean deleteReview(String isbn, String userName) {
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
@@ -1020,36 +997,109 @@ public class CDBInteractionGenerator
 			rs = this.MySQLQuery("CALL GetBookViewsByDate ('"+ isbn +"','"+ fdate +"','"+ tdate +"');");
 			while(rs.next())
 				{
-					if(mp.containsKey(rs.getString("date")))
-					{
-						mp.put(rs.getString("date"), mp.get(rs.getString("date"))+rs.getInt("amount"));
-					}
-					else mp.put(rs.getString("date"), rs.getInt("amount"));
+				String month = rs.getString("date").substring(5, 7);
+				if(mp.containsKey(month))
+				{
+					mp.put(month, mp.get(month)+rs.getInt("amount"));
+				}
+				else mp.put(month, rs.getInt("amount"));
 				}
 		} catch (Exception e) 
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
 		return mp;
 	}
 
+	public Map<String,Integer> getBookViews(String isbn, String year)
+	{
+		Map<String,Integer> mp = new HashMap<String,Integer>();
+		ResultSet rs;
+		String fdate = year+"-01-01";
+		String tdate = year+"-12-31";
+		try {
+			rs = this.MySQLQuery("CALL GetBookViewsByDate ('"+ isbn +"','"+ fdate +"','"+ tdate +"');");
+			while(rs.next())
+				{
+					String month = rs.getString("date").substring(5, 7);
+					if(mp.containsKey(month))
+					{
+						mp.put(month, mp.get(month)+rs.getInt("amount"));
+					}
+					else mp.put(month, rs.getInt("amount"));
+				}
+		} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
+		return mp;
+	}
 
 	public Set<CBookStats> getFullBookViews(String isbn, String year) {
-		// TODO Auto-generated method stub
-		return null;
+		ResultSet rs;
+		Set<CBookStats> set = new HashSet<CBookStats>();
+		String fdate = year+"-01-01";
+		String tdate = year+"-12-31";
+		try {
+			rs = this.MySQLQuery("CALL GetFullBookViews ('"+ isbn +"','"+ fdate +"','"+ tdate +"');");
+			while(rs.next())
+				{
+					set.add(new CBookStats(rs.getString("first_name")+" "+rs.getString("last_name"), rs.getString("user"), Integer.parseInt(rs.getString("date").substring(5, 7))));
+				}
+		} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
+		return set;
 	}
 	
 	public Map<String, Integer> getBookSales(String isbn, String year) {
-		// TODO Auto-generated method stub
 		//return short version of report (for histogram
-		return null;
+		Map<String,Integer> mp = new HashMap<String,Integer>();
+		ResultSet rs;
+		String fdate = year+"-01-01";
+		String tdate = year+"-12-31";
+		try {
+			rs = this.MySQLQuery("CALL GetBookSalesByDate ('"+ isbn +"','"+ fdate +"','"+ tdate +"');");
+			while(rs.next())
+			{
+				String month = rs.getString("date").substring(5, 7);
+				if(mp.containsKey(month))
+				{
+					mp.put(month, mp.get(month)+rs.getInt("1"));
+				}
+				else mp.put(month, rs.getInt("1"));
+			}
+		} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
+		return mp;
 	}
+	
 	public Set<CBookStats> getFullBookSales(String isbn, String year) {
-		// TODO Auto-generated method stub
-		return null;
+		ResultSet rs;
+		Set<CBookStats> set = new HashSet<CBookStats>();
+		String fdate = year+"-01-01";
+		String tdate = year+"-12-31";
+		try {
+			rs = this.MySQLQuery("CALL GetFullBookSales ('"+ isbn +"','"+ fdate +"','"+ tdate +"');");
+			while(rs.next())
+				{
+					set.add(new CBookStats(rs.getString("first_name")+" "+rs.getString("last_name"), rs.getString("user"), Integer.parseInt(rs.getString("date").substring(5, 7))));
+				}
+		} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
+		return set;
 	}
 
 	public Set<CPurchaseStats> getFullUserPurchases(String username, String year) {
 		// TODO Auto-generated method stub
-		return null;
+		ResultSet rs;
+		Set<CPurchaseStats> set = new HashSet<CPurchaseStats>();
+		String fdate = year+"-01-01";
+		String tdate = year+"-12-31";
+		try {
+			rs = this.MySQLQuery("CALL GetFullUserPurchases ('"+ username +"','"+ fdate +"','"+ tdate +"');");
+			while(rs.next())
+				{
+					set.add(new CPurchaseStats(rs.getString("isbn"), rs.getString("title"), Integer.parseInt(rs.getString("date").substring(5, 7))));
+				}
+		} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
+		return set;
 	}
 
 }
