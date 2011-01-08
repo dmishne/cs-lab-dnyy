@@ -588,7 +588,8 @@ public class CExecuter implements Runnable
 						{
 							String[] a = {"No affordable file formats"};
 							LinkedList <String> ans = db.getBookFormats(Work.getMsgMap().get("isbn"));
-							db.StatisticsAddView(Work.getMsgMap().get("isbn"),Work.getUserName());
+							if(Privilage <3)
+								db.StatisticsAddView(Work.getMsgMap().get("isbn"),Work.getUserName());
 							if(ans == null)
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),a);
 							else
@@ -611,7 +612,7 @@ public class CExecuter implements Runnable
 						{
 							if( Privilage >3 ) 
 							{
-								Set<CBookStats> rez=db.getBookViews(Work.getMsgMap().get("isbn"),Work.getMsgMap().get("year"));
+								Set<CBookStats> rez=db.getFullBookViews(Work.getMsgMap().get("isbn"),Work.getMsgMap().get("year"));
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),rez);
 							}
 							else

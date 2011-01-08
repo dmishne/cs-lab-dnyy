@@ -845,10 +845,10 @@ public class CDBInteractionGenerator
 	}
 
 
-	/*public Set<CBookStats> getBookViews(String isbn, String year) {
+	public Set<CBookStats> getFullBookViews(String isbn, String year) {
 		// TODO Auto-generated method stub
 		return null;
-	}*/
+	}
 
 	public Map<String,Integer> getBookViews(String isbn, String year)
 	{
