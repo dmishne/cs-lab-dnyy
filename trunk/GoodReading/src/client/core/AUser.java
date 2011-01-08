@@ -152,7 +152,7 @@ public abstract class AUser implements Serializable{
 	}
 	
 	
-	@SuppressWarnings("unchecked")
+	
 	public LinkedList<CBook> searchBook(HashMap<String,String> book_param) throws Exception
 	{
 		CEntry EntryToSrv =null;
@@ -195,8 +195,9 @@ public abstract class AUser implements Serializable{
 	    if(!book_param.get("labels").isEmpty())
 	                search_param.put("labels", (String)book_param.get("labels"));
 	    EntryToSrv = new CEntry("SearchBook",search_param,m_userName,m_UserSessionId);
-		LinkedList<CBook> result = (LinkedList<CBook>) CClientConnector.getInstance().messageToServer(EntryToSrv);
-	   
+		Object res =  CClientConnector.getInstance().messageToServer(EntryToSrv);
+		@SuppressWarnings("unchecked")
+		LinkedList<CBook> result = (LinkedList<CBook>)res;
 		return result;
 		
 	}

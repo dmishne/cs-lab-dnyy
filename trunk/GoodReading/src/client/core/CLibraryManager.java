@@ -48,41 +48,48 @@ public class CLibraryManager extends CLibrarian{
 	}
 	
 	
-	public void updateUserDetails (String UserName, String firstName, String lastName, int userID, String birthDay, String adress, String[] payType, EActor privilage, boolean suspend) throws Exception
+	public String updateUserDetails (String UserName, String firstName, String lastName, int userID, String birthDay, String adress, String[] payType, EActor privilage, boolean suspend) throws Exception
 	{
 		CEntry entryToSrv ;
 		String payChain = new String();
+		String answer;
+		String UnnormalBirthDay = birthDay.substring(6, 10)+"-"+birthDay.substring(3, 5)+"-"+birthDay.substring(0, 2);
 		Map<String,String> newUDetails = new HashMap<String,String>();
 		if(!UserName.isEmpty())
-		           newUDetails.put("username", UserName);
+		{
+		    newUDetails.put("username", UserName);
+		
+			if(!firstName.isEmpty())
+			           newUDetails.put("firstname", firstName);
+			if(!lastName.isEmpty())
+		               newUDetails.put("lastname", lastName);
+			if(userID != 0)   
+				       newUDetails.put("userid", Integer.toString(userID));
+			if(!birthDay.isEmpty())
+				       newUDetails.put("birthday", UnnormalBirthDay);
+			if(!adress.isEmpty())
+				       newUDetails.put("adress", adress);
+			for(String pt : payType)
+				if(pt != null)
+			           payChain =  pt + "-";
+			if(!payChain.isEmpty())
+			        newUDetails.put("paytypes", payChain);		
+			if(privilage != null)
+		               newUDetails.put("privilage", privilage.toString());
+			if(suspend)
+				   newUDetails.put("suspend", "true");
+			else if (!suspend)
+				   newUDetails.put("suspend", "false");
+			entryToSrv = new CEntry("EditUser",newUDetails, this.getUserName(),this.getUserSessionId());
+			Object ans=CClientConnector.getInstance().messageToServer(entryToSrv);
+			if( ans instanceof String )
+			{
+				answer = ans.toString();
+				return answer;
+			}
 		else
 			throw new IOException("Error occurred! Update fail");
-		if(!firstName.isEmpty())
-		           newUDetails.put("firstname", firstName);
-		if(!lastName.isEmpty())
-	               newUDetails.put("lastname", lastName);
-		if(userID != 0)   
-			       newUDetails.put("userid", Integer.toString(userID));
-		if(!birthDay.isEmpty())
-			       newUDetails.put("birthday", birthDay);
-		if(!adress.isEmpty())
-			       newUDetails.put("adress", adress);
-		for(String pt : payType)
-			if(pt != null)
-		           payChain =  pt + "-";
-		if(!payChain.isEmpty())
-		        newUDetails.put("paytypes", payChain);		
-		if(privilage != null)
-	               newUDetails.put("privilage", privilage.toString());
-		if(suspend)
-			   newUDetails.put("suspend", "true");
-		else if (!suspend)
-			   newUDetails.put("suspend", "false");
-		entryToSrv = new CEntry("EditUser",newUDetails, this.getUserName(),this.getUserSessionId());
-		Object arg=CClientConnector.getInstance().messageToServer(entryToSrv);
-		if( arg instanceof String )
-			;//System.out.println(arg);
-		else ;//System.out.println(arg.toString());//TODO:continue here / remove stubs
+	   }
+		return "Fail";
 	}
-	
 }
