@@ -23,12 +23,13 @@ public class CLibrarian extends AUser{
 	}
 	
 	
-	public void addNewBook(String title, String author, String isbn, String release, String publisher, String summary, String price, String topic, String subtopic, String lable, String TOC, boolean vis, String lang, String[] fileType) throws IOException, Exception
+	public String addNewBook(String title, String author, String isbn, String release, String publisher, String summary, String price, String topic, String subtopic, String lable, String TOC, boolean vis, String lang, String[] fileType) throws IOException, Exception
 	{
 		CEntry entryToSrv;
 		HashMap<String, String> newBook = new HashMap<String, String>();
 		String invisible = "false";
 		String format = "";
+		String answer;
 		// check date
 		Pattern pd = Pattern.compile("(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})");
 		Matcher md = pd.matcher(release);
@@ -90,8 +91,14 @@ public class CLibrarian extends AUser{
 			newBook.put("languages", lang);
 			newBook.put("format", format);
 			entryToSrv = new CEntry("AddBook", newBook, this.getUserName(),this.getUserSessionId());
-			CClientConnector.getInstance().messageToServer(entryToSrv);
+			Object ans = CClientConnector.getInstance().messageToServer(entryToSrv);
+			if(ans instanceof String)
+			{
+			       answer = ans.toString(); 
+			       return answer;
+			}
 		}
+		return "Fail";
 	}
 	
 	
@@ -136,12 +143,13 @@ public class CLibrarian extends AUser{
 	}
 	
 	
-	public void updateBookDetails(String isbn, String title, String author, String release, String publisher, String summary, String price, String topic, String lable, String TOC, boolean vis, String lang, String[] fileType) throws Exception
+	public String updateBookDetails(String isbn, String title, String author, String release, String publisher, String summary, String price, String topic, String lable, String TOC, boolean vis, String lang, String[] fileType) throws Exception
 	{
 		CEntry entryToSrv ;
 		HashMap<String, String> newBookDetails = new HashMap<String, String>();
 		String invisible = "false";
 		String format = "";
+		String answer;
 		Pattern pd = Pattern.compile("(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})");
 		Matcher md = pd.matcher(release);
 		if(!md.matches()){
@@ -198,14 +206,21 @@ public class CLibrarian extends AUser{
 			newBookDetails.put("languages", lang);
 			newBookDetails.put("format", format);
 			entryToSrv = new CEntry("EditBook",newBookDetails, this.getUserName(),this.getUserSessionId());
-			CClientConnector.getInstance().messageToServer(entryToSrv);
+			Object ans = CClientConnector.getInstance().messageToServer(entryToSrv);
+			if(ans instanceof String)
+			{
+			       answer = ans.toString(); 
+			       return answer;
+			}
 		}
+		return "Fail";
 	}
 	
 	
-	public void deleteReview( String title, String author, String isbn) throws Exception
+	public String deleteReview( String title, String author, String isbn) throws Exception
 	{
 		CEntry entryToSrv ;
+		String answer;
 		Map<String, String> delReview = new HashMap<String, String>();
 		
 	    if(title.isEmpty() || author.isEmpty() || isbn.isEmpty())
@@ -217,54 +232,45 @@ public class CLibrarian extends AUser{
 			delReview.put("author", author);
 			delReview.put("isbn", isbn);
 			entryToSrv = new CEntry("DeleteReview",delReview, this.getUserName(),this.getUserSessionId());
-			CClientConnector.getInstance().messageToServer(entryToSrv);	
+			Object ans = CClientConnector.getInstance().messageToServer(entryToSrv);
+			if(ans instanceof String)
+			{
+			       answer = ans.toString(); 
+			       return answer;
+			}
 		}
+	    return "Fail";
 	}
 	
 	
-	public void deleteBook(String isbn, String[] fileType) throws Exception
+	public String deleteBook(String isbn) throws Exception
 	{
 		CEntry entryToSrv ;
 		Map<String, String> delBook = new HashMap<String, String>();
-		String format = "";
+		String answer;
 		if(isbn.isEmpty())
-			throw new IOException("Book ISBN is a must!");
-		else if(fileType.length < 1)
-			throw new IOException("Book's File Type is a must!");
-		else if (fileType.length > 0)
-		{
-			format = "";
-			for(int i = 0; i< fileType.length ; i++)
-			{
-				if(fileType[i] != null)
-					if(format.equals(""))
-						format = format + fileType[i];				
-					else
-						format = format + "," + fileType[i];
-			}
+			throw new IOException("Book ISBN is a must!");		
 			delBook.put("isbn", isbn);
-		//	delBook.put("format", format);
 			entryToSrv = new CEntry("DeleteBook", delBook, this.getUserName(), this.getUserSessionId());
-			CClientConnector.getInstance().messageToServer(entryToSrv);
-		}
+			Object ans = CClientConnector.getInstance().messageToServer(entryToSrv);
+			if(ans instanceof String)
+			{
+			       answer = ans.toString(); 
+			       return answer;
+			}
+	    return "Fail";
 	}
 	
 	
-	public boolean isValidDate(String inDate) {
+	protected boolean isValidDate(String inDate) {
 
 	    if (inDate == null)
 	      return false;
-
-	    //set the format to use as a constructor argument
-	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	    
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");	    
 	    if (inDate.trim().length() != dateFormat.toPattern().length())
 	      return false;
-
-	    dateFormat.setLenient(false);
-	    
+	    dateFormat.setLenient(false);	    
 	    try {
-	      //parse the inDate parameter
 	      dateFormat.parse(inDate.trim());
 	    }
 	    catch (ParseException pe) {

@@ -560,8 +560,9 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
                                         	formats[i] = "doc";                            	
                                         }
                                         
-                                        ((CLibrarian)AUser.getInstance()).addNewBook(jTextField_title.getText(), jTextField_author.getText(), jTextField_isbn.getText(), jTextField_r_date.getText(), jTextField_publisher.getText(), jTextArea_summary.getText(),jTextField_price.getText(), jTextField_topic.getText(),jTextField_subtopic.getText() ,jTextField_label.getText(), jTextArea_toc.getText(), jCheckBox_visibilityCheck.isSelected(), jTextField_lang.getText(),formats);
+                                        String answer = ((CLibrarian)AUser.getInstance()).addNewBook(jTextField_title.getText(), jTextField_author.getText(), jTextField_isbn.getText(), jTextField_r_date.getText(), jTextField_publisher.getText(), jTextArea_summary.getText(),jTextField_price.getText(), jTextField_topic.getText(),jTextField_subtopic.getText() ,jTextField_label.getText(), jTextArea_toc.getText(), jCheckBox_visibilityCheck.isSelected(), jTextField_lang.getText(),formats);
                                         setLastChoice(ANBDecision.ADDBOOK);
+                                        JOptionPane.showMessageDialog(null, answer ,"Server answer : ",JOptionPane.INFORMATION_MESSAGE);
                                         this.setVisible(false);
                                         } catch (Exception e) {
                                                 JOptionPane.showMessageDialog(null, e.getMessage() ,"Error",JOptionPane.ERROR_MESSAGE);

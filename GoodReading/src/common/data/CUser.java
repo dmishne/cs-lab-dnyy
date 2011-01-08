@@ -144,6 +144,12 @@ public class CUser implements Serializable{
 	public String getBirthDay() {
 		return m_birthDay;
 	}
+	
+	
+	public String getNormalBirthDay() {
+		String normalBD = m_birthDay.substring(8, 10) + "-" + m_birthDay.substring(5, 7) + "-" + m_birthDay.substring(0, 4);
+		return normalBD;
+	}
 
 
 	/**

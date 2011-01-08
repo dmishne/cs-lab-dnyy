@@ -234,7 +234,7 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 			}
 			try {
 				answer = (String) ((CReader)AUser.getInstance()).submitReview(m_newReview.get("title"),m_newReview.get("review") , CBookDetailPanel.getBook().getM_ISBN());
-				JOptionPane.showMessageDialog(null, answer ,"OK",JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, answer ,"Server Answer :",JOptionPane.INFORMATION_MESSAGE);
 				this.setLastChoice(ESRDecision.SUBMIT);
 				this.setVisible(false);
 			} catch (Exception e) {

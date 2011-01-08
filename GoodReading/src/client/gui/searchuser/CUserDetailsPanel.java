@@ -16,6 +16,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
@@ -341,7 +342,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 			jTextField_birthDay.setEditable(false);
 			jTextField_birthDay.setSize(new Dimension(200, 26));
 			jTextField_birthDay.setLocation(new Point(120, 232));
-			jTextField_birthDay.setText(chosenUser.getBirthDay());
+			jTextField_birthDay.setText(chosenUser.getNormalBirthDay());
 		}
 		return jTextField_birthDay;
 	}
@@ -509,8 +510,8 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 			else if(jComboBox_privilage.getSelectedItem().toString() == "Librarian")
 				privilage = EActor.Librarian;			
 				try {
-					((CLibraryManager)AUser.getInstance()).updateUserDetails(chosenUser.getM_userName(), jTextField_firstName.getText(), jTextField_lastName.getText(), Integer.parseInt(jTextField_userID.getText()), jTextField_birthDay.getText(), jTextField_adress.getText(), paytypes, privilage, jCheckBox_suspend.isSelected());
-					
+					String answer = ((CLibraryManager)AUser.getInstance()).updateUserDetails(chosenUser.getM_userName(), jTextField_firstName.getText(), jTextField_lastName.getText(), Integer.parseInt(jTextField_userID.getText()), jTextField_birthDay.getText(), jTextField_adress.getText(), paytypes, privilage, jCheckBox_suspend.isSelected());
+					JOptionPane.showMessageDialog(null, answer ,"Server answer :",JOptionPane.INFORMATION_MESSAGE);
 				} catch (NumberFormatException e) {
 					System.out.println("Can't convert from String to Integer");
 				} catch (Exception e) {

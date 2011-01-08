@@ -209,8 +209,13 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 			score = 5;
 		}
 		try {
-			String ans = ((CReader)AUser.getInstance()).addScore(m_book.getM_ISBN(),score);
-			JOptionPane.showMessageDialog(null, ans, "Server Answer :",JOptionPane.INFORMATION_MESSAGE);
+			if(AUser.getInstance().getPrivilege() != EActor.Librarian   &&  AUser.getInstance().getPrivilege() != EActor.LibraryManager)
+			{
+				String ans = ((CReader)AUser.getInstance()).addScore(m_book.getM_ISBN(),score);
+				JOptionPane.showMessageDialog(null, ans, "Server Answer :",JOptionPane.INFORMATION_MESSAGE);
+			}
+			else
+				JOptionPane.showMessageDialog(null, "You have no authorization for this action !", "Message :",JOptionPane.ERROR_MESSAGE);
 		}
 		catch(Exception e)
 		{
