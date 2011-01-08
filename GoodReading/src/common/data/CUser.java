@@ -53,6 +53,11 @@ public class CUser implements Serializable{
 	    		b_suspend=true;
 	    		m_privilege=EActor.None;
 	    		break;
+	    	case(0):
+	    		//user ban
+	    		b_suspend=true;
+	    		m_privilege=EActor.None;
+	    		break;
 	    	case(1):
 	    		m_privilege=EActor.User;
 	    		break;
@@ -110,18 +115,13 @@ public class CUser implements Serializable{
 	 * @return the m_privilege
 	 */
 	public EActor getM_privilege() {
+		if(m_privilege == EActor.None)
+			return EActor.User;
 		return m_privilege;
 	}
 
 
-	/**
-	 * @param b_suspend the b_suspend to set
-	 */
-	public void setSuspend(boolean b_suspend) {
-		this.b_suspend = b_suspend;
-	}
-
-
+	
 	/**
 	 * @return the b_suspend
 	 */
@@ -193,7 +193,9 @@ public class CUser implements Serializable{
 
 
 	public boolean isB_suspend() {
-		return b_suspend;
+		if(m_privilege == EActor.None)
+			return true;
+		return false;
 	}
 
 

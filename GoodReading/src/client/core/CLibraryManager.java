@@ -79,7 +79,10 @@ public class CLibraryManager extends CLibrarian{
 		else if (!suspend)
 			   newUDetails.put("suspend", "false");
 		entryToSrv = new CEntry("EditUser",newUDetails, this.getUserName(),this.getUserSessionId());
-		CClientConnector.getInstance().messageToServer(entryToSrv);
+		Object arg=CClientConnector.getInstance().messageToServer(entryToSrv);
+		if( arg instanceof String )
+			;//System.out.println(arg);
+		else ;//System.out.println(arg.toString());//TODO:continue here / remove stubs
 	}
 	
 }
