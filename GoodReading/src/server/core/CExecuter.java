@@ -1,12 +1,5 @@
 package server.core;
 
-import client.core.AUser;
-import client.core.EActor;
-
-import common.api.CEntry;
-import common.api.CListOptions;
-import common.data.*;
-import ocsf.server.ConnectionToClient;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,7 +9,18 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import ocsf.server.ConnectionToClient;
 import server.db.CDBInteractionGenerator;
+import client.core.AUser;
+
+import common.api.CEntry;
+import common.api.CListOptions;
+import common.data.CBook;
+import common.data.CBookReview;
+import common.data.CBookStats;
+import common.data.CFile;
+import common.data.CPurchaseStats;
+import common.data.CUser;
 
 
 public class CExecuter implements Runnable

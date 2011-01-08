@@ -13,15 +13,18 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import server.core.CServerConstants;
-
-import common.data.*;
-
-
 import client.core.AUser;
 import client.core.CLibrarian;
 import client.core.CLibraryManager;
 import client.core.CReader;
 import client.core.EActor;
+
+import common.data.CBook;
+import common.data.CBookReview;
+import common.data.CBookStats;
+import common.data.CFile;
+import common.data.CPurchaseStats;
+import common.data.CUser;
 
 public class CDBInteractionGenerator 
 {
