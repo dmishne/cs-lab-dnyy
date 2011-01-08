@@ -717,17 +717,17 @@ public class CDBInteractionGenerator
 	}
 
 	public CFile getBook(String isbn, String format) {
-		CFile cf = new CFile(format);
+		CFile cf=null;
 		ResultSet rs;
 		try {
 			rs = this.MySQLQuery("CALL GetBook ('"+ isbn +"','"+ format +"');");
 			if(rs.next())
 				{
-					cf.setChars(rs.getBlob("book").getBytes(0, (int)(rs.getBlob("book").length())));
+					cf=new CFile(rs.getBlob("book"));//.getBytes (1, (int)( rs.getBlob("book").length() ))  );
 				}
 		} catch (Exception e) 
 		{	 System.out.println("GetBook() Exception while reading data from result set (FactoryData() "+e.getMessage());	}
-		return null;
+		return cf;
 	}
 
 	public LinkedList<CUser> SearchUser(Map<String, String> params) {
@@ -953,7 +953,7 @@ public class CDBInteractionGenerator
 	public boolean UploadFile(String isbn, String format, CFile file) {
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
-			int i = st.executeUpdate("CALL InsertFile ('"+ isbn +"','"+ format +"','"+ file.getChars() +"');");
+			int i = st.executeUpdate("CALL InsertFile ('"+ isbn +"','"+ format +"','"+ file.getChars().toString() +"');");
 			if(i == 1) return true;	
 		} catch (SQLException e) {
 			System.out.println("UploadFile():SQL exception: "+e.getErrorCode()+" "+e.getMessage());  }

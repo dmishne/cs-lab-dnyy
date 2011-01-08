@@ -75,7 +75,12 @@ public class CGoodReadingServer {
  			 info.setVisible(true);
 			} catch(Exception e) { System.out.println("Can't get ip address: "+e.getMessage()); }
 			}
-		
+		try {
+		CFile arg=new CFile("c:/library/1234.pdf"); //
+		arg.saveFile("c:/library/a.pdf");
+		arg=CDBInteractionGenerator.GetInstance().getBook("1234","pdf");
+		arg.saveFile("c:/library/b.pdf");
+		} catch (Exception e) { System.out.println("AARRG!!"); }
 		//	CFile arg=new CFile("c:/library/asd.pdf");
 		
 	//	CDBInteractionGenerator.GetInstance().MySQLInsertBlobFile(new CFile("arg.txt").getFilearray().toString());
