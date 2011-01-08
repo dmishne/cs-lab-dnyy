@@ -8,16 +8,25 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.Blob;
+import java.sql.SQLException;
 
 public class CFile implements Serializable
 {
 	private byte [] m_file;
-		
+	public CFile(byte [] arg)
+	{
+		this.m_file=arg;
+	}
 	public CFile(String path)
 	{
 		m_file=getFile(path);
 	}
 	
+	public CFile(Blob blob) throws SQLException {
+		m_file=blob.getBytes(1, (int) blob.length());
+		int i=1;
+	}
 	private static byte[] getFile(String path)
 	{
 		try {
@@ -50,6 +59,8 @@ public class CFile implements Serializable
 		this.m_file = m_file;
 	}
 
+	
+	
 	public static boolean saveFile(String path, byte[] mybytearray)
 	{
 		try {
@@ -62,15 +73,39 @@ public class CFile implements Serializable
 		    return true;
 	    
 		} catch (FileNotFoundException e) {
-			System.out.println("Error getting file "+ path+": "+e.getMessage());		}
+			System.out.println("Error saving file "+ path+": "+e.getMessage());		}
 		catch(IOException e) {
-			System.out.println("Error getting file "+ path+": "+e.getMessage());	
+			System.out.println("Error saving file "+ path+": "+e.getMessage());	
 		}
 		return false;
 	}
 
+	public boolean saveFile(String path)
+	{
+		try {
+			// set output stream to write file in filesystem
+			FileOutputStream fos = new FileOutputStream(path); 
+			BufferedOutputStream bos = new BufferedOutputStream( fos);	    
+		    
+		    bos.write(m_file, 0 , m_file.length); //write out file
+		    bos.flush(); //close buffer
+		    bos.close();
+		    return true;
+	    
+		} catch (FileNotFoundException e) {
+			System.out.println("Error saving file "+ path+": "+e.getMessage());		}
+		catch(IOException e) {
+			System.out.println("Error saving file "+ path+": "+e.getMessage());		}
+		
+		
+		return false;
+	}
+	
+	
 	public byte [] getFilearray() {
 		return m_file;
 	}
+
+	
 	
 }
