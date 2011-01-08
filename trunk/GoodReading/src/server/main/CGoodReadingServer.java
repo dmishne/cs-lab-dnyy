@@ -3,6 +3,7 @@ package server.main;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -18,6 +19,7 @@ import client.core.AUser;
 
 import common.data.CBook;
 import common.data.CBookReview;
+import common.data.CBookStats;
 import common.data.CFile;
 
 import server.core.CExecuter;
@@ -162,7 +164,15 @@ public class CGoodReadingServer {
 			e.printStackTrace();
 		}
 	*/	
-		
+	//	System.out.print(CDBInteractionGenerator.GetInstance().getBookSales("012345", "2011"));
+	/*	Set<CBookStats> s = new HashSet<CBookStats>();
+		s = CDBInteractionGenerator.GetInstance().getFullBookViews("1234", "2010");
+		Iterator<CBookStats> it = s.iterator();
+		while(it.hasNext())
+		{
+			System.out.println(it.next().getFullName());
+		}
+	*/			
 		
 		//at last, we check that everthing is working
 	/*
