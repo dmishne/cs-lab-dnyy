@@ -844,6 +844,12 @@ public class CDBInteractionGenerator
 		return mp;
 	}
 
+
+	/*public Set<CBookStats> getBookViews(String isbn, String year) {
+		// TODO Auto-generated method stub
+		return null;
+	}*/
+
 	public Map<String,Integer> getBookViews(String isbn, String year)
 	{
 		Map<String,Integer> mp = new HashMap<String,Integer>();
@@ -1015,6 +1021,17 @@ public class CDBInteractionGenerator
 		//method deletes Credit card for user.
 		//on fail THROW EXCEPTION. (counting on it in executer)
 		throw new Exception("arg");
+	}
+
+
+	public Set<CPurchaseStats> getUserPurchases(String username, String year) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Set<CBookStats> getBookSales(String isbn, String year) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
