@@ -595,20 +595,47 @@ public class CExecuter implements Runnable
 							else
 							    CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans.toArray(new String[ans.size()]));
 						}//end of GetFormats
+
 						
-						else if(Work.getMsgType().compareTo("UserPurchases") == 0)
+						else if(Work.getMsgType().compareTo("getBookSales") == 0)
 						{
 							if( Privilage >3 ) 
 							{
-								Set<CPurchaseStats> rez=db.getUserPurchases(Work.getMsgMap().get("username"),Work.getMsgMap().get("year"));
+								Map<String,Integer> rez=db.getBookSales(Work.getMsgMap().get("isbn"),Work.getMsgMap().get("year"));
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),rez);
 							}
 							else
 							    CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"User must have privilage!");
 						
-						}//end of UserPurchases
+						}//end of getBookSales HISTOGRAM
 						
-						else if(Work.getMsgType().compareTo("BookViews") == 0)
+						
+						else if(Work.getMsgType().compareTo("getBookViews") == 0)
+						{
+							if( Privilage >3 ) 
+							{
+								Map<String,Integer> rez=db.getBookViews(Work.getMsgMap().get("isbn"),Work.getMsgMap().get("year"));
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),rez);
+							}
+							else
+							    CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"User must have privilage!");
+						
+						}//end of getBookViews HISTOGRAM
+						
+						
+						else if(Work.getMsgType().compareTo("UserFullUserPurchases") == 0)
+						{
+							if( Privilage >3 ) 
+							{
+								Set<CPurchaseStats> rez=db.getFullUserPurchases(Work.getMsgMap().get("username"),Work.getMsgMap().get("year"));
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),rez);
+							}
+							else
+							    CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"User must have privilage!");
+						
+						}//end of UserFullUserPurchases
+						
+						else if(Work.getMsgType().compareTo("FullBookViews") == 0)
 						{
 							if( Privilage >3 ) 
 							{
@@ -618,16 +645,16 @@ public class CExecuter implements Runnable
 							else
 							    CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"User must have privilage!");
 						}//end of BookViews
-						else if(Work.getMsgType().compareTo("BookSales") == 0)
+						else if(Work.getMsgType().compareTo("FullBookSales") == 0)
 						{
 							if( Privilage >3 ) 
 							{
-								Set<CBookStats> rez=db.getBookSales(Work.getMsgMap().get("isbn"),Work.getMsgMap().get("year"));
+								Set<CBookStats> rez=db.getFullBookSales(Work.getMsgMap().get("isbn"),Work.getMsgMap().get("year"));
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),rez);
 							}
 							else
 							    CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"User must have privilage!");
-						}//end of BookSales
+						}//end of FullBookSales
 						
 						
 											
