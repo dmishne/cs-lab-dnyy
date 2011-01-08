@@ -36,6 +36,7 @@ public class CGoodReadingServer {
 	 */
 	public static void main(String[] args) {
 		/*
+		 * 			load properties (configuration)
 		 *   		start up server,
 		 *  		first comes DB
 		 *  		second comes in the CStandbyUnit, Executer SHOULD go after standby unit, for he calls for an instance of it, however there is no limitation currently, it will justmake some of the code redundant to call it first

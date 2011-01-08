@@ -619,7 +619,7 @@ public class CExecuter implements Runnable
 								else {
 									Map<String,String> n=new HashMap<String,String>();
 									n.put("username", arg.get("username"));
-									usr=db.SearchUser(n).getFirst(); //should only hold 1 user!
+									usr=db.SearchUser(n).getFirst(); //should only hold 1 user! TODO: fix wildcard issue
 
 									arg.remove("username");
 									if(!arg.keySet().isEmpty())
@@ -643,7 +643,7 @@ public class CExecuter implements Runnable
 										}
 							
 									
-									if(db.editUser(usr))
+									else if(db.editUser(usr) && (!arg.containsKey("suspend") || !Boolean.parseBoolean(arg.get("suspend"))) )
 										{
 										if( arg.containsKey("privilage"))
 											{
