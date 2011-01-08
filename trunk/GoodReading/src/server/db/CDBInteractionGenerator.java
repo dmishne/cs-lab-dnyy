@@ -635,7 +635,6 @@ public class CDBInteractionGenerator
 				ans.add("Credit Card");
 			cc.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		*/
@@ -1024,13 +1023,19 @@ public class CDBInteractionGenerator
 	}
 
 
-	public Set<CPurchaseStats> getUserPurchases(String username, String year) {
+	public Set<CPurchaseStats> getFullUserPurchases(String username, String year) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Set<CBookStats> getBookSales(String isbn, String year) {
+	public Set<CBookStats> getFullBookSales(String isbn, String year) {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Map<String, Integer> getBookSales(String isbn, String year) {
+		// TODO Auto-generated method stub
+		//return short version of report (for histogram
 		return null;
 	}
 
