@@ -1,6 +1,8 @@
 package client.core;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,24 +36,27 @@ public class CReader extends AUser{
 		Object OResult = null;
 		
 		Map <String,String> fromGui = new HashMap<String,String>();
-		
-		
+		Pattern pd = Pattern.compile("(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Punct})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})+(\\p{Digit})");
+		Matcher md = pd.matcher(Expire);
+		if(!md.matches()){
+			throw new IOException("Invalid Date format!");
+		}		
 		Pattern pu = Pattern.compile("(\\p{Digit})+");
 		Matcher mu = pu.matcher(CreditCardNumber);
 		boolean b = mu.matches();
-		mu = pu.matcher(Expire);
-		b &= mu.matches();
 		mu = pu.matcher(UserID);
 		b &= mu.matches();
 		if(!b){
 			throw new IOException("Invalid Input, Use Only Digits");
 		}
-
-		fromGui.put("type", "once");
+        String UnnormalExpire = Expire.substring(6, 10)+"-"+Expire.substring(3, 5)+"-"+Expire.substring(0, 2);
+        if(!isValidDate(UnnormalExpire))
+			 throw new IOException("No such date !");
+        fromGui.put("type", "once");
 		if(PayType == "CreditCard")
 	    {
 			fromGui.put("cc_num", CreditCardNumber);
-			fromGui.put("cc_expire", Expire);
+			fromGui.put("cc_expire", UnnormalExpire);
 			fromGui.put("cc_id", UserID);
 	    }
 		else
@@ -184,6 +189,24 @@ public class CReader extends AUser{
 		   return answer;
 		}
 	}
+	
+	
+	protected boolean isValidDate(String inDate) {
+
+	    if (inDate == null)
+	      return false;
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");	    
+	    if (inDate.trim().length() != dateFormat.toPattern().length())
+	      return false;
+	    dateFormat.setLenient(false);	    
+	    try {
+	      dateFormat.parse(inDate.trim());
+	    }
+	    catch (ParseException pe) {
+	      return false;
+	    }
+	    return true;
+	  }
 	
 	
 }
