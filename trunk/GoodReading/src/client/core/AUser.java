@@ -3,6 +3,8 @@ package client.core;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,8 +27,14 @@ public abstract class AUser implements Serializable{
 		   private int 	   m_UserSessionId;
 		   
 		   
-		
-
+	/**	
+	 * @param FirstName   the real first name of user
+	 * @param LastName   the real last name of user
+	 * @param UserId   the user's real id number 
+	 * @param UserName   the nick name to use in program,need for authorization
+	 * @param Privilege   the actual priority of the user
+	 * @param SessionID   the connection serial number to server
+	 */
     public AUser(String FirstName, String LastName, int UserId, String UserName, EActor Privilege, int SessionID)
     {
     	FirstName = FirstName.replace("\"", "");
@@ -39,11 +47,20 @@ public abstract class AUser implements Serializable{
     	m_UserSessionId = SessionID;
     }
     
+    
+    /**
+     * @param username  the authorization name parameter  
+     * @param password  the authorization number parameter
+     * @return Enum  returns the priority of user
+     * @throws Exception  username or password input invalid
+     * @throws Exception  username or password incorrect
+     * @throws Exception unsuccessful messageToServer pass
+     */ 
 	final static public EActor login(String username, String password) throws Exception
 	{	
 		 /*
 		  *  Username && Password input validation 
-		 */
+		  */
 		
 		Pattern pu = Pattern.compile("(\\p{Alpha})+((\\p{Digit})*(\\p{Alpha})*)*");
 		Pattern pp = Pattern.compile("(((\\p{Digit})+(\\p{Alpha})*)+|((\\p{Digit})*(\\p{Alpha})+)+)+");
@@ -77,6 +94,8 @@ public abstract class AUser implements Serializable{
 		throw new IOException("Incorrect Username/Password");
 	}
 	
+	
+	
 	final static public AUser getInstance() throws Exception
 	{
 		if(null == m_actor)
@@ -89,6 +108,8 @@ public abstract class AUser implements Serializable{
 		}
 	}
 	
+	
+
 	final static public void logout()
 	{
 		try
@@ -105,6 +126,8 @@ public abstract class AUser implements Serializable{
 	    }    
 		m_actor = null;
 	}
+	
+	
 	
 	static private void setActor(Object pri)
 	{
@@ -124,14 +147,20 @@ public abstract class AUser implements Serializable{
 	}
 	
 	
-	
+	// check, if we use this?
 	protected void updateAccount (EActor mPrivilege)
 	{
 		m_privilege = mPrivilege;
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @param isbn  the string isbn to focus the search of formats to specific book 
+	 * @return string array of formats for book
+	 * @throws Exception string isbn not recived required parameter 
+	 * @throws Exception unsuccessful messageToServer pass
+	 */
 	public String[] getFileType(String isbn) throws Exception
 	{
 		CEntry EntryToSrv = null;
@@ -152,7 +181,14 @@ public abstract class AUser implements Serializable{
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @param book_param  the HashMap with parameters to focus the search of the book
+	 * @return the LinkedList with Class's named CBook that holds book info
+	 * @throws Exception recived language parameter is not one of available 
+	 * @throws Exception recived topic parameter is not one of available
+	 * @throws Exception unsuccessful messageToServer pass
+	 */
 	public LinkedList<CBook> searchBook(HashMap<String,String> book_param) throws Exception
 	{
 		CEntry EntryToSrv =null;
@@ -202,7 +238,13 @@ public abstract class AUser implements Serializable{
 		
 	}
 	
-	public String[] getSubTopics(String topic) throws Exception
+	
+	/**
+	 * 
+	 * @param topic  the string topic to focus search for bound subtopics 
+	 * @return string array of found subtopics
+	 */
+	public String[] getSubTopics(String topic) 
 	{
 		//CEntry EntryToSrv =null;
 		HashMap<String,String> search_subtopics = new HashMap<String,String>();
@@ -214,7 +256,12 @@ public abstract class AUser implements Serializable{
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @param review_param   the HashMap with parameters to focus the search of the reviews for book
+	 * @return  LinkedList with Class's named CBookReview that holds review info
+	 * @throws Exception  unsuccessful messageToServer pass 
+	 */
 	public LinkedList<CBookReview> searchBookReview(HashMap<String,String> review_param) throws Exception
 	{
 		CEntry EntryToSrv =null;
@@ -231,21 +278,57 @@ public abstract class AUser implements Serializable{
 		LinkedList<CBookReview> result = (LinkedList<CBookReview>)res;
 		return result;
 	}
-		
 	
+	
+	protected boolean isValidDate(String inDate) {
+
+	    if (inDate == null)
+	      return false;
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");	    
+	    if (inDate.trim().length() != dateFormat.toPattern().length())
+	      return false;
+	    dateFormat.setLenient(false);	    
+	    try {
+	      dateFormat.parse(inDate.trim());
+	    }
+	    catch (ParseException pe) {
+	      return false;
+	    }
+	    return true;
+	  }
+	
+		
+	/**
+	 * @return the m_privilege
+	 */
 	public EActor getPrivilege() {
 		return m_privilege;
 	}
 
+	/**
+	 * @param arg   the Enum of type EActor determines priority of user
+	 */
 	public void setPrivilege(EActor arg) {
 		m_privilege = arg;
 	}
+	
+	/**
+	 * @param arg   the string determines first name of user
+	 */
 	public void setFirstName(String arg) {
 		m_firstName = arg;
-	}	
+	}
+	
+	/**
+	 * @param arg   the string determines last name of user
+	 */
 	public void setLastName(String arg) {
 		m_lastName = arg;
 	}
+	
+	/**
+	 * @param arg   the int determines the ID number of user
+	 */
 	public void setID(int arg) {
 		m_userID = arg;
 	}

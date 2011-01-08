@@ -177,7 +177,7 @@ public class CLibrarian extends AUser{
 			throw new IOException("Book Language is a must!");
 		else if(price.isEmpty())
 			throw new IOException("Book Price is a must!");
-		else if(!isValidDate(date))
+		else if(!isValidDate(date))  
 			throw new IOException("Wrong date!");
 		else if(fileType.length < 1)
 			throw new IOException("Book's File Type is a must!");
@@ -260,24 +260,6 @@ public class CLibrarian extends AUser{
 			}
 	    return "Fail";
 	}
-	
-	
-	protected boolean isValidDate(String inDate) {
-
-	    if (inDate == null)
-	      return false;
-	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");	    
-	    if (inDate.trim().length() != dateFormat.toPattern().length())
-	      return false;
-	    dateFormat.setLenient(false);	    
-	    try {
-	      dateFormat.parse(inDate.trim());
-	    }
-	    catch (ParseException pe) {
-	      return false;
-	    }
-	    return true;
-	  }
 	
 	
 	public int isMessages() throws Exception
