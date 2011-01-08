@@ -593,7 +593,42 @@ public class CExecuter implements Runnable
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),a);
 							else
 							    CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans.toArray(new String[ans.size()]));
-						}//end of GetFormats	
+						}//end of GetFormats
+						
+						else if(Work.getMsgType().compareTo("UserPurchases") == 0)
+						{
+							if( Privilage >3 ) 
+							{
+								Set<CPurchaseStats> rez=db.getUserPurchases(Work.getMsgMap().get("username"),Work.getMsgMap().get("year"));
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),rez);
+							}
+							else
+							    CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"User must have privilage!");
+						
+						}//end of UserPurchases
+						
+						else if(Work.getMsgType().compareTo("BookViews") == 0)
+						{
+							if( Privilage >3 ) 
+							{
+								Set<CBookStats> rez=db.getBookViews(Work.getMsgMap().get("isbn"),Work.getMsgMap().get("year"));
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),rez);
+							}
+							else
+							    CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"User must have privilage!");
+						}//end of BookViews
+						else if(Work.getMsgType().compareTo("BookSales") == 0)
+						{
+							if( Privilage >3 ) 
+							{
+								Set<CBookStats> rez=db.getBookSales(Work.getMsgMap().get("isbn"),Work.getMsgMap().get("year"));
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),rez);
+							}
+							else
+							    CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"User must have privilage!");
+						}//end of BookSales
+						
+						
 											
 						else if(Work.getMsgType().compareTo("SearchUser") == 0)
 						{
@@ -703,8 +738,8 @@ public class CExecuter implements Runnable
 	
 	
 
-	private boolean ChangePayments(CUser usr, String newpays) {
-		// TODO Auto-generated method stub
+	private boolean ChangePayments(CUser usr, String newpays) 
+	{
 		CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
 		//get current state
 		LinkedList<String> curr=db.getUserPayments(usr.getM_userName());
