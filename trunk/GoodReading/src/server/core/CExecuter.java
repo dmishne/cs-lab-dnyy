@@ -46,7 +46,6 @@ public class CExecuter implements Runnable
 		m_obj=new CExecuter();
 		m_obj.m_sleeping=true;
 		m_obj.m_generator = new Random( 19580427 );
-		//new Thread(m_obj).start();
 		m_obj.m_ThreadHolder=new Thread(m_obj);
 		m_obj.m_ThreadHolder.start();
 	}
@@ -68,7 +67,6 @@ public class CExecuter implements Runnable
 				}
 				Work=CStandbyUnit.GetInstance().getEntryFromQueue();
 				/*handle entry from standby unit*/
-				//((CClient_Entry) msg).getSessionID() = m_generator.nextInt();
 				if(Work.isLogin())
 				{
 					//make sure nobody's using the selected key
@@ -511,23 +509,24 @@ public class CExecuter implements Runnable
 									
 									//(String m_ISBN, String m_author, String m_title, String m_release, String m_publisher,				 String m_summary,double m_price, long m_score_count,double m_score,String m_topic, String m_lables, String m_TOC,boolean m_invisible, String m_language)
 									//we got book by isbn, now we need to edit data:
-								
 									if(arg.containsKey("title"))
 										a.settitle(arg.get("title"));
+									if(arg.containsKey("release"))
+										a.setrelease_date(arg.get("release"));
 									 if(arg.containsKey("author"))
 										a.setauthor(arg.get("author"));
-									 if(arg.containsKey("lable"))
-										a.setlables(arg.get("lable"));
+									 if(arg.containsKey("lables"))
+										a.setlables(arg.get("lables"));
 									 if(arg.containsKey("publisher"))
 										a.setpublisher(arg.get("publisher"));
 									 if(arg.containsKey("summary"))
 										a.setsummary(arg.get("summary"));
 									 if(arg.containsKey("topic"))
 										 a.settopic(arg.get("topic"));
-									 if(arg.containsKey("TOC"))
+									 if(arg.containsKey("toc"))
 										a.setTOC(arg.get("toc"));
-									 if(arg.containsKey("language"))
-										a.setlanguage(arg.get("language"));
+									 if(arg.containsKey("languages"))
+										a.setlanguage(arg.get("languages"));
 									 if(arg.containsKey("price"))
 										a.setprice(Double.parseDouble(arg.get("price")));
 									 if(arg.containsKey("invisible") && Privilage >3)
@@ -544,6 +543,7 @@ public class CExecuter implements Runnable
 										if(arg.containsKey("format"))
 										{
 											count=arg.get("format").split(",").length;
+											if(arg.get("format") != null && arg.get("format").compareTo("") != 0)
 											for(String s: arg.get("format").split(","))
 												if( db.UploadFile(arg.get("isbn"),s,new CFile(CServerConstants.DEFAULT_Global_Library_Path()+arg.get("isbn")+"."+s)) )
 													count--;
@@ -612,15 +612,21 @@ public class CExecuter implements Runnable
 						
 						else if(Work.getMsgType().compareTo("EditUser") == 0)
 						{
-							CUser usr;
+							CUser usr=null;
 							Map<String,String> arg=Work.getMsgMap();
 							if(!arg.containsKey("username"))
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"no username specified!");
 								else {
 									Map<String,String> n=new HashMap<String,String>();
-									n.put("username", arg.get("username"));
-									usr=db.SearchUser(n).getFirst(); //should only hold 1 user! TODO: fix wildcard issue
-
+									
+									n.put("username", arg.get("username"));	//make sure we have the right user
+				
+									for(CUser u:db.SearchUser(n))
+										if(arg.get("username").compareTo(u.getM_userName()) == 0)
+											usr=u;
+									
+									
+									//set attributes of usr
 									arg.remove("username");
 									if(!arg.keySet().isEmpty())
 									for(String a:arg.keySet())
@@ -635,6 +641,8 @@ public class CExecuter implements Runnable
 											usr.setBirthDay(arg.get(a));
 										
 									}
+									
+									//take care of suspend
 									if(arg.containsKey("suspend") && Boolean.parseBoolean(arg.get("suspend")))
 										{
 											db.SetUserPriv(usr,0);
