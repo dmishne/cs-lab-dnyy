@@ -11,7 +11,6 @@ import common.data.CFile;
 
 public class CGoodReadingServer {
 
-	
 	final public static int Version = 0;
 	final public static int Revision = 1;
 	
@@ -27,16 +26,46 @@ public class CGoodReadingServer {
 		 *	TODO:	next we should ??  
 		 */
 		CServerConstants.Config(); //load all properties
+		CServerInfo info = null;
 	
+		if (CServerConstants.POP_WINDOW())
+		{
+		try {
+			 info = new CServerInfo("GoodReadingServer V" + Version + "." + Revision);
+			 info.setVisible(true);
+			 Thread.sleep(1000);
+		} 
+		catch(Exception e) { System.out.println("Can't get ip address: "+e.getMessage()); }
+		}
+		
 		CDBInteractionGenerator.GetInstance();		//.ServerUpdateLog("Server Started loading at "+ (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime())));
-		if(CStandbyUnit.GetInstance() == null)
-			{
-				System.out.println("Problem Instanciating Standby Unit");
-				CDBInteractionGenerator.GetInstance().ServerUpdateLog("Problem Instanciating Standby Unit");
+		if(info != null)
+		{
+			info.incProgress();
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
-		else {
+		}
+		if(CStandbyUnit.GetInstance() == null)
+		{
+			System.out.println("Problem Instanciating Standby Unit");
+			CDBInteractionGenerator.GetInstance().ServerUpdateLog("Problem Instanciating Standby Unit");
+		}
+		else 
+		{
 			try {
 				CStandbyUnit.GetInstance().listen();
+				if(info != null)
+				{
+					info.incProgress();
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
 			} catch (IOException e) {
 				System.out.println("Error - Couldn't listen to client");
 				CDBInteractionGenerator.GetInstance().ServerUpdateLog("Error - Couldn't listen to client");
@@ -45,26 +74,40 @@ public class CGoodReadingServer {
 			CDBInteractionGenerator.GetInstance().ServerUpdateLog("Standby Unit online and waiting");
 		}
 		if(CExecuter.GetInstance() == null)
-				{
-					System.out.println("Problem Instanciating Executer");
-					CDBInteractionGenerator.GetInstance().ServerUpdateLog("Problem Instanciating Executer");
-				}
-		else {
+		{
+			System.out.println("Problem Instanciating Executer");
+			CDBInteractionGenerator.GetInstance().ServerUpdateLog("Problem Instanciating Executer");
+		}
+		else 
+		{
 			System.out.println("Excecuter online and waiting");
 			CDBInteractionGenerator.GetInstance().ServerUpdateLog("Excecuter online and waiting");
-		}
-		if (CServerConstants.POP_WINDOW())
-			{try {
-			 CServerInfo info = new CServerInfo("GoodReadingServer V" + Version + "." + Revision);
- 			 info.setVisible(true);
-			} catch(Exception e) { System.out.println("Can't get ip address: "+e.getMessage()); }
+			if(info != null)
+			{
+				info.incProgress();
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
+		}
+		if(info != null)
+		{
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			info.done();
+		} 
+		
 		try {
-		CFile arg=new CFile("c:/library/1234.pdf"); //
-		arg.saveFile("c:/library/a.pdf");
-		arg=CDBInteractionGenerator.GetInstance().getBook("1234","pdf");
-		arg.saveFile("c:/library/b.pdf");
-		} catch (Exception e) { System.out.println("AARRG!!"); }
+			CFile arg=new CFile("c:/library/1234.pdf"); //
+			arg.saveFile("c:/library/a.pdf");
+			arg=CDBInteractionGenerator.GetInstance().getBook("1234","pdf");
+			arg.saveFile("c:/library/b.pdf");
+			} catch (Exception e) { System.out.println("AARRG!!"); }
 		//	CFile arg=new CFile("c:/library/asd.pdf");
 		
 	//	CDBInteractionGenerator.GetInstance().MySQLInsertBlobFile(new CFile("arg.txt").getFilearray().toString());
@@ -119,7 +162,7 @@ public class CGoodReadingServer {
 	//	CDBInteractionGenerator.GetInstance().StatisticsAddView("1234", "yotam1");
 	//	System.out.print("stat view added");
 	//	System.out.print(CDBInteractionGenerator.GetInstance().hasUserBought("1234", "test2", 12345));
-	//	System.out.print(CDBInteractionGenerator.GetInstance().getBookViews("1234", "2010").toString());
+	//	System.out.print(CDBInteractionGenerator.GetInstance().getBookViews("1234", null, null).toString());
 	/*	Map<String,String> mp1 = new HashMap<String,String>();
 		mp1.put("lastname", "mishne");
 		LinkedList<AUser> cb1 = new LinkedList<AUser>();
@@ -139,6 +182,7 @@ public class CGoodReadingServer {
 		}
 	*/
 	//	System.out.print(CDBInteractionGenerator.GetInstance().deleteReview("1234", "nir"));
+
 	//	System.out.print(CDBInteractionGenerator.GetInstance().AddCC("yotam", "1234567812345678", "2012-01-01", "1231231231"));
 	/*	try {
 			CDBInteractionGenerator.GetInstance().deleteCC("yotam");
