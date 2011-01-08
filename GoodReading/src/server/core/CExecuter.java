@@ -616,7 +616,8 @@ public class CExecuter implements Runnable
 							Map<String,String> arg=Work.getMsgMap();
 							if(!arg.containsKey("username"))
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"no username specified!");
-								else {
+								else 
+								{
 									Map<String,String> n=new HashMap<String,String>();
 									
 									n.put("username", arg.get("username"));	//make sure we have the right user
@@ -672,8 +673,12 @@ public class CExecuter implements Runnable
 												}
 												db.SetUserPriv(usr,p);
 											}
+										boolean paytypes=ChangePayments(usr,arg.get("paytypes"));
 										
-										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"success");
+										if(paytypes)
+											CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"success");
+										else
+											CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"user updated, failed to change PaymentTypes");
 										}
 									else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"fail");
 									
@@ -697,6 +702,34 @@ public class CExecuter implements Runnable
 	
 	
 	
+
+	private boolean ChangePayments(CUser usr, String newpays) {
+		// TODO Auto-generated method stub
+		CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
+		//get current state
+		LinkedList<String> curr=db.getUserPayments(usr.getM_userName());
+		
+		//get new state
+		LinkedList<String> newp=new LinkedList<String>();
+		for(String s: newpays.split(","))
+			newp.add(s);
+		try {
+		for(String s:newp)
+			if(! curr.contains(s) )
+				if(s.toLowerCase().compareTo("monthly") == 0)
+					db.AddMonthly(usr.getM_userName());
+				else if(s.toLowerCase().compareTo("yearly") == 0)
+					db.AddYearly(usr.getM_userName());
+		for(String s:curr)
+			if(!newp.contains(s))
+				if(s.toLowerCase().compareTo("creditcard") != 0)
+					db.deleteSubscription(usr.getM_userName(),s.toLowerCase());
+				else
+					db.deleteCC(usr.getM_userName());
+		return true;
+		} catch(Exception e) { System.out.println("could not update user Payment types: "+e.getMessage()); }
+		return false;
+	}
 
 	public void add(CClientSession s)
 	{
