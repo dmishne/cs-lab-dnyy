@@ -159,7 +159,7 @@ public class CDBInteractionGenerator
 	{
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
-			st.executeUpdate("INSERT INTO credit_card_details VALUES ('"+user+"',"+CCnum+","+CCExpire+","+CCid+")");
+			st.executeUpdate("INSERT INTO credit_card_details VALUES ('"+user+"',"+CCnum+",'"+CCExpire+"',"+CCid+")");
 			return true;	
 		} catch (SQLException e) {
 			System.out.println("AddCC():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
@@ -603,7 +603,7 @@ public class CDBInteractionGenerator
 			
 			if(i == 1) return true;
 		} catch (SQLException e) {
-			System.out.println("insertNewBook():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
+			System.out.println("editBookDetails():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 	return false;
 	}
 
@@ -1012,14 +1012,30 @@ public class CDBInteractionGenerator
 		// TODO Auto-generated method stub
 		//method deletes subscription for username, type = mothly / yearly
 		//on fail THROW EXCEPTION. (counting on it in executer)
-		throw new Exception("arg");
+		int i = 0;
+		try {
+			Statement st = this.m_DB_Connection.createStatement();
+			i = st.executeUpdate("CALL DeleteSubscription ('"+ m_userName +"','"+ type +"');");	
+		} catch (SQLException e) {
+			System.out.println("deleteSubscription():SQL exception: "+e.getErrorCode()+" "+e.getMessage());  }
+		//throw new Exception("arg");
+		if(i == 1) return;
+		throw new Exception("deleteSubscription() failed!");
 	}
 
 	public void deleteCC(String m_userName) throws Exception{
 		// TODO Auto-generated method stub
 		//method deletes Credit card for user.
 		//on fail THROW EXCEPTION. (counting on it in executer)
-		throw new Exception("arg");
+		int i = 0;
+		try {
+			Statement st = this.m_DB_Connection.createStatement();
+			i = st.executeUpdate("CALL DeleteCC ('"+ m_userName +"');");	
+		} catch (SQLException e) {
+			System.out.println("deleteSubscription():SQL exception: "+e.getErrorCode()+" "+e.getMessage());  }
+		//throw new Exception("arg");
+		if(i == 1) return;
+		throw new Exception("deleteCC() failed!");
 	}
 
 

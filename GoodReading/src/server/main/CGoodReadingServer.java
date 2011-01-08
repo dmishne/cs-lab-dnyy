@@ -150,6 +150,13 @@ public class CGoodReadingServer {
 		}
 	*/
 	//	System.out.print(CDBInteractionGenerator.GetInstance().deleteReview("1234", "nir"));
+	//	System.out.print(CDBInteractionGenerator.GetInstance().AddCC("yotam", "1234567812345678", "2012-01-01", "1231231231"));
+	/*	try {
+			CDBInteractionGenerator.GetInstance().deleteCC("yotam");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	*/	
 		
 		
 		//at last, we check that everthing is working
