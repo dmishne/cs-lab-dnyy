@@ -1,14 +1,10 @@
 package client.core;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import common.api.CEntry;
-
 import client.common.*;
 
 
@@ -22,13 +18,18 @@ public class CReader extends AUser{
 	{
 		super(FirstName,LastName,UserId,UserName, pri,SessionID);
 	}
+		
 	
-	
-	
-	
-	/*
-	 *  This method get the payment type from GUI and send 
-	 *   update info to server
+	/**
+	 * @param PayType  the string PayType determines the type pg choosen payment
+	 * @param CreditCardNumber   the string CreditCardNumber is a number of users credit card to use for orders 
+	 * @param Expire   the string Expire is a date of credit card expire date
+	 * @param UserID   the string UserID is ID number bound to this specific credit card
+	 * @return the string answer from server if action was succesful or not
+	 * @throws Exception the recived date isn't have the correct form of dd-mm-yyyy ( - any sign) 
+	 * @throws Exception the credit card number or ID number contains not only digits
+	 * @throws Exception the recived pay type is not credit card while this method activated with other parameters  
+	 * @throws Exception the server answer to this action was NULL (server not succseed)
 	 */
 	public String ArrangePayment(String PayType, String CreditCardNumber, String Expire, String UserID ) throws Exception
 	{
@@ -75,6 +76,14 @@ public class CReader extends AUser{
 		return(SResult);      	          
 	}
 	
+	
+	/**
+	 * 
+	 * @param PayType  the string PayType determines type of payment user purchase
+	 * @return  the string answer from server if action was succesful or not
+	 * @throws Exception this method is not for credit card payment arrangement
+	 * @throws Exception the server answer to this action was NULL (server not succseed)
+	 */
 	public String ArrangePayment(String PayType) throws Exception
 	{
 		CEntry EntryToSrv = null;
@@ -104,7 +113,15 @@ public class CReader extends AUser{
 	
 	
 	
-
+ /**
+  * 
+  * @param reviewTitle  the string reviewTitle is a reviewer title for this review  
+  * @param review  the string review is a review it self
+  * @param isbn  the string isbn is a isbn number of book the review is about
+  * @return the string answer to this action from server
+  * @throws Exception  the title for review was empty
+  * @throws Exception  the review was empty
+  */
 	public String submitReview(String reviewTitle , String review , String isbn) throws Exception 
 	{
 		CEntry EntryToSrv = null;
@@ -134,6 +151,10 @@ public class CReader extends AUser{
 	}
 	
 	
+	/**
+	 * @return  string array with payment types of current user
+	 * @throws Exception unsuccessful messageToServer pass 
+	 */
 	public String[] getPaymentType() throws Exception
 	{
 		CEntry EntryToSrv = null;
@@ -148,7 +169,13 @@ public class CReader extends AUser{
 	
 
 	
-	
+	/**
+	 * @param isbn  the string isbn of book to order
+	 * @param PayType  the string payment type user choosed to pay with
+	 * @return string answer from server if fails or int number of receipt if success 
+	 * @throws Exception not recived one of parameters (isbn or pay type) required for order 
+	 * @throws Exception unsuccessful messageToServer pass
+	 */
 	public String orderBook (String isbn, String PayType) throws Exception 
 	{
 		CEntry EntryToSrv = null;
@@ -172,10 +199,21 @@ public class CReader extends AUser{
 		return "Fail";
 	}
 	
+	
+	/**
+	 * 
+	 * @param isbn  the string isbn to focus on specific book
+	 * @param score  the int score is a value of score to add 
+	 * @return the string answer from server about successnes of action
+	 * @throws Exception not recived book isbn or score is not positive value
+	 * @throws Exception unsuccessful messageToServer pass
+	 */
 	public String addScore(String isbn, int score) throws Exception
 	{
 		CEntry EntryToSrv;
 		Map <String,String> addSc = new HashMap<String,String>();
+		if(score < 0)
+			throw new IOException("The score must be positive !");
 		String sc = Integer.toString(score);
 		String answer;
 		if(isbn.isEmpty())
@@ -189,24 +227,5 @@ public class CReader extends AUser{
 		   return answer;
 		}
 	}
-	
-	
-	protected boolean isValidDate(String inDate) {
-
-	    if (inDate == null)
-	      return false;
-	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");	    
-	    if (inDate.trim().length() != dateFormat.toPattern().length())
-	      return false;
-	    dateFormat.setLenient(false);	    
-	    try {
-	      dateFormat.parse(inDate.trim());
-	    }
-	    catch (ParseException pe) {
-	      return false;
-	    }
-	    return true;
-	  }
-	
 	
 }
