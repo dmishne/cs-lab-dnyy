@@ -51,6 +51,7 @@ import client.gui.searchuser.CUserDetailsPanel;
 import client.gui.searchreview.CShowReviewPanel;
 import client.gui.searchbook.CEditBookDetailsPanel;
 import client.gui.generatereport.CBookReport;
+import client.gui.searchuser.CUserReport;
 
 public class CMainFrame extends JFrame implements ActionListener,ComponentListener{
 
@@ -83,6 +84,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private CEditBookDetailsPanel GUI_CEditBookDetailsPanel = null;
 	private msgChecker m_msgchk = null;
 	private CBookReport GUI_CBookReport = null;
+	private CUserReport GUI_CUserReport = null;
 	
 	/**
 	 * This is the default constructor
@@ -513,7 +515,12 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 					jContentPane.add(getGUI_CShowUserListPanel());
 					GUI_CShowUserListPanel.setVisible(true);
 				}
-				
+				else if(GUI_CUserDetailsPanel.getLastChoice() == CUserDetailsPanel.UDDecision.SHOWREPORT)	
+				{
+					GUI_CUserReport = null;
+					jContentPane.add(getGUI_CUserReport());
+					GUI_CUserReport.setVisible(true);
+				}
 			}
 			else if(source == GUI_CShowReviewPanel)
 			{
@@ -521,6 +528,8 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 				{
 					jContentPane.remove(GUI_CShowReviewPanel);
 					GUI_CShowReviewPanel = null;
+					GUI_CNewReviewsPanel = null;
+					jContentPane.add(getGUI_CNewReviewsPanel());
 					GUI_CNewReviewsPanel.setVisible(true);
 				}
 				else if(GUI_CShowReviewPanel.getFromWhere() == CShowReviewPanel.SRPFrom.RLP)
@@ -546,6 +555,12 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 				GUI_CBookReport = null;
 				GUI_CBookDetailPanel.setVisible(true);
 			}
+			else if(source == GUI_CUserReport)
+			{
+				jContentPane.remove(GUI_CUserReport);
+				GUI_CUserReport = null;
+				GUI_CUserDetailsPanel.setVisible(true);
+			}
 		}
 		catch (Exception e)
 		{
@@ -568,14 +583,17 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		else if(source == m_jMenuItem_ServerInfo)
 		{
 			String IP = JOptionPane.showInputDialog(null, "Enter Server's ip address", "IP Input", JOptionPane.QUESTION_MESSAGE );
-			Pattern pip = Pattern.compile("\\p{Digit}{1,3}\\.\\p{Digit}{1,3}\\.\\p{Digit}{1,3}\\.\\p{Digit}{1,3}");
-			Matcher mu = pip.matcher(IP);
-			if(mu.matches() || (IP.compareTo("localhost") == 0) )
-				CClientConnector.setConnectionHost(IP);
-			else
+			if(IP!=null)
 			{
-				JOptionPane.showMessageDialog(null, "Wrong input" ,"Error",JOptionPane.ERROR_MESSAGE);
-			}	
+				Pattern pip = Pattern.compile("\\p{Digit}{1,3}\\.\\p{Digit}{1,3}\\.\\p{Digit}{1,3}\\.\\p{Digit}{1,3}");
+				Matcher mu = pip.matcher(IP);
+				if(mu.matches() || (IP.compareTo("localhost") == 0) )
+					CClientConnector.setConnectionHost(IP);
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Wrong input" ,"Error",JOptionPane.ERROR_MESSAGE);
+				}	
+			}
 		}
 		else if(source == m_jMenu_goto)
 		{
@@ -985,6 +1003,23 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			GUI_CBookReport.addComponentListener(this);
 		}
 		return GUI_CBookReport;
+	}
+
+	/**
+	 * This method initializes GUI_CUserReport	
+	 * 	
+	 * @return client.gui.searchuser.CUserReport	
+	 * @throws Exception 
+	 */
+	private CUserReport getGUI_CUserReport() throws Exception {
+		if (GUI_CUserReport == null) {
+			GUI_CUserReport = new CUserReport();
+			GUI_CUserReport.setSize(new Dimension(700, 550));
+			GUI_CUserReport.setLocation(new Point(0, 100));
+			GUI_CUserReport.setVisible(false);
+			GUI_CUserReport.addComponentListener(this);
+		}
+		return GUI_CUserReport;
 	}
 
 	

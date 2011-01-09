@@ -224,6 +224,5 @@ public class CNewReviewsPanel extends JPanel implements ActionListener{
 	public LinkedList<CBookReview> getm_Messages() {
 		return m_messages;
 	}
-
 	
 }
