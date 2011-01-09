@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import common.api.CEntry;
+import common.data.CFile;
 import client.common.*;
 
 
@@ -228,4 +229,25 @@ public class CReader extends AUser{
 		}
 	}
 	
+	
+	public void downloadBook(String isbn, String format, String path) throws Exception
+	{
+		CEntry EntryToSrv;
+		Map <String,String> info = new HashMap<String,String>();
+		info.put("isbn",isbn);
+		info.put("format",format);
+		EntryToSrv = new CEntry("DownloadBook",info,this.getUserName(),this.getUserSessionId());
+		Object answer = CClientConnector.getInstance().messageToServer(EntryToSrv);
+		if(answer instanceof CFile)
+		{
+			CFile custFile  = (CFile)answer;
+			String newPath = path.replace("\\" , "/");
+			custFile.saveFile(newPath);
+		}
+		else
+		{
+			throw new Exception("Error, Can't download file");
+		}
+	}
+
 }

@@ -7,6 +7,7 @@ import client.common.CClientConnector;
 import client.gui.searchbook.CBookDetailPanel;
 
 import common.api.CEntry;
+import common.data.CPurchaseStats;
 import common.data.CUser;
 
 public class CLibraryManager extends CLibrarian{
@@ -134,6 +135,35 @@ public class CLibraryManager extends CLibrarian{
 			throw new IOException("Error occurred! Update fail");
 		}
 	}
+
+	@SuppressWarnings("unchecked")
+	public Vector<CPurchaseStats> getUserPurchases(String year) throws Exception
+	{
+		Set<CPurchaseStats> answer;
+		HashMap<String,String> temp = new HashMap<String,String>();
+		temp.put("user",AUser.getInstance().getUserName());
+		temp.put("year",year);
+		CEntry entryToSrv = new CEntry("UserFullUserPurchases",temp, this.getUserName(),this.getUserSessionId());
+		Object ans = CClientConnector.getInstance().messageToServer(entryToSrv);
+		if( ans instanceof Set<?> )
+		{
+			answer = (Set<CPurchaseStats>)ans;
+			Vector<CPurchaseStats> vanswer = new Vector<CPurchaseStats>();
+			Iterator<CPurchaseStats> it = answer.iterator();
+			while(it.hasNext())
+			{
+				vanswer.add(it.next());
+			}
+			return vanswer;
+		}
+		else
+		{
+			throw new IOException("Error occurred! Update fail");
+		}
+	}
+	
+	
+	
 	
 	
 }
