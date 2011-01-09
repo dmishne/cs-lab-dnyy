@@ -102,13 +102,17 @@ public class CGoodReadingServer {
 			info.done();
 		} 
 		
-		try {
+	/*	
+	try {//this is a check for CFile
 			CFile arg=new CFile("c:/library/1234.pdf"); //
+			System.out.println(arg.getFilearray());
 			arg.saveFile("c:/library/a.pdf");
+			System.out.println(arg.getFilearray());
 			arg=CDBInteractionGenerator.GetInstance().getBook("1234","pdf");
+			System.out.println(arg.getFilearray());
 			arg.saveFile("c:/library/b.pdf");
-			} catch (Exception e) { System.out.println("AARRG!!"); }
-		//	CFile arg=new CFile("c:/library/asd.pdf");
+			
+	} catch (Exception e) { System.out.println("AARRG!!"); }*/
 		
 	//	CDBInteractionGenerator.GetInstance().MySQLInsertBlobFile(new CFile("arg.txt").getFilearray().toString());
 	//	System.out.print(CDBInteractionGenerator.GetInstance().getPrice("1234"));

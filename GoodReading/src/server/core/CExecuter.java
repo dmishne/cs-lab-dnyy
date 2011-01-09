@@ -476,8 +476,11 @@ public class CExecuter implements Runnable
 									{
 										count=arg.get("format").split(",").length;
 										for(String a: arg.get("format").split(","))
-											if( db.UploadFile(arg.get("isbn"),a,new CFile("c:/library/"+arg.get("isbn")+"."+a)) )
+										{
+											CFile asd=new CFile("c:/library/"+arg.get("isbn")+"."+a);
+											if( db.UploadFile(arg.get("isbn"),a,asd) )
 												count--;
+										}
 									}
 									if(count == 0)
 										CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"added new book: SUCCESS");
