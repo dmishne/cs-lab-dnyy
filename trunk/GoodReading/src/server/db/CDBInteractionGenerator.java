@@ -159,7 +159,8 @@ public class CDBInteractionGenerator
 		return false;
 	}
 	public boolean AddCC(String user,String CCnum,String CCExpire,String CCid)
-	{
+	{ 
+		if(CCnum.length() > 12) return false;
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
 			st.executeUpdate("INSERT INTO credit_card_details VALUES ('"+user+"',"+CCnum+",'"+CCExpire+"',"+CCid+")");
@@ -853,7 +854,7 @@ public class CDBInteractionGenerator
 
 	public Set<String> getTopics() {
 		// TODO Auto-generated method stub
-		Set<String> m_topics = new HashSet<String>();		
+		Set<String> m_topics = new HashSet<String>();
 		m_topics.add("Action");
 		m_topics.add("Drama");
 		m_topics.add("Comedy");	
@@ -863,7 +864,6 @@ public class CDBInteractionGenerator
 	public LinkedList<String> getSubTopics(String topic) {
 		// TODO Auto-generated method stub
 		LinkedList<String> arg=new LinkedList<String>();
-
 		arg.add("kjafg");
 		arg.add("jkhfs");
 		arg.add("hdsag");
@@ -1089,7 +1089,6 @@ public class CDBInteractionGenerator
 	}
 
 	public Set<CPurchaseStats> getFullUserPurchases(String username, String year) {
-		// TODO Auto-generated method stub
 		ResultSet rs;
 		Set<CPurchaseStats> set = new HashSet<CPurchaseStats>();
 		String fdate = year+"-01-01";
