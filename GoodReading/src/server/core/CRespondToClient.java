@@ -32,10 +32,12 @@ public class CRespondToClient {
 	//send response
 	public void SendResponse(int i, Object msg)
 	{
+		if(i == -1)
+			return;
 		System.out.println("Sending message to client @ "+((ConnectionToClient)m_connections.get(i)).getName());
 		if(msg==null)
-			System.out.print("	null");
-		else System.out.print("	"+msg.toString());
+			System.out.println("	null");
+		else System.out.println("	"+msg.toString());
 		try{
 			if(msg==null)
 				((ConnectionToClient)m_connections.get(i)).sendToClient("null");

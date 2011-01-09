@@ -22,29 +22,54 @@ import common.data.CFile;
 import common.data.CPurchaseStats;
 import common.data.CUser;
 
+/*                     
+ *	
+ *	CExecuter is the glue behind Server, basically it's the Class holding everything together.
+ *
+ *	It's responsibility is basically authenticating a client's request (CEntry) and working to return the client an answer.	
+ *	                          
+ *	@see CStandbyUnit
+ *
+ *	@see CClientSession
+ *	
+ *	@see CDBInteractionGenerator 
+ *
+ *	@see CRespondToClient
+ *
+ */
 
 public class CExecuter implements Runnable
-{
-	private Set <CClientSession> m_sessions;
-	private boolean m_sleeping; // @param indicates Executer is sleeping
-	private Thread m_ThreadHolder;
-	private Random m_generator;	//infrastracture helping to generate random numbers.
-	private static CExecuter m_obj;
+{ 
+	private Set <CClientSession> m_sessions;	// @member m_sessions holds all active sessions
+	private boolean m_sleeping;					// @member m_sleeping indicates Executer is sleeping (waiting for jobs to do
+	private Thread m_ThreadHolder;				// @member m_ThreadHolder holds the thread on which the executer is running
+	private Random m_generator;					// @member m_generator is actually infrastracture helping to generate random numbers.
+	private static CExecuter m_obj;				// @member m_obj is a part of the implementation for the Singleton Design patern
 	
-	/*signleton*/
+	/*
+	 *  
+	 * GetInstance finishes the implementation for the Singleton
+	 * 
+	 * @returns the only instance of CExecuter
+	 * 
+	 */
 	public static CExecuter GetInstance()
 	{
 		if(m_obj == null)
 			init();
 		return m_obj;
 	}
-
+	
 	private CExecuter()
 	{
 	    //Instance is configured inside init()
 		this.m_sessions=new HashSet<CClientSession>();
 	}
-	
+	/*
+	 * 
+	 * Init() creates and initializes the instance of CExecuter
+	 * 
+	 */
 	private static void init()
 	{
 		m_obj=new CExecuter();
@@ -54,22 +79,39 @@ public class CExecuter implements Runnable
 		m_obj.m_ThreadHolder.start();
 	}
 	
+	
+	/*
+	 * run() implements the runnable interface.
+	 * 
+	 * This is the function that runs non-stop while server is up.
+	 * 
+	 * Started in init()
+	 * 
+	 * @see java.lang.Runnable#run()
+	 * 
+	 * @see server.core.CExecuter#init()
+	 * 
+	 */
 	public void run()
 	{
-		CEntry Work;
+		CEntry Work=new CEntry("", new HashMap<String,String>(), "", -1);				 //from now on this will be the referance to the CEntry we're working on.
+		
 		try {
-			while (true)
+			while (true)									//run forever
 			{
+				Work.setSessionID(-1);
 				if(CStandbyUnit.GetInstance().isEmpty())
 				{
 					m_sleeping = true;
 				}
-				synchronized(m_obj)
+				synchronized(m_obj)							//take hold of CExecuter
 				{
-					while(m_sleeping)
+					while(m_sleeping)						//wait if there's no work.
 						wait();
 				}
+				
 				Work=CStandbyUnit.GetInstance().getEntryFromQueue();
+				
 				/*handle entry from standby unit*/
 				if(Work.isLogin())
 				{
@@ -211,7 +253,6 @@ public class CExecuter implements Runnable
 							
 							DeleteBook(Work,Privilage);
 						} //end of DeleteBook
-						
 						
 						else if(Work.getMsgType().compareTo("DeleteFile") == 0)
 						{	
@@ -365,13 +406,10 @@ public class CExecuter implements Runnable
 			CDBInteractionGenerator.GetInstance().ServerUpdateLog("Server fail, can't wait in func run via CExecuter");
 		}
 	}
-	
-	
-	
 
+	//
 	private void SearchUser(CEntry Work, int Privilage) 
 	{
-
 		LinkedList<CUser> ans;
 		Map<String,String> arg=Work.getMsgMap();
 		for(String a: arg.keySet())
@@ -383,10 +421,10 @@ public class CExecuter implements Runnable
 			CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),ans);
 		}
 		else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"no privilage!");
-
-		
 	}
 
+	
+	//
 	private void EditUser(CEntry Work, int Privilage) 
 	{
 		CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
@@ -403,8 +441,7 @@ public class CExecuter implements Runnable
 				for(CUser u:db.SearchUser(n))
 					if(arg.get("username").compareTo(u.getM_userName()) == 0)
 						usr=u;
-				
-				
+	
 				//set attributes of usr
 				arg.remove("username");
 				if(!arg.keySet().isEmpty())
@@ -418,9 +455,7 @@ public class CExecuter implements Runnable
 						usr.setAdress(arg.get(a));
 					else if(a.compareTo("birthday")==0)
 						usr.setBirthDay(arg.get(a));
-					
-				}
-				
+		}
 				//take care of suspend
 				if(arg.containsKey("suspend") && Boolean.parseBoolean(arg.get("suspend")))
 					{
@@ -428,8 +463,7 @@ public class CExecuter implements Runnable
 						if(db.editUser(usr))
 							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"success");
 					}
-		
-				
+			
 				else if(db.editUser(usr) && (!arg.containsKey("suspend") || !Boolean.parseBoolean(arg.get("suspend"))) )
 					{
 					if( arg.containsKey("privilage"))
@@ -461,8 +495,6 @@ public class CExecuter implements Runnable
 				else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"fail");
 				
 			}
-
-		
 	}
 
 	private void EditBook(CEntry Work, int Privilage) 
@@ -543,15 +575,15 @@ public class CExecuter implements Runnable
 						CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Edit book: OK, problems uploading files");
 					} 	
 				}
-				}catch(NullPointerException e)
-			{
-			System.out.println("Can't find book");	
-			CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Edit book: FAIL, couldn't find book");
-			
+				}
+			catch(NullPointerException e)
+				{
+					System.out.println("Can't find book");	
+					CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Edit book: FAIL, couldn't find book");
+				
+				}
 			}
-			}
-		}
-		
+		}	
 	}
 
 	private void AddNewBook(CEntry Work, int Privilage) 
@@ -560,8 +592,6 @@ public class CExecuter implements Runnable
 
 		if (Privilage <3 )
 			CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: user must have sufficient privilage to add new book");
-		
-		
 		
 		else 
 		{
@@ -677,7 +707,7 @@ public class CExecuter implements Runnable
 		else
 		{
 			Map<String,String> arg=Work.getMsgMap();
-			//public boolean editReview(String isbn, String author, String title, String review)
+			
 			int i=arg.get("confirm").compareTo("true");
 			if( i ==0 ) //confirm = true
 				i=1;
@@ -878,7 +908,6 @@ public class CExecuter implements Runnable
 
 	private void ArrangePayment(CEntry Work, int Privilage) 
 	{
-		//TODO: validation for existing params
 		
 		CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
 		if(Privilage <3)
@@ -939,7 +968,7 @@ public class CExecuter implements Runnable
 			if(!curr.isEmpty())		
 			for(String s:curr)
 				if(!newp.contains(s))
-					if(s.toLowerCase().compareTo("creditcard") != 0)
+					if(s.toLowerCase().compareTo("credit card") != 0)
 						db.deleteSubscription(usr.getM_userName(),s.toLowerCase());
 					else
 						db.deleteCC(usr.getM_userName());
@@ -949,12 +978,20 @@ public class CExecuter implements Runnable
 	}
 	
 	
-
-	public void add(CClientSession s)
+	/*
+	 * this function just adds to the m_sessions container/
+	 */
+	private void add(CClientSession s)
 	{
 		this.m_sessions.add(s);
 	}
-	public  boolean isLogged(CEntry Work)
+	
+	/*
+	 *  checking to see if user is logged
+	 *  
+	 *  @returns true if user is logged
+	 */
+	private  boolean isLogged(CEntry Work)
 	{
 	//instead of isLogged() - saves checking if it's logged and then finding the session to kill
 	for(CClientSession t : m_sessions)
@@ -964,24 +1001,35 @@ public class CExecuter implements Runnable
 	}
 	
 
-	
+	/*
+	 * this function is mainly for the use of CStandbyUnit
+	 * 
+	 * Used to let CExecuter know that he's got a CEntry waiting for him.
+	 */
 	public void NotifyOfEntry()
 	{
 		synchronized(m_obj)
 		{
 			if(m_sleeping)
 				m_sleeping=false;
-			notify(); ///need to check that we're not missing on notifyall()
+			notify(); 
 		}
 	}
 	
-	
+	/*
+	 * Infrastracture function.
+	 * @returns a random integer from 0 to 19580427.
+	 */
 	public int Random()
 	{
 		return m_generator.nextInt();
 	}
 
-
+/*
+ * function is used to kill a session
+ * 
+ * this function is open for public for possible future upgrades.
+ */
 	public void Kill(CEntry work) 
 	{
 		if(m_sessions.isEmpty())
@@ -995,13 +1043,18 @@ public class CExecuter implements Runnable
 				}
 	}
 
+	/*
+	 * This function is a getter for the thread running on behalf of CExecuter
+	 * This will only really be relevant if we want to expand the activity (to have 2 or more executers running) 
+	 * Another idea (not implemented) was shutting the server down via killing the threads.
+	 * @return Thread running CExecuter.
+	 */
 	public Thread getThread() {
-		// @param this function will only really be relevant if we want to expand the activity (to have 2 or more executers running) 
 		return m_ThreadHolder;
 	}
 	
 		
-	public void handleLogin(CEntry Work) 
+	private void handleLogin(CEntry Work) 
 	{
 	
 		//call on ValidateLogin to make sure user matches password		
@@ -1033,7 +1086,7 @@ public class CExecuter implements Runnable
 		return ; //quick exit
 		
 	}
-	private static HashMap<String,Integer> ChangeMonthsNames(HashMap<String,Integer> arg)
+	private HashMap<String,Integer> ChangeMonthsNames(HashMap<String,Integer> arg)
 	{
 		HashMap<String,Integer> tmp=new HashMap<String,Integer>(arg);
 		arg.clear();
