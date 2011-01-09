@@ -28,7 +28,7 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 
 	public enum EBDDecision
 	{
-		BACK,REVIEW,ORDER,EDITBOOK
+		BACK,REVIEW,ORDER,EDITBOOK,REPORT
 	}
 	
 	private static final long serialVersionUID = 1L;
@@ -43,6 +43,7 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 	private JButton m_jButton_publishReview = null;
 	private EBDDecision m_lastChoice = EBDDecision.BACK;  //  @jve:decl-index=0:
 	private JButton m_jButton_EditBook = null;
+	private JButton m_jButton_Report = null;
 
 	/**
 	 * This is the default constructor
@@ -93,10 +94,14 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 			this.add(getM_jButton_publishReview(), null);
 			this.add(getM_jButton_Purchase_BDP(), null);
 		}
-		else if(AUser.getInstance().getPrivilege() == EActor.Librarian ||
-				AUser.getInstance().getPrivilege() == EActor.LibraryManager )
+		else if(AUser.getInstance().getPrivilege() == EActor.Librarian)
 		{
 			this.add(getM_jButton_EditBook(), null);
+		}
+		else if(AUser.getInstance().getPrivilege() == EActor.LibraryManager)
+		{
+			this.add(getM_jButton_EditBook(), null);
+			this.add(getM_jButton_Report(), null);
 		}
 	}
 
@@ -144,6 +149,11 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 		else if(source == m_jButton_EditBook)
 		{
 			this.setLastChoice(EBDDecision.EDITBOOK);
+			this.setVisible(false);
+		}
+		else if(source == m_jButton_Report)
+		{
+			this.setLastChoice(EBDDecision.REPORT);
 			this.setVisible(false);
 		}
 	}
@@ -294,6 +304,22 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 			m_jButton_EditBook.addActionListener(this);
 		}
 		return m_jButton_EditBook;
+	}
+
+	/**
+	 * This method initializes m_jButton_Report	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getM_jButton_Report() {
+		if (m_jButton_Report == null) {
+			m_jButton_Report = new JButton();
+			m_jButton_Report.setText("Report");
+			m_jButton_Report.setLocation(new Point(62, 420));
+			m_jButton_Report.setSize(new Dimension(150, 34));
+			m_jButton_Report.addActionListener(this);
+		}
+		return m_jButton_Report;
 	}
 	
 }  //  @jve:decl-index=0:visual-constraint="20,-195"
