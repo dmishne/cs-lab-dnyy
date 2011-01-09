@@ -14,6 +14,8 @@ import java.sql.SQLException;
 public class CFile implements Serializable
 {
 	private byte [] m_file;
+	
+	
 	public CFile(byte [] arg)
 	{
 		this.m_file=arg;
@@ -23,10 +25,15 @@ public class CFile implements Serializable
 		m_file=getFile(path);
 	}
 	
-	public CFile(Blob blob) throws SQLException {
-		m_file=blob.getBytes(1, (int) blob.length());
-		int i=1;
+	
+	public CFile(Blob blob) throws SQLException 
+	{
+		
+		m_file=blob.getBytes(1, (int) blob.length());//toString().replace("com.mysql.jdbc.Blob","[B").getBytes();
+	
+		int i;
 	}
+	
 	private static byte[] getFile(String path)
 	{
 		try {
@@ -100,7 +107,6 @@ public class CFile implements Serializable
 		
 		return false;
 	}
-	
 	
 	public byte [] getFilearray() {
 		return m_file;
