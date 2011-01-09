@@ -545,9 +545,23 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			}
 			else if(source == GUI_CEditBookDetailsPanel)
 			{
-				jContentPane.remove(GUI_CEditBookDetailsPanel);
+				jContentPane.remove(GUI_CEditBookDetailsPanel);		
+				if(GUI_CEditBookDetailsPanel.getLastChoice() == CEditBookDetailsPanel.EBDDecision.DELETEBOOK)
+				{
+					jContentPane.remove(GUI_CBookDetailPanel);
+					jContentPane.remove(GUI_CSearchResultPanel);
+					
+					GUI_CBookDetailPanel = null;
+					GUI_CSearchResultPanel = null;
+					
+					jContentPane.add(getGUI_CSearchResultPanel());
+					GUI_CSearchResultPanel.setVisible(true);
+				}
+				else
+				{
+					GUI_CBookDetailPanel.setVisible(true);
+				}
 				GUI_CEditBookDetailsPanel = null;
-				GUI_CBookDetailPanel.setVisible(true);
 			}
 			else if(source == GUI_CBookReport)
 			{
