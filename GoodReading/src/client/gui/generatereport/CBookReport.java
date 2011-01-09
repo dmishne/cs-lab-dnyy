@@ -26,6 +26,8 @@ public class CBookReport extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JButton m_jButton_back = null;
 
+	private final String[] m_months = {"Jan","Feb","Mars","Apr","May","June","July","Aug","Sep","Oct","Nov","Dec"};
+	
 	/**
 	 * This is the default constructor
 	 * @throws Exception 
@@ -68,18 +70,14 @@ public class CBookReport extends JPanel implements ActionListener {
 	{
 		DefaultCategoryDataset DCD = new DefaultCategoryDataset();
 		HashMap<String,Integer> bookDataViews = ((CLibraryManager)AUser.getInstance()).getBookViews("2011");
-		Iterator<String> itv = bookDataViews.keySet().iterator();
-		while(itv.hasNext())
+		for(int i=0;i<12;i++)
 		{
-			String month = itv.next();
-			DCD.addValue(bookDataViews.get(month), "Searches", month);
+			DCD.addValue(bookDataViews.get(m_months[i]), "Searches", m_months[i]);
 		}
 		HashMap<String,Integer> bookDataSales = ((CLibraryManager)AUser.getInstance()).getBookSales("2011");
-		Iterator<String> its = bookDataSales.keySet().iterator();
-		while(its.hasNext())
+		for(int i=0;i<12;i++)
 		{
-			String month = its.next();
-			DCD.addValue(bookDataSales.get(month), "Orders", month);
+			DCD.addValue(bookDataSales.get(m_months[i]), "Orders", m_months[i]);
 		}		
 		JFreeChart bookChart = ChartFactory.createBarChart3D(CBookDetailPanel.getBook().getM_title(), "Months", "Total", DCD, PlotOrientation.VERTICAL, true, false, false);
 		bookChart.setBackgroundPaint(new Color(238,238,238));
