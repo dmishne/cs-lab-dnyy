@@ -778,25 +778,33 @@ public class CExecuter implements Runnable
 		
 		//get new state
 		LinkedList<String> newp=new LinkedList<String>();
-		for(String s: newpays.split(","))
-			newp.add(s);
+		if(newpays != null && newpays.compareTo("") != 0)
+			for(String s: newpays.split(","))
+				newp.add(s);
+		
 		try {
-		for(String s:newp)
-			if(! curr.contains(s) )
-				if(s.toLowerCase().compareTo("monthly") == 0)
-					db.AddMonthly(usr.getM_userName());
-				else if(s.toLowerCase().compareTo("yearly") == 0)
-					db.AddYearly(usr.getM_userName());
-		for(String s:curr)
-			if(!newp.contains(s))
-				if(s.toLowerCase().compareTo("creditcard") != 0)
-					db.deleteSubscription(usr.getM_userName(),s.toLowerCase());
-				else
-					db.deleteCC(usr.getM_userName());
-		return true;
+			
+			if(!newp.isEmpty())
+			for(String s:newp)
+				if(! curr.contains(s) )
+					if(s.toLowerCase().compareTo("monthly") == 0)
+						db.AddMonthly(usr.getM_userName());
+					else if(s.toLowerCase().compareTo("yearly") == 0)
+						db.AddYearly(usr.getM_userName());
+			
+			if(!curr.isEmpty())		
+			for(String s:curr)
+				if(!newp.contains(s))
+					if(s.toLowerCase().compareTo("creditcard") != 0)
+						db.deleteSubscription(usr.getM_userName(),s.toLowerCase());
+					else
+						db.deleteCC(usr.getM_userName());
+			return true;
 		} catch(Exception e) { System.out.println("could not update user Payment types: "+e.getMessage()); }
 		return false;
 	}
+	
+	
 
 	public void add(CClientSession s)
 	{
