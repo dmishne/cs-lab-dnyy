@@ -42,6 +42,7 @@ import client.gui.searchbook.CSearchResultPanel;
 import client.gui.searchbook.CSubmitReviewPanel;
 import client.gui.searchreview.CSearchReviewPanel;
 import client.gui.searchreview.CReviewsListPanel;
+import client.gui.CMainMenuPanel.EMMDecision;
 import client.gui.addnewbook.CAddNewBookPanel;
 import client.gui.newmessages.CNewReviewsPanel;
 import client.gui.searchuser.CSearchUserPanel;
@@ -523,6 +524,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 					jContentPane.add(getGUI_CReviewsListPanel());
 					GUI_CReviewsListPanel.setVisible(true);
 				}
+				m_jMenu_messages.setText(String.valueOf(((CLibrarian)AUser.getInstance()).isMessages()) + " Messages");
 			}
 			else if(source == GUI_CEditBookDetailsPanel)
 			{
@@ -583,13 +585,10 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			{
 				jContentPane.removeAll();
 				GUI_CMainMenuPanel = null;
-				GUI_CNewReviewsPanel = null;
 				jContentPane.add(getGUI_CMainMenuPanel());
-				jContentPane.add(getGUI_CNewReviewsPanel());
+				GUI_CMainMenuPanel.setVisible(true);
+				GUI_CMainMenuPanel.setLastChoice(CMainMenuPanel.EMMDecision.NEWMSGS);
 				GUI_CMainMenuPanel.setVisible(false);
-				GUI_CNewReviewsPanel.setVisible(true);
-				pack();
-				validate();
 			}
 			catch(Exception e)
 			{
