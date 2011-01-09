@@ -608,7 +608,7 @@ public class CExecuter implements Runnable
 						{
 							if( Privilage >3 ) 
 							{
-								Map<String,Integer> rez=db.getBookSales(Work.getMsgMap().get("isbn"),Work.getMsgMap().get("year"));
+								Map<String,Integer> rez=ChangeMonthsNames((HashMap<String, Integer>) db.getBookSales(Work.getMsgMap().get("isbn"),Work.getMsgMap().get("year")));
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),rez);
 							}
 							else
@@ -621,7 +621,7 @@ public class CExecuter implements Runnable
 						{
 							if( Privilage >3 ) 
 							{
-								Map<String,Integer> rez=db.getBookViews(Work.getMsgMap().get("isbn"),Work.getMsgMap().get("year"));
+								Map<String,Integer> rez=ChangeMonthsNames((HashMap<String, Integer>)db.getBookViews(Work.getMsgMap().get("isbn"),Work.getMsgMap().get("year")));
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),rez);
 							}
 							else
@@ -892,7 +892,85 @@ public class CExecuter implements Runnable
 		return ; //quick exit
 		
 	}
-	
+	private static HashMap<String,Integer> ChangeMonthsNames(HashMap<String,Integer> arg)
+	{
+		HashMap<String,Integer> tmp=new HashMap<String,Integer>(arg);
+		arg.clear();
+		
+		if(tmp.containsKey("01"))
+			arg.put("Jan",tmp.get("01"));
+		else
+			arg.put("Jan",new Integer(0));
+		
+		
+		if(tmp.containsKey("02"))
+			arg.put("Feb",tmp.get("02"));
+		else
+			arg.put("Feb",new Integer(0));
+		
+		
+		if(tmp.containsKey("03"))
+			arg.put("Mars",tmp.get("03"));
+		else
+			arg.put("Mars",new Integer(0));
+		
+		
+		if(tmp.containsKey("04"))
+			arg.put("Apr",tmp.get("04"));
+		else
+			arg.put("Apr",new Integer(0));
+		
+		
+		if(tmp.containsKey("05"))
+			arg.put("May",tmp.get("05"));
+		else
+			arg.put("May",new Integer(0));
+		
+		
+		if(tmp.containsKey("06"))
+			arg.put("June",tmp.get("06"));
+		else
+			arg.put("June",new Integer(0));
+		
+		
+		if(tmp.containsKey("07"))
+			arg.put("July",tmp.get("07"));
+		else
+			arg.put("July",new Integer(0));
+		
+		
+		if(tmp.containsKey("08"))
+			arg.put("Aug",tmp.get("08"));
+		else
+			arg.put("Aug",new Integer(0));
+		
+		
+		if(tmp.containsKey("09"))
+			arg.put("Sep",tmp.get("09"));
+		else
+			arg.put("Sep",new Integer(0));
+		
+		
+		if(tmp.containsKey("10"))
+			arg.put("Oct",tmp.get("10"));
+		else
+			arg.put("Oct",new Integer(0));
+
+		
+		if(tmp.containsKey("11"))
+			arg.put("Nov",tmp.get("11"));
+		else
+			arg.put("Nov",new Integer(0));
+
+		
+		if(tmp.containsKey("12"))
+			arg.put("Dec",tmp.get("12"));
+		else
+			arg.put("Dec",new Integer(0));
+		
+		
+		return arg;
+	}
 }
 
 
