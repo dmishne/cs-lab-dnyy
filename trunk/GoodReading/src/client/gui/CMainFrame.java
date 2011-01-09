@@ -50,6 +50,7 @@ import client.gui.searchuser.CShowUserListPanel;
 import client.gui.searchuser.CUserDetailsPanel;
 import client.gui.searchreview.CShowReviewPanel;
 import client.gui.searchbook.CEditBookDetailsPanel;
+import client.gui.generatereport.CBookReport;
 
 public class CMainFrame extends JFrame implements ActionListener,ComponentListener{
 
@@ -81,6 +82,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private CShowReviewPanel GUI_CShowReviewPanel = null;
 	private CEditBookDetailsPanel GUI_CEditBookDetailsPanel = null;
 	private msgChecker m_msgchk = null;
+	private CBookReport GUI_CBookReport = null;
 	
 	/**
 	 * This is the default constructor
@@ -376,6 +378,12 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 					GUI_CBookDetailPanel.setVisible(false);
 					GUI_CEditBookDetailsPanel.setVisible(true);
 				}
+				else if(GUI_CBookDetailPanel.getLastChoice() == CBookDetailPanel.EBDDecision.REPORT)
+				{
+					jContentPane.add(getGUI_CBookReport());
+					GUI_CBookDetailPanel.setVisible(false);
+					GUI_CBookReport.setVisible(true);
+				}
 			}
 			else if(source == GUI_CSubmitReviewPanel)
 			{
@@ -530,6 +538,12 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			{
 				jContentPane.remove(GUI_CEditBookDetailsPanel);
 				GUI_CEditBookDetailsPanel = null;
+				GUI_CBookDetailPanel.setVisible(true);
+			}
+			else if(source == GUI_CBookReport)
+			{
+				jContentPane.remove(getGUI_CBookReport());
+				GUI_CBookReport = null;
 				GUI_CBookDetailPanel.setVisible(true);
 			}
 		}
@@ -953,6 +967,24 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			checker = false;
 			m_msgchk.interrupt();
 		}
+	}
+
+	/**
+	 * This method initializes GUI_CBookReport	
+	 * 	
+	 * @return client.gui.generatereport.CBookReport	
+	 * @throws Exception 
+	 */
+	private CBookReport getGUI_CBookReport() throws Exception {
+		if (GUI_CBookReport == null) {
+			GUI_CBookReport = new CBookReport();
+			GUI_CBookReport.setSize(new Dimension(700, 550));
+			GUI_CBookReport.setLocation(new Point(0, 100));
+			GUI_CBookReport.setPreferredSize(new Dimension(700, 550));
+			GUI_CBookReport.setVisible(false);
+			GUI_CBookReport.addComponentListener(this);
+		}
+		return GUI_CBookReport;
 	}
 
 	

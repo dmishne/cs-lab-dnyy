@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.*;
 
 import client.common.CClientConnector;
+import client.gui.searchbook.CBookDetailPanel;
 
 import common.api.CEntry;
 import common.data.CUser;
@@ -92,4 +93,47 @@ public class CLibraryManager extends CLibrarian{
 	   }
 		return "Fail";
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public HashMap<String,Integer> getBookViews(String year) throws Exception
+	{
+		HashMap<String,Integer> answer;
+		HashMap<String,String> temp = new HashMap<String,String>();
+		temp.put("isbn",CBookDetailPanel.getBook().getM_ISBN());
+		temp.put("year",year);
+		CEntry entryToSrv = new CEntry("getBookViews",temp, this.getUserName(),this.getUserSessionId());
+		Object ans = CClientConnector.getInstance().messageToServer(entryToSrv);
+		if( ans instanceof HashMap<?,?> )
+		{
+			answer = (HashMap<String,Integer>)ans;
+			return answer;
+		}
+		else
+		{
+			throw new IOException("Error occurred! Update fail");
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public HashMap<String,Integer> getBookSales(String year) throws Exception
+	{
+		HashMap<String,Integer> answer;
+		HashMap<String,String> temp = new HashMap<String,String>();
+		temp.put("isbn",CBookDetailPanel.getBook().getM_ISBN());
+		temp.put("year",year);
+		CEntry entryToSrv = new CEntry("getBookSales",temp, this.getUserName(),this.getUserSessionId());
+		Object ans = CClientConnector.getInstance().messageToServer(entryToSrv);
+		if( ans instanceof HashMap<?,?> )
+		{
+			answer = (HashMap<String,Integer>)ans;
+			return answer;
+		}
+		else
+		{
+			throw new IOException("Error occurred! Update fail");
+		}
+	}
+	
+	
 }

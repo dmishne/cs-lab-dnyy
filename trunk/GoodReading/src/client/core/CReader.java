@@ -188,10 +188,10 @@ public class CReader extends AUser{
 			throw new IOException("Pay type required for order!");
 		orderInfo.put("paytype", PayType);
 		EntryToSrv = new CEntry("PurchaseBook",orderInfo,this.getUserName(),this.getUserSessionId());
-		Object res = (String)CClientConnector.getInstance().messageToServer(EntryToSrv);
+		Object res = (Integer)CClientConnector.getInstance().messageToServer(EntryToSrv);
 		if(res instanceof Integer)
 		{
-		       receipt_num = ((Integer)res).toString();
+		       receipt_num = String.valueOf(((Integer)res).intValue());
 		       return receipt_num;
 		}
 		else if(res instanceof String)
