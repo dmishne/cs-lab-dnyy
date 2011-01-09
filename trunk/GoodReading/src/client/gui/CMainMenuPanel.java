@@ -13,6 +13,7 @@ import javax.swing.SwingConstants;
 
 import client.core.AUser;
 import client.core.EActor;
+import java.awt.Point;
 
 public class CMainMenuPanel extends JPanel implements ActionListener {
 
@@ -25,7 +26,6 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	private JButton m_jButton_SearchBook_MM = null;
 	private JButton m_jButton_NewMsgs_MM = null;
 	private JButton m_jButton_AddNewBook_MM = null;
-	private JButton m_jButton_Report_MM = null;
 	private JButton m_jButton_SearchUser_MM = null;
 	
 
@@ -67,7 +67,6 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 		this.add(getM_jButton_Search_MM(), null);
 		this.add(getM_jButton_NewMsgs_MM(), null);
 		this.add(getM_jButton_AddNewBook_MM(), null);
-		this.add(getM_jButton_Report_MM(), null);
 		this.add(getM_jButton_SearchUser_MM(), null);
 		this.add(getM_jButton_ArrangePayment(), null);
 		this.add(getM_jButton_SearchReview_MM(), null);
@@ -150,29 +149,6 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * This method initializes m_jButton_Report_MM	
-	 * 	
-	 * @return javax.swing.JButton	
-	 * @throws Exception 
-	 */
-	private JButton getM_jButton_Report_MM() throws Exception {
-		if (m_jButton_Report_MM == null) {
-			m_jButton_Report_MM = new JButton();
-			m_jButton_Report_MM.setBounds(new Rectangle(117, 312, 174, 75));
-			m_jButton_Report_MM.setText("Generate Report");
-		}
-		if(AUser.getInstance().getPrivilege() == EActor.User ||
-		   AUser.getInstance().getPrivilege() == EActor.Reader ||
-		   AUser.getInstance().getPrivilege() == EActor.Librarian)
-		{
-			m_jButton_Report_MM.setVisible(false);
-			m_jButton_Report_MM.setEnabled(false);
-		}
-		return m_jButton_Report_MM;
-	}
-
-
-	/**
 	 * This method initializes m_jButton_ArrangePayment	
 	 * 	
 	 * @return javax.swing.JButton	
@@ -197,9 +173,10 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	private JButton getM_jButton_SearchUser_MM() throws Exception {
 		if (m_jButton_SearchUser_MM == null) {
 			m_jButton_SearchUser_MM = new JButton();
-			m_jButton_SearchUser_MM.setBounds(new Rectangle(408, 312, 174, 75));
 			m_jButton_SearchUser_MM.setText("Search User");
 			m_jButton_SearchUser_MM.addActionListener(this);
+			m_jButton_SearchUser_MM.setSize(new Dimension(174, 75));
+			m_jButton_SearchUser_MM.setLocation(new Point(263, 312));
 		}
 		if(AUser.getInstance().getPrivilege() == EActor.User ||
 		   AUser.getInstance().getPrivilege() == EActor.Reader ||
