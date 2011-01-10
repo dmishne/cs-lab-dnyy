@@ -250,22 +250,44 @@ public class CBook implements Serializable {
 		 m_language=a;
 	}
 
-
-	public void setSubtopic(String m_subtopic) {
-		this.m_subtopic = m_subtopic;
-	}
-
-	
+	//@return topics
 	public String[] gettopics()
 	{
-		return m_topic.split(",");
+		LinkedList<String> arg=new LinkedList<String>();
+		String[] tmp=m_topic.substring(1).split("~");
+		for(String s:tmp)
+		{
+			arg.add(s.split("@")[0]);
+		}
+		
+		return (String[]) arg.toArray();
 	}
 	
-
-	public String[] getSubtopics()
+	public String[] getSubtopics(String topic)
 	{
-		return m_subtopic.split(",");
+		String[] tmp=m_topic.substring(1).split("~");
+		for(String s:tmp)
+		{
+			if(topic.compareTo(s.split("@")[0]) == 0)
+					return s.split("@")[1].split(",");
+		}
+		
+		return null;
 	}
+	//@return sub topics
+	public String[] getSubTopics()
+	{
+		LinkedList<String> arg=new LinkedList<String>();
+		String[] tmp=m_topic.substring(1).split("~");
+		for(String s:tmp)
+		{
+			for(String str:s.split("@")[1].split(","))
+				arg.add(str);
+		}
+		
+		return (String[]) arg.toArray();
+	}
+	
 	
 	
 }
