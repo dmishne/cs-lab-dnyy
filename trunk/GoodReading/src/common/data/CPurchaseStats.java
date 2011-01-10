@@ -27,5 +27,10 @@ public class CPurchaseStats implements Serializable{
 		m_month=m;
 	}
 	
-	
+	public String toString()
+	{
+		String temp = new String();
+		temp+= m_isbn + " - " + m_title + " - " + String.valueOf(m_month);
+		return temp;
+	}
 }

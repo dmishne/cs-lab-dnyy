@@ -137,11 +137,11 @@ public class CLibraryManager extends CLibrarian{
 	}
 
 	@SuppressWarnings("unchecked")
-	public Vector<CPurchaseStats> getUserPurchases(String year) throws Exception
+	public Vector<CPurchaseStats> getUserPurchases(String username,String year) throws Exception
 	{
 		Set<CPurchaseStats> answer;
 		HashMap<String,String> temp = new HashMap<String,String>();
-		temp.put("user",AUser.getInstance().getUserName());
+		temp.put("username",username);
 		temp.put("year",year);
 		CEntry entryToSrv = new CEntry("UserFullUserPurchases",temp, this.getUserName(),this.getUserSessionId());
 		Object ans = CClientConnector.getInstance().messageToServer(entryToSrv);

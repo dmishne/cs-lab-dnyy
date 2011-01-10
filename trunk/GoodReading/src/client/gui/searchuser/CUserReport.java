@@ -66,7 +66,7 @@ public class CUserReport extends JPanel implements ActionListener {
 	 */
 	private JList getM_jList() throws Exception {
 		if (m_jList == null) {
-			m_jList = new JList(((CLibraryManager)AUser.getInstance()).getUserPurchases("2011"));
+			m_jList = new JList(((CLibraryManager)AUser.getInstance()).getUserPurchases(CShowUserListPanel.getChosenUser().getM_userName(),"2011"));
 			m_jList.setLocation(new Point(50, 50));
 			m_jList.setSize(new Dimension(600, 300));
 		}
@@ -98,7 +98,7 @@ public class CUserReport extends JPanel implements ActionListener {
 		return m_jButton_Back;
 	}
 
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent ae) {
 		this.setVisible(false);
 	}
 	
