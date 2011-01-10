@@ -585,7 +585,26 @@ public class CDBInteractionGenerator
 	{
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
-			st.executeUpdate("CALL InsertBook('"+ isbn +"','"+ title +"','"+ author +"','"+ release_date +"','"+ publisher +"','"+ summary +"',"+ price +","+ score +","+ score_count +",'"+ topic +"','"+ lables +"','"+ toc +"',"+ invisible +",'"+ language +"');");
+			st.executeUpdate("CALL InsertBook('"+ isbn +"','"+ title +"','"+ author +"','"+ release_date +"','"+ publisher +"','"+ summary +"',"+ price +","+ score +","+ score_count +",'"+ null +"','"+ lables +"','"+ toc +"',"+ invisible +",'"+ language +"');");
+	/*		if(!topic.isEmpty()) //handle topic and subtopic insertion
+			{
+				String[] topics = topic.split("~");
+				for (int i = 0; i < topics.length; i++)
+				{
+					String s = topics[i];
+					s = s.substring(0, s.indexOf('~'));
+					String top = s.substring(0, s.indexOf('@'));
+					insertTopic(top);
+					s = s.substring(s.indexOf('@'));
+					String[] subs = s.split(",");
+					for(String ss : subs)
+					{
+						insertSubTopic(top, ss);
+						insertBookTopics(isbn, top, ss);
+					}
+				}
+			}
+			*/
 			return true;	
 		} catch (SQLException e) {
 			System.out.println("insertNewBook():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
@@ -594,17 +613,16 @@ public class CDBInteractionGenerator
 	
 	public boolean editBookDetails(CBook aBook)
 	{
+		//TODO add topics and subtopics in here (like in insert new book)
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
 			//generate good string for Date
 			String a=aBook.getM_release_date().substring(6, 10)+"-"+aBook.getM_release_date().substring(3, 5)+"-"+aBook.getM_release_date().substring(0, 2);
-		
 			int i;		
 			if(aBook.getM_invisible())
-				i = st.executeUpdate("CALL ChangeBookDetails ('"+ aBook.getM_ISBN() +"','"+ aBook.getM_title() +"','"+ aBook.getM_author() +"','"+ a +"','"+ aBook.getM_publisher() +"','"+ aBook.getM_summary() +"',"+ aBook.getM_price() +","+ aBook.getM_score() +","+ aBook.getM_score_count() +",'"+ aBook.getM_topic() +"','"+ aBook.getM_lables() +"','"+ aBook.getM_TOC() +"',1,'"+ aBook.getM_language() +"');");
+				i = st.executeUpdate("CALL ChangeBookDetails ('"+ aBook.getM_ISBN() +"','"+ aBook.getM_title() +"','"+ aBook.getM_author() +"','"+ a +"','"+ aBook.getM_publisher() +"','"+ aBook.getM_summary() +"',"+ aBook.getM_price() +","+ aBook.getM_score() +","+ aBook.getM_score_count() +",'"+ null +"','"+ aBook.getM_lables() +"','"+ aBook.getM_TOC() +"',1,'"+ aBook.getM_language() +"');");
 			else
-				i = st.executeUpdate("CALL ChangeBookDetails ('"+ aBook.getM_ISBN() +"','"+ aBook.getM_title() +"','"+ aBook.getM_author() +"','"+ a +"','"+ aBook.getM_publisher() +"','"+ aBook.getM_summary() +"',"+ aBook.getM_price() +","+ aBook.getM_score() +","+ aBook.getM_score_count() +",'"+ aBook.getM_topic() +"','"+ aBook.getM_lables() +"','"+ aBook.getM_TOC() +"',0,'"+ aBook.getM_language() +"');");
-			
+				i = st.executeUpdate("CALL ChangeBookDetails ('"+ aBook.getM_ISBN() +"','"+ aBook.getM_title() +"','"+ aBook.getM_author() +"','"+ a +"','"+ aBook.getM_publisher() +"','"+ aBook.getM_summary() +"',"+ aBook.getM_price() +","+ aBook.getM_score() +","+ aBook.getM_score_count() +",'"+ null +"','"+ aBook.getM_lables() +"','"+ aBook.getM_TOC() +"',0,'"+ aBook.getM_language() +"');");			
 			if(i == 1) return true;
 		} catch (SQLException e) {
 			System.out.println("editBookDetails():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
@@ -853,23 +871,83 @@ public class CDBInteractionGenerator
 	}
 
 	public Set<String> getTopics() {
-		// TODO Auto-generated method stub
 		Set<String> m_topics = new HashSet<String>();
-		m_topics.add("Action");
-		m_topics.add("Drama");
-		m_topics.add("Comedy");	
+		ResultSet topic;
+		try {
+			topic = this.MySQLQuery("CALL GetTopics ();");
+			while(topic.next())
+				{
+					m_topics.add(topic.getString("topic"));
+				}
+		} catch (Exception e) 
+		{	 System.out.println("getTopics():SQL exception: "+e.getMessage());	}
 		return m_topics;
 	}
 
 	public LinkedList<String> getSubTopics(String topic) {
-		// TODO Auto-generated method stub
-		LinkedList<String> arg=new LinkedList<String>();
-		arg.add("kjafg");
-		arg.add("jkhfs");
-		arg.add("hdsag");
-		return arg;
+		LinkedList<String> m_subTopics =new LinkedList<String>();
+		ResultSet subtopic;
+		try {
+			subtopic = this.MySQLQuery("CALL GetSubTopicsByTopic ('"+ topic +"');");
+			while(subtopic.next())
+				{
+					m_subTopics.add(subtopic.getString("subtopic"));
+				}
+		} catch (Exception e) 
+		{	 System.out.println("getTopics():SQL exception: "+e.getMessage());	}
+		
+		return m_subTopics;
 	}
 
+	public String getBookTopics (String isbn)	{
+		String res = "";
+		String prevTopic = "";
+		ResultSet book;
+		try {
+			book = this.MySQLQuery("CALL GetBookTopics ('"+ isbn +"');");
+			while(book.next())
+				{
+					if(book.getString("topic").compareToIgnoreCase(prevTopic) == 0)
+						res += ","+book.getString("subtopic");
+					res += "~"+book.getString("topic")+"@"+book.getString("subtopic");
+					prevTopic = book.getString("topic");
+				}
+		} catch (Exception e) 
+		{	 System.out.println("getBookTopics():SQL exception: "+e.getMessage());	}
+		return res;
+	}
+	
+	public boolean insertTopic(String topic) {
+		try {
+			Statement st = this.m_DB_Connection.createStatement();
+			int i = st.executeUpdate("CALL InsertTopic ('"+ topic +"');");
+			if(i == 1) return true;	
+		} catch (SQLException e) {
+			System.out.println("insertTopic():SQL exception: "+e.getErrorCode()+" "+e.getMessage());  }
+		return false;
+	}
+	
+	public boolean insertBookTopics(String isbn, String topic, String subTopic)
+	{
+		try {
+			Statement st = this.m_DB_Connection.createStatement();
+			int i = st.executeUpdate("CALL InsertBookTopics ('"+ isbn +"','"+ topic +"','"+ subTopic+"');");
+			if(i == 1) return true;	
+		} catch (SQLException e) {
+			System.out.println("insertBookTopics():SQL exception: "+e.getErrorCode()+" "+e.getMessage());  }
+		return false;
+	}
+	
+	public boolean insertSubTopic(String topic, String subTopic) {
+		try {
+			Statement st = this.m_DB_Connection.createStatement();
+			int i = st.executeUpdate("CALL InsertSubTopic ('"+ topic +"','"+ subTopic+"');");
+			if(i == 1) return true;	
+		} catch (SQLException e) {
+			System.out.println("insertTopic():SQL exception: "+e.getErrorCode()+" "+e.getMessage());  }
+		return false;
+	}
+	
 	public boolean deleteBook(String isbn) {
 		///delete book from DB
 		try {

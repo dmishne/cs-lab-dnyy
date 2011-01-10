@@ -89,6 +89,7 @@ public class CGoodReadingServer {
 			CDBInteractionGenerator.GetInstance().ServerUpdateLog("Standby Unit online and waiting");
 		}
 		
+		
 		/*  Last but not least comes the executer */
 		if(CExecuter.GetInstance() == null)
 		{
@@ -119,7 +120,13 @@ public class CGoodReadingServer {
 			info.done();
 		} 
 		
-	
+	//	System.out.println(CDBInteractionGenerator.GetInstance().insertTopic("Comedy"));
+	//	System.out.println(CDBInteractionGenerator.GetInstance().insertSubTopic("Comedy","SitCom"));
+	//	System.out.println(CDBInteractionGenerator.GetInstance().getTopics().toString());
+	//	System.out.println(CDBInteractionGenerator.GetInstance().getSubTopics("Comedy").toString());
+	//	System.out.println(CDBInteractionGenerator.GetInstance().insertBookTopics("1234", "Comedy", "SitCom"));
+	//	System.out.println(CDBInteractionGenerator.GetInstance().getBookTopics("1234"));
+		System.out.println(CDBInteractionGenerator.GetInstance().insertNewBook("23456", "topic book", "topic1", "200-08-08", "boo", "summ", 7.5, 0, 0, "~topic1@sub1,sub2,sub3~topic2@sub2,sub3~topic3", "lll", "1. 2.", false, "Hebrew"));
 	}
 
 }
