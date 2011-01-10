@@ -126,7 +126,7 @@ public class CGoodReadingServer {
 	//	System.out.println(CDBInteractionGenerator.GetInstance().getSubTopics("Comedy").toString());
 	//	System.out.println(CDBInteractionGenerator.GetInstance().insertBookTopics("1234", "Comedy", "SitCom"));
 	//	System.out.println(CDBInteractionGenerator.GetInstance().getBookTopics("1234"));
-		System.out.println(CDBInteractionGenerator.GetInstance().insertNewBook("23456", "topic book", "topic1", "200-08-08", "boo", "summ", 7.5, 0, 0, "~topic1@sub1,sub2,sub3~topic2@sub2,sub3~topic3", "lll", "1. 2.", false, "Hebrew"));
+	//	System.out.println(CDBInteractionGenerator.GetInstance().insertNewBook("61010101021", "topic book else", "topic11", "2000-08-08", "booz", "summi", 8.5, 0, 0, "~utopic@usub1,usub2,usub3,usub4~utopic2@usub1,usub2,usub3~utopic3@usub1,usub3", "lllll", "1. 2. 3.", false, "English"));
 	}
 
 }

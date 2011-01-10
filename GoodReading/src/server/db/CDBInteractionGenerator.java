@@ -583,28 +583,54 @@ public class CDBInteractionGenerator
 
 	public boolean insertNewBook(String isbn, String title, String author, String release_date, String publisher, String summary, Double price, int score, int score_count,  String topic, String lables, String toc, boolean invisible, String language)
 	{
+		//TODO right now a topic must have a sub topic as well... otherwise its not related to a book
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
 			st.executeUpdate("CALL InsertBook('"+ isbn +"','"+ title +"','"+ author +"','"+ release_date +"','"+ publisher +"','"+ summary +"',"+ price +","+ score +","+ score_count +",'"+ null +"','"+ lables +"','"+ toc +"',"+ invisible +",'"+ language +"');");
-	/*		if(!topic.isEmpty()) //handle topic and subtopic insertion
+			if(!topic.isEmpty()) //handle topic and subtopic insertion
 			{
 				String[] topics = topic.split("~");
-				for (int i = 0; i < topics.length; i++)
+				String s = topic;
+				String top = null;
+				String subs = null;
+				int start = 0;
+				int end = 0;
+				for (int i = 0; i < topics.length-1; i++)
 				{
-					String s = topics[i];
-					s = s.substring(0, s.indexOf('~'));
-					String top = s.substring(0, s.indexOf('@'));
-					insertTopic(top);
-					s = s.substring(s.indexOf('@'));
-					String[] subs = s.split(",");
-					for(String ss : subs)
+					if(s.indexOf("@") != -1)
 					{
-						insertSubTopic(top, ss);
-						insertBookTopics(isbn, top, ss);
+						start = s.indexOf("~");
+						end = s.indexOf("@");
+						top = s.substring(start+1, end);
 					}
+					else 
+					{
+						insertTopic(s.substring(1));
+						return true;
+					}
+					insertTopic(top);
+					s = s.substring(end+1);
+					if(s.indexOf("~") != -1)
+					{
+						subs = s.substring(0, s.indexOf("~"));
+					}
+					else subs = s;
+					int csubs = subs.split(",").length;
+					String ss = null;
+					for(int j = 0; j < csubs; j++)
+					{
+						if(subs.indexOf(",") > 0)
+							ss = subs.substring(0, subs.indexOf(","));
+						else ss = subs;
+						insertBookTopics(isbn, top, ss);
+						subs = subs.substring(subs.indexOf(",")+1);
+					}
+					if(s.indexOf("~") != -1)
+					{
+						s = s.substring(s.indexOf("~"));
+					}else return true;
 				}
 			}
-			*/
 			return true;	
 		} catch (SQLException e) {
 			System.out.println("insertNewBook():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
