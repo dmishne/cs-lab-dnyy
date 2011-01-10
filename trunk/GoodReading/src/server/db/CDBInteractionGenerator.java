@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.Vector;
 
 import server.core.CServerConstants;
 import client.core.AUser;
@@ -1209,4 +1210,12 @@ public class CDBInteractionGenerator
 	}
 	//TODO a query that gives the years in which book were viewed or purchased
 	//TODO a query that gives the rating of a book by a certain function
+
+	public Vector<String> getYears() {
+		// TODO Auto-generated method stub
+		//this method returns the years in which there was activity. 
+		Vector<String> ans=new Vector<String>();
+		ans.add("2008");
+		return ans;
+	}
 }
