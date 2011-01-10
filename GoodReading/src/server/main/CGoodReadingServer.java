@@ -32,8 +32,6 @@ public class CGoodReadingServer {
 		 *	
 		 */
 		
-		CServerConstants.Config(); //load all properties
-		
 		/*  Here starts the server's pop-up */
 		CServerInfo info = null;
 	
@@ -42,10 +40,12 @@ public class CGoodReadingServer {
 		try {
 			 info = new CServerInfo("GoodReadingServer V" + Version + "." + Revision);
 			 info.setVisible(true);
-			 Thread.sleep(1000);
+			 Thread.sleep(3500);
 		} 
 		catch(Exception e) { System.out.println("Can't get ip address: "+e.getMessage()); }
 		}
+		
+		CServerConstants.Config(); //load all properties
 		
 		/*  Here we halted for DBIG to start up */
 		

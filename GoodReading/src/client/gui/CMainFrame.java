@@ -53,6 +53,7 @@ import client.gui.searchreview.CShowReviewPanel;
 import client.gui.searchbook.CEditBookDetailsPanel;
 import client.gui.generatereport.CBookReport;
 import client.gui.searchuser.CUserReport;
+import client.gui.searchbook.CPurchaseReceipt;
 
 public class CMainFrame extends JFrame implements ActionListener,ComponentListener{
 
@@ -87,6 +88,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private msgChecker m_msgchk = null;
 	private CBookReport GUI_CBookReport = null;
 	private CUserReport GUI_CUserReport = null;
+	private CPurchaseReceipt GUI_CPurchaseReceipt = null;
 	
 	/**
 	 * This is the default constructor
@@ -403,6 +405,12 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 					GUI_COrderBookPanel = null;
 					GUI_CBookDetailPanel.setVisible(true);
 				}
+				else if(GUI_COrderBookPanel.getLastChoice() == COrderBookPanel.EOBDecision.SHOWRECEIPT)
+				{
+					GUI_CPurchaseReceipt = null;
+					jContentPane.add(getGUI_CPurchaseReceipt());
+					GUI_CPurchaseReceipt.setVisible(true);
+				}
 			}
 			else if (source == GUI_CSearchReviewPanel)
 			{
@@ -615,6 +623,12 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 				jContentPane.remove(GUI_CUserReport);
 				GUI_CUserReport = null;
 				GUI_CUserDetailsPanel.setVisible(true);
+			}
+			else if(source == GUI_CPurchaseReceipt)
+			{
+				jContentPane.remove(GUI_CPurchaseReceipt);
+				GUI_CPurchaseReceipt = null;
+				GUI_COrderBookPanel.setVisible(true);
 			}
 		}
 		catch (Exception e)
@@ -1089,6 +1103,23 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			GUI_CUserReport.addComponentListener(this);
 		}
 		return GUI_CUserReport;
+	}
+
+	/**
+	 * This method initializes GUI_CPurchaseReceipt	
+	 * 	
+	 * @return client.gui.searchbook.CPurchaseReceipt	
+	 */
+	private CPurchaseReceipt getGUI_CPurchaseReceipt() {
+		if (GUI_CPurchaseReceipt == null) {
+			GUI_CPurchaseReceipt = new CPurchaseReceipt();
+			GUI_CPurchaseReceipt.setPreferredSize(new Dimension(700, 550));
+			GUI_CPurchaseReceipt.setLocation(new Point(0, 100));
+			GUI_CPurchaseReceipt.setSize(new Dimension(700, 550));
+			GUI_CPurchaseReceipt.setVisible(false);
+			GUI_CPurchaseReceipt.addComponentListener(this);
+		}
+		return GUI_CPurchaseReceipt;
 	}
 
 	
