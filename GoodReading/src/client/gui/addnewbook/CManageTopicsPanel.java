@@ -399,7 +399,7 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 		}
 		else if(source == jButton_AddToList_MT)
 		{
-			String toSet = "~";
+			String toSet = "";
 			if((toSet = jComboBox_AvailTopics.getSelectedItem().toString()).compareTo(" ") != 0)
 			   if(jComboBox_AvailSubTopics_MT.getSelectedItem().toString().compareTo("") != 0)  
 				   toSet = toSet + ":" + jComboBox_AvailSubTopics_MT.getSelectedItem().toString();			
