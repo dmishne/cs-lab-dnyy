@@ -366,7 +366,7 @@ public class CDBInteractionGenerator
 		try {
 			data = this.MySQLQuery("SELECT * FROM books "+this.buildSearchBookWhere(msgMap)+";");
 			while(data.next())
-				arg.add(new CBook(data.getString(1),data.getString(2),data.getString(3),data.getString(4),data.getString(5),data.getString(6),data.getFloat(7),data.getInt(8),data.getLong(9),data.getString(10),data.getString(11),data.getString(12),data.getBoolean(13),data.getString(14),"arg")); //TODO: replace "arg" with data.getString(15)
+				arg.add(new CBook(data.getString(1),data.getString(2),data.getString(3),data.getString(4),data.getString(5),data.getString(6),data.getFloat(7),data.getInt(8),data.getLong(9),data.getString(10),data.getString(11),data.getString(12),data.getBoolean(13),data.getString(14),0)); //TODO: replace 0 with data.getString(15) -- book RANK
 		
 			} catch (Exception e) 
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}	
@@ -1242,4 +1242,10 @@ public class CDBInteractionGenerator
 		// function adds topic to DB - if no subtopic can be parsed than add ""
 		return false;
 	}
+	public void SetRank(String isbn,int rank) {
+		// TODO Auto-generated method stub
+		// function changes rank of book
+	}
+	
+	
 }

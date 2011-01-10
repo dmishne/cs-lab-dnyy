@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.Vector;
 
 import ocsf.server.ConnectionToClient;
@@ -43,6 +44,8 @@ public class CExecuter implements Runnable
 { 
 	private Set <CClientSession> m_sessions;	// @member m_sessions holds all active sessions
 	private boolean m_sleeping;					// @member m_sleeping indicates Executer is sleeping (waiting for jobs to do
+	private static boolean m_running=false;		// @member m_running holds the PopCheckRunner boolean to show it if to continue running or pause
+	private static PopCheckRunner m_PopCheckRunner;	// @member m_PopCheckRunner holds the PopCheckRunner thread
 	private Thread m_ThreadHolder;				// @member m_ThreadHolder holds the thread on which the executer is running
 	private Random m_generator;					// @member m_generator is actually infrastracture helping to generate random numbers.
 	private static CExecuter m_obj;				// @member m_obj is a part of the implementation for the Singleton Design patern
@@ -1265,6 +1268,97 @@ public class CExecuter implements Runnable
 		return arg;
 	}
 
+	/*
+	 * function checks popularity of all books in DB and sets their ranks accordingly
+	 */
+	public static void recheckPopularity()
+	{
+		synchronized(CExecuter.m_PopCheckRunner) { //just to make sure there won't be 2 or more checks running simultaneously
+		CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
+		//get all books
+		LinkedList<CBook> blist=db.SearchBook(new HashMap<String,String>());
+		//create a new temp set to hold these
+		TreeSet<CBook> tmp = new TreeSet<CBook>();
+		
+		for(CBook b:blist)
+		{
+			b.setM_rank(  db.GetViews( b.getM_ISBN() ) / CServerConstants.POPULARITY_RATIO()+ db.GetPurchases(b.getM_ISBN())  );
+			tmp.add(b);
+		}
+		int i=1;
+		while(!tmp.isEmpty())
+		{
+			CBook temp=tmp.first();
+			db.SetRank(temp.getM_ISBN(), i++);
+			tmp.remove(temp);
+		}
+		}
+	}
+	
+	
+	
+	
+	//TODO:check these functions tmr
+	
+	//this function is dangerous as it may take a long time until thread returns to caller! 
+	public void stopCheck() throws InterruptedException
+	{
+		if(m_PopCheckRunner == null)
+			return;
+		m_running=false;
+		while(m_PopCheckRunner != null)
+			Thread.sleep(10);
+	}
+	public boolean startCheck(int delay)
+	{
+		//if exists then stop checking
+		if(m_PopCheckRunner != null)
+			return false;
+		
+		//create and start check
+		m_PopCheckRunner=new PopCheckRunner(delay); 
+		m_PopCheckRunner.start();
+		return true;
+	}
+	
+	private class PopCheckRunner extends Thread
+	{
+		private int m_checkdelay;
+		//constructor
+		public PopCheckRunner(int sl)
+		{
+			if(sl <5000)
+				m_checkdelay=5000;
+			else
+				m_checkdelay=sl;
+			
+			m_running=true;
+		}
+		
+		public void run()
+		{
+			while(CExecuter.m_running)
+			{
+				//check popularity
+				CExecuter.recheckPopularity();
+				
+				//go to sleep
+				try 
+				{ 
+					Thread.sleep(m_checkdelay*1000);
+				} catch (InterruptedException e) 
+				{	
+					//if interrupted
+					System.out.println("Popularity check timer halted(can't sleep): "+e.getMessage()); 
+					CExecuter.m_running=false; 
+					CExecuter.m_PopCheckRunner=null;
+					return;	
+				}
+			}
+		}
+		
+	}	//end of PopCheckRunner
+	
 }
 
 
