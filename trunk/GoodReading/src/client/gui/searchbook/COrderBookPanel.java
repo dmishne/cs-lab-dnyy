@@ -1,6 +1,7 @@
 package client.gui.searchbook;
 
 import javax.swing.BorderFactory;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -39,8 +40,7 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 	private JLabel jLabel_chooseFile = null;
 	private EOBDecision m_lastChoice = null;  
 	private static String chosenFileType = null;  //  @jve:decl-index=0:
-	
-
+	private static String m_receipt = null;	
 	
 	/**
 	 * This is the default constructor
@@ -193,7 +193,14 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 	public static String getChosenFileType() {
 		return chosenFileType;
 	}
-
+	
+	/**
+	 * @return the receipt number
+	 */
+	public static String getReceipt()
+	{
+		return m_receipt;
+	}
 
 	/**
 	 * @param chosenFileType the chosenFileType to set
@@ -303,6 +310,7 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 					receipt =((CReader)AUser.getInstance()).orderBook(CBookDetailPanel.getBook().getM_ISBN(),(String)jComboBox_PayType.getSelectedItem() );	       
 					if(receipt.isEmpty() == false)
 					{
+						m_receipt = receipt;
 						jButton_Purchase.setVisible(false);
 						jButton_ShowReceipt.setVisible(true);	
 					}
