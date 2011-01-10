@@ -505,10 +505,10 @@ public class CDBInteractionGenerator
 		return true;
 	}
 
-	public int createReciept(String userName, String isbn, String type) {	
+	public int createReciept(String userName, String isbn, String type,int sid) {	
 		ResultSet rs = null;
 		try {
-			rs = this.MySQLQuery("CALL CreateReciept('"+ userName +"','"+ isbn +"','"+ type+"');");
+			rs = this.MySQLQuery("CALL CreateReciept('"+ userName +"','"+ isbn +"','"+ type+"','"+sid+"');");
 			if(rs.next())
 				{
 					return (rs.getInt("MAX(receipt_id)"));
@@ -1216,6 +1216,9 @@ public class CDBInteractionGenerator
 		//this method returns the years in which there was activity. 
 		Vector<String> ans=new Vector<String>();
 		ans.add("2008");
+		ans.add("2009");
+		ans.add("2010");
+		ans.add("2011");
 		return ans;
 	}
 }
