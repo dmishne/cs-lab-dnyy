@@ -510,7 +510,7 @@ public class CDBInteractionGenerator
 			rs = this.MySQLQuery("CALL CreateReciept('"+ userName +"','"+ isbn +"','"+ type+"');");
 			if(rs.next())
 				{
-					return (rs.getInt("receipt_ID"));
+					return (rs.getInt("MAX(receipt_id)"));
 				}
 		} catch (Exception e) 
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}		
