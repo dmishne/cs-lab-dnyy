@@ -246,7 +246,7 @@ public class CReader extends AUser{
 		}
 		else
 		{
-			throw new Exception("Error, Can't download file");
+			throw new Exception((String)answer);
 		}
 	}
 

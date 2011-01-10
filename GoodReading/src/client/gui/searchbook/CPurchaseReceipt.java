@@ -1,6 +1,7 @@
 package client.gui.searchbook;
 
 import java.awt.GridBagLayout;
+
 import javax.swing.JPanel;
 import java.awt.Dimension;
 import javax.swing.JLabel;
@@ -22,6 +23,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
+
+
+import client.core.*;
 
 import common.data.CBook;
 
@@ -51,7 +55,6 @@ public class CPurchaseReceipt extends JPanel implements ActionListener {
 	 * @return void
 	 */
 	private void initialize() {
-		m_fileChooser = new JFileChooser();
 		m_jLabel_MainLabel = new JLabel();
 		m_jLabel_MainLabel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		m_jLabel_MainLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -103,7 +106,7 @@ public class CPurchaseReceipt extends JPanel implements ActionListener {
 		m_receipt += "Title: " + currBook.getM_title() + "\n";
 		m_receipt += "Author: " + currBook.getM_author() + "\n";
 		m_receipt += "ISBN: " + currBook.getM_ISBN() + "\n";
-		m_receipt += "\n\nTotal Price: " + currBook.getM_price() + "\n";
+		m_receipt += "\n\nTotal Price: " + currBook.getM_price() + "$\n";
 		m_receipt += "\nThank you for buying books with GoodReading";
 		return m_receipt;
 	}
@@ -162,6 +165,7 @@ public class CPurchaseReceipt extends JPanel implements ActionListener {
 		Object source = ae.getSource();
 		if(source == m_jButton_SaveReceipt)
 		{
+			m_fileChooser = new JFileChooser();
 			int returnVal = m_fileChooser.showSaveDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = m_fileChooser.getSelectedFile();
@@ -187,9 +191,27 @@ public class CPurchaseReceipt extends JPanel implements ActionListener {
 				}	
 			}			
 		}
-		else if(source == m_jButton_SaveReceipt)
+		else if(source == m_jButton_SaveFile)
 		{
-			
+			m_fileChooser = new JFileChooser();
+			int returnVal = m_fileChooser.showSaveDialog(this);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				try {
+					File file = m_fileChooser.getSelectedFile();
+					if(file.exists())
+					{
+						int res = JOptionPane.showConfirmDialog(null,"File already exist, Overwrite?", "File Exist", JOptionPane.YES_NO_OPTION);
+						if(res != JOptionPane.YES_OPTION)
+						{
+							return;
+						}
+					}			
+					System.out.println(file.getAbsolutePath());
+					((CReader)AUser.getInstance()).downloadBook(CBookDetailPanel.getBook().getM_ISBN(),COrderBookPanel.getChosenFileType(),file.getAbsolutePath());
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null,e.getMessage(), "ERROR MESSAGE", 1);
+				}
+			}			
 		}
 		else if(source == m_jButton_Back)
 		{
