@@ -560,7 +560,8 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
                                         }
                                         int len = jList_topics.getModel().getSize();
                                         for(int j =0 ; j < len; j++)
-                                        	topics = topics + "~"+ jList_topics.getModel().getElementAt(j);
+                                        	if(jList_topics.getModel().getElementAt(j).toString().compareTo(" ") != 0 &&  jList_topics.getModel().getElementAt(j).toString().compareTo("") != 0)
+                                        	       topics = topics + "~"+ jList_topics.getModel().getElementAt(j);
                                         topics = topics.replace(":", "@");
                                         String answer = ((CLibrarian)AUser.getInstance()).addNewBook(jTextField_title.getText(), jTextField_author.getText(), jTextField_isbn.getText(), jTextField_r_date.getText(), jTextField_publisher.getText(), jTextArea_summary.getText(),jTextField_price.getText(), topics ,jTextField_label.getText(), jTextArea_toc.getText(), jCheckBox_visibilityCheck.isSelected(), jTextField_lang.getText(),formats);
                                         setLastChoice(ANBDecision.ADDBOOK);
