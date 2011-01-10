@@ -45,7 +45,7 @@ public class CUser implements Serializable{
     	m_adress        = data.getString(6) ;
     	setM_pass(data.getString(2)) ;
     	PayTypes=arg;
-       	b_suspend=false;
+       	b_suspend=data.getBoolean("suspended");
     	switch(data.getInt(3))
     	{
 	    	case(-1):
@@ -55,7 +55,6 @@ public class CUser implements Serializable{
 	    		break;
 	    	case(0):
 	    		//user ban
-	    		b_suspend=true;
 	    		m_privilege=EActor.None;
 	    		break;
 	    	case(1):
@@ -115,8 +114,6 @@ public class CUser implements Serializable{
 	 * @return the m_privilege
 	 */
 	public EActor getM_privilege() {
-		if(m_privilege == EActor.None)
-			return EActor.User;
 		return m_privilege;
 	}
 
@@ -127,6 +124,10 @@ public class CUser implements Serializable{
 	 */
 	public boolean isSuspend() {
 		return b_suspend;
+	}
+	public void SetSuspend(boolean arg)
+	{
+		b_suspend=arg;
 	}
 
 
@@ -199,8 +200,6 @@ public class CUser implements Serializable{
 
 
 	public boolean isB_suspend() {
-		if(m_privilege == EActor.None)
-			return true;
 		return false;
 	}
 
