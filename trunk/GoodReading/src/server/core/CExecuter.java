@@ -1086,6 +1086,7 @@ public class CExecuter implements Runnable
 		return ; //quick exit
 		
 	}
+	
 	private HashMap<String,Integer> ChangeMonthsNames(HashMap<String,Integer> arg)
 	{
 		HashMap<String,Integer> tmp=new HashMap<String,Integer>(arg);
@@ -1165,6 +1166,87 @@ public class CExecuter implements Runnable
 		
 		return arg;
 	}
+
+	private HashMap<String,Integer> ChangeLongMonthsNames(HashMap<String,Integer> arg)
+	{
+		HashMap<String,Integer> tmp=new HashMap<String,Integer>(arg);
+		arg.clear();
+		
+		if(tmp.containsKey("01"))
+			arg.put("Jannuar",tmp.get("01"));
+		else
+			arg.put("Jannuar",new Integer(0));
+		
+		
+		if(tmp.containsKey("02"))
+			arg.put("Februar",tmp.get("02"));
+		else
+			arg.put("Februar",new Integer(0));
+		
+		
+		if(tmp.containsKey("03"))
+			arg.put("Mars",tmp.get("03"));
+		else
+			arg.put("Mars",new Integer(0));
+		
+		
+		if(tmp.containsKey("04"))
+			arg.put("April",tmp.get("04"));
+		else
+			arg.put("April",new Integer(0));
+		
+		
+		if(tmp.containsKey("05"))
+			arg.put("May",tmp.get("05"));
+		else
+			arg.put("May",new Integer(0));
+		
+		
+		if(tmp.containsKey("06"))
+			arg.put("June",tmp.get("06"));
+		else
+			arg.put("June",new Integer(0));
+		
+		
+		if(tmp.containsKey("07"))
+			arg.put("July",tmp.get("07"));
+		else
+			arg.put("July",new Integer(0));
+		
+		
+		if(tmp.containsKey("08"))
+			arg.put("August",tmp.get("08"));
+		else
+			arg.put("August",new Integer(0));
+		
+		
+		if(tmp.containsKey("09"))
+			arg.put("September",tmp.get("09"));
+		else
+			arg.put("September",new Integer(0));
+		
+		
+		if(tmp.containsKey("10"))
+			arg.put("October",tmp.get("10"));
+		else
+			arg.put("October",new Integer(0));
+
+		
+		if(tmp.containsKey("11"))
+			arg.put("November",tmp.get("11"));
+		else
+			arg.put("November",new Integer(0));
+
+		
+		if(tmp.containsKey("12"))
+			arg.put("December",tmp.get("12"));
+		else
+			arg.put("December",new Integer(0));
+		
+		
+		return arg;
+	}
+
 }
 
 
