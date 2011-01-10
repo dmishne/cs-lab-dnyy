@@ -217,7 +217,17 @@ public class CExecuter implements Runnable
 							LinkedList<String> rez=db.getSubTopics(Work.getMsgMap().get("topic"));
 							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), rez);
 						}//end of SearchSubtopics
-
+						
+						else if(Work.getMsgType().compareTo("AddTopic") == 0)
+						{	
+							if(!Work.getMsgMap().containsKey("topic"))
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "No topic to add!");
+							else if(!db.addTopic(Work.getMsgMap().get("topic")))
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Failed to add topic "+Work.getMsgMap().get("topic"));
+							else 
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Added topic!");
+						}// end of AddTopic
+						
 						else if(Work.getMsgType().compareTo("SearchBook") == 0)
 						{
 							SearchBook(Work,Privilage);

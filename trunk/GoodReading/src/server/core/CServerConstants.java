@@ -12,6 +12,7 @@ public class CServerConstants {
 	private static String m_DEFAULTHOST="jdbc:mysql://localhost/cslabdnyy";
 	private static String m_DEFAULTUSER="root";
 	private static String m_DEFAULTPASS="m00nkey";
+	private static int POPULARITY_RATIO=10;
 	/*
 	final private static String m_DEFAULTHOST="jdbc:mysql://remote-mysql4.servage.net/cslabdnyy";
 	final private static String m_DEFAULTUSER="cslabdnyy";
@@ -31,6 +32,7 @@ public class CServerConstants {
 		m_DEFAULT_Global_Library_Path=arg.getString("DEFAULT_Global_Library_Path");
 		m_YEARLY_AMMOUNT=Integer.parseInt(arg.getString("YEARLY_AMMOUNT"));
 		m_MONTHLY_AMMOUNT=Integer.parseInt(arg.getString("MONTHLY_AMMOUNT"));
+		POPULARITY_RATIO=Integer.parseInt(arg.getString("POPULARITY_RATIO"));
 		m_DEFAULTHOST=arg.getString("DEFAULTHOST");
 		m_DEFAULTUSER=arg.getString("DEFAULTUSER");
 		m_DEFAULTPASS=arg.getString("DEFAULTPASS");
@@ -72,4 +74,8 @@ public class CServerConstants {
 	public static String DEFAULTPASS() {
 		return m_DEFAULTPASS;
 	}	
+	public static int POPULARITY_RATIO()
+	{
+		return POPULARITY_RATIO;
+	}
 }
