@@ -335,12 +335,13 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 	}
 	
 	public void itemStateChanged(ItemEvent ie) {
-	    if (ie.getItemSelectable() == m_jComboBox_Topics_SBP  &&  s_flag == false) {
+	    if (ie.getItemSelectable() == m_jComboBox_Topics_SBP) {
 	    	if(m_jComboBox_Topics_SBP.getSelectedItem().toString().compareTo(" ") != 0)
 	    	{
 		       try {
 				String[] subtopics = AUser.getInstance().getSubTopics(m_jComboBox_Topics_SBP.getSelectedItem().toString());
 				jComboBox_Subtopics_SBR.setEnabled(true);
+				jComboBox_Subtopics_SBR.removeAllItems();
 				for(String s : subtopics)
 				      jComboBox_Subtopics_SBR.addItem(s);
 				s_flag = true;
@@ -348,12 +349,13 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 				System.out.println("getSubTopics fail");
 			   }
 	    	} 
-	    }
-	    else if (ie.getItemSelectable() == m_jComboBox_Topics_SBP  &&  s_flag == true  &&  m_jComboBox_Topics_SBP.getSelectedItem().toString().compareTo(" ") == 0)
-	    {
-	    	jComboBox_Subtopics_SBR.removeAllItems(); 
-	    	jComboBox_Subtopics_SBR.setEnabled(false);
-			s_flag = false;	
+	    
+		    else if (ie.getItemSelectable() == m_jComboBox_Topics_SBP  &&  s_flag == true  &&  m_jComboBox_Topics_SBP.getSelectedItem().toString().compareTo(" ") == 0)
+		    {
+		    	jComboBox_Subtopics_SBR.removeAllItems(); 
+		    	jComboBox_Subtopics_SBR.setEnabled(false);
+				s_flag = false;	
+		    }
 	    }
 	}
 

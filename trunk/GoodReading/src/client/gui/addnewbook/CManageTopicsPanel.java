@@ -99,13 +99,33 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 		this.add(getJButton_RemoveFromList_MT(), null);
 		if(m_last.compareTo("EBD") == 0)
 		{
-			try {
-				booktopics = CEditBookDetailsPanel.getM_topics();
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, e.getMessage() ,"Error",JOptionPane.ERROR_MESSAGE);
-				}
-			for(String s : booktopics)
-					listModel.addElement(s);
+			JList list =  CEditBookDetailsPanel.getLastList();
+			int size  = list.getModel().getSize();
+		    Object [] last = new String[size];
+		    for (int i = 0; i<size;i++)
+		    {
+		    	last[i] = list.getModel().getElementAt(i);
+		    }
+			for(String s : (String[])last)
+			{
+				s.replace("@", ":");
+				listModel.addElement(s);
+			}
+		}
+		else if(m_last.compareTo("ANB") == 0)
+		{
+			JList list =  CAddNewBookPanel.getLastList();
+			int size  = list.getModel().getSize();
+		    Object [] last = new String[size];
+		    for (int i = 0; i<size;i++)
+		    {
+		    	last[i] = list.getModel().getElementAt(i);
+		    }
+			for(String s : (String[])last)
+			{
+				s.replace("@", ":");
+				listModel.addElement(s);
+			}
 		}
 	}
 
@@ -323,33 +343,35 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 
 
 	public void itemStateChanged(ItemEvent te) {
-		  if (!m_flag && te.getItemSelectable() == jComboBox_AvailTopics)
+		  if (te.getItemSelectable() == jComboBox_AvailTopics)
 		  {
 			  if( jComboBox_AvailTopics.getSelectedItem().toString().compareTo(" ") != 0)
-			  {
-				  jComboBox_AvailSubTopics_MT.setEnabled(true);
+			  {			  
 				  String[] subtopics = {""};
 				try {
-					subtopics = AUser.getInstance().getSubTopics(jComboBox_AvailTopics.getSelectedItem().toString());
+					subtopics = AUser.getInstance().getSubTopics((String)jComboBox_AvailTopics.getSelectedItem());
 				    } catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage() ,"Error",JOptionPane.ERROR_MESSAGE);
 				    }
+				  jComboBox_AvailSubTopics_MT.setEnabled(true);
+				  jComboBox_AvailSubTopics_MT.removeAllItems();
+				  jComboBox_AvailSubTopics_MT.addItem("");
 				  for(String t : subtopics)
 					  jComboBox_AvailSubTopics_MT.addItem(t);			  
 				  jTextField_AddSubTopic_MT.setEditable(true);
 				  jButton_addSubTopic_MT.setEnabled(true);
 				  m_flag = true;
 			  }
+		  
+			  else if(te.getItemSelectable() == jComboBox_AvailTopics && m_flag && jComboBox_AvailTopics.getSelectedItem().toString().compareTo(" ") == 0)
+			  {
+				  jTextField_AddSubTopic_MT.setEditable(false);
+				  jButton_addSubTopic_MT.setEnabled(false);
+				  jComboBox_AvailSubTopics_MT.removeAllItems();
+				  jComboBox_AvailSubTopics_MT.setEnabled(false);
+				  m_flag = false;
+			  }
 		  }
-		  else if(te.getItemSelectable() == jComboBox_AvailTopics && m_flag && jComboBox_AvailTopics.getSelectedItem().toString().compareTo(" ") == 0)
-		  {
-			  jTextField_AddSubTopic_MT.setEditable(false);
-			  jButton_addSubTopic_MT.setEnabled(false);
-			  jComboBox_AvailSubTopics_MT.removeAllItems();
-			  jComboBox_AvailSubTopics_MT.setEnabled(false);
-			  m_flag = false;
-		  }
-		
 	}
 
 	
@@ -378,9 +400,9 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 		else if(source == jButton_AddToList_MT)
 		{
 			String toSet = "~";
-			if((toSet = jComboBox_AvailTopics.getSelectedItem().toString()).compareTo("") != 0)
+			if((toSet = jComboBox_AvailTopics.getSelectedItem().toString()).compareTo(" ") != 0)
 			   if(jComboBox_AvailSubTopics_MT.getSelectedItem().toString().compareTo("") != 0)  
-				   toSet = toSet + "@" + jComboBox_AvailSubTopics_MT.getSelectedItem().toString();			
+				   toSet = toSet + ":" + jComboBox_AvailSubTopics_MT.getSelectedItem().toString();			
 			
 			listModel.addElement(toSet);
 			this.remove(jList_ChoosenTopics_MT);
@@ -405,6 +427,19 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 		}
 	}
 
+	
+	/*public void setLastList(JList lList)
+	{
+		this.remove(jList_ChoosenTopics_MT);
+		this.remove(jScrollPane_ChoosenTopics_MT);
+		jList_ChoosenTopics_MT = lList;
+		jScrollPane_ChoosenTopics_MT = null;
+		jList_ChoosenTopics_MT.setLocation(new Point(118, 276));
+		jList_ChoosenTopics_MT.setSize(new Dimension(274, 54));
+		jList_ChoosenTopics_MT.setEnabled(true);
+		jList_ChoosenTopics_MT.setVisible(true);
+		this.add(getJScrollPane_ChoosenTopics_MT());
+	}*/
 
 	public void valueChanged(ListSelectionEvent a) {
 		if(!a.getValueIsAdjusting())

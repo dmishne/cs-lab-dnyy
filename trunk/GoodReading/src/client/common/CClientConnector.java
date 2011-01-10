@@ -138,16 +138,16 @@ public class CClientConnector extends AbstractClient {
 
 		public String[] getTopics()
 		{
-			//String[] topics = new String[ m_listOptions.getM_topics().size() + 1];
-			//topics[0]=" ";
-			/*int i =1;
+			String[] topics = new String[ m_listOptions.getM_topics().size() + 1];
+			topics[0]=" ";
+			int i =1;
 			Iterator<String> it = m_listOptions.getM_topics().iterator();
 			while(it.hasNext())
 			{
 				topics[i] = it.next();
 				i++;
-			}*/	
-			String[] topics = {" ","Food","Internet","History"};
+			}
+			//String[] topics = {" ","topic11","Internet","History"};
 			return topics;
 		}
 

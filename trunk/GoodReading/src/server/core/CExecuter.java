@@ -214,7 +214,7 @@ public class CExecuter implements Runnable
 						else if(Work.getMsgType().compareTo("SearchSubtopics") == 0)
 						{
 							LinkedList<String> rez=db.getSubTopics(Work.getMsgMap().get("topic"));
-							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), rez.toArray());
+							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), rez);
 						}//end of SearchSubtopics
 						
 						else if(Work.getMsgType().compareTo("SearchBook") == 0)

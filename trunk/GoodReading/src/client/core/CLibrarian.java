@@ -301,17 +301,20 @@ public class CLibrarian extends AUser{
 		return "Fail";
 	}
 	
-	public String[] getTopicsForBook(String isbn) throws Exception
+	public String getTopicsForBook(String isbn) throws Exception
 	{
-		CEntry entryToSrv ;
-		//String[] answer = {""};
-		String[] answer = {"Action:War,Fantasy,Criminal","Comedy:Famely,Black Humor"};
+		/*CEntry entryToSrv ;
+		String answer = "";
 		Map<String, String> booktopics = new HashMap<String, String>();
 		booktopics.put("isbn", isbn);
 		entryToSrv = new CEntry("GetBookTopics", booktopics , this.getUserName(), this.getUserSessionId());
-		//Object ans = CClientConnector.getInstance().messageToServer(entryToSrv);
-		//if(ans != null)
-			// answer = (String[])ans;
+		Object ans = CClientConnector.getInstance().messageToServer(entryToSrv);
+		if(ans instanceof String )
+		{
+			 answer = (String)ans;
+			 answer = answer.replace("@",":");
+		}*/
+		String answer = "~Sport:Games,Trio,Swim~Computers:Java,C#,C++";
 		return answer;
 	}
 	
