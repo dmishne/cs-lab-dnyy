@@ -73,7 +73,7 @@ public class CLibraryManager extends CLibrarian{
 				       newUDetails.put("adress", adress);
 			for(String pt : payType)
 				if(pt != null)
-			           payChain =  pt + "-";
+					   payChain = payChain + pt + ",";
 			if(!payChain.isEmpty())
 			        newUDetails.put("paytypes", payChain);		
 			if(privilage != null)
