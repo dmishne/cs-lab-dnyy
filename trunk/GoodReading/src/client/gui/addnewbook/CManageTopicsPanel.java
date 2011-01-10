@@ -428,18 +428,6 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 	}
 
 	
-	/*public void setLastList(JList lList)
-	{
-		this.remove(jList_ChoosenTopics_MT);
-		this.remove(jScrollPane_ChoosenTopics_MT);
-		jList_ChoosenTopics_MT = lList;
-		jScrollPane_ChoosenTopics_MT = null;
-		jList_ChoosenTopics_MT.setLocation(new Point(118, 276));
-		jList_ChoosenTopics_MT.setSize(new Dimension(274, 54));
-		jList_ChoosenTopics_MT.setEnabled(true);
-		jList_ChoosenTopics_MT.setVisible(true);
-		this.add(getJScrollPane_ChoosenTopics_MT());
-	}*/
 
 	public void valueChanged(ListSelectionEvent a) {
 		if(!a.getValueIsAdjusting())
