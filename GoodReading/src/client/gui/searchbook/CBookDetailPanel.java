@@ -21,6 +21,7 @@ import javax.swing.SwingConstants;
 import client.core.AUser;
 import client.core.CReader;
 import client.core.EActor;
+import client.gui.CustomLabel;
 
 import common.data.CBook;
 
@@ -34,8 +35,8 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 	private static final long serialVersionUID = 1L;
 	private JButton m_jButton_back_BDP = null;
 	private static CBook m_book;
-	private JLabel m_jLabel_Title = null;
-	private JLabel m_jLabel_Author = null;
+	private CustomLabel m_jLabel_Title = null;
+	private CustomLabel m_jLabel_Author = null;
 	private JTextArea m_jTextArea_Summary = null;
 	private CFiveStarPanel m_cFiveStarPanel = null;
 	private JLabel m_jLabel_Price = null;
@@ -67,12 +68,12 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 		m_jLabel_Price.setFont(new Font("Freestyle Script", Font.BOLD, 36));
 		m_jLabel_Price.setHorizontalAlignment(SwingConstants.CENTER);
 		m_jLabel_Price.setText("Price: " + ((Double)m_book.getM_price()).intValue() +"." + (int)((m_book.getM_price()-((Double)m_book.getM_price()).intValue())*100) + " $USD");
-		m_jLabel_Author = new JLabel();
+		m_jLabel_Author = new CustomLabel();
 		m_jLabel_Author.setFont(new Font("Freestyle Script", Font.BOLD, 36));
 		m_jLabel_Author.setSize(new Dimension(350, 50));
 		m_jLabel_Author.setLocation(new Point(350, 45));
 		m_jLabel_Author.setText("");
-		m_jLabel_Title = new JLabel();
+		m_jLabel_Title = new CustomLabel();
 		m_jLabel_Title.setText("");
 		m_jLabel_Title.setSize(new Dimension(700, 60));
 		m_jLabel_Title.setFont(new Font("Freestyle Script", Font.PLAIN, 60));

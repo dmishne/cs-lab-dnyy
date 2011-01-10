@@ -44,6 +44,7 @@ import client.gui.searchreview.CSearchReviewPanel;
 import client.gui.searchreview.CReviewsListPanel;
 import client.gui.CMainMenuPanel.EMMDecision;
 import client.gui.addnewbook.CAddNewBookPanel;
+import client.gui.addnewbook.CManageTopicsPanel;
 import client.gui.newmessages.CNewReviewsPanel;
 import client.gui.searchuser.CSearchUserPanel;
 import client.gui.searchuser.CShowUserListPanel;
@@ -82,6 +83,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private CUserDetailsPanel GUI_CUserDetailsPanel = null;
 	private CShowReviewPanel GUI_CShowReviewPanel = null;
 	private CEditBookDetailsPanel GUI_CEditBookDetailsPanel = null;
+	private CManageTopicsPanel GUI_CManageTopicsPanel = null;
 	private msgChecker m_msgchk = null;
 	private CBookReport GUI_CBookReport = null;
 	private CUserReport GUI_CUserReport = null;
@@ -448,9 +450,20 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			}
 			else if(source == GUI_CAddNewBookPanel)
 			{
+				if(GUI_CAddNewBookPanel.getLastChoice() == CAddNewBookPanel.ANBDecision.BACK ||
+				   GUI_CAddNewBookPanel.getLastChoice() == CAddNewBookPanel.ANBDecision.ADDBOOK)
+				{
 					jContentPane.remove(GUI_CAddNewBookPanel);
 					GUI_CAddNewBookPanel = null;
 					GUI_CMainMenuPanel.setVisible(true);
+				}
+				else
+				{
+					GUI_CAddNewBookPanel.setVisible(false);
+					GUI_CManageTopicsPanel = null;
+					jContentPane.add(getGUI_CManageTopicsPanel("ANB"));
+					GUI_CManageTopicsPanel.setVisible(true);
+				}
 			}
 			else if(source == GUI_CNewReviewsPanel)
 			{
@@ -545,8 +558,13 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			}
 			else if(source == GUI_CEditBookDetailsPanel)
 			{
-				jContentPane.remove(GUI_CEditBookDetailsPanel);		
-				if(GUI_CEditBookDetailsPanel.getLastChoice() == CEditBookDetailsPanel.EBDDecision.DELETEBOOK)
+				if (GUI_CEditBookDetailsPanel.getLastChoice() == CEditBookDetailsPanel.EBDDecision.EDITTOPICS)
+				{
+					GUI_CManageTopicsPanel = null;
+					jContentPane.add(getGUI_CManageTopicsPanel("EBD"));
+					GUI_CManageTopicsPanel.setVisible(true);					
+				}
+				else if(GUI_CEditBookDetailsPanel.getLastChoice() == CEditBookDetailsPanel.EBDDecision.DELETEBOOK)
 				{
 					jContentPane.remove(GUI_CBookDetailPanel);
 					jContentPane.remove(GUI_CSearchResultPanel);
@@ -559,15 +577,38 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 				}
 				else
 				{
+					jContentPane.remove(GUI_CBookDetailPanel);
+					jContentPane.remove(GUI_CSearchResultPanel);
+					
+					GUI_CBookDetailPanel = null;
+					GUI_CSearchResultPanel = null;
+					
+					jContentPane.add(getGUI_CSearchResultPanel());
+					jContentPane.add(getGUI_CBookDetailPanel());
 					GUI_CBookDetailPanel.setVisible(true);
 				}
-				GUI_CEditBookDetailsPanel = null;
 			}
 			else if(source == GUI_CBookReport)
 			{
 				jContentPane.remove(getGUI_CBookReport());
 				GUI_CBookReport = null;
 				GUI_CBookDetailPanel.setVisible(true);
+
+			}
+			else if(source == GUI_CManageTopicsPanel)
+			{
+				jContentPane.remove(GUI_CManageTopicsPanel);
+				if(GUI_CManageTopicsPanel.getFrom() == CManageTopicsPanel.MTPfrom.ADDBOOK)
+				{
+					GUI_CAddNewBookPanel.setNewList(GUI_CManageTopicsPanel.getList());
+					GUI_CAddNewBookPanel.setVisible(true);
+				}
+				else
+				{
+					GUI_CEditBookDetailsPanel.setNewList(GUI_CManageTopicsPanel.getList());
+					GUI_CEditBookDetailsPanel.setVisible(true);
+				}
+				GUI_CManageTopicsPanel = null;
 			}
 			else if(source == GUI_CUserReport)
 			{
@@ -960,6 +1001,20 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		}
 		return GUI_CEditBookDetailsPanel;
 	}
+	
+	private CManageTopicsPanel getGUI_CManageTopicsPanel(String from) {
+		if (GUI_CManageTopicsPanel == null) {
+			GUI_CManageTopicsPanel = new CManageTopicsPanel(from);
+			GUI_CManageTopicsPanel.setSize(new Dimension(700, 550));
+			GUI_CManageTopicsPanel.setPreferredSize(new Dimension(700, 550));
+			GUI_CManageTopicsPanel.setLocation(new Point(0, 100));
+			GUI_CManageTopicsPanel.setVisible(false);
+			GUI_CManageTopicsPanel.addComponentListener(this);
+		}
+		return GUI_CManageTopicsPanel;
+	}
+	
+	
 	
 	/**
 	 * Class msgChecker
