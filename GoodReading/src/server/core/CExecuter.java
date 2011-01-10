@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.Vector;
 
 import ocsf.server.ConnectionToClient;
 import server.db.CDBInteractionGenerator;
@@ -216,10 +217,19 @@ public class CExecuter implements Runnable
 							LinkedList<String> rez=db.getSubTopics(Work.getMsgMap().get("topic"));
 							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), rez);
 						}//end of SearchSubtopics
-						
+
 						else if(Work.getMsgType().compareTo("SearchBook") == 0)
 						{
 							SearchBook(Work,Privilage);
+						} //end of Searchbook
+
+						else if(Work.getMsgType().compareTo("GetYears") == 0)
+						{
+							if(Privilage > 3)
+							{
+								Vector<String> ans=db.getYears();
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), ans);
+							}
 						} //end of Searchbook
 					
 
