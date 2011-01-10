@@ -860,7 +860,7 @@ public class CDBInteractionGenerator
 	public boolean editUser(CUser usr) {
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
-			int i = st.executeUpdate("CALL EditUser ('"+ usr.getM_userName() +"','"+ usr.getAdress() +"','"+ usr.getM_firstName() +"','"+ usr.getM_lastName() +"','"+ usr.getBirthDay() +"');");
+			int i = st.executeUpdate("CALL EditUser ('"+ usr.getM_userName() +"','"+ usr.getAdress() +"','"+ usr.getM_firstName() +"','"+ usr.getM_lastName() +"','"+ usr.getBirthDay() +"',"+ usr.isSuspend() +");");
 			if(i == 1) return true;	
 		} catch (SQLException e) {
 			System.out.println("editUser():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
@@ -1207,5 +1207,6 @@ public class CDBInteractionGenerator
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
 		return set;
 	}
-
+	//TODO a query that gives the years in which book were viewed or purchased
+	//TODO a query that gives the rating of a book by a certain function
 }
