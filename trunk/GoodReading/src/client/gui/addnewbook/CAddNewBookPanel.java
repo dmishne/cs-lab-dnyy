@@ -19,6 +19,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
 import client.core.*;
+import javax.swing.JList;
+
+import com.mysql.jdbc.log.Jdk14Logger;
 
 public class CAddNewBookPanel extends JPanel implements ActionListener{
 
@@ -36,7 +39,6 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
         private JTextField jTextField_title = null;
         private JTextField jTextField_author = null;
         private JTextField jTextField_lang = null;
-        private JTextField jTextField_topic = null;
         private JTextField jTextField_r_date = null;
         private JTextField jTextField_publisher = null;
         private JTextField jTextField_price = null;
@@ -61,12 +63,12 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
         private JCheckBox jCheckBox_fb2 = null;
         private JCheckBox jCheckBox_doc = null;
         private JLabel jLabel_subtopic = null;
-        private JTextField jTextField_subtopic = null;
-       
-       
+		private JList jList_topics = null;
+		private JButton jButton_manageTopics = null;
+		private JScrollPane jScrollPane_topics = null;
         public enum ANBDecision
         {
-                BACK,ADDBOOK
+                BACK,ADDBOOK,SETTOPICS
         }
        
        
@@ -88,7 +90,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
                 jLabel_subtopic.setText("Subtopic :");
                 jLabel_subtopic.setSize(new Dimension(90, 26));
                 jLabel_subtopic.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
-                jLabel_subtopic.setLocation(new Point(20, 220));
+                jLabel_subtopic.setLocation(new Point(20, 304));
                 jLabel_Type_doc = new JLabel();
                 jLabel_Type_doc.setText("DOC");
                 jLabel_Type_doc.setSize(new Dimension(30, 20));
@@ -112,7 +114,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
                 jLabel_label = new JLabel();
                 jLabel_label.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
                 jLabel_label.setSize(new Dimension(90, 26));
-                jLabel_label.setLocation(new Point(20, 304));
+                jLabel_label.setLocation(new Point(20, 248));
                 jLabel_label.setText("Labels");
                 jLabel_toc = new JLabel();
                 jLabel_toc.setText("Table Of Contents");
@@ -143,23 +145,22 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
                 jLabel_Price.setSize(new Dimension(90, 26));
                 jLabel_Publisher = new JLabel();
                 jLabel_Publisher.setText("Publisher  :");
-                jLabel_Publisher.setLocation(new Point(20, 276));
+                jLabel_Publisher.setLocation(new Point(20, 220));
                 jLabel_Publisher.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
                 jLabel_Publisher.setSize(new Dimension(90, 26));
                 jLabel_ReleaseDate = new JLabel();
                 jLabel_ReleaseDate.setText("Release Date  :");
-                jLabel_ReleaseDate.setLocation(new Point(20, 248));
+                jLabel_ReleaseDate.setLocation(new Point(20, 192));
                 jLabel_ReleaseDate.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
                 jLabel_ReleaseDate.setSize(new Dimension(90, 26));
                 jLabel_Topic = new JLabel();
-                jLabel_Topic.setText("Topic  :");
-                jLabel_Topic.setLocation(new Point(21, 192));
+                jLabel_Topic.setText("Topic &");
+                jLabel_Topic.setLocation(new Point(20, 276));
                 jLabel_Topic.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
-                jLabel_Topic.setSize(new Dimension(90, 26
-                                ));
+                jLabel_Topic.setSize(new Dimension(90, 32));
                 jLabel_Language = new JLabel();
                 jLabel_Language.setText("Language  :");
-                jLabel_Language.setLocation(new Point(21, 164));
+                jLabel_Language.setLocation(new Point(20, 164));
                 jLabel_Language.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
                 jLabel_Language.setSize(new Dimension(90, 26));
                 jLabel_ISBN = new JLabel();
@@ -191,7 +192,6 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
                 this.add(getJTextField_title(), null);
                 this.add(getJTextField_author(), null);
                 this.add(getJTextField_lang(), null);
-                this.add(getJTextField_topic(), null);
                 this.add(getJTextField_r_date(), null);
                 this.add(getJTextField_publisher(), null);
                 this.add(getJTextField_price(), null);
@@ -214,7 +214,8 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
                 this.add(getJCheckBox_fb2(), null);
                 this.add(getJCheckBox_doc(), null);
                 this.add(jLabel_subtopic, null);
-                this.add(getJTextField_subtopic(), null);
+                this.add(getJButton_manageTopics(), null);
+                this.add(getJScrollPane_topics(), null);
         }
 
        
@@ -292,22 +293,6 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
         }
 
         /**
-         * This method initializes jTextField_topic    
-         *      
-         * @return javax.swing.JTextField      
-         */
-        private JTextField getJTextField_topic() {
-                if (jTextField_topic == null) {
-                        jTextField_topic = new JTextField();
-                        jTextField_topic.setSize(new Dimension(280, 27));
-                        jTextField_topic.setPreferredSize(new Dimension(280, 24));
-                        jTextField_topic.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-                        jTextField_topic.setLocation(new Point(115, 192));
-                }
-                return jTextField_topic;
-        }
-
-        /**
          * This method initializes jTextField_r_date    
          *      
          * @return javax.swing.JTextField      
@@ -318,7 +303,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
                         jTextField_r_date.setSize(new Dimension(280, 27));
                         jTextField_r_date.setPreferredSize(new Dimension(280, 24));
                         jTextField_r_date.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-                        jTextField_r_date.setLocation(new Point(115, 248));
+                        jTextField_r_date.setLocation(new Point(115, 192));
                 }
                 return jTextField_r_date;
         }
@@ -334,7 +319,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
                         jTextField_publisher.setSize(new Dimension(280, 27));
                         jTextField_publisher.setPreferredSize(new Dimension(280, 24));
                         jTextField_publisher.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-                        jTextField_publisher.setLocation(new Point(115, 276));
+                        jTextField_publisher.setLocation(new Point(115, 220));
                 }
                 return jTextField_publisher;
         }
@@ -364,7 +349,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
                 if (jScrollPane_summary == null) {
                         jScrollPane_summary = new JScrollPane();
                         jScrollPane_summary.setLocation(new Point(23, 390));
-                        jScrollPane_summary.setSize(new Dimension(376, 67));
+                        jScrollPane_summary.setSize(new Dimension(655, 67));
                         jScrollPane_summary.setViewportView(getJTextArea_summary());
                         jScrollPane_summary.setBorder(BorderFactory.createLineBorder(Color.black));
                        
@@ -393,7 +378,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
         private JScrollPane getJScrollPane_TOC() {
                 if (jScrollPane_TOC == null) {
                         jScrollPane_TOC = new JScrollPane();
-                        jScrollPane_TOC.setSize(new Dimension(263, 251));
+                        jScrollPane_TOC.setSize(new Dimension(263, 153));
                         jScrollPane_TOC.setLocation(new Point(415, 206));
                         jScrollPane_TOC.setViewportView(getJTextArea_toc());
                         jScrollPane_TOC.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -483,7 +468,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
                         jTextField_label.setSize(new Dimension(280, 27));
                         jTextField_label.setPreferredSize(new Dimension(280, 24));
                         jTextField_label.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-                        jTextField_label.setLocation(new Point(114, 304));
+                        jTextField_label.setLocation(new Point(115, 248));
                 }
                 return jTextField_label;
         }
@@ -532,15 +517,20 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
         }
        
        
-        @Override
         public void actionPerformed(ActionEvent ae) {
                 Object source = ae.getSource();
+                String topics = "";
                 if(source == jButton_back)
                 {
                         setLastChoice(ANBDecision.BACK);
                         this.setVisible(false);
                 }
-                if(source == jButton_AddBook)
+                else if(source == jButton_manageTopics)
+                {
+                	this.setLastChoice(ANBDecision.SETTOPICS);
+                	this.setVisible(false);
+                }
+                else if(source == jButton_AddBook)
                 {              
                                 try {
                                 	    String[] formats = new String[3];
@@ -559,8 +549,11 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
                                         {
                                         	formats[i] = "doc";                            	
                                         }
+                                        int len = jList_topics.getModel().getSize();
+                                        for(int j =0 ; j < len; j++)
+                                        	topics = topics + "~"+ jList_topics.getModel().getElementAt(j);
                                         
-                                        String answer = ((CLibrarian)AUser.getInstance()).addNewBook(jTextField_title.getText(), jTextField_author.getText(), jTextField_isbn.getText(), jTextField_r_date.getText(), jTextField_publisher.getText(), jTextArea_summary.getText(),jTextField_price.getText(), jTextField_topic.getText(),jTextField_subtopic.getText() ,jTextField_label.getText(), jTextArea_toc.getText(), jCheckBox_visibilityCheck.isSelected(), jTextField_lang.getText(),formats);
+                                        String answer = ((CLibrarian)AUser.getInstance()).addNewBook(jTextField_title.getText(), jTextField_author.getText(), jTextField_isbn.getText(), jTextField_r_date.getText(), jTextField_publisher.getText(), jTextArea_summary.getText(),jTextField_price.getText(), topics ,jTextField_label.getText(), jTextArea_toc.getText(), jCheckBox_visibilityCheck.isSelected(), jTextField_lang.getText(),formats);
                                         setLastChoice(ANBDecision.ADDBOOK);
                                         JOptionPane.showMessageDialog(null, answer ,"Server answer : ",JOptionPane.INFORMATION_MESSAGE);
                                         this.setVisible(false);
@@ -570,19 +563,64 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
                 }
         }
 
-        /**
-         * This method initializes jTextField_subtopic  
-         *      
-         * @return javax.swing.JTextField      
-         */
-        private JTextField getJTextField_subtopic() {
-                if (jTextField_subtopic == null) {
-                        jTextField_subtopic = new JTextField();
-                        jTextField_subtopic.setLocation(new Point(115, 220));
-                        jTextField_subtopic.setSize(new Dimension(280, 27));
-                }
-                return jTextField_subtopic;
-        }
+		/**
+		 * This method initializes jList_topics	
+		 * 	
+		 * @return javax.swing.JList	
+		 */
+		private JList getJList_topics() {
+			if (jList_topics == null) {
+				jList_topics = new JList();
+				jList_topics.setEnabled(false);
+			}
+			return jList_topics;
+		}
+		
+		
+		
+		public void setNewList(JList nList)
+		{
+			this.remove(jList_topics);
+			this.remove(jScrollPane_topics);
+			jList_topics = nList;
+			jScrollPane_topics = null;
+			jList_topics.setLocation(new Point(118, 276));
+			jList_topics.setSize(new Dimension(274, 54));
+			jList_topics.setEnabled(true);
+			jList_topics.setVisible(true);
+			this.add(getJScrollPane_topics());
+		}
+
+		/**
+		 * This method initializes jButton_manageTopics	
+		 * 	
+		 * @return javax.swing.JButton	
+		 */
+		private JButton getJButton_manageTopics() {
+			if (jButton_manageTopics == null) {
+				jButton_manageTopics = new JButton();
+				jButton_manageTopics.setText("Set Topics");
+				jButton_manageTopics.setSize(new Dimension(134, 24));
+				jButton_manageTopics.setLocation(new Point(260, 334));
+				jButton_manageTopics.addActionListener(this);
+			}
+			return jButton_manageTopics;
+		}
+
+		/**
+		 * This method initializes jScrollPane_topics	
+		 * 	
+		 * @return javax.swing.JScrollPane	
+		 */
+		private JScrollPane getJScrollPane_topics() {
+			if (jScrollPane_topics == null) {
+				jScrollPane_topics = new JScrollPane();
+				jScrollPane_topics.setLocation(new Point(118, 276));
+				jScrollPane_topics.setViewportView(getJList_topics());
+				jScrollPane_topics.setSize(new Dimension(274, 54));
+			}
+			return jScrollPane_topics;
+		}
 
        
 

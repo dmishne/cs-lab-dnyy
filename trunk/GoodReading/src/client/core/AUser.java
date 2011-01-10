@@ -28,6 +28,7 @@ public abstract class AUser implements Serializable{
 		   
 		   
 	/**	
+	 * 
 	 * @param FirstName   the real first name of user
 	 * @param LastName   the real last name of user
 	 * @param UserId   the user's real id number 
@@ -49,6 +50,9 @@ public abstract class AUser implements Serializable{
     
     
     /**
+     * This method request establishing of Auser class instance from server, 
+     * if succeed, its also requesting to set up the CListOption class from server.  
+     * 
      * @param username  the authorization name parameter  
      * @param password  the authorization number parameter
      * @return Enum  returns the priority of user
@@ -155,6 +159,8 @@ public abstract class AUser implements Serializable{
 	
 	
 	/**
+	 * This method requesting server to search for available file formats for 
+	 * specific book given by isbn number.
 	 * 
 	 * @param isbn  the string isbn to focus the search of formats to specific book 
 	 * @return string array of formats for book
@@ -182,6 +188,8 @@ public abstract class AUser implements Serializable{
 	
 	
 	/**
+	 * This method requesting server to search for books mutching the given parameters of book
+	 * to search.
 	 * 
 	 * @param book_param  the HashMap with parameters to focus the search of the book
 	 * @return the LinkedList with Class's named CBook that holds book info
@@ -240,6 +248,7 @@ public abstract class AUser implements Serializable{
 	
 	
 	/**
+	 * This method requesting server to search for subtopics bounded to given topic.
 	 * 
 	 * @param topic  the string topic to focus search for bound subtopics 
 	 * @return string array of found subtopics
@@ -257,6 +266,7 @@ public abstract class AUser implements Serializable{
 	
 	
 	/**
+	 * This method requesting server to search for reviews mutching the given parameters
 	 * 
 	 * @param review_param   the HashMap with parameters to focus the search of the reviews for book
 	 * @return  LinkedList with Class's named CBookReview that holds review info

@@ -23,7 +23,7 @@ public class CLibrarian extends AUser{
 	}
 	
 	
-	public String addNewBook(String title, String author, String isbn, String release, String publisher, String summary, String price, String topic, String subtopic, String lable, String TOC, boolean vis, String lang, String[] fileType) throws IOException, Exception
+	public String addNewBook(String title, String author, String isbn, String release, String publisher, String summary, String price, String topics, String lable, String TOC, boolean vis, String lang, String[] fileType) throws IOException, Exception
 	{
 		CEntry entryToSrv;
 		HashMap<String, String> newBook = new HashMap<String, String>();
@@ -52,10 +52,8 @@ public class CLibrarian extends AUser{
 			throw new IOException("Book Title is a must!");
 		else if(publisher.isEmpty())
 			throw new IOException("Book Publisher is a must!");
-		else if(topic.isEmpty())
+		else if(topics.isEmpty())
 			throw new IOException("Book Topic is a must!");
-		else if(subtopic.isEmpty())
-			throw new IOException("Book Subtopic is a must!");
 		else if(lang.isEmpty())
 			throw new IOException("Book Language is a must!");
 		else if(price.isEmpty())
@@ -83,8 +81,7 @@ public class CLibrarian extends AUser{
 			newBook.put("publisher", publisher);
 			newBook.put("summary", summary);
 			newBook.put("price", price);
-			newBook.put("topic", topic);
-			newBook.put("subtopic", subtopic);
+			newBook.put("topics", topics);
 			newBook.put("lables", lable);
 			newBook.put("toc", TOC);
 			newBook.put("invisible", invisible);
@@ -270,4 +267,52 @@ public class CLibrarian extends AUser{
 		Integer Count = (Integer)CClientConnector.getInstance().messageToServer(entryToSrv);
 		return Count.intValue();
 	}
+	
+	public String addTopic(String topic) throws Exception
+	{
+		CEntry entryToSrv ;
+		String answer;
+		Map<String, String> topics = new HashMap<String, String>();
+		topics.put("topic", topic);
+		entryToSrv = new CEntry("AddTopic", topics , this.getUserName(), this.getUserSessionId());
+		Object ans = CClientConnector.getInstance().messageToServer(entryToSrv);
+		if(ans instanceof String)
+		{
+			answer = ans.toString();
+			return answer;
+		}
+		return "Fail";
+	}
+	
+	
+	public String addSubTopic(String subtopic) throws Exception
+	{
+		CEntry entryToSrv ;
+		String answer;
+		Map<String, String> subtopics = new HashMap<String, String>();
+		subtopics.put("topic", subtopic);
+		entryToSrv = new CEntry("AddSubtopic", subtopics , this.getUserName(), this.getUserSessionId());
+		Object ans = CClientConnector.getInstance().messageToServer(entryToSrv);
+		if(ans instanceof String)
+		{
+			answer = ans.toString();
+			return answer;
+		}
+		return "Fail";
+	}
+	
+	public String[] getTopicsForBook(String isbn) throws Exception
+	{
+		CEntry entryToSrv ;
+		//String[] answer = {""};
+		String[] answer = {"Action:War,Fantasy,Criminal","Comedy:Famely,Black Humor"};
+		Map<String, String> booktopics = new HashMap<String, String>();
+		booktopics.put("isbn", isbn);
+		entryToSrv = new CEntry("GetBookTopics", booktopics , this.getUserName(), this.getUserSessionId());
+		//Object ans = CClientConnector.getInstance().messageToServer(entryToSrv);
+		//if(ans != null)
+			// answer = (String[])ans;
+		return answer;
+	}
+	
 }
