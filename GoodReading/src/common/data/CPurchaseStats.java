@@ -2,7 +2,7 @@ package common.data;
 
 import java.io.Serializable;
 
-public class CPurchaseStats implements Serializable{
+public class CPurchaseStats implements Serializable,Comparable<CPurchaseStats>{
 	/**
 	 * 
 	 */
@@ -30,7 +30,19 @@ public class CPurchaseStats implements Serializable{
 	public String toString()
 	{
 		String temp = new String();
-		temp+= m_isbn + " - " + m_title + " - " + String.valueOf(m_month);
+		temp+= String.valueOf(m_month) + " - " + m_title + " - " + m_isbn;
 		return temp;
+	}
+
+	public int compareTo(CPurchaseStats o) {
+		if(m_month > o.m_month)
+		{
+			return 1;
+		}
+		else if(m_month < o.m_month)
+		{
+			return -1;
+		}
+		return 0;
 	}
 }
