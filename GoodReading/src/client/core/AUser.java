@@ -255,13 +255,32 @@ public abstract class AUser implements Serializable{
 	 */
 	public String[] getSubTopics(String topic) 
 	{
-		//CEntry EntryToSrv =null;
+		CEntry EntryToSrv =null;
+		Object temp = null;
+		String[] no_subs = {"No Subtopics"};
 		HashMap<String,String> search_subtopics = new HashMap<String,String>();
 		search_subtopics.put("topic", topic);
-		//EntryToSrv = new CEntry("SearchSubtopics",search_subtopics,m_userName,m_UserSessionId);
-		//String[] subtopics = (String[])CClientConnector.getInstance().messageToServer(EntryToSrv);
-		String[] subtopics = {"2010","2009","2008"};
-		return subtopics;
+		EntryToSrv = new CEntry("SearchSubtopics",search_subtopics,m_userName,m_UserSessionId);
+		try {			
+			temp = CClientConnector.getInstance().messageToServer(EntryToSrv);
+		} catch (Exception e) {
+			System.out.println("Fail to recive Subtopics from server !");
+		}
+			@SuppressWarnings("unchecked")
+		    LinkedList<String> subtopics = (LinkedList<String>)temp;		
+			if(subtopics.size() > 0 && temp != null)
+			{
+				String[] answer = new String[subtopics.size()];
+				Iterator<String> it = subtopics.iterator();
+				int i = 0;
+				while(it.hasNext())
+				{
+					answer[i] = it.next();
+					i++;
+				}
+			    return answer;
+			}
+		return no_subs;
 	}
 	
 	

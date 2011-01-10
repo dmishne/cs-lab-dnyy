@@ -69,6 +69,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	private JCheckBox jCheckBox_doc = null;
 	private JScrollPane jScrollPane_topics = null;
 	private JList jList_topics = null;
+	private static JList m_lastList = null;
 	private JButton jButton_setTopics = null;
 	private static String[] m_topics = null;
 	
@@ -256,6 +257,13 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 		CEditBookDetailsPanel.m_topics = m_topics;
 	}
 	
+	
+	 /**
+	 * @return the m_lastList
+	 */
+	public static JList getLastList() {
+		return m_lastList;
+	}
 	
 	/**
 	 * This method initializes jTextField_isbn	
@@ -561,6 +569,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 		}
 		if(source == jButton_setTopics)
 		{
+			m_lastList = getJList_topics();
 			setLastChoice(EBDDecision.EDITTOPICS);
 			this.setVisible(false);
 		}
@@ -597,7 +606,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
                     int len = jList_topics.getModel().getSize();
                     for(int j =0 ; j < len; j++)
                     	topics = topics + "~"+ jList_topics.getModel().getElementAt(j);
-					
+                    topics = topics.replace(":", "@");
 					String answer = ((CLibrarian)AUser.getInstance()).updateBookDetails(m_book.getM_ISBN(),jTextField_title.getText(), jTextField_author.getText(), jTextField_r_date.getText(), jTextField_publisher.getText(), jTextArea_summary.getText(),jTextField_price.getText(), topics, jTextField_label.getText(), jTextArea_toc.getText(), jCheckBox_visibilityCheck.isSelected(), jTextField_lang.getText(),formats);
 					setLastChoice(EBDDecision.SAVE);
 					JOptionPane.showMessageDialog(null, answer ,"Server answer :",JOptionPane.INFORMATION_MESSAGE);
@@ -647,7 +656,10 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	private JList getJList_topics() {
 		if (jList_topics == null) {
 			try {
-				 m_topics = ((CLibrarian)AUser.getInstance()).getTopicsForBook(m_book.getM_ISBN());
+				String topicSyting = ((CLibrarian)AUser.getInstance()).getTopicsForBook(m_book.getM_ISBN());
+				
+				
+				m_topics = topicSyting.split("~"); 
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, e.getMessage() ,"Error",JOptionPane.ERROR_MESSAGE);
 			} 

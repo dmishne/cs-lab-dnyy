@@ -64,6 +64,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
         private JCheckBox jCheckBox_doc = null;
         private JLabel jLabel_subtopic = null;
 		private JList jList_topics = null;
+		private static JList m_lastList = null;
 		private JButton jButton_manageTopics = null;
 		private JScrollPane jScrollPane_topics = null;
         public enum ANBDecision
@@ -229,6 +230,13 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
        
 
         /**
+		 * @return the m_lastList
+		 */
+		public static JList getLastList() {
+			return m_lastList;
+		}
+
+		/**
          * This method initializes jTextField_isbn      
          *      
          * @return javax.swing.JTextField      
@@ -527,6 +535,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
                 }
                 else if(source == jButton_manageTopics)
                 {
+                	m_lastList = getJList_topics();
                 	this.setLastChoice(ANBDecision.SETTOPICS);
                 	this.setVisible(false);
                 }
@@ -552,7 +561,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
                                         int len = jList_topics.getModel().getSize();
                                         for(int j =0 ; j < len; j++)
                                         	topics = topics + "~"+ jList_topics.getModel().getElementAt(j);
-                                        
+                                        topics = topics.replace(":", "@");
                                         String answer = ((CLibrarian)AUser.getInstance()).addNewBook(jTextField_title.getText(), jTextField_author.getText(), jTextField_isbn.getText(), jTextField_r_date.getText(), jTextField_publisher.getText(), jTextArea_summary.getText(),jTextField_price.getText(), topics ,jTextField_label.getText(), jTextArea_toc.getText(), jCheckBox_visibilityCheck.isSelected(), jTextField_lang.getText(),formats);
                                         setLastChoice(ANBDecision.ADDBOOK);
                                         JOptionPane.showMessageDialog(null, answer ,"Server answer : ",JOptionPane.INFORMATION_MESSAGE);
