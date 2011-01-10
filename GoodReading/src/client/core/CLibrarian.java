@@ -81,7 +81,7 @@ public class CLibrarian extends AUser{
 			newBook.put("publisher", publisher);
 			newBook.put("summary", summary);
 			newBook.put("price", price);
-			newBook.put("topics", topics);
+			newBook.put("topic", topics);
 			newBook.put("lables", lable);
 			newBook.put("toc", TOC);
 			newBook.put("invisible", invisible);
