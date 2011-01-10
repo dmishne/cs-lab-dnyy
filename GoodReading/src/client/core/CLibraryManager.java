@@ -162,8 +162,20 @@ public class CLibraryManager extends CLibrarian{
 		}
 	}
 	
-	
-	
-	
-	
+	@SuppressWarnings("unchecked")
+	public Vector<String> getYears() throws Exception
+	{
+		Vector<String> vanswer;	
+		CEntry entryToSrv = new CEntry("GetYears",new HashMap<String,String>(), this.getUserName(),this.getUserSessionId());
+		Object ans = CClientConnector.getInstance().messageToServer(entryToSrv);
+		if( ans instanceof Vector<?> )
+		{
+			vanswer = (Vector<String>)ans;
+			return vanswer;
+		}
+		else
+		{
+			throw new IOException("Error occurred! Problem with connection to server");
+		}
+	}
 }
