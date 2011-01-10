@@ -528,7 +528,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 		 if (pe.getItemSelectable() == jComboBox_privilage)
 		 {
 			 String priv = jComboBox_privilage.getSelectedItem().toString();
-			 if( (priv.compareTo(EActor.Librarian.toString()) == 0 || priv.compareTo(EActor.LibraryManager.toString()) == 0))
+			 if( (priv.compareTo(EActor.Librarian.toString()) == 0 || priv.compareTo(EActor.LibraryManager.toString()) == 0 || (priv.compareTo(EActor.User.toString()) == 0)))
 			 {
 				 jCheckBox_monthly.setSelected(false);
 				 jCheckBox_monthly.setEnabled(false);
