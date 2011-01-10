@@ -468,13 +468,10 @@ public class CExecuter implements Runnable
 		}
 				//take care of suspend
 				if(arg.containsKey("suspend") && Boolean.parseBoolean(arg.get("suspend")))
-					{
-						db.SetUserPriv(usr,0);
-						if(db.editUser(usr))
-							CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"success");
-					}
-			
-				else if(db.editUser(usr) && (!arg.containsKey("suspend") || !Boolean.parseBoolean(arg.get("suspend"))) )
+					usr.SetSuspend(true);
+				else usr.SetSuspend(false);
+
+				if(db.editUser(usr) )
 					{
 					if( arg.containsKey("privilage"))
 						{
@@ -495,6 +492,7 @@ public class CExecuter implements Runnable
 							}
 							db.SetUserPriv(usr,p);
 						}
+					
 					boolean paytypes=ChangePayments(usr,arg.get("paytypes"));
 					
 					if(paytypes)
