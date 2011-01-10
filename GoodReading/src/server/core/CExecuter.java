@@ -1077,7 +1077,7 @@ public class CExecuter implements Runnable
 		
 	private void handleLogin(CEntry Work) 
 	{
-	
+		
 		//call on ValidateLogin to make sure user matches password		
 		if(CDBInteractionGenerator.GetInstance().ValidateLogin(Work.getMsgMap().get("user"),Work.getMsgMap().get("password")))			
 		{	

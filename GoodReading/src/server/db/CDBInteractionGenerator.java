@@ -72,7 +72,7 @@ public class CDBInteractionGenerator
 	public ResultSet MySQLLoginQuery(String user)
 	{
 		try {
-			return this.m_DB_Connection.createStatement().executeQuery("SELECT u.user,u.password FROM users u WHERE u.user like '"+user+"';");
+			return this.m_DB_Connection.createStatement().executeQuery("SELECT u.user,u.password,u.suspended FROM users u WHERE u.user like '"+user+"';");
 		}
 		catch(SQLException e)
 		{ 
@@ -125,7 +125,7 @@ public class CDBInteractionGenerator
 		try {
 			
 		rs=MySQLLoginQuery(user);
-		if(!rs.next())
+		if(!rs.next() || rs.getInt(3) == 1 )
 			{
 				rs.close();
 				return false;
@@ -1246,6 +1246,6 @@ public class CDBInteractionGenerator
 		// TODO Auto-generated method stub
 		// function changes rank of book
 	}
-	
+
 	
 }
