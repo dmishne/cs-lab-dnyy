@@ -682,7 +682,7 @@ public class CExecuter implements Runnable
 			if(arg.get("paytype").compareTo("Monthly")==0)
 				if (db.subscriptionPay("Monthly",Work.getUserName()))
 					{ 
-					int rID=db.createReciept(Work.getUserName(),arg.get("isbn"),"Monthly");//generate reciept
+					int rID=db.createReciept(Work.getUserName(),arg.get("isbn"),"Monthly",Work.getSessionID());//generate reciept
 					CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),new Integer(rID));//response to client
 					}
 				else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "failed operation");
@@ -690,7 +690,7 @@ public class CExecuter implements Runnable
 			else if(arg.get("paytype").compareTo("Yearly")==0)
 				if (db.subscriptionPay("Yearly",Work.getUserName()))
 				{ 
-					int rID=db.createReciept(Work.getUserName(),arg.get("isbn"),"Yearly");//generate reciept
+					int rID=db.createReciept(Work.getUserName(),arg.get("isbn"),"Yearly",Work.getSessionID());//generate reciept
 					CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),new Integer(rID));//response to client
 				}
 				else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "failed operation");
@@ -698,7 +698,7 @@ public class CExecuter implements Runnable
 			else if(arg.get("paytype").compareTo("Credit Card")==0)
 				if (db.ccPay(Work.getUserName(),db.getPrice(arg.get("isbn")),arg.get("isbn")))
 				{ 
-					int rID=db.createReciept(Work.getUserName(),arg.get("isbn"),"Credit Card");//generate reciept
+					int rID=db.createReciept(Work.getUserName(),arg.get("isbn"),"Credit Card",Work.getSessionID());//generate reciept
 					CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), new Integer(rID));//response to client
 				}
 				else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "failed operation");
