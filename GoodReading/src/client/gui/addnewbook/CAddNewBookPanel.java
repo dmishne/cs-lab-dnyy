@@ -1,27 +1,29 @@
 package client.gui.addnewbook;
 
-import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JLabel;
-import java.awt.Rectangle;
+
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import java.awt.Point;
-import javax.swing.JCheckBox;
-import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
-import client.core.*;
-import javax.swing.JList;
 
-import com.mysql.jdbc.log.Jdk14Logger;
+import client.core.AUser;
+import client.core.CLibrarian;
+import client.core.EActor;
 
 public class CAddNewBookPanel extends JPanel implements ActionListener{
 

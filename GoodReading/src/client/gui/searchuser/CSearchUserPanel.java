@@ -19,8 +19,6 @@ import javax.swing.border.BevelBorder;
 
 import client.core.AUser;
 import client.core.CLibraryManager;
-import client.core.EActor;
-import client.gui.CustomLabel;
 
 import common.data.CUser;
 

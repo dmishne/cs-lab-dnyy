@@ -1,10 +1,11 @@
 package server.core;
-import java.util.*;
-import java.util.concurrent.SynchronousQueue;
+import java.util.LinkedList;
+import java.util.Queue;
+
+import ocsf.server.AbstractServer;
+import ocsf.server.ConnectionToClient;
 
 import common.api.CEntry;
-
-import ocsf.server.*;
 
 public class CStandbyUnit  extends AbstractServer 
 {

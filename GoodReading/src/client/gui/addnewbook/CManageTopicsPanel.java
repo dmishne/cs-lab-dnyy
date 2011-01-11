@@ -1,34 +1,30 @@
 package client.gui.addnewbook;
 
-import javax.swing.JPanel;
 import java.awt.Dimension;
-import javax.swing.JLabel;
-import java.awt.Rectangle;
-import java.awt.Point;
-import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JList;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import common.data.CBook;
 
 import client.common.CClientConnector;
 import client.core.AUser;
 import client.core.CLibrarian;
-import client.gui.searchbook.CBookDetailPanel;
 import client.gui.searchbook.CEditBookDetailsPanel;
 
 public class CManageTopicsPanel extends JPanel implements ActionListener,ItemListener, ListSelectionListener{
@@ -80,7 +76,6 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 	 * @return void
 	 */
 	private void initialize() {
-		String[] booktopics = {""};
 		listModel = new DefaultListModel();
 		jLabel_main_label = new JLabel();
 		jLabel_main_label.setText("Book Organize Maneger");

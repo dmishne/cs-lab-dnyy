@@ -1,15 +1,7 @@
 package client.gui.searchbook;
 
-import java.awt.GridBagLayout;
-
-import javax.swing.JPanel;
 import java.awt.Dimension;
-import javax.swing.JLabel;
-import java.awt.Rectangle;
 import java.awt.Font;
-import javax.swing.BorderFactory;
-import javax.swing.border.BevelBorder;
-import javax.swing.SwingConstants;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,14 +10,19 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JButton;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
 
-
-import client.core.*;
+import client.core.AUser;
+import client.core.CReader;
 
 import common.data.CBook;
 

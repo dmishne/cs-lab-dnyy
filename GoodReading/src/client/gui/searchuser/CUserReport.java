@@ -1,30 +1,25 @@
 package client.gui.searchuser;
 
-import java.awt.GridBagLayout;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
 import java.awt.Dimension;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.SwingConstants;
-import java.awt.GridBagConstraints;
-import java.awt.Rectangle;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Vector;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 
 import client.core.AUser;
 import client.core.CLibraryManager;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 
 import common.data.CPurchaseStats;
 
