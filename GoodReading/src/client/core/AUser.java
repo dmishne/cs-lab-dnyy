@@ -251,7 +251,7 @@ public abstract class AUser implements Serializable{
 	    if(!book_param.get("summary").isEmpty())
 	                search_param.put("summary", (String)book_param.get("summary"));
 	    if(!book_param.get("toc").isEmpty())
-	                search_param.put("TOC", (String)book_param.get("TOC"));
+	                search_param.put("toc", (String)book_param.get("toc"));
 	    if(!book_param.get("labels").isEmpty())
 	                search_param.put("labels", (String)book_param.get("labels"));
 	    EntryToSrv = new CEntry("SearchBook",search_param,m_userName,m_UserSessionId);
@@ -261,6 +261,40 @@ public abstract class AUser implements Serializable{
 		return result;
 		
 	}
+	
+	
+	public String[] getTopics() 
+	{
+		CEntry EntryToSrv =null;
+		Object temp = null;
+		String[] no_topics = {"No Topics"};
+		HashMap<String,String> searchTopics = new HashMap<String,String>();
+		EntryToSrv = new CEntry("SearchTopics",searchTopics,m_userName,m_UserSessionId);
+		try {			
+			temp = CClientConnector.getInstance().messageToServer(EntryToSrv);
+		} catch (Exception e) {
+			System.out.println("Fail to recive Topics from server !");
+		}
+			@SuppressWarnings("unchecked")
+		    LinkedList<String> topics = (LinkedList<String>)temp;		
+			if(topics.size() > 0 && temp != null)
+			{
+				String[] answer = new String[topics.size()+1];
+				answer[0] = " ";
+				Iterator<String> it = topics.iterator();
+				int i = 1;
+				while(it.hasNext())
+				{
+					answer[i] = it.next();
+					i++;
+				}
+			    return answer;
+			}
+		return no_topics;
+	}
+	
+	
+	
 	
 	
 	/**

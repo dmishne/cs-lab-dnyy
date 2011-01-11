@@ -204,6 +204,7 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 		if (jComboBox_AvailTopics == null) {
 			try {
 				jComboBox_AvailTopics = new JComboBox(CClientConnector.getInstance().getTopics());
+				//jComboBox_AvailTopics = new JComboBox(((CLibrarian)AUser.getInstance()).getTopics());
 				jComboBox_AvailTopics.setSize(new Dimension(278, 27));
 				jComboBox_AvailTopics.setLocation(new Point(40, 280));
 			} catch (Exception e) {
@@ -400,7 +401,8 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 				JOptionPane.showMessageDialog(null, e1.getMessage() ,"Error",JOptionPane.ERROR_MESSAGE);
 			}
 			this.remove(jComboBox_AvailTopics);
-			this.add(jComboBox_AvailTopics);
+			this.jComboBox_AvailTopics = null;
+			this.add(getJButton_add_Topic(), null);
 		}
 		else if(source == jButton_addSubTopic_MT)
 		{
