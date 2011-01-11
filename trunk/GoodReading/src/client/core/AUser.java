@@ -36,7 +36,7 @@ public abstract class AUser implements Serializable{
 	 * @param Privilege   the actual priority of the user
 	 * @param SessionID   the connection serial number to server
 	 */
-    public AUser(String FirstName, String LastName, int UserId, String UserName, EActor Privilege, int SessionID)
+    protected AUser(String FirstName, String LastName, int UserId, String UserName, EActor Privilege, int SessionID)
     {
     	FirstName = FirstName.replace("\"", "");
     	LastName  = LastName.replace("\"", "");
@@ -201,8 +201,8 @@ public abstract class AUser implements Serializable{
 	{
 		CEntry EntryToSrv =null;
 		HashMap<String,String> search_param = new HashMap<String,String>();
-		String lang, topic;
-		if(book_param.get("language").compareTo(" ") != 0)
+		String lang, topic = "",subtopic;
+		if(book_param.get("language").compareTo(" ") != 0  &&  !book_param.get("language").isEmpty())
 		{
 			lang = (String)book_param.get("language");
 		    Set<String> avail_lang = CClientConnector.getInstance().getM_listOptions().getM_langueges();
@@ -215,7 +215,7 @@ public abstract class AUser implements Serializable{
 		    	search_param.put("language", lang);
 		    }
 		}
-	    if(book_param.get("topic").compareTo(" ") != 0)
+	    if(book_param.get("topic").compareTo(" ") != 0  && !book_param.get("topic").isEmpty())
 		{
 	    	topic = (String)book_param.get("topic");
 	    	Set<String> avail_topics = CClientConnector.getInstance().getM_listOptions().getM_topics();
@@ -227,6 +227,22 @@ public abstract class AUser implements Serializable{
 		    {
 		    	search_param.put("topic", topic);
 		    }
+		}
+	    if(book_param.get("subtopic").compareTo(" ") != 0 && !book_param.get("subtopic").isEmpty())
+		{
+	    	subtopic = (String)book_param.get("subtopic");
+	    	String[] avail_subtopics = getSubTopics(topic);
+	    	boolean have = false;
+		    for(int i = 0; i< avail_subtopics.length ; i++ )
+		    {
+		    	if(avail_subtopics[i].compareTo(subtopic) == 0)
+		    	     have = true;
+		    }
+	    	if (!have)
+		    	throw new Exception("Subtopic unavailable!");
+		    else
+		    	search_param.put("subtopic", subtopic);
+		    
 		}
 	    if(!book_param.get("title").isEmpty())
 	                search_param.put("title", (String)book_param.get("title"));

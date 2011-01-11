@@ -105,5 +105,11 @@ public class CBookReview implements Serializable
 	public void setBookName(String m_bookName) {
 		this.m_bookName = m_bookName;
 	}
+	
+	public String getNormalWriteDate()
+	{
+	       String date = m_write_date.substring(8, 10)+"-"+m_write_date.substring(5, 7)+"-"+m_write_date.substring(0, 4);
+	   return date;
+	}
 	 
 } //end of class

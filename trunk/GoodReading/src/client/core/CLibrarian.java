@@ -303,10 +303,11 @@ public class CLibrarian extends AUser{
 		return "Fail";
 	}
 	
-	public String getTopicsForBook(String isbn) throws Exception
+	/*public String getTopicsForBook(String isbn) throws Exception
 	{
-		/*CEntry entryToSrv ;
+		CEntry entryToSrv ;
 		String answer = "";
+		String fail = "No topics found!";
 		Map<String, String> booktopics = new HashMap<String, String>();
 		booktopics.put("isbn", isbn);
 		entryToSrv = new CEntry("GetBookTopics", booktopics , this.getUserName(), this.getUserSessionId());
@@ -315,9 +316,10 @@ public class CLibrarian extends AUser{
 		{
 			 answer = (String)ans;
 			 answer = answer.replace("@",":");
-		}*/
-		String answer = "~Sport:Games,Trio,Swim~Computers:Java,C#,C++";
-		return answer;
-	}
+			 return answer;
+		}
+		//String answer = "~Sport:Games,Trio,Swim~Computers:Java,C#,C++";
+		return fail;
+	}*/
 	
 }

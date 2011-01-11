@@ -122,7 +122,10 @@ public class CReviewsListPanel extends JPanel implements ActionListener{
 			int i = 0;
 			for(CBookReview cb : m_reviewsList)
 			{
-				result[i] = cb.gettitle() + " - " + cb.getauthor() + " - " + cb.getisbn() + " - " + cb.getwrite_date();
+				String date = cb.getNormalWriteDate();
+				date = date.replace("00:00:00.0", "");
+				date = date.replace("-", ".");
+				result[i] = cb.gettitle() + " - " + cb.getauthor() + " - " + cb.getisbn() + " - " + date;
 			    i++;
 			}
 			jList_resultList_RL = new JList(result);
@@ -180,11 +183,12 @@ public class CReviewsListPanel extends JPanel implements ActionListener{
 			{
 				String res = (String)jList_resultList_RL.getSelectedValue();
 				String[] splitedRes = res.split(" - ");
+				splitedRes[3] = splitedRes[3].replace(".", "-");
 				Iterator<CBookReview> it = m_reviewsList.iterator();
 				while(it.hasNext())
 				{
 					CBookReview temp = it.next();
-					if(temp.gettitle().compareTo(splitedRes[0]) == 0 && temp.getauthor().compareTo(splitedRes[1]) == 0 && temp.getisbn().compareTo(splitedRes[2]) == 0 && temp.getwrite_date().compareTo(splitedRes[3]) == 0)
+					if(temp.gettitle().compareTo(splitedRes[0]) == 0 && temp.getauthor().compareTo(splitedRes[1]) == 0 && temp.getisbn().compareTo(splitedRes[2]) == 0 && temp.getNormalWriteDate().compareTo(splitedRes[3]) == 0)
 					{
 						m_chosenReview = temp;
 						break;
