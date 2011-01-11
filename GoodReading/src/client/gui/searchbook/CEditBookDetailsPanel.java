@@ -685,14 +685,8 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	 */
 	private JList getJList_topics() {
 		if (jList_topics == null) {
-			try {
-				String topicSyting = ((CLibrarian)AUser.getInstance()).getTopicsForBook(m_book.getM_ISBN());
-				
-				
-				m_topics = topicSyting.split("~"); 
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, e.getMessage() ,"Error",JOptionPane.ERROR_MESSAGE);
-			} 
+			String topicSetting = m_book.getM_topic();
+			m_topics = topicSetting.split("~");
 			jList_topics = new JList(m_topics);		
 			jList_topics.setEnabled(false);
 		}

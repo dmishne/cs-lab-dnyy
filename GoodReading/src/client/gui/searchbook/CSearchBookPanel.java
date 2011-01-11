@@ -286,10 +286,10 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 			m_searchDetails.put("summary",m_jTextField_Summary_SBP.getText());
 			m_searchDetails.put("toc",m_jTextField_TOC_SBP.getText());
 			m_searchDetails.put("labels",m_jTextField_Labels_SBP.getText());
-			//if(jComboBox_Subtopics_SBR.isEnabled())
-			  //     m_searchDetails.put("subtopic",jComboBox_Subtopics_SBR.getSelectedItem().toString());
-			//else if (!jComboBox_Subtopics_SBR.isEnabled())
-				//m_searchDetails.put("subtopic","");
+			if(jComboBox_Subtopics_SBR.isEnabled())
+			       m_searchDetails.put("subtopic",jComboBox_Subtopics_SBR.getSelectedItem().toString());
+			else if (!jComboBox_Subtopics_SBR.isEnabled())
+				   m_searchDetails.put("subtopic","");
 			this.setLastChoice(SBPDecision.SEARCH);
 			this.setVisible(false);
 		}
