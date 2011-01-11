@@ -375,7 +375,7 @@ public class CExecuter implements Runnable
 							{
 								Set<CPurchaseStats> rez=db.getFullUserPurchases(Work.getMsgMap().get("username"),Work.getMsgMap().get("year"));
 								
-								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),rez);
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),this.ChangeLongMonthsNames(rez));
 							}
 							else
 							    CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"User must have privilage!");
@@ -387,7 +387,7 @@ public class CExecuter implements Runnable
 							if( Privilage >3 ) 
 							{
 								Set<CBookStats> rez=db.getFullBookViews(Work.getMsgMap().get("isbn"),Work.getMsgMap().get("year"));
-								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),rez);
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),this.ChangeLongMonthNames( rez ));
 							}
 							else
 							    CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"User must have privilage!");
@@ -397,7 +397,7 @@ public class CExecuter implements Runnable
 							if( Privilage >3 ) 
 							{
 								Set<CBookStats> rez=db.getFullBookSales(Work.getMsgMap().get("isbn"),Work.getMsgMap().get("year"));
-								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),rez);
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),this.ChangeLongMonthNames(rez));
 							}
 							else
 							    CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"User must have privilage!");
@@ -1192,87 +1192,79 @@ public class CExecuter implements Runnable
 	}
 
 	//same as prev only with full month name
-	private HashMap<String,Integer> ChangeLongMonthsNames(HashMap<String,Integer> arg)
+	private Set<CPurchaseStats> ChangeLongMonthsNames(Set<CPurchaseStats> arg)
 	{
-		HashMap<String,Integer> tmp=new HashMap<String,Integer>(arg);
+		Set<CPurchaseStats> tmp=new HashSet<CPurchaseStats>(arg);
 		arg.clear();
 		
-		if(tmp.containsKey("01"))
-			arg.put("Jannuar",tmp.get("01"));
-		else
-			arg.put("Jannuar",new Integer(0));
-		
-		
-		if(tmp.containsKey("02"))
-			arg.put("Februar",tmp.get("02"));
-		else
-			arg.put("Februar",new Integer(0));
-		
-		
-		if(tmp.containsKey("03"))
-			arg.put("Mars",tmp.get("03"));
-		else
-			arg.put("Mars",new Integer(0));
-		
-		
-		if(tmp.containsKey("04"))
-			arg.put("April",tmp.get("04"));
-		else
-			arg.put("April",new Integer(0));
-		
-		
-		if(tmp.containsKey("05"))
-			arg.put("May",tmp.get("05"));
-		else
-			arg.put("May",new Integer(0));
-		
-		
-		if(tmp.containsKey("06"))
-			arg.put("June",tmp.get("06"));
-		else
-			arg.put("June",new Integer(0));
-		
-		
-		if(tmp.containsKey("07"))
-			arg.put("July",tmp.get("07"));
-		else
-			arg.put("July",new Integer(0));
-		
-		
-		if(tmp.containsKey("08"))
-			arg.put("August",tmp.get("08"));
-		else
-			arg.put("August",new Integer(0));
-		
-		
-		if(tmp.containsKey("09"))
-			arg.put("September",tmp.get("09"));
-		else
-			arg.put("September",new Integer(0));
-		
-		
-		if(tmp.containsKey("10"))
-			arg.put("October",tmp.get("10"));
-		else
-			arg.put("October",new Integer(0));
-
-		
-		if(tmp.containsKey("11"))
-			arg.put("November",tmp.get("11"));
-		else
-			arg.put("November",new Integer(0));
-
-		
-		if(tmp.containsKey("12"))
-			arg.put("December",tmp.get("12"));
-		else
-			arg.put("December",new Integer(0));
-		
+		for(CPurchaseStats a: tmp)
+			if(a.getmonth().compareTo("01") == 0)
+				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"Jannuar"));
+			else if(a.getmonth().compareTo("02") == 0)
+				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"Februar"));
+			else if(a.getmonth().compareTo("03") == 0)
+				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"Mars"));
+			else if(a.getmonth().compareTo("04") == 0)
+				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"April"));
+			else if(a.getmonth().compareTo("05") == 0)
+				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"May"));
+			else if(a.getmonth().compareTo("06") == 0)
+				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"June"));
+			else if(a.getmonth().compareTo("07") == 0)
+				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"July"));
+			else if(a.getmonth().compareTo("08") == 0)
+				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"August"));
+			else if(a.getmonth().compareTo("09") == 0)
+				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"September"));
+			else if(a.getmonth().compareTo("10") == 0)
+				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"October"));
+			else if(a.getmonth().compareTo("11") == 0)
+				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"November"));
+			else if(a.getmonth().compareTo("12") == 0)
+				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"Jannuar"));
+			
+	
 		
 		return arg;
+		
 	}
 	
+	private Set<CBookStats> ChangeLongMonthNames(Set<CBookStats> arg)
+	{
+		Set<CBookStats> tmp=new HashSet<CBookStats>(arg);
+		arg.clear();
+		
+		for(CBookStats a: tmp)
+			if(a.getmonth().compareTo("01") == 0)
+				arg.add(new CBookStats(a.getUsername(),a.getFullName(),"Jannuar"));
+			else if(a.getmonth().compareTo("02") == 0)
+				arg.add(new CBookStats(a.getUsername(),a.getFullName(),"Februar"));
+			else if(a.getmonth().compareTo("03") == 0)
+				arg.add(new CBookStats(a.getUsername(),a.getFullName(),"Mars"));
+			else if(a.getmonth().compareTo("04") == 0)
+				arg.add(new CBookStats(a.getUsername(),a.getFullName(),"April"));
+			else if(a.getmonth().compareTo("05") == 0)
+				arg.add(new CBookStats(a.getUsername(),a.getFullName(),"May"));
+			else if(a.getmonth().compareTo("06") == 0)
+				arg.add(new CBookStats(a.getUsername(),a.getFullName(),"June"));
+			else if(a.getmonth().compareTo("07") == 0)
+				arg.add(new CBookStats(a.getUsername(),a.getFullName(),"July"));
+			else if(a.getmonth().compareTo("08") == 0)
+				arg.add(new CBookStats(a.getUsername(),a.getFullName(),"August"));
+			else if(a.getmonth().compareTo("09") == 0)
+				arg.add(new CBookStats(a.getUsername(),a.getFullName(),"September"));
+			else if(a.getmonth().compareTo("10") == 0)
+				arg.add(new CBookStats(a.getUsername(),a.getFullName(),"October"));
+			else if(a.getmonth().compareTo("11") == 0)
+				arg.add(new CBookStats(a.getUsername(),a.getFullName(),"November"));
+			else if(a.getmonth().compareTo("12") == 0)
+				arg.add(new CBookStats(a.getUsername(),a.getFullName(),"Jannuar"));
+			
 	
+		
+		return arg;
+		
+	}
 
 	/*
 	 * function checks popularity of all books in DB and sets their ranks accordingly (in DB!)
