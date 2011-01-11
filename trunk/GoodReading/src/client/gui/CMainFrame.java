@@ -598,12 +598,18 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 				jContentPane.remove(GUI_CManageTopicsPanel);
 				if(GUI_CManageTopicsPanel.getFrom() == CManageTopicsPanel.MTPfrom.ADDBOOK)
 				{
-					GUI_CAddNewBookPanel.setNewList(GUI_CManageTopicsPanel.getList());
+					if(GUI_CManageTopicsPanel.getLastChoice() == CManageTopicsPanel.MTPDecision.SET)
+					{
+						GUI_CAddNewBookPanel.setNewList(GUI_CManageTopicsPanel.getList());
+					}
 					GUI_CAddNewBookPanel.setVisible(true);
 				}
 				else
 				{
-					GUI_CEditBookDetailsPanel.setNewList(GUI_CManageTopicsPanel.getList());
+					if(GUI_CManageTopicsPanel.getLastChoice() == CManageTopicsPanel.MTPDecision.SET)
+					{
+						GUI_CEditBookDetailsPanel.setNewList(GUI_CManageTopicsPanel.getList());
+					}
 					GUI_CEditBookDetailsPanel.setVisible(true);
 				}
 				GUI_CManageTopicsPanel = null;
