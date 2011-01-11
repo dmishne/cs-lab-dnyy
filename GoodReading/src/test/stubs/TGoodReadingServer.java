@@ -1,5 +1,7 @@
 package test.stubs;
 
+import server.db.CDBInteractionGenerator;
+
 public class TGoodReadingServer {
 	
 /*
@@ -112,7 +114,7 @@ public class TGoodReadingServer {
 	//	System.out.println(CDBInteractionGenerator.GetInstance().insertBookTopics("1234", "Comedy", "SitCom"));
 	//	System.out.println(CDBInteractionGenerator.GetInstance().getBookTopics("1234"));
 	//	System.out.println(CDBInteractionGenerator.GetInstance().insertNewBook("61010101021", "topic book else", "topic11", "2000-08-08", "booz", "summi", 8.5, 0, 0, "~utopic@usub1,usub2,usub3,usub4~utopic2@usub1,usub2,usub3~utopic3@usub1,usub3", "lllll", "1. 2. 3.", false, "English"));
-	
+	//  System.out.print(CDBInteractionGenerator.GetInstance().GetPurchases("012345"));
 	
 	//at last, we check that everthing is working
 /*

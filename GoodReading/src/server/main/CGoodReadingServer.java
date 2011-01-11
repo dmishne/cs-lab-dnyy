@@ -122,5 +122,5 @@ public class CGoodReadingServer {
 			info.done();
 		} 
 	}
-
+	
 }
