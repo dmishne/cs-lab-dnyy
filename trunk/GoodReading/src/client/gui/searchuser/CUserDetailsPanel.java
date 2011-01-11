@@ -354,15 +354,21 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	 */
 	private JComboBox getJComboBox_privilage() {
 		if (jComboBox_privilage == null) {
-			String[] privilagesToShow = new String[4];
-			String[] privilage = {EActor.Reader.toString(),EActor.User.toString(),EActor.Librarian.toString(),EActor.LibraryManager.toString()};
+			String[] privilagesToShow = new String[5];
+			String[] privilage = {EActor.Reader.toString(),EActor.User.toString(),EActor.Librarian.toString(),EActor.LibraryManager.toString(),EActor.None.toString()};
 			privilagesToShow[0] = chosenUser.getM_privilege().toString(); 
 			int i = 1;
 			for(String pr : privilage)
 			{
 				if( privilagesToShow[0].compareTo(pr) != 0)
 				{
-					privilagesToShow[i]=pr;
+					if(i>5)
+					{
+				    	JOptionPane.showMessageDialog(null, "Error occured while setting privilage!","Error",JOptionPane.ERROR_MESSAGE);
+				    	this.setLastChoice(UDDecision.BACK);   // Exit on error
+						this.setVisible(false);
+					}
+				    privilagesToShow[i]=pr;
 				    i++;
 				}
 			}
@@ -387,9 +393,10 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 			jCheckBox_yearly.setSize(new Dimension(23, 20));
 			jCheckBox_yearly.setEnabled(false);
 			jCheckBox_yearly.setLocation(new Point(210, 287));
-			for(String pt : chosenUser.getPayTypes())
-			   if(pt.compareTo("Yearly") == 0)
-				   jCheckBox_yearly.setSelected(true);
+			if(chosenUser.getM_privilege().toString().compareTo("Reader") == 0)
+				for(String pt : chosenUser.getPayTypes())
+				   if(pt.compareTo("Yearly") == 0)
+					   jCheckBox_yearly.setSelected(true);
 		}
 		return jCheckBox_yearly;
 	}
@@ -405,9 +412,10 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 			jCheckBox_monthly.setSize(new Dimension(17, 17));
 			jCheckBox_monthly.setEnabled(false);
 			jCheckBox_monthly.setLocation(new Point(210, 327));
-			for(String pt : chosenUser.getPayTypes())
-				   if(pt.compareTo("Monthly") == 0)
-					   jCheckBox_monthly.setSelected(true);
+			if(chosenUser.getM_privilege().toString().compareTo("Reader") == 0)
+				for(String pt : chosenUser.getPayTypes())
+					   if(pt.compareTo("Monthly") == 0)
+						   jCheckBox_monthly.setSelected(true);
 		}
 		return jCheckBox_monthly;
 	}
@@ -423,9 +431,10 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 			jCheckBox_creditCard.setSize(new Dimension(22, 16));
 			jCheckBox_creditCard.setEnabled(false);
 			jCheckBox_creditCard.setLocation(new Point(210, 367));
-			for(String pt : chosenUser.getPayTypes())
-				   if(pt.compareTo("CreditCard") == 0)
-					   jCheckBox_creditCard.setSelected(true);
+			if(chosenUser.getM_privilege().toString().compareTo("Reader") == 0)
+				for(String pt : chosenUser.getPayTypes())
+					   if(pt.compareTo("CreditCard") == 0)
+						   jCheckBox_creditCard.setSelected(true);
 		}
 		return jCheckBox_creditCard;
 	}
@@ -528,7 +537,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 		 if (pe.getItemSelectable() == jComboBox_privilage)
 		 {
 			 String priv = jComboBox_privilage.getSelectedItem().toString();
-			 if( (priv.compareTo(EActor.Librarian.toString()) == 0 || priv.compareTo(EActor.LibraryManager.toString()) == 0 || (priv.compareTo(EActor.User.toString()) == 0)))
+			 if( priv.compareTo(EActor.Reader.toString()) != 0)
 			 {
 				 jCheckBox_monthly.setSelected(false);
 				 jCheckBox_monthly.setEnabled(false);
@@ -536,7 +545,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 				 jCheckBox_yearly.setEnabled(false);
 				 jCheckBox_creditCard.setSelected(false);
 			 }
-			 else if((priv.compareTo(EActor.Reader.toString()) == 0 || priv.compareTo(EActor.User.toString()) == 0))
+			 else if(priv.compareTo(EActor.Reader.toString()) == 0 )
 			 {
 				 for(String pt : chosenUser.getPayTypes())
 				 {
@@ -544,7 +553,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 						   jCheckBox_yearly.setSelected(true);
 					   if(pt.compareTo("Monthly") == 0)
 						   jCheckBox_monthly.setSelected(true);
-					   if(pt.compareTo("CreditCard") == 0)
+					   if(pt.compareTo("CreditCard") == 0 || pt.compareTo("Credit Card") == 0)
 						   jCheckBox_creditCard.setSelected(true);
 				 }
 				 jCheckBox_monthly.setEnabled(true);
