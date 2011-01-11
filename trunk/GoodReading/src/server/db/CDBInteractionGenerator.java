@@ -259,7 +259,7 @@ public class CDBInteractionGenerator
 
 	
 	private String buildSearchBookWhere(Map<String,String> params)
-	{  ///TODO: add sub catagories
+	{ 
 		String ans="";
 		if(params.isEmpty())
 			return ans;
@@ -280,10 +280,10 @@ public class CDBInteractionGenerator
 			ans=ans+"author LIKE '%"+params.get("author")+"%'";
 			params.remove("author");
 		}
-		else if(params.containsKey("lable"))
+		else if(params.containsKey("labels"))
 		{
-			ans=ans+"lables LIKE '%"+params.get("lable")+"%'";
-			params.remove("lable");
+			ans=ans+"lables LIKE '%"+params.get("labels")+"%'";
+			params.remove("labels");
 		}
 		else if(params.containsKey("isbn"))
 		{
@@ -300,11 +300,6 @@ public class CDBInteractionGenerator
 			ans=ans+"summary LIKE '%"+params.get("summary")+"%'";
 			params.remove("summary");
 		}
-		//else if(params.containsKey("topic"))
-		//{
-		//	ans=ans+"topic LIKE '%"+params.get("topic")+"%'";
-		//	params.remove("topic");
-		//}
 		else if(params.containsKey("TOC"))
 		{
 			ans=ans+"TOC LIKE '%"+params.get("TOC")+"%'";
@@ -330,7 +325,7 @@ public class CDBInteractionGenerator
 		}
 		 if(params.containsKey("lable"))
 		{
-			ans=ans+" AND lables LIKE '%"+params.get("lable")+"%'";
+			ans=ans+" AND lables LIKE '%"+params.get("labels")+"%'";
 		}
 		 if(params.containsKey("isbn"))
 		{
@@ -344,10 +339,6 @@ public class CDBInteractionGenerator
 		{
 			ans=ans+" AND summary LIKE '%"+params.get("summary")+"%'";
 		}
-		// if(params.containsKey("topic"))
-		//{
-		//	ans=ans+" AND topic LIKE '%"+params.get("topic")+"%'";
-		//}
 		 if(params.containsKey("TOC"))
 		{
 			ans=ans+" AND TOC LIKE '%"+params.get("toc")+"%'";
