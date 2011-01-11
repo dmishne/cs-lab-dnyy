@@ -1,12 +1,14 @@
 package client.core;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import client.common.CClientConnector;
+
 import common.api.CEntry;
 import common.data.CBookReview;
 

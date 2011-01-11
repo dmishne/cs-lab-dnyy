@@ -1,7 +1,5 @@
 package client.gui;
 
-import java.awt.Color;
-
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
@@ -10,9 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.ContainerEvent;
-import java.awt.event.ContainerListener;
-import java.awt.event.FocusListener;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,34 +21,29 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 
 import client.common.CClientConnector;
 import client.core.AUser;
 import client.core.CLibrarian;
 import client.core.EActor;
+import client.gui.addnewbook.CAddNewBookPanel;
+import client.gui.addnewbook.CManageTopicsPanel;
+import client.gui.generatereport.CBookReport;
+import client.gui.newmessages.CNewReviewsPanel;
 import client.gui.searchbook.CBookDetailPanel;
+import client.gui.searchbook.CEditBookDetailsPanel;
 import client.gui.searchbook.COrderBookPanel;
+import client.gui.searchbook.CPurchaseReceipt;
 import client.gui.searchbook.CSearchBookPanel;
 import client.gui.searchbook.CSearchResultPanel;
 import client.gui.searchbook.CSubmitReviewPanel;
-import client.gui.searchreview.CSearchReviewPanel;
 import client.gui.searchreview.CReviewsListPanel;
-import client.gui.CMainMenuPanel.EMMDecision;
-import client.gui.addnewbook.CAddNewBookPanel;
-import client.gui.addnewbook.CManageTopicsPanel;
-import client.gui.newmessages.CNewReviewsPanel;
+import client.gui.searchreview.CSearchReviewPanel;
+import client.gui.searchreview.CShowReviewPanel;
 import client.gui.searchuser.CSearchUserPanel;
 import client.gui.searchuser.CShowUserListPanel;
 import client.gui.searchuser.CUserDetailsPanel;
-import client.gui.searchreview.CShowReviewPanel;
-import client.gui.searchbook.CEditBookDetailsPanel;
-import client.gui.generatereport.CBookReport;
 import client.gui.searchuser.CUserReport;
-import client.gui.searchbook.CPurchaseReceipt;
 
 public class CMainFrame extends JFrame implements ActionListener,ComponentListener{
 

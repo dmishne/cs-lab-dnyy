@@ -7,6 +7,10 @@ import java.util.Set;
 
 public class CListOptions implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7986416378972374649L;
 	private Set<String> m_langueges;
 	private Set<String> m_topics;
 	private static CListOptions m_hold;
@@ -34,7 +38,7 @@ public class CListOptions implements Serializable{
 		return m_hold;
 	}
 	//CListOptions.CListOptionsInit((CListOptions)o.getM_langueges(),(CListOptions)o.getM_topics());
-	public static CListOptions CListOptionsInit(Set lang,Set topics)
+	public static CListOptions CListOptionsInit(Set<String> lang,Set<String> topics)
 	{
 		if(m_hold == null)
 			m_hold=new CListOptions();

@@ -8,10 +8,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
@@ -23,8 +23,6 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import client.core.AUser;
 import client.core.CLibraryManager;
 import client.gui.searchbook.CBookDetailPanel;
-import javax.swing.JComboBox;
-import java.awt.Rectangle;
 
 public class CBookReport extends JPanel implements ActionListener, ItemListener {
 
