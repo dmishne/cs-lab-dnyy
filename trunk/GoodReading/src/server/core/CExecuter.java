@@ -119,6 +119,7 @@ public class CExecuter implements Runnable
 				/*handle entry from standby unit*/
 				if(Work.isLogin())
 				{
+					
 					//make sure nobody's using the selected key
 					do {
 						Work.setSessionID(Random());
@@ -159,7 +160,9 @@ public class CExecuter implements Runnable
 					String v;
 					for(String k:Work.getMsgMap().keySet())
 					{
-						v=tmp.get(k).replace("\\", "/").replace("\'", "'").replace("'", "\\'");
+						v=tmp.get(k);
+						if(v != null)
+							v=v.replace("\\", "/").replace("\'", "'").replace("'", "\\'");
 						tmp.remove(k);
 						tmp.put(k.toLowerCase(), v);
 					}
@@ -641,7 +644,8 @@ public class CExecuter implements Runnable
 					
 					for(String a: arg.get("format").split(","))
 					{
-						CFile asd=new CFile("c:/library/"+arg.get("isbn")+"."+a);
+						CFile asd=new CFile(CServerConstants.DEFAULT_Global_Library_Path()+arg.get("isbn")+"."+a);
+						
 						if( a!= null && a.compareTo("") != 0 && db.UploadFile(arg.get("isbn"),a,asd) )
 							count--;
 					}
