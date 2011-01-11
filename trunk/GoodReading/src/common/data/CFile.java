@@ -13,6 +13,11 @@ import java.sql.SQLException;
 
 public class CFile implements Serializable
 {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4431100074929112042L;
 	private byte [] m_file;
 	
 	
@@ -28,10 +33,7 @@ public class CFile implements Serializable
 	
 	public CFile(Blob blob) throws SQLException 
 	{
-		
 		m_file=blob.getBytes(1, (int) blob.length());//toString().replace("com.mysql.jdbc.Blob","[B").getBytes();
-	
-		int i;
 	}
 	
 	private static byte[] getFile(String path)
