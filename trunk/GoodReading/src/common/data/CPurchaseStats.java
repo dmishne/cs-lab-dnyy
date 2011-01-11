@@ -9,7 +9,7 @@ public class CPurchaseStats implements Serializable,Comparable<CPurchaseStats>{
 	private static final long serialVersionUID = 1L;
 	private String m_isbn;
 	private String m_title;
-	private int m_month;
+	private String m_month;
 	
 	public String getisbn() {
 		return m_isbn;
@@ -17,10 +17,10 @@ public class CPurchaseStats implements Serializable,Comparable<CPurchaseStats>{
 	public String gettitle() {
 		return m_title;
 	}
-	public int getmonth() {
+	public String getmonth() {
 		return m_month;
 	}
-	public CPurchaseStats(String i,String t,int m)
+	public CPurchaseStats(String i,String t,String m)
 	{
 		m_isbn=i;
 		m_title=t;
@@ -35,14 +35,6 @@ public class CPurchaseStats implements Serializable,Comparable<CPurchaseStats>{
 	}
 
 	public int compareTo(CPurchaseStats o) {
-		if(m_month > o.m_month)
-		{
-			return 1;
-		}
-		else if(m_month < o.m_month)
-		{
-			return -1;
-		}
-		return 0;
+		return -1; //TODO: make a valid comparator
 	}
 }
