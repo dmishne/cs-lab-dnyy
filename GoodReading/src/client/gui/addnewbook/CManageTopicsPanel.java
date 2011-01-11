@@ -419,7 +419,7 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 			String toSet = "";
 			if((toSet = jComboBox_AvailTopics.getSelectedItem().toString()).compareTo(" ") != 0)
 			   if(jComboBox_AvailSubTopics_MT.getSelectedItem().toString().compareTo("") != 0)  
-				   toSet = toSet + ":" + jComboBox_AvailSubTopics_MT.getSelectedItem().toString();			
+				   toSet = toSet + " : " + jComboBox_AvailSubTopics_MT.getSelectedItem().toString();			
 			
 			listModel.addElement(toSet);
 			this.remove(jList_ChoosenTopics_MT);
