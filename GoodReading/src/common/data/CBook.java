@@ -289,9 +289,8 @@ public class CBook implements Serializable,Comparable<CBook> {
 
 //this function is only supposed to compare between CBooks, not anything else!
 //implements the Comparable interface
-	public int compareTo(CBook ct) 
+	public int compareTo(CBook b) 
 	{
-		CBook b = ct;
 		if(m_rank > b.m_rank)
 		{
 			return 1;

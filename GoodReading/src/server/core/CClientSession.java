@@ -1,7 +1,7 @@
 package server.core;
 import common.api.CEntry;
 
-public class CClientSession implements Comparable
+public class CClientSession implements Comparable<Object>
 {
 	//public java.net.InetAddress m_IP;
 	private int m_SessionID;
@@ -65,28 +65,36 @@ public class CClientSession implements Comparable
 
 
 	
-	public int compareTo(CClientSession b) 
+	public int compareTo(Object b) 
 	{
-		// if Username is the same username, resolve to SessionID (prob isn't needed), else rely on Username
-		if(this.m_UserName.compareTo(b.m_UserName) == 0)
-			if(this.m_SessionID > b.m_SessionID)
-				return 1;
-			else if(this.m_SessionID == b.m_SessionID)
-				return 0;
-			else return -1;
-			
-		return this.m_UserName.compareTo(b.m_UserName);
-	}
+		if(b instanceof CEntry)
+		{
+			if(this.m_UserName.compareTo(((CEntry) b).getUserName()) == 0)
+				if(this.m_SessionID > ((CEntry) b).getSessionID())
+					return 1;
+				else if(this.m_SessionID == ((CEntry) b).getSessionID())
+					return 0;
+				else return -1;
+			return this.m_UserName.compareTo(((CEntry) b).getUserName());
 
+		}
+		if(b instanceof CClientSession)
+		{
+		 	if(this.m_UserName.compareTo(((CClientSession)b).m_UserName) == 0)
+				if(this.m_SessionID > ((CClientSession)b).m_SessionID)
+					return 1;
+				else if(this.m_SessionID == ((CClientSession)b).m_SessionID)
+					return 0;
+				else return -1;
+			return this.m_UserName.compareTo(((CClientSession)b).m_UserName);
 
+		}
 
-	@Override
-	public int compareTo(Object o) {
-		if(o.equals(this))
+		
+		if(this.equals(b))
 			return 0;
-		return 1;
+		return this.toString().compareTo(b.toString());
 	}
-
 
 
 	public int getUserAuth() {
