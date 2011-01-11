@@ -1108,6 +1108,9 @@ public class CExecuter implements Runnable
 		
 	}
 	
+	
+	//function just changes names of months from numbers to actual names
+	//also adds months that aren't in set with 0 as counter
 	private HashMap<String,Integer> ChangeMonthsNames(HashMap<String,Integer> arg)
 	{
 		HashMap<String,Integer> tmp=new HashMap<String,Integer>(arg);
@@ -1188,6 +1191,7 @@ public class CExecuter implements Runnable
 		return arg;
 	}
 
+	//same as prev only with full month name
 	private HashMap<String,Integer> ChangeLongMonthsNames(HashMap<String,Integer> arg)
 	{
 		HashMap<String,Integer> tmp=new HashMap<String,Integer>(arg);
@@ -1267,39 +1271,47 @@ public class CExecuter implements Runnable
 		
 		return arg;
 	}
+	
+	
 
 	/*
-	 * function checks popularity of all books in DB and sets their ranks accordingly
+	 * function checks popularity of all books in DB and sets their ranks accordingly (in DB!)
 	 */
 	public static void recheckPopularity()
 	{
-		synchronized(CExecuter.m_PopCheckRunner) { //just to make sure there won't be 2 or more checks running simultaneously
-		CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
-		//get all books
-		LinkedList<CBook> blist=db.SearchBook(new HashMap<String,String>());
-		//create a new temp set to hold these
-		TreeSet<CBook> tmp = new TreeSet<CBook>();
-		
-		for(CBook b:blist)
-		{
-			b.setM_rank(  db.GetViews( b.getM_ISBN() ) / CServerConstants.POPULARITY_RATIO()+ db.GetPurchases(b.getM_ISBN())  );
-			tmp.add(b);
-		}
-		int i=1;
-		while(!tmp.isEmpty())
-		{
-			CBook temp=tmp.first();
-			db.SetRank(temp.getM_ISBN(), i++);
-			tmp.remove(temp);
-		}
-		}
-	}
+		synchronized(CExecuter.GetInstance()) 
+		{ //just to make sure there won't be 2 or more checks running simultaneously
+			CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
+			//get all books
+			LinkedList<CBook> blist=db.SearchBook(new HashMap<String,String>());
+			//create a new temp set to hold these
+			TreeSet<CBook> tmp = new TreeSet<CBook>();
+			int k,l;
+			for(CBook b:blist)	//for every book, set rank as popularity, and add to tmp (sorted)
+			{
+				k=db.GetViews(b.getM_ISBN());
+				l=db.GetPurchases(b.getM_ISBN());
+				b.setM_rank( k / CServerConstants.POPULARITY_RATIO() +l );
+				tmp.add(b);
+			}
+			
+			int i=1;
+			Iterator<CBook> it=tmp.descendingIterator();
+			while(it.hasNext())
+			{	//for each book set it's rank, and ask dbig to 
+				CBook temp=it.next();
+				temp.setM_rank(i);
+				db.SetRank(temp.getM_ISBN(), i++);
+			}
+			tmp.clear();
+			
+		}//end of synchronized
+	}//end of popularity check
 	
 	
 	
 	
 	//TODO:check these functions tmr
-	
 	//this function is dangerous as it may take a long time until thread returns to caller! 
 	public void stopCheck() throws InterruptedException
 	{
@@ -1307,8 +1319,15 @@ public class CExecuter implements Runnable
 			return;
 		m_running=false;
 		while(m_PopCheckRunner != null)
-			Thread.sleep(10);
+			Thread.sleep(100);
 	}
+	/*
+	 * this function starts the check.
+	 * if check is already running or if there's a thread responsible for it then it will return false
+	 * the popularity check will return every cycle of the thread.
+	 * @param delay states how much to wait between cycles(in miliseconds) NOTE: delay can't be smaller than 5 seconds, if it is function will just set it to 5 seconds
+	 * @return success
+	 */
 	public boolean startCheck(int delay)
 	{
 		//if exists then stop checking
@@ -1321,6 +1340,7 @@ public class CExecuter implements Runnable
 		return true;
 	}
 	
+	//private class to help keep in touch of the thread running the checks
 	private class PopCheckRunner extends Thread
 	{
 		private int m_checkdelay;
@@ -1346,7 +1366,8 @@ public class CExecuter implements Runnable
 				try 
 				{ 
 					Thread.sleep(m_checkdelay*1000);
-				} catch (InterruptedException e) 
+				} 
+				catch (InterruptedException e) 
 				{	
 					//if interrupted
 					System.out.println("Popularity check timer halted(can't sleep): "+e.getMessage()); 
@@ -1354,8 +1375,8 @@ public class CExecuter implements Runnable
 					CExecuter.m_PopCheckRunner=null;
 					return;	
 				}
-			}
-		}
+			} //end of loop
+		} //end of run
 		
 	}	//end of PopCheckRunner
 	

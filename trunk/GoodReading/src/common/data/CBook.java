@@ -291,6 +291,8 @@ public class CBook implements Serializable,Comparable<CBook> {
 //implements the Comparable interface
 	public int compareTo(CBook b) 
 	{
+		if(b.equals(this))
+			return 0;		
 		if(m_rank > b.m_rank)
 		{
 			return 1;
