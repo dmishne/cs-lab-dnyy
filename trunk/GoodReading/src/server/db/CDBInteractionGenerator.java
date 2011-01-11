@@ -1208,8 +1208,6 @@ public class CDBInteractionGenerator
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
 		return set;
 	}
-	//TODO a query that gives the years in which book were viewed or purchased
-	//TODO a query that gives the rating of a book by a certain function
 
 	public Vector<String> getYears() {
 		//this method returns the years in which there was activity.
@@ -1242,8 +1240,16 @@ public class CDBInteractionGenerator
 	}
 	
 	public int GetViews(String isbn) {
-		// TODO Auto-generated method stub
 		//This function returns all views (from all times) for this book
+		ResultSet views;
+		try {
+			views = this.MySQLQuery("CALL GetViews ('"+ isbn +"')");
+			if(views.next())
+				{
+					return views.getInt("views");
+				}
+		} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
 		return 0;
 	}
 
