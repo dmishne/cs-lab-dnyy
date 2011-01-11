@@ -1254,8 +1254,12 @@ public class CDBInteractionGenerator
 	}
 
 	public void SetRank(String isbn,int rank) {
-		// TODO Auto-generated method stub
 		// function changes rank of book
+		try {
+			Statement st = this.m_DB_Connection.createStatement();
+			st.executeUpdate("CALL SetRank('"+ isbn +"',"+ rank +");");	
+		} catch (SQLException e) {
+			System.out.println("SetRank():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 	}
 
 	
