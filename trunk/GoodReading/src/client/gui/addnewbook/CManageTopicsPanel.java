@@ -53,6 +53,12 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 	private MTPfrom from = null;
 	private boolean m_flag = false;
 	private int selection = 0;
+	private MTPDecision m_lastChoice = null;  //  @jve:decl-index=0:
+	
+	public enum MTPDecision
+	{
+		SET,BACK
+	}
 	public enum MTPfrom
 	{
 		ADDBOOK,EDITBOOK
@@ -131,6 +137,20 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 
 	
 	
+	/**
+	 * @return the m_lastChoice
+	 */
+	public MTPDecision getLastChoice() {
+		return m_lastChoice;
+	}
+
+	/**
+	 * @param m_lastChoice the m_lastChoice to set
+	 */
+	public void setLastChoice(MTPDecision m_lastChoice) {
+		this.m_lastChoice = m_lastChoice;
+	}
+
 	public JList getList(){
 		return m_list;
 		}
@@ -416,13 +436,19 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 			jList_ChoosenTopics_MT = null;
 			this.add(getJList_ChoosenTopics_MT());
 		}
-		else if (source == jButton_Back_MT  ||  source == jButton_Set_MT)
+		else if(source == jButton_Back_MT)
+		{
+			this.setLastChoice(MTPDecision.BACK);
+			this.setVisible(false);
+		}
+		else if (source == jButton_Set_MT)
 		{
 			m_list = jList_ChoosenTopics_MT;
 			if(m_last.compareTo("ANB") == 0)
 			    this.setFrom(MTPfrom.ADDBOOK);
 			else if(m_last.compareTo("EBD") == 0)
 				 this.setFrom(MTPfrom.EDITBOOK);
+			this.setLastChoice(MTPDecision.SET);
 			this.setVisible(false);
 		}
 	}
