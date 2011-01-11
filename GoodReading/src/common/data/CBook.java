@@ -1,12 +1,10 @@
 package common.data;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CBook implements Serializable,Comparable {
+public class CBook implements Serializable,Comparable<CBook> {
 	
 	static private final long serialVersionUID = 1L;
 	private String	 m_title;
@@ -291,13 +289,17 @@ public class CBook implements Serializable,Comparable {
 
 //this function is only supposed to compare between CBooks, not anything else!
 //implements the Comparable interface
-	public int compareTo(Object arg0) 
+	public int compareTo(CBook ct) 
 	{
-		CBook b=(CBook) arg0;
-		if(m_rank>b.m_rank)
+		CBook b = ct;
+		if(m_rank > b.m_rank)
+		{
 			return 1;
-		if(m_rank<b.m_rank)
+		}
+		if(m_rank < b.m_rank)
+		{
 			return -1;
+		}
 		return m_ISBN.compareTo(b.m_ISBN);
 	}
 }
