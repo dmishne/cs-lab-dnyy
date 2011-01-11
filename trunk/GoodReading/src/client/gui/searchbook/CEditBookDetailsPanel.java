@@ -636,7 +636,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
                     for(int j =0 ; j < len; j++)
                     	if(jList_topics.getModel().getElementAt(j).toString().compareTo(" ") != 0 &&  jList_topics.getModel().getElementAt(j).toString().compareTo("") != 0)
                     	        topics = topics + "~"+ jList_topics.getModel().getElementAt(j);
-                    topics = topics.replace(":", "@");
+                    topics = topics.replace(" : ", "@");
 					String answer = ((CLibrarian)AUser.getInstance()).updateBookDetails(m_book.getM_ISBN(),jTextField_title.getText(), jTextField_author.getText(), jTextField_r_date.getText(), jTextField_publisher.getText(), jTextArea_summary.getText(),jTextField_price.getText(), topics, jTextField_label.getText(), jTextArea_toc.getText(), jCheckBox_visibilityCheck.isSelected(), jTextField_lang.getText(),formats);
 					setLastChoice(EBDDecision.SAVE);
 					JOptionPane.showMessageDialog(null, answer ,"Server answer :",JOptionPane.INFORMATION_MESSAGE);
@@ -686,6 +686,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	private JList getJList_topics() {
 		if (jList_topics == null) {
 			String topicSetting = m_book.getM_topic();
+			topicSetting = topicSetting.replace("@", " : ");
 			m_topics = topicSetting.split("~");
 			jList_topics = new JList(m_topics);		
 			jList_topics.setEnabled(false);

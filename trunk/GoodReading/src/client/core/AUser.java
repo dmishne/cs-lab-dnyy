@@ -286,9 +286,10 @@ public abstract class AUser implements Serializable{
 		    LinkedList<String> subtopics = (LinkedList<String>)temp;		
 			if(subtopics.size() > 0 && temp != null)
 			{
-				String[] answer = new String[subtopics.size()];
+				String[] answer = new String[subtopics.size()+1];
+				answer[0] = " ";
 				Iterator<String> it = subtopics.iterator();
-				int i = 0;
+				int i = 1;
 				while(it.hasNext())
 				{
 					answer[i] = it.next();
