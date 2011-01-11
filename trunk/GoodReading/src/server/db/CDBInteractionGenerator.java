@@ -366,7 +366,7 @@ public class CDBInteractionGenerator
 		try {
 			data = this.MySQLQuery("SELECT * FROM books "+this.buildSearchBookWhere(msgMap)+";");
 			while(data.next())
-				arg.add(new CBook(data.getString(1),data.getString(2),data.getString(3),data.getString(4),data.getString(5),data.getString(6),data.getFloat(7),data.getInt(8),data.getLong(9),data.getString(10),data.getString(11),data.getString(12),data.getBoolean(13),data.getString(14),0)); //TODO: replace 0 with data.getString(15) -- book RANK
+				arg.add(new CBook(data.getString(1),data.getString(2),data.getString(3),data.getString(4),data.getString(5),data.getString(6),data.getFloat(7),data.getInt(8),data.getLong(9),data.getString(10),data.getString(11),data.getString(12),data.getBoolean(13),data.getString(14),data.getInt(15)));
 		
 			} catch (Exception e) 
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}	
@@ -588,6 +588,7 @@ public class CDBInteractionGenerator
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
 			st.executeUpdate("CALL InsertBook('"+ isbn +"','"+ title +"','"+ author +"','"+ release_date +"','"+ publisher +"','"+ summary +"',"+ price +","+ score +","+ score_count +",'"+ null +"','"+ lables +"','"+ toc +"',"+ invisible +",'"+ language +"');");
+			/*
 			if(!topic.isEmpty()) //handle topic and subtopic insertion
 			{
 				String[] topics = topic.split("~");
@@ -631,8 +632,8 @@ public class CDBInteractionGenerator
 						s = s.substring(s.indexOf("~"));
 					}else return true;
 				}
-			}
-			return true;	
+			}*/
+			if(InsertTopicsAndSubTopics(topic,isbn)) return true;	
 		} catch (SQLException e) {
 			System.out.println("insertNewBook():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 		return false;
@@ -650,12 +651,72 @@ public class CDBInteractionGenerator
 				i = st.executeUpdate("CALL ChangeBookDetails ('"+ aBook.getM_ISBN() +"','"+ aBook.getM_title() +"','"+ aBook.getM_author() +"','"+ a +"','"+ aBook.getM_publisher() +"','"+ aBook.getM_summary() +"',"+ aBook.getM_price() +","+ aBook.getM_score() +","+ aBook.getM_score_count() +",'"+ null +"','"+ aBook.getM_lables() +"','"+ aBook.getM_TOC() +"',1,'"+ aBook.getM_language() +"');");
 			else
 				i = st.executeUpdate("CALL ChangeBookDetails ('"+ aBook.getM_ISBN() +"','"+ aBook.getM_title() +"','"+ aBook.getM_author() +"','"+ a +"','"+ aBook.getM_publisher() +"','"+ aBook.getM_summary() +"',"+ aBook.getM_price() +","+ aBook.getM_score() +","+ aBook.getM_score_count() +",'"+ null +"','"+ aBook.getM_lables() +"','"+ aBook.getM_TOC() +"',0,'"+ aBook.getM_language() +"');");			
-			if(i == 1) return true;
+			if(i == 1 && editBookTopics(aBook.getM_topic(), aBook.getM_ISBN())) return true;
 		} catch (SQLException e) {
 			System.out.println("editBookDetails():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 	return false;
 	}
+	
+	private boolean editBookTopics(String topics, String isbn)
+	{
+		if(topics.compareTo(getBookTopics(isbn)) == 0) return true;
+		try {
+			Statement st = this.m_DB_Connection.createStatement();
+			st.executeUpdate("CALL DeleteBookTopics('"+ isbn +"')");	
+		} catch (SQLException e) {
+			System.out.println("editBookTopics():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
+		return InsertTopicsAndSubTopics(topics, isbn);
+	}
 
+	private boolean InsertTopicsAndSubTopics(String topic, String isbn) //handle topic and subtopic insertion
+	{
+		if(!topic.isEmpty()) 
+		{
+			String[] topics = topic.split("~");
+			String s = topic;
+			String top = null;
+			String subs = null;
+			int start = 0;
+			int end = 0;
+			for (int i = 0; i < topics.length-1; i++)
+			{
+				if(s.indexOf("@") != -1)
+				{
+					start = s.indexOf("~");
+					end = s.indexOf("@");
+					top = s.substring(start+1, end);
+				}
+				else 
+				{
+					insertTopic(s.substring(1));
+					return true;
+				}
+				insertTopic(top);
+				s = s.substring(end+1);
+				if(s.indexOf("~") != -1)
+				{
+					subs = s.substring(0, s.indexOf("~"));
+				}
+				else subs = s;
+				int csubs = subs.split(",").length;
+				String ss = null;
+				for(int j = 0; j < csubs; j++)
+				{
+					if(subs.indexOf(",") > 0)
+						ss = subs.substring(0, subs.indexOf(","));
+					else ss = subs;
+					insertBookTopics(isbn, top, ss);
+					subs = subs.substring(subs.indexOf(",")+1);
+				}
+				if(s.indexOf("~") != -1)
+				{
+					s = s.substring(s.indexOf("~"));
+				}else return true;
+			}
+		}else return true;
+		return false;
+	}
+	
 	public boolean editReview(String isbn, String author, String title, String review, int accepted, String user)
 	{
 		try {
