@@ -1209,7 +1209,7 @@ public class CDBInteractionGenerator
 			rs = this.MySQLQuery("CALL GetFullBookViews ('"+ isbn +"','"+ fdate +"','"+ tdate +"');");
 			while(rs.next())
 				{
-					set.add(new CBookStats(rs.getString("first_name")+" "+rs.getString("last_name"), rs.getString("user"), Integer.parseInt(rs.getString("date").substring(5, 7))));
+					set.add(new CBookStats(rs.getString("first_name")+" "+rs.getString("last_name"), rs.getString("user"), rs.getString("date").substring(5, 7)));
 				}
 		} catch (Exception e) 
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
@@ -1247,7 +1247,7 @@ public class CDBInteractionGenerator
 			rs = this.MySQLQuery("CALL GetFullBookSales ('"+ isbn +"','"+ fdate +"','"+ tdate +"');");
 			while(rs.next())
 				{
-					set.add(new CBookStats(rs.getString("first_name")+" "+rs.getString("last_name"), rs.getString("user"), Integer.parseInt(rs.getString("date").substring(5, 7))));
+					set.add(new CBookStats(rs.getString("first_name")+" "+rs.getString("last_name"), rs.getString("user"), rs.getString("date").substring(5, 7)));
 				}
 		} catch (Exception e) 
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
@@ -1263,7 +1263,7 @@ public class CDBInteractionGenerator
 			rs = this.MySQLQuery("CALL GetFullUserPurchases ('"+ username +"','"+ fdate +"','"+ tdate +"');");
 			while(rs.next())
 				{
-					set.add(new CPurchaseStats(rs.getString("isbn"), rs.getString("title"), Integer.parseInt(rs.getString("date").substring(5, 7))));
+					set.add(new CPurchaseStats(rs.getString("isbn"), rs.getString("title"), rs.getString("date").substring(5, 7)));
 				}
 		} catch (Exception e) 
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
