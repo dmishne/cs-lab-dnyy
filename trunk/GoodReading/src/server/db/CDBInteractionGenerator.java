@@ -1227,15 +1227,21 @@ public class CDBInteractionGenerator
 	}
 	
 	
-	public int GetPurchases(String isbn)
-	{
-		// TODO Auto-generated method stub
+	public int GetPurchases(String isbn) {
 		//This function returns all purchases (from all times) for this book
+		ResultSet purchases;
+		try {
+			purchases = this.MySQLQuery("CALL GetPurchases ('"+ isbn +"')");
+			if(purchases.next())
+				{
+					return purchases.getInt("purchases");
+				}
+		} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
 		return 0;
 	}
 	
-	public int GetViews(String isbn)
-	{
+	public int GetViews(String isbn) {
 		// TODO Auto-generated method stub
 		//This function returns all views (from all times) for this book
 		return 0;
