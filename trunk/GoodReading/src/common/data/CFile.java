@@ -42,6 +42,12 @@ public class CFile implements Serializable
 			File myFile = new File (path); //get "File"
 		    byte [] mybytearray  = new byte [(int)myFile.length()]; //allocate space for file
 		    
+		    if(!myFile.exists())
+		    	System.out.println("file not here!");
+		    	
+		    if(!myFile.canRead())
+		    	System.out.println("file can not be read!");
+		    	
 		    BufferedInputStream bis = new BufferedInputStream(new FileInputStream(myFile)); //get Buffered Stream
 		    
 		    bis.read(mybytearray,0,mybytearray.length); // read file into array
