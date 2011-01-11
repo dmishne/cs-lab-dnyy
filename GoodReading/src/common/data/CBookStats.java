@@ -9,11 +9,11 @@ public class CBookStats implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String m_Username;
 	private String m_FullName;
-	private int m_month;
+	private String m_month;
 	
 	
 
-	public CBookStats(String f,String u,int m)
+	public CBookStats(String f,String u,String m)
 	{
 		m_FullName=f;
 		m_Username=u;
@@ -22,7 +22,7 @@ public class CBookStats implements Serializable{
 	public String getFullName() {
 		return m_FullName;
 	}
-	public int getmonth() {
+	public String getmonth() {
 		return m_month;
 	}
 	public String getUsername() {
