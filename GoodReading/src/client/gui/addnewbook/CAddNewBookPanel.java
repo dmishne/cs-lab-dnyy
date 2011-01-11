@@ -490,7 +490,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
         private JCheckBox getJCheckBox_pdf() {
                 if (jCheckBox_pdf == null) {
                         jCheckBox_pdf = new JCheckBox();
-                        jCheckBox_pdf.setSize(new Dimension(19, 17));
+                        jCheckBox_pdf.setSize(new Dimension(22, 20));
                         jCheckBox_pdf.setLocation(new Point(515, 150));
                 }
                 return jCheckBox_pdf;
@@ -504,7 +504,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
         private JCheckBox getJCheckBox_fb2() {
                 if (jCheckBox_fb2 == null) {
                         jCheckBox_fb2 = new JCheckBox();
-                        jCheckBox_fb2.setSize(new Dimension(18, 18));
+                        jCheckBox_fb2.setSize(new Dimension(22, 20));
                         jCheckBox_fb2.setLocation(new Point(575, 150));
                 }
                 return jCheckBox_fb2;
@@ -518,7 +518,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
         private JCheckBox getJCheckBox_doc() {
                 if (jCheckBox_doc == null) {
                         jCheckBox_doc = new JCheckBox();
-                        jCheckBox_doc.setSize(new Dimension(22, 16));
+                        jCheckBox_doc.setSize(new Dimension(22, 20));
                         jCheckBox_doc.setLocation(new Point(635, 150));
                 }
                 return jCheckBox_doc;

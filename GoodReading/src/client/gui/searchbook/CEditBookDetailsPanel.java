@@ -458,7 +458,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 			for(String s : files)
 				if(s.compareTo("pdf") == 0)
 					jCheckBox_pdf.setSelected(true);
-			jCheckBox_pdf.setSize(new Dimension(19, 17));
+			jCheckBox_pdf.setSize(new Dimension(22, 20));
 			jCheckBox_pdf.setLocation(new Point(515, 150));
 		}
 		return jCheckBox_pdf;
@@ -481,7 +481,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 			for(String s : files)
 				if(s.compareTo("fb2") == 0)
 					jCheckBox_fb2.setSelected(true);
-			jCheckBox_fb2.setSize(new Dimension(18, 18));
+			jCheckBox_fb2.setSize(new Dimension(22, 20));
 			jCheckBox_fb2.setLocation(new Point(575, 150));
 		}
 		return jCheckBox_fb2;
@@ -504,7 +504,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 			for(String s : files)
 				if(s.compareTo("doc") == 0)
 					jCheckBox_doc.setSelected(true);
-			jCheckBox_doc.setSize(new Dimension(22, 16));
+			jCheckBox_doc.setSize(new Dimension(22, 20));
 			jCheckBox_doc.setLocation(new Point(635, 150));
 		}
 		return jCheckBox_doc;
