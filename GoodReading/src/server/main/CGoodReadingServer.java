@@ -120,7 +120,8 @@ public class CGoodReadingServer {
 				e.printStackTrace();
 			}
 			info.done();
-		} 
+		}
+		CExecuter.GetInstance().startCheck(15000); // final set of the server.
 	}
 	
 }
