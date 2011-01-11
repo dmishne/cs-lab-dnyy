@@ -300,10 +300,10 @@ public class CDBInteractionGenerator
 			ans=ans+"summary LIKE '%"+params.get("summary")+"%'";
 			params.remove("summary");
 		}
-		else if(params.containsKey("TOC"))
+		else if(params.containsKey("toc"))
 		{
-			ans=ans+"TOC LIKE '%"+params.get("TOC")+"%'";
-			params.remove("TOC");
+			ans=ans+"TOC LIKE '%"+params.get("toc")+"%'";
+			params.remove("toc");
 		}
 		else if(params.containsKey("language"))
 		{
@@ -323,7 +323,7 @@ public class CDBInteractionGenerator
 		{
 			ans=ans+" AND author LIKE '%"+params.get("author")+"%'";
 		}
-		 if(params.containsKey("lable"))
+		 if(params.containsKey("labels"))
 		{
 			ans=ans+" AND lables LIKE '%"+params.get("labels")+"%'";
 		}
