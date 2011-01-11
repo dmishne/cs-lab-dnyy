@@ -1212,13 +1212,17 @@ public class CDBInteractionGenerator
 	//TODO a query that gives the rating of a book by a certain function
 
 	public Vector<String> getYears() {
-		// TODO Auto-generated method stub
-		//this method returns the years in which there was activity. 
+		//this method returns the years in which there was activity.
 		Vector<String> ans=new Vector<String>();
-		ans.add("2008");
-		ans.add("2009");
-		ans.add("2010");
-		ans.add("2011");
+		ResultSet years;
+		try {
+			years = this.MySQLQuery("CALL GetYears ()");
+			while(years.next())
+				{
+					ans.add(years.getString("YEAR(s.date)"));
+				}
+		} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
 		return ans;
 	}
 	
