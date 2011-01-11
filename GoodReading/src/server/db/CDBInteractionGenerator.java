@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
@@ -299,11 +300,11 @@ public class CDBInteractionGenerator
 			ans=ans+"summary LIKE '%"+params.get("summary")+"%'";
 			params.remove("summary");
 		}
-		else if(params.containsKey("topic"))
-		{
-			ans=ans+"topic LIKE '%"+params.get("topic")+"%'";
-			params.remove("topic");
-		}
+		//else if(params.containsKey("topic"))
+		//{
+		//	ans=ans+"topic LIKE '%"+params.get("topic")+"%'";
+		//	params.remove("topic");
+		//}
 		else if(params.containsKey("TOC"))
 		{
 			ans=ans+"TOC LIKE '%"+params.get("TOC")+"%'";
@@ -343,10 +344,10 @@ public class CDBInteractionGenerator
 		{
 			ans=ans+" AND summary LIKE '%"+params.get("summary")+"%'";
 		}
-		 if(params.containsKey("topic"))
-		{
-			ans=ans+" AND topic LIKE '%"+params.get("topic")+"%'";
-		}
+		// if(params.containsKey("topic"))
+		//{
+		//	ans=ans+" AND topic LIKE '%"+params.get("topic")+"%'";
+		//}
 		 if(params.containsKey("TOC"))
 		{
 			ans=ans+" AND TOC LIKE '%"+params.get("toc")+"%'";
@@ -363,17 +364,58 @@ public class CDBInteractionGenerator
 	{
 		LinkedList<CBook> arg=new LinkedList<CBook>();
 		ResultSet data=null;
-		try {
-			data = this.MySQLQuery("SELECT * FROM books "+this.buildSearchBookWhere(msgMap)+";");
-			while(data.next())
-				arg.add(new CBook(data.getString(1),data.getString(2),data.getString(3),data.getString(4),data.getString(5),data.getString(6),data.getFloat(7),data.getInt(8),data.getLong(9),data.getString(10),data.getString(11),data.getString(12),data.getBoolean(13),data.getString(14),data.getInt(15)));
-		
-			} catch (Exception e) 
-		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}	
-	
+		if(msgMap.get("topic") == null && msgMap.get("subtopic") == null)
+		{
+			try {
+				data = this.MySQLQuery("SELECT * FROM books "+this.buildSearchBookWhere(msgMap)+";");
+				while(data.next())
+					arg.add(new CBook(data.getString(1),data.getString(2),data.getString(3),data.getString(4),data.getString(5),data.getString(6),data.getFloat(7),data.getInt(8),data.getLong(9),data.getString(10),data.getString(11),data.getString(12),data.getBoolean(13),data.getString(14),data.getInt(15)));
+			
+				} catch (Exception e) 
+			{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}	
+		}
+		else
+		{
+			String atopic = msgMap.get("topic");
+			String asubtopic =  msgMap.get("subtopic");
+			msgMap.remove("topic");
+			msgMap.remove("subtopic");
+			try {
+				data = this.MySQLQuery("SELECT * FROM books "+this.buildSearchBookWhere(msgMap)+";");
+				while(data.next())
+					arg.add(new CBook(data.getString(1),data.getString(2),data.getString(3),data.getString(4),data.getString(5),data.getString(6),data.getFloat(7),data.getInt(8),data.getLong(9),data.getString(10),data.getString(11),data.getString(12),data.getBoolean(13),data.getString(14),data.getInt(15)));
+			
+				} catch (Exception e) 
+			{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
+			LinkedList<CBook> argtopic=new LinkedList<CBook>();
+			argtopic = searchByTopics(atopic, asubtopic);
+			LinkedList<CBook> list =new LinkedList<CBook>();
+			for(int i = 0 ; i < arg.size(); i++)
+			{
+				for(int j =0 ; j < argtopic.size(); j++)
+					{
+						if(arg.get(i).getM_ISBN().compareTo(argtopic.get(j).getM_ISBN()) == 0)
+							list.add(arg.get(i));
+					}
+			}
+			return list;
+		}
 		return arg;
 	}
 
+	private LinkedList<CBook> searchByTopics(String topic, String subtopic)
+	{
+		LinkedList<CBook> books = new LinkedList<CBook>();
+		ResultSet res;
+		try {
+			res = this.MySQLQuery("CALL SearchByTopics ('"+ topic +"','"+ subtopic +"')");
+			while(res.next())
+				books.add(new CBook(res.getString(1),res.getString(2),res.getString(3),res.getString(4),res.getString(5),res.getString(6),res.getFloat(7),res.getInt(8),res.getLong(9),res.getString(10),res.getString(11),res.getString(12),res.getBoolean(13),res.getString(14),res.getInt(15)));
+		
+			} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
+		return books;
+	}
 	public LinkedList<CBookReview> SearchReview(Map<String, String> msgMap) 
 	{
 		LinkedList<CBookReview> arg=new LinkedList<CBookReview>();
@@ -641,7 +683,6 @@ public class CDBInteractionGenerator
 	
 	public boolean editBookDetails(CBook aBook)
 	{
-		//TODO add topics and subtopics in here (like in insert new book)
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
 			//generate good string for Date
