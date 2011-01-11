@@ -225,7 +225,7 @@ public class CExecuter implements Runnable
 						{	
 							if(!Work.getMsgMap().containsKey("topic"))
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "No topic to add!");
-							else if(!db.addTopic(Work.getMsgMap().get("topic")))
+							else if(!db.insertTopic(Work.getMsgMap().get("topic")))
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Failed to add topic "+Work.getMsgMap().get("topic"));
 							else 
 								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Added topic!");

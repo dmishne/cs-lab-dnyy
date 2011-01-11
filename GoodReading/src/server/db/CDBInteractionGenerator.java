@@ -1253,11 +1253,6 @@ public class CDBInteractionGenerator
 		return 0;
 	}
 
-	public boolean addTopic(String topic) {
-		// TODO Auto-generated method stub
-		// function adds topic to DB - if no subtopic can be parsed than add ""
-		return false;
-	}
 	public void SetRank(String isbn,int rank) {
 		// TODO Auto-generated method stub
 		// function changes rank of book
