@@ -1353,5 +1353,13 @@ public class CDBInteractionGenerator
 			System.out.println("SetRank():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 	}
 
+	public void removeSessionId()
+	{
+		try {
+			Statement st = this.m_DB_Connection.createStatement();
+			st.executeUpdate("CALL RemoveSessionId();");	
+		} catch (SQLException e) {
+			System.out.println("removeSessionId():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
+	}
 	
 }
