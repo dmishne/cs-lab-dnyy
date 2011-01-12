@@ -44,18 +44,15 @@ public class CExecuter implements Runnable
 { 
 	private Set <CClientSession> m_sessions;	// @member m_sessions holds all active sessions
 	private boolean m_sleeping;					// @member m_sleeping indicates Executer is sleeping (waiting for jobs to do
-	private static boolean m_running=false;		// @member m_running holds the PopCheckRunner boolean to show it if to continue running or pause
-	private static PopCheckRunner m_PopCheckRunner;	// @member m_PopCheckRunner holds the PopCheckRunner thread
+	private static boolean m_running=false;		// @member m_running holds the MaintenanceRunner boolean to show it if to continue running or pause
+	private static MaintenanceRunner m_MaintenanceRunner;	// @member m_MaintenanceRunner holds the MaintenanceRunner thread
 	private Thread m_ThreadHolder;				// @member m_ThreadHolder holds the thread on which the executer is running
 	private Random m_generator;					// @member m_generator is actually infrastracture helping to generate random numbers.
 	private static CExecuter m_obj;				// @member m_obj is a part of the implementation for the Singleton Design patern
 	
-	/*
-	 *  
+	/*  
 	 * GetInstance finishes the implementation for the Singleton
-	 * 
 	 * @returns the only instance of CExecuter
-	 * 
 	 */
 	public static CExecuter GetInstance()
 	{
@@ -69,10 +66,9 @@ public class CExecuter implements Runnable
 	    //Instance is configured inside init()
 		this.m_sessions=new HashSet<CClientSession>();
 	}
+	
 	/*
-	 * 
 	 * Init() creates and initializes the instance of CExecuter
-	 * 
 	 */
 	private static void init()
 	{
@@ -86,15 +82,10 @@ public class CExecuter implements Runnable
 	
 	/*
 	 * run() implements the runnable interface.
-	 * 
 	 * This is the function that runs non-stop while server is up.
-	 * 
 	 * Started in init()
-	 * 
 	 * @see java.lang.Runnable#run()
-	 * 
 	 * @see server.core.CExecuter#init()
-	 * 
 	 */
 	public void run()
 	{
@@ -546,6 +537,7 @@ public class CExecuter implements Runnable
 			}
 	}
 
+	//Wrik map should contain isbn and 1 more attr of CBook
 	private void EditBook(CEntry Work, int Privilage) 
 	{
 		CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
@@ -633,7 +625,7 @@ public class CExecuter implements Runnable
 				}
 			}
 		}	
-	}
+	}	//end of edit book
 
 	private void AddNewBook(CEntry Work, int Privilage) 
 	{
@@ -683,7 +675,7 @@ public class CExecuter implements Runnable
 				 
 			}//end of add files
 		} //end of privilage
-	}
+	}//end of add book
 
 	
 	private void SubmitScore(CEntry Work, int Privilage) 
@@ -1053,8 +1045,8 @@ public class CExecuter implements Runnable
 
 	/*
 	 * this function is mainly for the use of CStandbyUnit
-	 * 
 	 * Used to let CExecuter know that he's got a CEntry waiting for him.
+	 * @see server.core.CStandbyUnit
 	 */
 	public void NotifyOfEntry()
 	{
@@ -1067,7 +1059,7 @@ public class CExecuter implements Runnable
 	}
 	
 	/*
-	 * Infrastracture function.
+	 * Infrastructure function.
 	 * @returns a random integer from 0 to 19580427.
 	 */
 	public int Random()
@@ -1076,8 +1068,7 @@ public class CExecuter implements Runnable
 	}
 
 /*
- * function is used to kill a session
- * 
+ * function is used to kill a session that's related to the relevant CEntry
  * this function is open for public for possible future upgrades.
  */
 	public void Kill(CEntry work) 
@@ -1091,7 +1082,7 @@ public class CExecuter implements Runnable
 					m_sessions.remove(c);//remove from sessions
 					CRespondToClient.GetInstance().Remove(c.getSessionID()); //remove from Client list
 				}
-	}
+	}	//end of kill
 
 	/*
 	 * This function is a getter for the thread running on behalf of CExecuter
@@ -1288,15 +1279,14 @@ public class CExecuter implements Runnable
 				arg.add(new CBookStats(a.getUsername(),a.getFullName(),"November"));
 			else if(a.getmonth().compareTo("12") == 0)
 				arg.add(new CBookStats(a.getUsername(),a.getFullName(),"Jannuar"));
-			
 	
-		
 		return arg;
 		
 	}
 
 	/*
 	 * function checks popularity of all books in DB and sets their ranks accordingly (in DB!)
+	 * @see server.core.CExecuter#startCheck()
 	 */
 	public static void recheckPopularity()
 	{
@@ -1332,41 +1322,44 @@ public class CExecuter implements Runnable
 	
 	
 	
-	//TODO:check these functions tmr
-	//this function is dangerous as it may take a long time until thread returns to caller! 
-	public void stopCheck() throws InterruptedException
+	/*
+	 * this function is dangerous as it may take a long time until thread returns to caller!
+	 * function will tell the maintenance thread to stop, which will happen as soon as it ends it's cycle ( and wakes up from Thread.sleep).
+	 * @see server.core.CExecuter#startCheck()
+	 */
+	public void stopMaintenance() throws InterruptedException
 	{
-		if(m_PopCheckRunner == null)
+		if(m_MaintenanceRunner == null)
 			return;
 		m_running=false;
-		while(m_PopCheckRunner != null)
+		while(m_MaintenanceRunner != null)
 			Thread.sleep(100);
 	}
 	/*
 	 * this function starts the check.
-	 * if check is already running or if there's a thread responsible for it then it will return false
-	 * the popularity check will return every cycle of the thread.
+	 * if maintenance check is already running or if there's a thread responsible for it then it will return false
+	 * the  maintenance functions (popularity check and clear sIDs) will return every cycle of the thread.
 	 * @param delay states how much to wait between cycles(in miliseconds) NOTE: delay can't be smaller than 5 seconds, if it is function will just set it to 5 seconds
 	 * @return success
 	 */
 	public boolean startCheck(int delay)
 	{
 		//if exists then stop checking
-		if(m_PopCheckRunner != null)
+		if(m_MaintenanceRunner != null)
 			return false;
 		
 		//create and start check
-		m_PopCheckRunner=new PopCheckRunner(delay); 
-		m_PopCheckRunner.start();
+		m_MaintenanceRunner=new MaintenanceRunner(delay); 
+		m_MaintenanceRunner.start();
 		return true;
 	}
 	
 	//private class to help keep in touch of the thread running the checks
-	private class PopCheckRunner extends Thread
+	private class MaintenanceRunner extends Thread
 	{
 		private int m_checkdelay;
 		//constructor
-		public PopCheckRunner(int sl)
+		public MaintenanceRunner(int sl)
 		{
 			if(sl <5000)
 				m_checkdelay=5000;
@@ -1376,12 +1369,30 @@ public class CExecuter implements Runnable
 			m_running=true;
 		}
 		
+		
+		/*
+		 * flow chart for function
+		 * while ( should run && wasn't told to stop )
+		 * 	 DO: maintenance {
+		 * 						popularity check
+		 * 						remove sID from old reciepts
+		 * 					}
+		 * 		Sleep for awhile( delay / 1000) seconds
+		 * 
+		 * @see java.lang.Thread#run()
+		 * @see server.core.CExecuter#startCheck()
+		 */
 		public void run()
 		{
+			m_running=true;
+			
 			while(CExecuter.m_running)
 			{
-				//check popularity
+				//Maintenance functions start
 				CExecuter.recheckPopularity();
+				CDBInteractionGenerator.GetInstance().removeSessionId();
+				//Maintenance functions end
+				
 				
 				//go to sleep
 				try 
@@ -1393,13 +1404,13 @@ public class CExecuter implements Runnable
 					//if interrupted
 					System.out.println("Popularity check timer halted(can't sleep): "+e.getMessage()); 
 					CExecuter.m_running=false; 
-					CExecuter.m_PopCheckRunner=null;
+					CExecuter.m_MaintenanceRunner=null;
 					return;	
 				}
 			} //end of loop
 		} //end of run
 		
-	}	//end of PopCheckRunner
+	}	//end of MaintenanceRunner
 	
 }
 
