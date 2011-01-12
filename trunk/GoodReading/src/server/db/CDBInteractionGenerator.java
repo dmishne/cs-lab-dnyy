@@ -360,7 +360,6 @@ public class CDBInteractionGenerator
 				data = this.MySQLQuery("SELECT * FROM books "+this.buildSearchBookWhere(msgMap)+";");
 				while(data.next())
 					arg.add(new CBook(data.getString(1),data.getString(2),data.getString(3),data.getString(4),data.getString(5),data.getString(6),data.getFloat(7),data.getInt(8),data.getLong(9),getBookTopics(data.getString(1)),data.getString(11),data.getString(12),data.getBoolean(13),data.getString(14),data.getInt(15)));
-					
 				} catch (Exception e) 
 			{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}	
 		}
