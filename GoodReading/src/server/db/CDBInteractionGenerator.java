@@ -32,11 +32,22 @@ public class CDBInteractionGenerator
 	private Connection m_DB_Connection;
 	private static CDBInteractionGenerator m_obj;
 	
+	/**
+	 * Executes an SQL query
+	 * @param query
+	 * @return ResultSet with the SQLQuery result from DB
+	 * @throws SQLException
+	 */
 	public ResultSet MySQLQuery(String query) throws SQLException
 	{
 		return this.m_DB_Connection.createStatement().executeQuery(query);	
 	}
 
+	/**
+	 * returns the authorization level of the user
+	 * @param user
+	 * @return authorization level for user
+	 */
 	public int MySQLGetAuth(String user)  
 	{
 		try
@@ -55,6 +66,11 @@ public class CDBInteractionGenerator
 		return -1;
 	}
 
+	/**
+	 * Executes SQL statement
+	 * @param statement
+	 * @return true / false on success / failure
+	 */
 	private boolean MySQLExecute(String statement)
 	{
 		try{
@@ -69,6 +85,11 @@ public class CDBInteractionGenerator
 		}
 	}
 	
+	/**
+	 * returns login information of user
+	 * @param user
+	 * @return login information of user
+	 */
 	public ResultSet MySQLLoginQuery(String user)
 	{
 		try {
@@ -80,21 +101,24 @@ public class CDBInteractionGenerator
 			
 			return null;
 		}
-	} /////////////////TODO:need to fix " inside of DB
+	} 
 	
+	/**
+	 * Returns the (only) instance of CDBInteractionGenerator
+	 * @return instance of CDBInteractionGenerator
+	 */
 	public static CDBInteractionGenerator GetInstance()
 	{
-		/* TODO add constructor args */
 		if(m_obj == null)
 			{
-				m_obj=new CDBInteractionGenerator(); //init();
+				m_obj=new CDBInteractionGenerator();
 			}
 		return m_obj;
 	}
 	
-	
-	
-	
+	/**
+	 *  Constructor for CDBInteractionGenerator class
+	 */
 	private CDBInteractionGenerator()
 	{
 		try 
@@ -104,7 +128,7 @@ public class CDBInteractionGenerator
             System.out.println("SQL connection succeed");
 	 	} 
 		catch (Exception ex) 
- 	    {/* handle any errors*/
+ 	    {
 			System.out.println("Error initializing DB connection 5: " + ex.getMessage());
         }
 		
@@ -112,13 +136,21 @@ public class CDBInteractionGenerator
 
 	
 	
-	
+	/**
+	 * Updates log
+	 */
 	public void ServerUpdateLog(String toLog) 
 	{
 		// TODO Auto-generated method stub
 		
 	}
 	
+	/**
+	 * Validates the user login details
+	 * @param user
+	 * @param password
+	 * @return true if login is OK, false otherwise
+	 */
 	public boolean ValidateLogin(String user, String password) 
 	{
 		ResultSet rs;
@@ -148,6 +180,11 @@ public class CDBInteractionGenerator
 		return false;		
 	}
 	
+	/**
+	 * Deletes a CreditCard details from database
+	 * @param user
+	 * @return true on success, false on failure
+	 */
 	public boolean RemoveCC(String user)
 	{
 		try {
@@ -159,6 +196,15 @@ public class CDBInteractionGenerator
 	
 		return false;
 	}
+	
+	/**
+	 * Adds CreditCard details of a user into database
+	 * @param user
+	 * @param CCnum
+	 * @param CCExpire
+	 * @param CCid
+	 * @return true on success, false on failure
+	 */
 	public boolean AddCC(String user,String CCnum,String CCExpire,String CCid)
 	{ 
 		if(CCnum.length() > 12) return false;
@@ -172,7 +218,12 @@ public class CDBInteractionGenerator
 		return false;
 	}
 	
-	
+	/**
+	 * Creates an instance of AUser by user and sessionID
+	 * @param user
+	 * @param sessionID
+	 * @return new instance of AUser for the specified user
+	 */
 	public AUser getUserInstance(String user,int sessionID)
 	{
 		ResultSet rs;
@@ -208,17 +259,18 @@ public class CDBInteractionGenerator
 		default:
 			return null;
 		}
-		
-		
-		
 		//TODO: add log
 		} catch (SQLException e) {
 			System.out.print("SQL Exception while gettins user info, func GetUsernstance: "+e.getErrorCode()+" "+e.getMessage());	}
-	
 		return null;
 		
 	}
 
+	/**
+	 * Adds a monthly subscription in the database for the user
+	 * @param userName
+	 * @return true on success, false on failure
+	 */
 	public boolean AddMonthly(String userName) {
 		try {
 			ResultSet rs=MySQLQuery("SELECT * FROM subscriptions s WHERE s.type LIKE 'monthly' AND s.user LIKE '"+userName+"';");
@@ -237,6 +289,11 @@ public class CDBInteractionGenerator
 		return true;
 	}
 
+	/**
+	 * Adds a yearly subscription in the database for the user
+	 * @param userName
+	 * @return true on success, false on failure
+	 */
 	public boolean AddYearly(String userName) {
 		try {
 			ResultSet rs=MySQLQuery("SELECT * FROM subscriptions s WHERE s.type LIKE 'yearly' AND s.user LIKE '"+userName+"';");
@@ -256,7 +313,11 @@ public class CDBInteractionGenerator
 	}
 	
 
-	
+	/**
+	 * Builds the WHERE clause for search book function
+	 * @param params
+	 * @return SQL syntax WHERE clause
+	 */
 	private String buildSearchBookWhere(Map<String,String> params)
 	{ 
 		String ans="";
@@ -349,7 +410,11 @@ public class CDBInteractionGenerator
 		return ans;		
 	}
 
-	
+	/**
+	 * Searches for a book in the database
+	 * @param msgMap
+	 * @return a list of books
+	 */
 	public LinkedList<CBook> SearchBook(Map<String, String> msgMap) 
 	{
 		LinkedList<CBook> arg=new LinkedList<CBook>();
@@ -392,6 +457,12 @@ public class CDBInteractionGenerator
 		return arg;
 	}
 
+	/**
+	 * Searches books in database according to their topics and sub topics
+	 * @param topic
+	 * @param subtopic
+	 * @return  a list of books
+	 */
 	private LinkedList<CBook> searchByTopics(String topic, String subtopic)
 	{
 		LinkedList<CBook> books = new LinkedList<CBook>();
@@ -405,6 +476,12 @@ public class CDBInteractionGenerator
 		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
 		return books;
 	}
+	
+	/**
+	 * Searches for a review in the database
+	 * @param msgMap
+	 * @return a list of reviews
+	 */
 	public LinkedList<CBookReview> SearchReview(Map<String, String> msgMap) 
 	{
 		LinkedList<CBookReview> arg=new LinkedList<CBookReview>();
@@ -420,6 +497,11 @@ public class CDBInteractionGenerator
 		return arg;
 	}
 
+	/**
+	 * Builds the WHERE clause for search review
+	 * @param params
+	 * @return SQL syntax WHERE clause
+	 */
 	private String buildSearchBookReviewWhere(Map<String, String> params) {
 		String ans="";
 		
@@ -489,7 +571,11 @@ public class CDBInteractionGenerator
 		return ans;		
 	}
 
-
+	/**
+	 * returns the price of the specified book
+	 * @param isbn
+	 * @return book price
+	 */
 	public double getPrice(String isbn) {
 		ResultSet price=null;
 		try {
@@ -503,6 +589,12 @@ public class CDBInteractionGenerator
 		return -1;
 	}
 
+	/**
+	 * Bills a user with the specified subscription
+	 * @param type
+	 * @param userName
+	 * @return true on success, false on failure
+	 */
 	public boolean subscriptionPay(String type, String userName) {
 		ResultSet check = null;
 		String ltype = null;
@@ -532,10 +624,25 @@ public class CDBInteractionGenerator
 		return true;
 	}
 
+	/**
+	 * Simulates CreditCard payment
+	 * @param userName
+	 * @param price
+	 * @param string2
+	 * @return true
+	 */
 	public boolean ccPay( String userName, double price, String string2) {
 		return true;
 	}
 
+	/**
+	 * Creates a receipt for a purchased book 
+	 * @param userName
+	 * @param isbn
+	 * @param type
+	 * @param sid
+	 * @return the receipt number
+	 */
 	public int createReciept(String userName, String isbn, String type,int sid) {	
 		ResultSet rs = null;
 		try {
@@ -549,20 +656,14 @@ public class CDBInteractionGenerator
 		return -1;
 	}
 
+	/**
+	 * Checks if the user has read the specified book
+	 * @param isbn
+	 * @param userName
+	 * @return true on success, false on failure
+	 */
 	public boolean hasUserRead(String isbn, String userName) {
 		ResultSet check = null;
-	//nir's sql
-	/*	try {
-			check = this.MySQLQuery("SELECT * FROM receipts r WHERE r.user like '"+userName+"' AND r.isbn like '"+isbn+"';");
-			if(check.next())
-				{
-					return true;
-				}
-		} catch (Exception e) 
-		{	}// System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}		
-	
-	*/	
-		
 		  try {
 		 
 			check = this.MySQLQuery( "CALL CheckReceiptByUserNameAndISBN ('"+ isbn + "','"+ userName +"');");
@@ -575,6 +676,14 @@ public class CDBInteractionGenerator
 		return false;
 	}
 
+	/**
+	 * Submits a new review to database
+	 * @param isbn
+	 * @param userName
+	 * @param title
+	 * @param review
+	 * @return true on success, false on failure
+	 */
 	public boolean submitReview(String isbn, String userName, String title, String review) {
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
@@ -585,6 +694,13 @@ public class CDBInteractionGenerator
 		return false;
 	}
 
+	/**
+	 * Scores a book in database
+	 * @param isbn
+	 * @param userName
+	 * @param score
+	 * @return true on success, false on failure
+	 */
 	public boolean giveScore(String isbn, String userName, int score) 
 	{
 		ResultSet check = null;
@@ -613,63 +729,40 @@ public class CDBInteractionGenerator
 		return false;
 	}
 
+	/**
+	 * Inserts a new book into the database
+	 * @param isbn
+	 * @param title
+	 * @param author
+	 * @param release_date
+	 * @param publisher
+	 * @param summary
+	 * @param price
+	 * @param score
+	 * @param score_count
+	 * @param topic
+	 * @param lables
+	 * @param toc
+	 * @param invisible
+	 * @param language
+	 * @return true on success, false on failure
+	 */
 	public boolean insertNewBook(String isbn, String title, String author, String release_date, String publisher, String summary, Double price, int score, int score_count,  String topic, String lables, String toc, boolean invisible, String language)
 	{
-		//TODO right now a topic must have a sub topic as well... otherwise its not related to a book
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
 			st.executeUpdate("CALL InsertBook('"+ isbn +"','"+ title +"','"+ author +"','"+ release_date +"','"+ publisher +"','"+ summary +"',"+ price +","+ score +","+ score_count +",'"+ null +"','"+ lables +"','"+ toc +"',"+ invisible +",'"+ language +"');");
-			/*
-			if(!topic.isEmpty()) //handle topic and subtopic insertion
-			{
-				String[] topics = topic.split("~");
-				String s = topic;
-				String top = null;
-				String subs = null;
-				int start = 0;
-				int end = 0;
-				for (int i = 0; i < topics.length-1; i++)
-				{
-					if(s.indexOf("@") != -1)
-					{
-						start = s.indexOf("~");
-						end = s.indexOf("@");
-						top = s.substring(start+1, end);
-					}
-					else 
-					{
-						insertTopic(s.substring(1));
-						return true;
-					}
-					insertTopic(top);
-					s = s.substring(end+1);
-					if(s.indexOf("~") != -1)
-					{
-						subs = s.substring(0, s.indexOf("~"));
-					}
-					else subs = s;
-					int csubs = subs.split(",").length;
-					String ss = null;
-					for(int j = 0; j < csubs; j++)
-					{
-						if(subs.indexOf(",") > 0)
-							ss = subs.substring(0, subs.indexOf(","));
-						else ss = subs;
-						insertBookTopics(isbn, top, ss);
-						subs = subs.substring(subs.indexOf(",")+1);
-					}
-					if(s.indexOf("~") != -1)
-					{
-						s = s.substring(s.indexOf("~"));
-					}else return true;
-				}
-			}*/
 			if(InsertTopicsAndSubTopics(topic,isbn)) return true;	
 		} catch (SQLException e) {
 			System.out.println("insertNewBook():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 		return false;
 	}
 	
+	/**
+	 * Updates a books details in the database
+	 * @param aBook
+	 * @return true on success, false on failure
+	 */
 	public boolean editBookDetails(CBook aBook)
 	{
 		try {
@@ -687,6 +780,12 @@ public class CDBInteractionGenerator
 	return false;
 	}
 	
+	/**
+	 * Updates a book's topics and subtopics
+	 * @param topics
+	 * @param isbn
+	 * @return true on success, false on failure
+	 */
 	private boolean editBookTopics(String topics, String isbn)
 	{
 		if(topics.compareTo(getBookTopics(isbn)) == 0) return true;
@@ -698,6 +797,12 @@ public class CDBInteractionGenerator
 		return InsertTopicsAndSubTopics(topics, isbn);
 	}
 
+	/**
+	 * Inserts topics and subtopics into database
+	 * @param topic
+	 * @param isbn
+	 * @return true on success, false on failure
+	 */
 	private boolean InsertTopicsAndSubTopics(String topic, String isbn) //handle topic and subtopic insertion
 	{
 		if(!topic.isEmpty()) 
@@ -747,6 +852,16 @@ public class CDBInteractionGenerator
 		return false;
 	}
 	
+	/**
+	 * Edits a review's details in the database
+	 * @param isbn
+	 * @param author
+	 * @param title
+	 * @param review
+	 * @param accepted
+	 * @param user
+	 * @return true on success, false on failure
+	 */
 	public boolean editReview(String isbn, String author, String title, String review, int accepted, String user)
 	{
 		try {
@@ -758,27 +873,14 @@ public class CDBInteractionGenerator
 		return false;
 	}
 	
+	/**
+	 * Returns a user's existing subscription types in the database
+	 * @param userName
+	 * @return a list of subscription types
+	 */
 	public LinkedList<String> getUserPayments(String userName) {
 		ResultSet cc;
 		LinkedList<String>ans=new LinkedList<String>();
-		//Nir's SQL
-		/*try {
-			cc=this.MySQLQuery("Select type FROM subscriptions WHERE user like '"+userName+"';");
-	
-			while(cc.next())
-			{
-			 ans.add(cc.getString(1));	
-			}
-			cc.close();
-			cc=this.MySQLQuery("Select * FROM credit_card_details WHERE user like '"+userName+"';");
-			if(cc.next())
-				ans.add("Credit Card");
-			cc.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
-		
 		try {
 			cc = this.MySQLQuery("CALL CheckSubscription ('"+ userName +"');");
 			while(cc.next())
@@ -800,24 +902,14 @@ public class CDBInteractionGenerator
 		return ans;
 	}
 
+	/**
+	 * Returns the existing book formats in the database
+	 * @param isbn
+	 * @return a list of book formats
+	 */
 	public LinkedList<String> getBookFormats(String isbn) {
 		ResultSet formats;
 		LinkedList<String>ans=new LinkedList<String>();
-		// Nir's sql
-		/*try {
-			cc=this.MySQLQuery("SELECT * FROM files WHERE isbn like '"+isbn+"';");
-	
-			while(cc.next())
-			{
-			 ans.add(cc.getString(2));	
-			}
-			cc.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		
-		*/
 		try {
 			formats = this.MySQLQuery("CALL GetBookFormats ('"+ isbn +"');");
 			while(formats.next())
@@ -834,8 +926,12 @@ public class CDBInteractionGenerator
 		return ans ;
 	}
 
+	/**
+	 * Adds statistics for this isbn and user (user viewed book at DATE)
+	 * @param isbn
+	 * @param userName
+	 */
 	public void StatisticsAddView(String isbn, String userName) {
-		//adds statistics for this isbn and user (user viewed book at DATE)
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
 			st.executeUpdate("CALL AddStatsView ('"+ isbn +"','"+ userName +"');");
@@ -843,6 +939,13 @@ public class CDBInteractionGenerator
 			System.out.println("StatisticsAddView():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 	}
 
+	/**
+	 * Checks in the database whether the user has bought this book
+	 * @param isbn
+	 * @param userName
+	 * @param sessionID
+	 * @return true if yes false if no
+	 */
 	public boolean hasUserBought(String isbn, String userName, int sessionID) {
 		ResultSet bought;
 		try {
@@ -856,6 +959,12 @@ public class CDBInteractionGenerator
 		return false;
 	}
 
+	/**
+	 * Retrieves a book file from the database
+	 * @param isbn
+	 * @param format
+	 * @return Blob containing the book
+	 */
 	public CFile getBook(String isbn, String format) {
 		CFile cf=null;
 		ResultSet rs;
@@ -863,13 +972,18 @@ public class CDBInteractionGenerator
 			rs = this.MySQLQuery("CALL GetBook ('"+ isbn +"','"+ format +"');");
 			if(rs.next())
 				{
-					cf=new CFile(rs.getBlob("book"));//.getBytes (1, (int)( rs.getBlob("book").length() ))  );
+					cf=new CFile(rs.getBlob("book"));
 				}
 		} catch (Exception e) 
 		{	 System.out.println("GetBook() Exception while reading data from result set (FactoryData() "+e.getMessage());	}
 		return cf;
 	}
 
+	/**
+	 * Searches for a user in the database
+	 * @param params
+	 * @return a list of users
+	 */
 	public LinkedList<CUser> SearchUser(Map<String, String> params) {
 		LinkedList<CUser> res = new LinkedList<CUser>();
 		ResultSet data=null;
@@ -888,6 +1002,11 @@ public class CDBInteractionGenerator
 		return res;
 	}
 	
+	/**
+	 * Builds a WHERE clause for search user action
+	 * @param params
+	 * @return SQL syntax WHERE clause
+	 */
 	private String buildSearchUserWhere(Map<String, String> params) {
 		String ans="";
 		
@@ -941,6 +1060,11 @@ public class CDBInteractionGenerator
 		return ans;		
 	}
 
+	/**
+	 * Updates the user's privileges in the database
+	 * @param usr
+	 * @param priv
+	 */
 	public void SetUserPriv(CUser usr, int priv) {
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
@@ -949,6 +1073,11 @@ public class CDBInteractionGenerator
 			System.out.println("SetUserPriv():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 	}
 
+	/**
+	 * Updates a user's details in the database
+	 * @param usr
+	 * @return true on success false on failure
+	 */
 	public boolean editUser(CUser usr) {
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
@@ -959,6 +1088,12 @@ public class CDBInteractionGenerator
 		return false;
 	}
 	
+	/**
+	 * Deletes  areview form the database
+	 * @param isbn
+	 * @param userName
+	 * @return true on success false on failure
+	 */
 	public boolean deleteReview(String isbn, String userName) {
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
@@ -969,6 +1104,10 @@ public class CDBInteractionGenerator
 		return false;
 	}
 
+	/**
+	 * Retrieves the existing languages from the database
+	 * @return a set of languages
+	 */
 	public Set<String> getLangs() {
 		ResultSet langs;
 		Set<String> m_langueges = new TreeSet<String>();
@@ -988,6 +1127,10 @@ public class CDBInteractionGenerator
 		return m_langueges;
 	}
 
+	/**
+	 * Retrieves the existing topics from the database
+	 * @return a set of topics
+	 */
 	public Set<String> getTopics() {
 		Set<String> m_topics = new HashSet<String>();
 		ResultSet topic;
@@ -1002,6 +1145,11 @@ public class CDBInteractionGenerator
 		return m_topics;
 	}
 
+	/**
+	 * Retrieves the existing subtopics for a topic from the database
+	 * @param topic
+	 * @return a list of subtopics
+	 */
 	public LinkedList<String> getSubTopics(String topic) {
 		LinkedList<String> m_subTopics =new LinkedList<String>();
 		ResultSet subtopic;
@@ -1017,6 +1165,11 @@ public class CDBInteractionGenerator
 		return m_subTopics;
 	}
 
+	/**
+	 * Retrieves the existing topic and subtopics of a book from the database
+	 * @param isbn
+	 * @return a string containing topics and subtopics with special delimiters "~" and "@"
+	 */
 	public String getBookTopics (String isbn)	{
 		String res = "";
 		String prevTopic = "";
@@ -1035,6 +1188,11 @@ public class CDBInteractionGenerator
 		return res;
 	}
 	
+	/**
+	 * Inserts a topic into the database
+	 * @param topic
+	 * @return true on success false on failure
+	 */
 	public boolean insertTopic(String topic) {
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
@@ -1045,6 +1203,13 @@ public class CDBInteractionGenerator
 		return false;
 	}
 	
+	/**
+	 * Relates a topic and a sub topic to a book in the database
+	 * @param isbn
+	 * @param topic
+	 * @param subTopic
+	 * @return true on success false on failure
+	 */
 	public boolean insertBookTopics(String isbn, String topic, String subTopic)
 	{
 		try {
@@ -1056,6 +1221,12 @@ public class CDBInteractionGenerator
 		return false;
 	}
 	
+	/**
+	 * Inserts a subtopic into the database
+	 * @param topic
+	 * @param subTopic
+	 * @return true on success false on failure
+	 */
 	public boolean insertSubTopic(String topic, String subTopic) {
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
@@ -1066,8 +1237,12 @@ public class CDBInteractionGenerator
 		return false;
 	}
 	
+	/**
+	 * Deletes a book from the database
+	 * @param isbn
+	 * @return true on success false on failure
+	 */
 	public boolean deleteBook(String isbn) {
-		///delete book from DB
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
 			int i = st.executeUpdate("CALL DeleteBook ('"+ isbn +"');");
@@ -1077,8 +1252,13 @@ public class CDBInteractionGenerator
 		return false;
 	}
 
+	/**
+	 * Deletes a file of a book from the databse
+	 * @param isbn
+	 * @param format
+	 * @return true on success false on failure
+	 */
 	public boolean deleteFile(String isbn, String format) {
-		///delete book FILE from DB
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
 			int i = st.executeUpdate("CALL DeleteFile ('"+ isbn +"','"+ format +"');");
@@ -1088,10 +1268,14 @@ public class CDBInteractionGenerator
 		return false;
 	}
 
+	/**
+	 * Creates an instance of AUser
+	 * @param rs
+	 * @return an AUser instance
+	 */
 	public AUser getUserInstance(ResultSet rs)
 	{
-		try{
-		//ResultSet rs;		
+		try{		
 		AUser arg;
 		switch (rs.getInt(3))
 		{
@@ -1126,6 +1310,13 @@ public class CDBInteractionGenerator
 		
 	}
 
+	/**
+	 * Uploads a file to the database
+	 * @param isbn
+	 * @param format
+	 * @param file
+	 * @return true on success false on failure
+	 */
 	public boolean UploadFile(String isbn, String format, CFile file) {
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
@@ -1136,8 +1327,11 @@ public class CDBInteractionGenerator
 		return false;
 	}
 
+	/**
+	 * Retrieves the amount of unhandeled reviews form the database 
+	 * @return the number of relevant reviews
+	 */
 	public int CountMessages() {
-		//count unhandled reviews
 		ResultSet ms;
 		try {
 			ms = this.MySQLQuery("CALL CountMessages ();");
@@ -1150,12 +1344,22 @@ public class CDBInteractionGenerator
 		return 0;
 	}
 
+	/**
+	 * deletes a certain book's files from the database
+	 * @param isbn
+	 */
 	public void clearFiles(String isbn) {
 		LinkedList<String> arg=getBookFormats(isbn);
 		for(String s:arg)
 			this.deleteFile(isbn, s);
 	}
 
+	/**
+	 * Deletes subscription for user
+	 * @param m_userName
+	 * @param type
+	 * @throws Exception
+	 */
 	public void deleteSubscription(String m_userName, String type) throws Exception {
 		//method deletes subscription for username, type = mothly / yearly
 		//on fail THROW EXCEPTION. (counting on it in executer)
@@ -1170,6 +1374,11 @@ public class CDBInteractionGenerator
 		throw new Exception("deleteSubscription() failed!");
 	}
 
+	/**
+	 * Deletes Credit card for user
+	 * @param m_userName
+	 * @throws Exception
+	 */
 	public void deleteCC(String m_userName) throws Exception{
 		//method deletes Credit card for user.
 		//on fail THROW EXCEPTION. (counting on it in executer)
@@ -1184,6 +1393,13 @@ public class CDBInteractionGenerator
 		throw new Exception("deleteCC() failed!");
 	}
 
+	/**
+	 * Retrieves the months and amount in every month that a book has been searched
+	 * @param isbn
+	 * @param from_date
+	 * @param to_date
+	 * @return a map of months and amounts
+	 */
 	public Map<String,Integer> getBookViews(String isbn, String from_date, String to_date)
 	{
 		Map<String,Integer> mp = new HashMap<String,Integer>();
@@ -1208,6 +1424,12 @@ public class CDBInteractionGenerator
 		return mp;
 	}
 
+	/**
+	 * Retrieves the months and amount in every month that a book has been searched
+	 * @param isbn
+	 * @param year
+	 * @return a map of months and amounts
+	 */
 	public Map<String,Integer> getBookViews(String isbn, String year)
 	{
 		Map<String,Integer> mp = new HashMap<String,Integer>();
@@ -1230,6 +1452,12 @@ public class CDBInteractionGenerator
 		return mp;
 	}
 
+	/**
+	 * Retrieves the user details of every user which viewed the specified book in the specified year
+	 * @param isbn
+	 * @param year
+	 * @return a set of user's details
+	 */
 	public Set<CBookStats> getFullBookViews(String isbn, String year) {
 		ResultSet rs;
 		Set<CBookStats> set = new HashSet<CBookStats>();
@@ -1246,6 +1474,12 @@ public class CDBInteractionGenerator
 		return set;
 	}
 	
+	/**
+	 * Retrieves dates and amounts of a book's purchases in a specified year
+	 * @param isbn
+	 * @param year
+	 * @return a map of dates and amounts
+	 */
 	public Map<String, Integer> getBookSales(String isbn, String year) {
 		//return short version of report (for histogram
 		Map<String,Integer> mp = new HashMap<String,Integer>();
@@ -1268,6 +1502,12 @@ public class CDBInteractionGenerator
 		return mp;
 	}
 	
+	/**
+	 * Retrieves the user details of every user which bought the specified book in the specified year
+	 * @param isbn
+	 * @param year
+	 * @return a set of user's details
+	 */
 	public Set<CBookStats> getFullBookSales(String isbn, String year) {
 		ResultSet rs;
 		Set<CBookStats> set = new HashSet<CBookStats>();
@@ -1284,6 +1524,12 @@ public class CDBInteractionGenerator
 		return set;
 	}
 
+	/**
+	 * Retrieves the book details of every book which was bought by the specified user in the specified year
+	 * @param username
+	 * @param year
+	 * @return a set of book's details
+	 */
 	public Set<CPurchaseStats> getFullUserPurchases(String username, String year) {
 		ResultSet rs;
 		Set<CPurchaseStats> set = new HashSet<CPurchaseStats>();
@@ -1300,6 +1546,10 @@ public class CDBInteractionGenerator
 		return set;
 	}
 
+	/**
+	 * Returns the years in which there was activity
+	 * @return a vector of years
+	 */
 	public Vector<String> getYears() {
 		//this method returns the years in which there was activity.
 		Vector<String> ans=new Vector<String>();
@@ -1315,7 +1565,11 @@ public class CDBInteractionGenerator
 		return ans;
 	}
 	
-	
+	/**
+	 * Returns all purchases (from all times) for this book
+	 * @param isbn
+	 * @return amount of purchases
+	 */
 	public int GetPurchases(String isbn) {
 		//This function returns all purchases (from all times) for this book
 		ResultSet purchases;
@@ -1330,6 +1584,11 @@ public class CDBInteractionGenerator
 		return 0;
 	}
 	
+	/**
+	 * Returns all views (from all times) for this book
+	 * @param isbn
+	 * @return amount of views
+	 */
 	public int GetViews(String isbn) {
 		//This function returns all views (from all times) for this book
 		ResultSet views;
@@ -1344,6 +1603,11 @@ public class CDBInteractionGenerator
 		return 0;
 	}
 
+	/**
+	 * Sets the rank of the specified book
+	 * @param isbn
+	 * @param rank
+	 */
 	public void SetRank(String isbn,int rank) {
 		// function changes rank of book
 		try {
@@ -1353,6 +1617,9 @@ public class CDBInteractionGenerator
 			System.out.println("SetRank():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
 	}
 
+	/**
+	 * Deletes the session id within an old receipt
+	 */
 	public void removeSessionId()
 	{
 		try {
