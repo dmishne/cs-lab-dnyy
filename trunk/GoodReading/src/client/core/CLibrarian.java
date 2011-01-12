@@ -287,12 +287,13 @@ public class CLibrarian extends AUser{
 	}
 	
 	
-	public String addSubTopic(String subtopic) throws Exception
+	public String addSubTopic(String topic,String subtopic) throws Exception
 	{
 		CEntry entryToSrv ;
 		String answer;
 		Map<String, String> subtopics = new HashMap<String, String>();
-		subtopics.put("topic", subtopic);
+		subtopics.put("topic", topic);
+		subtopics.put("subtopic", subtopic);
 		entryToSrv = new CEntry("AddSubtopic", subtopics , this.getUserName(), this.getUserSessionId());
 		Object ans = CClientConnector.getInstance().messageToServer(entryToSrv);
 		if(ans instanceof String)
