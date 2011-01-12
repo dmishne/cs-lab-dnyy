@@ -29,7 +29,6 @@ public class CGoodReadingServer {
 		 *   		start up server,
 		 *  		first comes DB
 		 *  		second comes in the CStandbyUnit, Executer SHOULD go after standby unit, for he calls for an instance of it, however there is no limitation currently, it will justmake some of the code redundant to call it first
-		 *	
 		 */
 		
 		/*  Here starts the server's pop-up */
@@ -121,7 +120,7 @@ public class CGoodReadingServer {
 			}
 			info.done();
 		}
-		CExecuter.GetInstance().startCheck(15000); // final set of the server.
+		CExecuter.GetInstance().startCheck(150000); // final set of the server.
 	}
 	
 }
