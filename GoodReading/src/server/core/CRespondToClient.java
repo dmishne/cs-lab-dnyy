@@ -2,20 +2,28 @@ package server.core;
 
 import java.util.Map;
 import java.util.TreeMap;
-
 import ocsf.server.ConnectionToClient;
 
+	/**
+	 * CRespondToClient class was written with the Single Responsibility principle of the OOP in mind.
+	 * it's sole purpose is to return a msg to client.
+	 * for this, it ALSO holds the container of client connections
+	 * @see server.core.CExecuter main customer for this unit
+	 */
 public class CRespondToClient {
 
-	private Map <Integer,Object> m_connections;
-	private static CRespondToClient m_obj;
+	private Map <Integer,Object> m_connections;	//holds all connections to clients
+	private static CRespondToClient m_obj; 		//used for implementation of the Singleton DP
 	
 	private CRespondToClient()
 	{
 		m_connections=new TreeMap<Integer,Object>();
 	}
 		
-	//get instance for Singleton
+	/**
+	 * this func is the implementation of the Singleton DP
+	 * @return the instance of CRespondToClient
+	 */
 	public static CRespondToClient GetInstance()
 	{
 		if(m_obj==null)
@@ -23,49 +31,54 @@ public class CRespondToClient {
 		return m_obj;
 	}
 		
-	//insert to Map
+	/**
+	 * Save connection to client (or out stream)
+	 */
 	public void InsertOutstream(int key,Object stream)
 	{
 		m_connections.put(new Integer(key),stream);				 		
 	}
 	
-	//send response
+	/**
+	 * send response to client
+	 */
 	public void SendResponse(int i, Object msg)
 	{
-		if(i == -1)
+		if(i < 0)
 			return;
-		System.out.println("Sending message to client @ "+((ConnectionToClient)m_connections.get(i)).getName());
+		System.out.print("\n\nSending message to client @ "+((ConnectionToClient)m_connections.get(i)).getName());
 		if(msg==null)
-			System.out.println("	null");
-		else System.out.println("	"+msg.toString());
+			System.out.print("	null");
+		else System.out.print("	"+msg.toString());
 		try{
 			if(msg==null)
 				((ConnectionToClient)m_connections.get(i)).sendToClient("null");
 			else
 				((ConnectionToClient)m_connections.get(i)).sendToClient(msg);	
 		}
-		catch (Exception e) {	// TODO Auto-generated catch block
-			System.out.println("Response Unit failed to send msg to "+i+": "+e.getMessage());
+		catch (Exception e) {	
+			System.out.println("\nResponse Unit failed to send msg to "+i+": "+e.getMessage());
 		}
-	}
+	}//end of SendResponse
 	
-	//is object defined in map
+	
+	/**
+	 * is object defined in map
+	 * @return answer (is object defined in map / is key registered to a client)
+	 */
 	public boolean isRegistered(int key)
 	{
 		return this.m_connections.containsKey(key);
 	}
 	
-	//removing an object so we can replace it
+	/**
+	 * removing an object so we can replace it / returns stream, it is also used in logout to return msg to client
+	 * @return connection to client inserted by CExecuter
+	 */
 	public ConnectionToClient Remove(int key)
 	{
 		ConnectionToClient arg=(ConnectionToClient) this.m_connections.get(key);
 		this.m_connections.remove(key);
 		return arg;
-	}
-	
-	/*
-	 *  TODO:
-	 *  think about timeout  
-	*/
-	
+	}	
 }
