@@ -454,20 +454,27 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 			jList_ChoosenTopics_MT = null;
 			this.add(getJList_ChoosenTopics_MT());
 		}
-		else if(source == jButton_Back_MT)
+		else
 		{
-			this.setLastChoice(MTPDecision.BACK);
-			this.setVisible(false);
-		}
-		else if (source == jButton_Set_MT)
-		{
-			m_list = jList_ChoosenTopics_MT;
 			if(m_last.compareTo("ANB") == 0)
-			    this.setFrom(MTPfrom.ADDBOOK);
+			{
+				this.setFrom(MTPfrom.ADDBOOK);
+			}
 			else if(m_last.compareTo("EBD") == 0)
-				 this.setFrom(MTPfrom.EDITBOOK);
-			this.setLastChoice(MTPDecision.SET);
-			this.setVisible(false);
+			{
+				this.setFrom(MTPfrom.EDITBOOK);
+			}
+			if(source == jButton_Back_MT)
+			{
+				this.setLastChoice(MTPDecision.BACK);
+				this.setVisible(false);
+			}
+			else if (source == jButton_Set_MT)
+			{
+				m_list = jList_ChoosenTopics_MT;
+				this.setLastChoice(MTPDecision.SET);
+				this.setVisible(false);
+			}
 		}
 	}
 

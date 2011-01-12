@@ -596,13 +596,13 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 			setLastChoice(EBDDecision.BACK);
 			this.setVisible(false);
 		}
-		if(source == jButton_setTopics)
+		else if(source == jButton_setTopics)
 		{
 			m_lastList = getJList_topics();
 			setLastChoice(EBDDecision.EDITTOPICS);
 			this.setVisible(false);
 		}
-		if(source == jButton_deleteBook)
+		else if(source == jButton_deleteBook)
 		{
 			try {				
 				String answer = ((CLibrarian)AUser.getInstance()).deleteBook(m_book.getM_ISBN());
@@ -613,37 +613,38 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 				JOptionPane.showMessageDialog(null, e.getMessage() ,"Error",JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		if(source == jButton_Save_EBD)
+		else if(source == jButton_Save_EBD)
 		{ 		
-				try {
-					String[] formats = new String[3];
-                    int i = 0;
-                    if(jCheckBox_pdf.isSelected())
-                    {
-                    	formats[i] = "pdf";
-                    	i++;
-                    }
-                    if(jCheckBox_fb2.isSelected())
-                    {
-                    	formats[i] = "fb2";
-                    	i++;
-                    }
-                    if(jCheckBox_doc.isSelected())
-                    {
-                    	formats[i] = "doc";                            	
-                    }
-                    int len = jList_topics.getModel().getSize();
-                    for(int j =0 ; j < len; j++)
-                    	if(jList_topics.getModel().getElementAt(j).toString().compareTo(" ") != 0 &&  jList_topics.getModel().getElementAt(j).toString().compareTo("") != 0)
-                    	        topics = topics + "~"+ jList_topics.getModel().getElementAt(j);
-                    topics = topics.replace(" : ", "@");
-					String answer = ((CLibrarian)AUser.getInstance()).updateBookDetails(m_book.getM_ISBN(),jTextField_title.getText(), jTextField_author.getText(), jTextField_r_date.getText(), jTextField_publisher.getText(), jTextArea_summary.getText(),jTextField_price.getText(), topics, jTextField_label.getText(), jTextArea_toc.getText(), jCheckBox_visibilityCheck.isSelected(), jTextField_lang.getText(),formats);
-					setLastChoice(EBDDecision.SAVE);
-					JOptionPane.showMessageDialog(null, answer ,"Server answer :",JOptionPane.INFORMATION_MESSAGE);
-					this.setVisible(false);
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, e.getMessage() + e.getClass() ,"Error",JOptionPane.ERROR_MESSAGE);
-					}			
+			try {
+				String[] formats = new String[3];
+                int i = 0;
+                if(jCheckBox_pdf.isSelected())
+                {
+                	formats[i] = "pdf";
+                	i++;
+                }
+                if(jCheckBox_fb2.isSelected())
+                {
+                	formats[i] = "fb2";
+                	i++;
+                }
+                if(jCheckBox_doc.isSelected())
+                {
+                	formats[i] = "doc";                            	
+                }
+                int len = jList_topics.getModel().getSize();
+                for(int j =0 ; j < len; j++)
+                	if(jList_topics.getModel().getElementAt(j).toString().compareTo(" ") != 0 &&  jList_topics.getModel().getElementAt(j).toString().compareTo("") != 0)
+                	        topics = topics + "~"+ jList_topics.getModel().getElementAt(j);
+                topics = topics.replace(" : ", "@");
+				String answer = ((CLibrarian)AUser.getInstance()).updateBookDetails(m_book.getM_ISBN(),jTextField_title.getText(), jTextField_author.getText(), jTextField_r_date.getText(), jTextField_publisher.getText(), jTextArea_summary.getText(),jTextField_price.getText(), topics, jTextField_label.getText(), jTextArea_toc.getText(), jCheckBox_visibilityCheck.isSelected(), jTextField_lang.getText(),formats);
+				setLastChoice(EBDDecision.SAVE);
+				JOptionPane.showMessageDialog(null, answer ,"Server answer :",JOptionPane.INFORMATION_MESSAGE);
+				this.setVisible(false);
+			} 
+			catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage() + e.getClass() ,"Error",JOptionPane.ERROR_MESSAGE);
+			}			
 		}
 	}
 
