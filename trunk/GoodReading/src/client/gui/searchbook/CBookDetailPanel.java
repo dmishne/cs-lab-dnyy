@@ -81,10 +81,14 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 		//
 		jLabel_intrank = new CustomLabel();
 		jLabel_intrank.setBounds(new Rectangle(115, 120, 27, 27));
+		jLabel_intrank.setFont(new Font("Old English Text MT", Font.BOLD, 18));
+		jLabel_intrank.setForeground(new Color(255, 102, 0));
 		jLabel_intrank.setText(((Integer)m_book.getM_rank()).toString());
 		jLabel_rank = new CustomLabel();
 		jLabel_rank.setText("Rank :");
 		jLabel_rank.setSize(new Dimension(62, 27));
+		jLabel_rank.setFont(new Font("Old English Text MT", Font.BOLD, 18));
+		jLabel_rank.setForeground(new Color(255, 102, 0));
 		jLabel_rank.setLocation(new Point(45, 120));
 		jLabel_toc = new CustomLabel();
 		jLabel_toc.setText("TOC :");

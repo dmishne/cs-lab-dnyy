@@ -203,8 +203,8 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 	private JComboBox getJComboBox_AvailTopics() {
 		if (jComboBox_AvailTopics == null) {
 			try {
-				jComboBox_AvailTopics = new JComboBox(CClientConnector.getInstance().getTopics());
-				//jComboBox_AvailTopics = new JComboBox(((CLibrarian)AUser.getInstance()).getTopics());
+				//jComboBox_AvailTopics = new JComboBox(CClientConnector.getInstance().getTopics());
+				jComboBox_AvailTopics = new JComboBox(((CLibrarian)AUser.getInstance()).getTopics());
 				jComboBox_AvailTopics.setSize(new Dimension(278, 27));
 				jComboBox_AvailTopics.setLocation(new Point(40, 280));
 			} catch (Exception e) {
@@ -371,7 +371,7 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 				    }
 				  jComboBox_AvailSubTopics_MT.setEnabled(true);
 				  jComboBox_AvailSubTopics_MT.removeAllItems();
-				  jComboBox_AvailSubTopics_MT.addItem("");
+				  //jComboBox_AvailSubTopics_MT.addItem("");
 				  for(String t : subtopics)
 					  jComboBox_AvailSubTopics_MT.addItem(t);			  
 				  jTextField_AddSubTopic_MT.setEditable(true);
@@ -402,17 +402,38 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 			}
 			this.remove(jComboBox_AvailTopics);
 			this.jComboBox_AvailTopics = null;
-			this.add(getJButton_add_Topic(), null);
+			this.add(getJComboBox_AvailTopics(), null);
 		}
 		else if(source == jButton_addSubTopic_MT)
-		{
-			try {
-				((CLibrarian)AUser.getInstance()).addSubTopic(jTextField_AddTopic_MT.getText(),jTextField_AddSubTopic_MT.getText());
-			} catch (Exception e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage() ,"Error",JOptionPane.ERROR_MESSAGE);
+		{			
+		    if (jComboBox_AvailTopics.getSelectedItem().toString().compareTo(" ") != 0)
+			{
+				try {
+					((CLibrarian)AUser.getInstance()).addSubTopic(jComboBox_AvailTopics.getSelectedItem().toString(),jTextField_AddSubTopic_MT.getText());
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage() ,"Error",JOptionPane.ERROR_MESSAGE);
+				}
 			}
-			this.remove(jComboBox_AvailSubTopics_MT);
-			this.add(jComboBox_AvailSubTopics_MT);
+			else
+			{
+				JOptionPane.showMessageDialog(null, "You have to choose topic first" ,"Error",JOptionPane.ERROR_MESSAGE);
+			}
+			if(jComboBox_AvailTopics.getSelectedItem().toString().compareTo(" ") != 0)
+			{
+				this.remove(jComboBox_AvailSubTopics_MT);
+				this.jComboBox_AvailSubTopics_MT = null;
+				this.add(getJComboBox_AvailSubTopics_MT(), null);
+				String[] subtopics = {""};
+				try {
+					subtopics = AUser.getInstance().getSubTopics((String)jComboBox_AvailTopics.getSelectedItem());
+				    } catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, e2.getMessage() ,"Error",JOptionPane.ERROR_MESSAGE);
+				    }
+				  //jComboBox_AvailSubTopics_MT.addItem("");
+				  for(String t : subtopics)
+					  jComboBox_AvailSubTopics_MT.addItem(t);
+				  jComboBox_AvailSubTopics_MT.setEnabled(true);
+			}
 		}
 		else if(source == jButton_AddToList_MT)
 		{
