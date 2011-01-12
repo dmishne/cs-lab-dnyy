@@ -19,13 +19,14 @@ import javax.swing.SwingConstants;
 import client.core.AUser;
 import client.core.CReader;
 
+/**
+ *	CArrangePayPanel defines the panel of the arrange payment screen
+ */
 public class CArrangePayPanel extends JPanel implements ActionListener {
 
-	/*
-	 * Consider change the Expiration Date JTextField
-	 * to JFormattedTextField 
+	/**
+	 * Defines the operation the will cause changing of the panel
 	 */
-	
 	public enum EAPDecision
 	{
 		BACK,PURCHASE
@@ -36,10 +37,16 @@ public class CArrangePayPanel extends JPanel implements ActionListener {
 	private JButton m_jButton_Back = null;
 	private JButton m_jButton_Purchase = null;
 	
-	private EAPDecision m_lastChoice = null;  //  @jve:decl-index=0:
+	/**
+	 * Saves the last choice of the user
+	 */
+	private EAPDecision m_lastChoice = null; 
+	
 	private JComboBox m_jComboBox_PaymentType = null;
 	private JLabel m_jLabel_ChoosePayment = null;
-	
+	/**
+	 * Contains the Available option for arranging the payment.
+	 */
 	final private String[] types = {"Prepaid - Yearly","Prepaid - Monthly","Per Purchase"};
 	private JTextField m_jTextField_CCNUM = null;
 	private JTextField m_jTextField_CCEXP = null;
@@ -57,7 +64,7 @@ public class CArrangePayPanel extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * This method initializes this
+	 * initialize() initializes this class
 	 * 
 	 * @return void
 	 */
@@ -104,8 +111,8 @@ public class CArrangePayPanel extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * This method initializes m_jButton_Back	
-	 * 	
+	 * getM_jButton_Back() initializes m_jButton_Back	
+	 * On pressing on m_jButton_Back the current screen disappears. 
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_Back() {
@@ -119,8 +126,9 @@ public class CArrangePayPanel extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * This method initializes m_jButton_Purchase	
-	 * 	
+	 * getM_jButton_Purchase() initializes m_jButton_Purchase	
+	 * On pressing on getM_jButton_Purchase the purchase information 
+	 * pass to the server and database and the screen disappears.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_Purchase() {
@@ -133,7 +141,10 @@ public class CArrangePayPanel extends JPanel implements ActionListener {
 		return m_jButton_Purchase;
 	}
 
-	
+	/**
+	 * actionPerformed handle responsible for action performed.  
+	 * @param ae ActionEvent
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		if(source == m_jButton_Back)
@@ -261,7 +272,7 @@ public class CArrangePayPanel extends JPanel implements ActionListener {
 		return m_jTextField_SSN;
 	}
 
-	/*
+	/**
 	 * This method set the relevant features of
 	 * the Credit Card payment to be Visible
 	 */
@@ -278,7 +289,7 @@ public class CArrangePayPanel extends JPanel implements ActionListener {
 		m_jLabel_SSN.setVisible(true); 
 	}
 
-	/*
+	/**
 	 * This method set the relevant features of
 	 * the Credit Card payment to be Invisible
 	 */
