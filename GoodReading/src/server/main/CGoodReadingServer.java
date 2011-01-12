@@ -7,7 +7,7 @@ import server.core.CStandbyUnit;
 import server.db.CDBInteractionGenerator;
 
 
-/*	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *
+/**  *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *	 *
  *	
  *  CGoodReadingServer class
  *
@@ -20,7 +20,7 @@ public class CGoodReadingServer {
 	final public static int Revision = 1;
 	
 	/**
-	 * @param args
+	 * @param args unused
 	 */
 	public static void main(String[] args) {
 		/*

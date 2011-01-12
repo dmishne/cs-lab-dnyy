@@ -2,9 +2,10 @@ package server.core;
 
 import java.util.ResourceBundle;
 
-	/*
+	/**
 	 * This class uses the ResourceBundle to load properties for the server from a properties file (named config)
-	 * CServerConstants make a good option for avoiding hard coded text and helping to make outside configuration easier. 
+	 * CServerConstants make a good option for avoiding hard coded text and helping to make outside configuration easier.
+	 * All members are called statically, so there's no need for an actual instance of this Class 
 	 */
 public class CServerConstants {
 
@@ -21,7 +22,7 @@ public class CServerConstants {
 	private static int m_POPULARITY_RATIO=10;
 	private static int m_DEFAULT_PORT=5555;
 	
-	/*
+	/**
 	 * method configures all the static vars
 	 * does not require any path as input
 	 * should be called BEFORE classes use these values!
@@ -30,7 +31,7 @@ public class CServerConstants {
 	{
 		Config("server.core.config");
 	}
-	/*
+	/**
 	 * method configures all the static variables
 	 * @param path determines the path to the configuration file
 	 * should be called BEFORE classes use these values!

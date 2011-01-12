@@ -24,7 +24,7 @@ import common.data.CFile;
 import common.data.CPurchaseStats;
 import common.data.CUser;
 
-/*                     
+/**                    
  *	
  *	CExecuter is the glue behind Server, basically it's the Class holding everything together.
  *
@@ -42,15 +42,15 @@ import common.data.CUser;
 
 public class CExecuter implements Runnable
 { 
-	private Set <CClientSession> m_sessions;	// @member m_sessions holds all active sessions
-	private boolean m_sleeping;					// @member m_sleeping indicates Executer is sleeping (waiting for jobs to do
-	private static boolean m_running=false;		// @member m_running holds the MaintenanceRunner boolean to show it if to continue running or pause
-	private static MaintenanceRunner m_MaintenanceRunner;	// @member m_MaintenanceRunner holds the MaintenanceRunner thread
-	private Thread m_ThreadHolder;				// @member m_ThreadHolder holds the thread on which the executer is running
-	private Random m_generator;					// @member m_generator is actually infrastracture helping to generate random numbers.
-	private static CExecuter m_obj;				// @member m_obj is a part of the implementation for the Singleton Design patern
+	private Set <CClientSession> m_sessions;				//  m_sessions holds all active sessions
+	private boolean m_sleeping;								//  m_sleeping indicates Executer is sleeping (waiting for jobs to do
+	private static boolean m_running=false;					//  m_running holds the MaintenanceRunner boolean to show it if to continue running or pause
+	private static MaintenanceRunner m_MaintenanceRunner;	//  m_MaintenanceRunner holds the MaintenanceRunner thread
+	private Thread m_ThreadHolder;							//  m_ThreadHolder holds the thread on which the executer is running
+	private Random m_generator;								//  m_generator is actually infrastracture helping to generate random numbers.
+	private static CExecuter m_obj;							//  m_obj is a part of the implementation for the Singleton Design patern
 	
-	/*  
+	/**  
 	 * GetInstance finishes the implementation for the Singleton
 	 * @returns the only instance of CExecuter
 	 */
@@ -67,7 +67,7 @@ public class CExecuter implements Runnable
 		this.m_sessions=new HashSet<CClientSession>();
 	}
 	
-	/*
+	/**
 	 * Init() creates and initializes the instance of CExecuter
 	 */
 	private static void init()
@@ -80,7 +80,7 @@ public class CExecuter implements Runnable
 	}
 	
 	
-	/*
+	/**
 	 * run() implements the runnable interface.
 	 * This is the function that runs non-stop while server is up.
 	 * Started in init()
@@ -449,7 +449,6 @@ public class CExecuter implements Runnable
 		}
 	}
 
-	//
 	private void SearchUser(CEntry Work, int Privilage) 
 	{
 		LinkedList<CUser> ans;
@@ -466,7 +465,6 @@ public class CExecuter implements Runnable
 	}
 
 	
-	//
 	private void EditUser(CEntry Work, int Privilage) 
 	{
 		CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
@@ -497,7 +495,7 @@ public class CExecuter implements Runnable
 						usr.setAdress(arg.get(a));
 					else if(a.compareTo("birthday")==0)
 						usr.setBirthDay(arg.get(a));
-		}
+				}
 				//take care of suspend
 				if(arg.containsKey("suspend") && Boolean.parseBoolean(arg.get("suspend")))
 					usr.SetSuspend(true);
@@ -537,7 +535,7 @@ public class CExecuter implements Runnable
 			}
 	}
 
-	//Wrik map should contain isbn and 1 more attr of CBook
+	//Work map should contain isbn and 1 more attr of CBook
 	private void EditBook(CEntry Work, int Privilage) 
 	{
 		CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
@@ -1020,7 +1018,7 @@ public class CExecuter implements Runnable
 	}
 	
 	
-	/*
+	/**
 	 * this function just adds to the m_sessions container/
 	 */
 	private void add(CClientSession s)
@@ -1028,7 +1026,7 @@ public class CExecuter implements Runnable
 		this.m_sessions.add(s);
 	}
 	
-	/*
+	/**
 	 *  checking to see if user is logged
 	 *  
 	 *  @returns true if user is logged
@@ -1043,7 +1041,7 @@ public class CExecuter implements Runnable
 	}
 	
 
-	/*
+	/**
 	 * this function is mainly for the use of CStandbyUnit
 	 * Used to let CExecuter know that he's got a CEntry waiting for him.
 	 * @see server.core.CStandbyUnit
@@ -1058,16 +1056,16 @@ public class CExecuter implements Runnable
 		}
 	}
 	
-	/*
+	/**
 	 * Infrastructure function.
-	 * @returns a random integer from 0 to 19580427.
+	 * @return a random integer from 0 to 19580427.
 	 */
 	public int Random()
 	{
 		return m_generator.nextInt();
 	}
 
-/*
+/**
  * function is used to kill a session that's related to the relevant CEntry
  * this function is open for public for possible future upgrades.
  */
@@ -1084,7 +1082,7 @@ public class CExecuter implements Runnable
 				}
 	}	//end of kill
 
-	/*
+	/**
 	 * This function is a getter for the thread running on behalf of CExecuter
 	 * This will only really be relevant if we want to expand the activity (to have 2 or more executers running) 
 	 * Another idea (not implemented) was shutting the server down via killing the threads.
@@ -1284,7 +1282,7 @@ public class CExecuter implements Runnable
 		
 	}
 
-	/*
+	/**
 	 * function checks popularity of all books in DB and sets their ranks accordingly (in DB!)
 	 * @see server.core.CExecuter#startCheck()
 	 */
@@ -1322,7 +1320,7 @@ public class CExecuter implements Runnable
 	
 	
 	
-	/*
+	/**
 	 * this function is dangerous as it may take a long time until thread returns to caller!
 	 * function will tell the maintenance thread to stop, which will happen as soon as it ends it's cycle ( and wakes up from Thread.sleep).
 	 * @see server.core.CExecuter#startCheck()
@@ -1335,7 +1333,7 @@ public class CExecuter implements Runnable
 		while(m_MaintenanceRunner != null)
 			Thread.sleep(100);
 	}
-	/*
+	/**
 	 * this function starts the check.
 	 * if maintenance check is already running or if there's a thread responsible for it then it will return false
 	 * the  maintenance functions (popularity check and clear sIDs) will return every cycle of the thread.
@@ -1370,7 +1368,7 @@ public class CExecuter implements Runnable
 		}
 		
 		
-		/*
+		/**
 		 * flow chart for function
 		 * while ( should run && wasn't told to stop )
 		 * 	 DO: maintenance {
