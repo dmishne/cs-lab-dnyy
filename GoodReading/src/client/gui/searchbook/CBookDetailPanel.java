@@ -58,6 +58,8 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 	private JScrollPane jScrollPane_toc = null;
 	private JTextArea jTextArea_toc = null;
 	private CustomLabel jLabel_toc = null;
+	private CustomLabel jLabel_rank = null;
+	private CustomLabel jLabel_intrank = null;
 
 	/**
 	 * This is the default constructor
@@ -77,6 +79,13 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 	 */
 	private void initialize() throws Exception {
 		//
+		jLabel_intrank = new CustomLabel();
+		jLabel_intrank.setBounds(new Rectangle(115, 120, 27, 27));
+		jLabel_intrank.setText(((Integer)m_book.getM_rank()).toString());
+		jLabel_rank = new CustomLabel();
+		jLabel_rank.setText("Rank :");
+		jLabel_rank.setSize(new Dimension(62, 27));
+		jLabel_rank.setLocation(new Point(45, 120));
 		jLabel_toc = new CustomLabel();
 		jLabel_toc.setText("TOC :");
 		jLabel_toc.setSize(new Dimension(40, 27));
@@ -168,13 +177,13 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 		this.add(jLabel_re_date, null);
 		this.add(getJScrollPane_toc(), null);
 		this.add(jLabel_toc, null);
+		this.add(jLabel_rank, null);
+		this.add(jLabel_intrank, null);
 		if(AUser.getInstance().getPrivilege() == EActor.User ||
 		   AUser.getInstance().getPrivilege() == EActor.Reader )
 		{
 			this.add(getM_jButton_publishReview(), null);
 			this.add(getM_jButton_Purchase_BDP(), null);
-			
-			
 		}
 		else if(AUser.getInstance().getPrivilege() == EActor.Librarian)
 		{

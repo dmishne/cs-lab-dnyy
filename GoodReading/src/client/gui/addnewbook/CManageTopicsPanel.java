@@ -407,7 +407,7 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 		else if(source == jButton_addSubTopic_MT)
 		{
 			try {
-				((CLibrarian)AUser.getInstance()).addSubTopic(jTextField_AddSubTopic_MT.getText());
+				((CLibrarian)AUser.getInstance()).addSubTopic(jTextField_AddTopic_MT.getText(),jTextField_AddSubTopic_MT.getText());
 			} catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage() ,"Error",JOptionPane.ERROR_MESSAGE);
 			}
