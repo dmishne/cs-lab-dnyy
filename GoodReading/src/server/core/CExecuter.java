@@ -226,18 +226,31 @@ public class CExecuter implements Runnable
 						
 						else if(Work.getMsgType().compareTo("AddTopic") == 0)
 						{	
-							if(!Work.getMsgMap().containsKey("topic"))
-								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "No topic to add!");
-							else if(!db.insertTopic(Work.getMsgMap().get("topic")))
-								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Failed to add topic "+Work.getMsgMap().get("topic"));
+							if(Privilage >2)
+								if(!Work.getMsgMap().containsKey("topic"))
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "No topic to add!");
+								else if(!db.insertTopic(Work.getMsgMap().get("topic")))
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Failed to add topic "+Work.getMsgMap().get("topic"));
+								else 
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Added topic!");
 							else 
-								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Added topic!");
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "not enough privilage!");
+							
 						}// end of AddTopic
-						
+
 						else if(Work.getMsgType().compareTo("SearchBook") == 0)
 						{
 							SearchBook(Work,Privilage);
 						} //end of Searchbook
+
+
+						else if(Work.getMsgType().compareTo("SearchTopics") == 0)
+						{
+							
+							Set<String> ans=db.getTopics();
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), new LinkedList<String>(ans));
+							
+						} //end of SearchTopics
 
 						else if(Work.getMsgType().compareTo("GetYears") == 0)
 						{
@@ -305,7 +318,19 @@ public class CExecuter implements Runnable
 						else if(Work.getMsgType().compareTo("AddBook") == 0)
 						{	
 							AddNewBook(Work,Privilage);						
-							} //end of add book
+						} //end of add book
+						
+						else if(Work.getMsgType().compareTo("AddSubtopic") == 0)
+						{	
+							if(Privilage >2)
+								if(db.insertSubTopic(Work.getMsgMap().get("topic"), Work.getMsgMap().get("subtopic")))
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Success!");
+								else 
+									CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Fail!");
+							else 
+								CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "not enough privilage!");
+					
+						} //end of add subtopic
 						
 						else if(Work.getMsgType().compareTo("EditBook") == 0)
 						{
