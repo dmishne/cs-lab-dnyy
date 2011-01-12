@@ -6,7 +6,7 @@ import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
 import common.api.CEntry;
-/*
+/**
  * class responsibility is thus: get requests from client, store them, and tell the CExecuter he's got work.
  * @see server.core.CExecuter
  * @see common.api.CEntry
@@ -14,17 +14,16 @@ import common.api.CEntry;
 public class CStandbyUnit  extends AbstractServer 
 {
 	
-	/*signleton*/
+	/**Singleton*/
 	private static CStandbyUnit m_obj;
 
-	/*Entry queue*/
+	/**Entry queue*/
 	private Queue <CEntry> m_que;
 
-	/*
+	/**
 	 * Implementation for the Singleton DP
 	 * @returns the instance of CStandbyUnit
-	 */
-	
+	 */	
 	public static CStandbyUnit GetInstance()
 	{
 		if(CStandbyUnit.m_obj == null)
@@ -37,7 +36,7 @@ public class CStandbyUnit  extends AbstractServer
 		super(port);
 		m_que=new LinkedList<CEntry>();
 	}
-	/*
+	/**
 	 * used by CExecuter to get a request from the clients.
 	 * @returns CEntry which is the base for the client-server API.
 	 * @see common.api.CEntry
@@ -47,7 +46,7 @@ public class CStandbyUnit  extends AbstractServer
 		return m_que.remove();
 	}
 	
-	/*
+	/**
 	 * checks if queue is empty or have Entries that needs to be taken care of.
 	 * @return answer in boolean
 	 */
@@ -58,7 +57,7 @@ public class CStandbyUnit  extends AbstractServer
 	
 	
 	
-	/*
+	/**
 	 * Implementation for the OCSF package.
 	 * handle messages from client.
 	 */
