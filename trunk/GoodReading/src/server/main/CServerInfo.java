@@ -14,7 +14,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
-
+/**
+ * This class represents the GUI for server side.
+ * showing on a panel the progress of the startup-sequence and when finished it shows the IP of the server (at least until we start using DNS)
+ */
 public class CServerInfo extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -96,12 +99,17 @@ public class CServerInfo extends JFrame {
 		return m_jProgressBar_loader;
 	}
 	
+	/**
+	 * function advances the progress variable and updates the progress bar
+	 */
 	public void incProgress(){
 		m_progress++;
 		m_jProgressBar_loader.setValue(m_progress);
 	}
 	
-	
+	/**
+	 * called when done to show the IP of the server
+	 */
 	public void done()
 	{
 		if(m_jProgressBar_loader.getValue() == 3)
@@ -161,14 +169,10 @@ public class CServerInfo extends JFrame {
 				}	
 			}
 		} catch (SocketException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				System.out.println("Server fail during CServerInfo run for the IP: "+e.getMessage());
 		}
 		
-		
-		
-		
-		
+	
 		if(ip != null)
 		{
 			return ip.getHostAddress();
