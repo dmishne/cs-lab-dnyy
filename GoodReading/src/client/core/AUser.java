@@ -13,21 +13,36 @@ import common.api.CListOptions;
 import common.data.CBook;
 import common.data.CBookReview;
 import client.common.CClientConnector;
-
-
+/**
+ * Abstract class that holds user individual parameters. 
+ * is a "super class" for privileged user classes.
+ * AUser is a Singleton.
+ * 
+ *  @see CClientConnector
+ *  
+ */
 public abstract class AUser implements Serializable{
 	
 	static private final long serialVersionUID = 1L;
+	 /**   m_actor           A stored for client instance of AUser class */	
 	static protected AUser m_actor = null;
-		   private String  m_firstName;
+	       /**   m_firstName       Actor's real first name */
+		   private String  m_firstName; 
+		   /**   m_lastName        Actor's real last name */
 		   private String  m_lastName;
+		   /**   m_userID          Actor's real ID number */
 		   private int     m_userID;
+		   /**   m_userName        Actor's user name for login */
 		   private String  m_userName;
+		   /**   m_privilege       Actor's actual privilege */
 		   private EActor  m_privilege;
+		   /**   m_UserSessionId   Connection session id for this user to identify in front of server */
 		   private int 	   m_UserSessionId;
 		   
 		   
 	/**	
+	 * Protected constructor for AUser and subclasses of AUser.
+	 * Initialize singleton instance of AUser
 	 * 
 	 * @param FirstName   the real first name of user
 	 * @param LastName   the real last name of user
@@ -50,7 +65,7 @@ public abstract class AUser implements Serializable{
     
     
     /**
-     * This method request establishing of Auser class instance from server, 
+     * Building "API Unit" with request for instance of AUser class from server, 
      * if succeed, its also requesting to set up the CListOption class from server.  
      * 
      * @param username  the authorization name parameter  
@@ -62,10 +77,6 @@ public abstract class AUser implements Serializable{
      */ 
 	final static public EActor login(String username, String password) throws Exception
 	{	
-		 /*
-		  *  Username && Password input validation 
-		  */
-		
 		Pattern pu = Pattern.compile("(\\p{Alpha})+((\\p{Digit})*(\\p{Alpha})*)*");
 		Pattern pp = Pattern.compile("(((\\p{Digit})+(\\p{Alpha})*)+|((\\p{Digit})*(\\p{Alpha})+)+)+");
 		Matcher mu = pu.matcher(username);
@@ -75,10 +86,6 @@ public abstract class AUser implements Serializable{
 		if(!b){
 			throw new IOException("Invalid Username/Password Characters");
 		}
-		
-		/*
-		 * Creating Entry to send to server
-		 */
 		HashMap<String,String> UP = new HashMap<String,String>();
 		UP.put("user", username);
 		UP.put("password", password);
@@ -99,7 +106,11 @@ public abstract class AUser implements Serializable{
 	}
 	
 	
-	
+	/**
+	 * this method returns the AUser instance
+	 * @return  current instance of AUser 
+	 * @throws Exception if no AUser instance defined 
+	 */
 	final static public AUser getInstance() throws Exception
 	{
 		if(null == m_actor)
@@ -113,7 +124,9 @@ public abstract class AUser implements Serializable{
 	}
 	
 	
-
+    /**
+     * Drop the connection with server by sending to server the request for logout and closes the connection 
+     */
 	final static public void logout()
 	{
 		try
@@ -132,7 +145,11 @@ public abstract class AUser implements Serializable{
 	}
 	
 	
-	
+	/**
+	 * Setting the type of AUser instance according to his privilege 
+	 * 
+	 * @param pri   the privilege of current user
+	 */
 	static private void setActor(Object pri)
 	{
 		switch(((AUser)pri).getPrivilege())
@@ -151,7 +168,11 @@ public abstract class AUser implements Serializable{
 	}
 	
 	
-	// check, if we use this?
+	/**
+	 * Uses to update the privilege of user in some cases
+	 * 
+	 * @param mPrivilege  the privilege to update to 
+	 */
 	protected void updateAccount (EActor mPrivilege)
 	{
 		m_privilege = mPrivilege;
@@ -159,7 +180,7 @@ public abstract class AUser implements Serializable{
 	
 	
 	/**
-	 * This method requesting server to search for available file formats for 
+	 * Building "API Unit" for requesting server to search for available file formats for 
 	 * specific book given by isbn number.
 	 * 
 	 * @param isbn  the string isbn to focus the search of formats to specific book 
@@ -188,7 +209,7 @@ public abstract class AUser implements Serializable{
 	
 	
 	/**
-	 * This method requesting server to search for books mutching the given parameters of book
+	 * Building "API Unit" for requesting server to search for books mutching the given parameters of book
 	 * to search.
 	 * 
 	 * @param book_param  the HashMap with parameters to focus the search of the book
@@ -262,7 +283,11 @@ public abstract class AUser implements Serializable{
 		
 	}
 	
-	
+	/**
+	 * Requesting the server to get list off all available topics from DB 
+	 * 
+	 * @return  string array of topics
+	 */
 	public String[] getTopics() 
 	{
 		CEntry EntryToSrv =null;
@@ -298,7 +323,7 @@ public abstract class AUser implements Serializable{
 	
 	
 	/**
-	 * This method requesting server to search for subtopics bounded to given topic.
+	 * Building "API Unit" for requesting server to search for subtopics bounded to given topic.
 	 * 
 	 * @param topic  the string topic to focus search for bound subtopics 
 	 * @return string array of found subtopics
@@ -307,7 +332,7 @@ public abstract class AUser implements Serializable{
 	{
 		CEntry EntryToSrv =null;
 		Object temp = null;
-		String[] no_subs = {"No Subtopics"};
+		String[] no_subs = {""};
 		HashMap<String,String> search_subtopics = new HashMap<String,String>();
 		search_subtopics.put("topic", topic);
 		EntryToSrv = new CEntry("SearchSubtopics",search_subtopics,m_userName,m_UserSessionId);
@@ -336,7 +361,7 @@ public abstract class AUser implements Serializable{
 	
 	
 	/**
-	 * This method requesting server to search for reviews mutching the given parameters
+	 * Building "API Unit" for requesting server to search for reviews mutching the given parameters
 	 * 
 	 * @param review_param   the HashMap with parameters to focus the search of the reviews for book
 	 * @return  LinkedList with Class's named CBookReview that holds review info
@@ -359,7 +384,12 @@ public abstract class AUser implements Serializable{
 		return result;
 	}
 	
-	
+	/**
+	 * For validate the given date in front of Java date formater
+	 * 
+	 * @param inDate  the date to validate
+	 * @return boolean true if valid or false if invalid
+	 */
 	protected boolean isValidDate(String inDate) {
 
 	    if (inDate == null)
@@ -379,20 +409,15 @@ public abstract class AUser implements Serializable{
 	
 		
 	/**
-	 * @return the m_privilege
+	 * Return the privlege of user
+	 * @return the m_privilege    the current privilege of user
 	 */
 	public EActor getPrivilege() {
 		return m_privilege;
 	}
-
-	/**
-	 * @param arg   the Enum of type EActor determines priority of user
-	 */
-	public void setPrivilege(EActor arg) {
-		m_privilege = arg;
-	}
 	
 	/**
+	 * Set the first name of user
 	 * @param arg   the string determines first name of user
 	 */
 	public void setFirstName(String arg) {
@@ -400,6 +425,7 @@ public abstract class AUser implements Serializable{
 	}
 	
 	/**
+	 * Set the last name of user
 	 * @param arg   the string determines last name of user
 	 */
 	public void setLastName(String arg) {
@@ -407,42 +433,48 @@ public abstract class AUser implements Serializable{
 	}
 	
 	/**
+	 * Set the id number of user
 	 * @param arg   the int determines the ID number of user
 	 */
 	public void setID(int arg) {
 		m_userID = arg;
 	}
 	
-	 /**
-	 * @return the m_firstName
+	/**
+	 * Get the first name of user
+	 * @return the m_firstName   the first name of user
 	 */
 	public String getFirstName() {
 		return m_firstName;
 	}
 
 	/**
-	 * @return the m_lastName
+	 * Get the last name of user
+	 * @return the m_lastName    the last name of user
 	 */
 	public String getLastName() {
 		return m_lastName;
 	}
 
 	/**
-	 * @return the m_userID
+	 * Get the id number of user
+	 * @return the m_userID   the user id of user
 	 */
 	public int getUserID() {
 		return m_userID;
 	}
 
 	/**
-	 * @return the m_userName
+	 * Get the user name of this user
+	 * @return the m_userName   the user name of user
 	 */
 	public String getUserName() {
 		return m_userName;
 	}
 
 	/**
-	 * @return the m_UserSessionId
+	 * Get the the session id of the connection instance of this user
+	 * @return the m_UserSessionId   the session id of this instance in front of server
 	 */
 	public int getUserSessionId() {
 		return m_UserSessionId;
