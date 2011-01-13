@@ -171,10 +171,10 @@ public class CClientConnector extends AbstractClient {
 		 */
 		public String[] getLangages()
 		{
-			String[] lang = new String[ m_listOptions.getM_langueges().size() + 1];
+			String[] lang = new String[ (m_listOptions.getm_languages()).size() + 1];
 			lang[0]= " ";
 			int i =1;
-			Iterator<String> it = m_listOptions.getM_langueges().iterator();
+			Iterator<String> it = m_listOptions.getm_languages().iterator();
 			while(it.hasNext())
 			{
 				lang[i] = it.next();

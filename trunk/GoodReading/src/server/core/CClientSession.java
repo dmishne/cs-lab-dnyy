@@ -40,7 +40,7 @@ public class CClientSession implements Comparable<Object>
 	
 	/**
 	 * simple setter for session ID
-	 * @param m_SessionID sets the new SID
+	 * @param SessionID sets the new SID
 	 */
 	public void setSessionID(int SessionID) {
 		this.m_SessionID = SessionID;

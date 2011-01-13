@@ -5,15 +5,24 @@ import java.io.Serializable;
 public class CBookReview implements Serializable
 {
 	
-	private static final long serialVersionUID = 1L;
-	private String m_isbn;
+	 private static final long serialVersionUID = 1L;
+	 
+	 private String m_isbn;
+	 
 	 private String m_author;
+	 
 	 private String m_title;
+	 
 	 private String m_review;
+	 
 	 private String m_write_date;
+	 
 	 private int m_accepted; //values -1 rejected, 0 unhandled, 1 approved
+	 
 	 private String m_checkout_date;
+	 
 	 private String m_auth_by;
+	 
 	 private String m_bookName;
 
 		//no setter for ISBN or author! (keys of review at DB)

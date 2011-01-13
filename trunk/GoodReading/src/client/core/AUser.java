@@ -92,7 +92,7 @@ public abstract class AUser implements Serializable{
 			HashMap<String,String> listoption = new HashMap<String,String>();
 			CEntry ListOption = new CEntry("GetList",listoption,username,-1);
 			CListOptions ListOptions = (CListOptions) CClientConnector.getInstance().messageToServer(ListOption);
-			CListOptions.CListOptionsInit(ListOptions.getM_langueges(),ListOptions.getM_topics());
+			CListOptions.CListOptionsInit(ListOptions.getm_languages(),ListOptions.getM_topics());
 			return(m_actor.getPrivilege());
 		}
 		throw new IOException("Incorrect Username/Password");
@@ -205,7 +205,7 @@ public abstract class AUser implements Serializable{
 		if(book_param.get("language").compareTo(" ") != 0  &&  !book_param.get("language").isEmpty())
 		{
 			lang = (String)book_param.get("language");
-		    Set<String> avail_lang = CClientConnector.getInstance().getM_listOptions().getM_langueges();
+		    Set<String> avail_lang = CClientConnector.getInstance().getM_listOptions().getm_languages();
 		    if (!avail_lang.contains(lang))
 		    {
 		    	throw new Exception("Language unavailable!");
