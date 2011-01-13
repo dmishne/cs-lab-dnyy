@@ -8,13 +8,20 @@ import common.api.CEntry;
 import common.data.CFile;
 import client.common.*;
 
-
+/**
+ * CReader Is A AUser subclass.
+ * Provide the AUser instance while privilege is Reader.
+ * Holds compatible methods for the privilege 
+ */
 public class CReader extends AUser{
 	
 	private static final long serialVersionUID = 1L;
 	
-	Map <String,String> m_forGui;
-	
+	//Map <String,String> m_forGui;
+	/**
+	 * Constructor for CReader.
+	 * Initialize user instance of type Reader 
+	 */
 	public CReader(String FirstName, String LastName, int UserId, String UserName, int SessionID, EActor pri)
 	{
 		super(FirstName,LastName,UserId,UserName, pri,SessionID);
@@ -22,6 +29,8 @@ public class CReader extends AUser{
 		
 	
 	/**
+	 * Building "API Unit" for server with relevant Credit Card payment parameters to arrange new Credit Card payment for user.
+	 * 
 	 * @param PayType  the string PayType determines the type pg choosen payment
 	 * @param CreditCardNumber   the string CreditCardNumber is a number of users credit card to use for orders 
 	 * @param Expire   the string Expire is a date of credit card expire date
@@ -79,6 +88,7 @@ public class CReader extends AUser{
 	
 	
 	/**
+	 * Building "API Unit" for server with relevant subscription type to arrange new payment subscription for user.
 	 * 
 	 * @param PayType  the string PayType determines type of payment user purchase
 	 * @return  the string answer from server if action was succesful or not
@@ -115,6 +125,7 @@ public class CReader extends AUser{
 	
 	
  /**
+  * Requesting from server to store new user review in DB
   * 
   * @param reviewTitle  the string reviewTitle is a reviewer title for this review  
   * @param review  the string review is a review it self
@@ -153,6 +164,9 @@ public class CReader extends AUser{
 	
 	
 	/**
+	 * Requesting server to make a list of afordable payment types for this user,
+	 * based on user_name taken from the instance class of user.
+	 * 
 	 * @return  string array with payment types of current user
 	 * @throws Exception unsuccessful messageToServer pass 
 	 */
@@ -171,6 +185,8 @@ public class CReader extends AUser{
 
 	
 	/**
+	 * Requesting server to build receipt for the order while provided with relevant information 
+	 * 
 	 * @param isbn  the string isbn of book to order
 	 * @param PayType  the string payment type user choosed to pay with
 	 * @return string answer from server if fails or int number of receipt if success 
@@ -202,6 +218,7 @@ public class CReader extends AUser{
 	
 	
 	/**
+	 * Adding score to book through request from server 
 	 * 
 	 * @param isbn  the string isbn to focus on specific book
 	 * @param score  the int score is a value of score to add 
@@ -230,6 +247,14 @@ public class CReader extends AUser{
 	}
 	
 	
+	/**
+	 * Providing server with request and parameters to recive preferd ordered file
+	 * 
+	 * @param isbn      the ordered book isbn
+	 * @param format    the preffered file format of the file
+	 * @param path      the path to the directory where to save the file
+	 * @throws Exception  server unable to get the file
+	 */
 	public void downloadBook(String isbn, String format, String path) throws Exception
 	{
 		CEntry EntryToSrv;

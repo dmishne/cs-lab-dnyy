@@ -15,16 +15,44 @@ import common.data.CBookReview;
 public class CLibrarian extends AUser{
 
 	/**
-	 * 
+	 * CLibrarian Is A AUser subclass.
+	 * Provide the AUser instance while privilege is Librarian.
+	 * Holds compatible methods for the privilege.
 	 */
 	private static final long serialVersionUID = 1L;
 
+	
+	/**
+	 * Constructor for CLibrarian.
+	 * Initialize user instance of type Librarian. 
+	 */
 	public CLibrarian(String FirstName, String LastName, int UserId, String UserName, int SessionID)
 	{
 		super(FirstName,LastName,UserId,UserName, EActor.Librarian, SessionID);
 	}
 	
-	
+	/**
+	 * Request server to add new book to DB with given parameters.
+	 * Visibility of book is unchangeable for Librarian privilege.
+	 * 
+	 * @param title            the title of new book
+	 * @param author           the author of new book
+	 * @param isbn             the isbn of new book
+	 * @param release          the release date of new book
+	 * @param publisher        the publisher of new book
+	 * @param summary          the summary for book
+	 * @param price            the price of new book
+	 * @param topics           the topics and subtopics this book associated with 
+	 * Defined as (~) before topic, (@) between topic and subtopic, (,) between subtopics
+	 * @param lable            the labels for book
+	 * @param TOC              the Table of content in the book
+	 * @param vis              the boolean visibility in catalog, true for visible, false for invisible 
+	 * @param lang             the language of new book
+	 * @param fileType         the types of book files affordable for order
+	 * @return                 string answer from server
+	 * @throws IOException     one or more "must have" parameters not recived 
+	 * @throws Exception       request to server fail
+	 */
 	public String addNewBook(String title, String author, String isbn, String release, String publisher, String summary, String price, String topics, String lable, String TOC, boolean vis, String lang, String[] fileType) throws IOException, Exception
 	{
 		CEntry entryToSrv;
@@ -100,7 +128,12 @@ public class CLibrarian extends AUser{
 		return "Fail";
 	}
 	
-	
+	/**
+	 * Request server to search reviews that not confirmed yet.
+	 * 
+	 * @return               LinkedList with CBookReview class contains review information
+	 * @throws Exception     request to server fail
+	 */
 	public LinkedList<CBookReview> searchNewReviews() throws Exception
 	{		
 		HashMap<String, String> empty = new HashMap<String, String>();
@@ -111,7 +144,19 @@ public class CLibrarian extends AUser{
 		return booksReview;
 	}
 	
-	public void updateReview(String isbn, String author, String title, String curr_title, String review, boolean confirm) throws Exception
+	/**
+	 * Request server to update review fields in DB with given parameters.
+	 * 
+	 * @param isbn          isbn number of reviewed book
+	 * @param author        author of the review
+	 * @param title         title of the review
+	 * @param curr_title    currently known review title
+	 * @param review        the review it self
+	 * @param confirm       boolean cofirmation, true for confirmed, false for not confirmed 
+	 * @throws IOException  one or more "must have" parameters not recived
+	 * @throws Exception    request to server fail
+	 */
+	public void updateReview(String isbn, String author, String title, String curr_title, String review, boolean confirm) throws Exception,IOException
 	{
 		HashMap<String, String> upReview = new HashMap<String, String>();
 		CEntry entryToSrv ;
@@ -141,7 +186,28 @@ public class CLibrarian extends AUser{
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * Request server to update book fields in DB with given parameters.
+	 * Visibility of book is unchangeable for Librarian privilege.
+	 * Book isbn unchangeable.
+	 * 
+	 * @param isbn             the isbn of book
+	 * @param title            the new title of book
+	 * @param author           the new author of book
+	 * @param release          the new release date of book
+	 * @param publisher        the new publisher of book
+	 * @param summary          the new summary for book
+	 * @param price            the new price of book
+	 * @param topic            the new topics and subtopics this book associated with, defined as (~) before topic, (@) between topic and subtopic, (,) between subtopics
+	 * @param lable            the new labels for book
+	 * @param TOC              the new Table of content in the book
+	 * @param vis              the boolean visibility in catalog, true for visible, false for invisible 
+	 * @param lang             the new language of new book
+	 * @param fileType         the new types of book files affordable for order
+	 * @return                 string answer from server
+	 * @throws Exception       request to server fail
+	 */
 	public String updateBookDetails(String isbn, String title, String author, String release, String publisher, String summary, String price, String topic, String lable, String TOC, boolean vis, String lang, String[] fileType) throws Exception
 	{
 		CEntry entryToSrv ;
@@ -215,7 +281,16 @@ public class CLibrarian extends AUser{
 		return "Fail";
 	}
 	
+	/**
+	 * Requesting server to delete the specific review given by parameters
+	 * 
+	 * @param title            review title
+	 * @param author           review author
+	 * @param isbn             reviewed book isbn number
+	 * @return                 string answer from server
+	 * @throws Exception       request to server fail
 	
+	 */
 	public String deleteReview( String title, String author, String isbn) throws Exception
 	{
 		CEntry entryToSrv ;
@@ -241,7 +316,13 @@ public class CLibrarian extends AUser{
 	    return "Fail";
 	}
 	
-	
+	/**
+	 * Requesting server to delete the specific book given by isbn number
+	 * 
+	 * @param isbn             books isbn
+	 * @return                 string answer from server
+	 * @throws Exception       request to server fail
+	 */
 	public String deleteBook(String isbn) throws Exception
 	{
 		CEntry entryToSrv ;
@@ -260,7 +341,12 @@ public class CLibrarian extends AUser{
 	    return "Fail";
 	}
 	
-	
+	/**
+	 * Return the current unconfirmed review count
+	 * 
+	 * @return            unconfirmed review count
+	 * @throws Exception  request to server fail
+	 */
 	public int isMessages() throws Exception
 	{
 		CEntry entryToSrv ;
@@ -270,6 +356,13 @@ public class CLibrarian extends AUser{
 		return Count.intValue();
 	}
 	
+	/**
+	 * Requesting server to add new topic to DB
+	 * 
+	 * @param topic        the new topic to add
+	 * @return             string answer from server
+	 * @throws Exception   request to server fail
+	 */
 	public String addTopic(String topic) throws Exception
 	{
 		CEntry entryToSrv ;
@@ -286,7 +379,14 @@ public class CLibrarian extends AUser{
 		return "Fail";
 	}
 	
-	
+	/**
+	 * Requesting server to add new subtopic to DB
+	 * 
+	 * @param topic         the topic with which new subtopic associates
+	 * @param subtopic      the new subtopic
+	 * @return              string answer from server
+	 * @throws Exception    request to server fail
+	 */
 	public String addSubTopic(String topic,String subtopic) throws Exception
 	{
 		CEntry entryToSrv ;
@@ -304,23 +404,5 @@ public class CLibrarian extends AUser{
 		return "Fail";
 	}
 	
-	/*public String getTopicsForBook(String isbn) throws Exception
-	{
-		CEntry entryToSrv ;
-		String answer = "";
-		String fail = "No topics found!";
-		Map<String, String> booktopics = new HashMap<String, String>();
-		booktopics.put("isbn", isbn);
-		entryToSrv = new CEntry("GetBookTopics", booktopics , this.getUserName(), this.getUserSessionId());
-		Object ans = CClientConnector.getInstance().messageToServer(entryToSrv);
-		if(ans instanceof String )
-		{
-			 answer = (String)ans;
-			 answer = answer.replace("@",":");
-			 return answer;
-		}
-		//String answer = "~Sport:Games,Trio,Swim~Computers:Java,C#,C++";
-		return fail;
-	}*/
 	
 }
