@@ -11,11 +11,16 @@ public class CEntry implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private String m_msgType;			        // Message Type
-	private HashMap<String,String> m_msgMap;    // Message Entry
-	private String m_userName;       		    // 
-	private int m_sessionID;			        // User's Session ID
-	private Object m_client; 				    // Client Info
+	/** indicates what sort of request client sends to server */
+	private String m_msgType;			       
+	/** the message map holds the parameters of the request, e.g. Search criteria  <NEVER null> */
+	private HashMap<String,String> m_msgMap;   
+	/** the Username of the client */
+	private String m_userName;       		   
+	/** holds the session ID*/
+	private int m_sessionID;			       
+	/** for use of the server, holds the connection back to client while entry's waiting in the queue */
+	private Object m_client; 				   
 		
 	/*
 	 * CEntry Constructor
@@ -46,8 +51,12 @@ public class CEntry implements Serializable{
 		return m_msgMap;
 	}
 
-	public void setSessionID(int mSessionID) {
-		m_sessionID = mSessionID;
+	/**
+	 * sets the session ID
+	 * @param SessionID value to set in CEntry.m_sessionID
+	 */
+	public void setSessionID(int SessionID) {
+		m_sessionID = SessionID;
 	}
 
 	/**
@@ -82,6 +91,10 @@ public class CEntry implements Serializable{
 	  return Integer.toString(m_sessionID)+ "~" + m_userName;
 	 }
 	 
+	 /**
+	  * short check, if CEntry is for login, this will mean a different handling in CExecuter
+	  * @return true only if CEntry is a login request
+	  */
 	 public boolean isLogin()
 	 {
 		 if ( m_msgType.compareTo("Login") == 0)
@@ -91,7 +104,10 @@ public class CEntry implements Serializable{
 		 return false;
 	 }
 
-
+	 /**
+	  * Setter for msg map
+	  * @param tmp
+	  */
 	public void setMsgMap(Map<String, String> tmp) {
 		this.m_msgMap=(HashMap<String, String>) tmp;
 	}
