@@ -11,7 +11,7 @@ public class CBook implements Serializable,Comparable<CBook> {
 	private String	 m_title;
 	/** author of the book */
 	private String	 m_author;
-	/** isbn of the book */
+	/** International Standard Book Number  - the key for this class */
 	private String	 m_ISBN;
 	/** release date, stored in SQL format - 2010-1-13*/
 	private String	 m_release;   
