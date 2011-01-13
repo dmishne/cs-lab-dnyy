@@ -1,0 +1,19 @@
+#labels Featured
+#project properties
+
+= Introduction =
+
+easily changed via config.properties file in server.core package, the constants class offers an easy way to change settings without hard-coding it in the classes.
+
+
+= Details =
+
+ *POP_WINDOW=true -> indicates GUI is activated for server
+ *DEFAULT_Global_Library_Path=library from which files will be uploaded
+ *YEARLY_AMMOUNT,MONTHLY_AMMOUNT= ammounts gained by purhcasing a subscription
+ *DEFAULTHOST="jdbc:mysql://localhost/cslabdnyy" -> DB address and scheme
+ *DEFAULTUSER= DB user
+ *DEFAULTPASS= password
+ *DEFAULT_PORT= listening port for clients
+ *POPULARITY_RATIO= howh much views weigh against purchases
+ *DEBUG - if true then it disables the logging to files.
