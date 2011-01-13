@@ -1,7 +1,9 @@
 package common.data;
 
 import java.io.Serializable;
-
+/**
+ * simple container class in order to pass results to client
+ */
 public class CPurchaseStats implements Serializable,Comparable<CPurchaseStats>{
 	/**
 	 * 

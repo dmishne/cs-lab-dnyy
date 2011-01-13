@@ -1,11 +1,12 @@
 package common.data;
 
 import java.io.Serializable;
+/**
+ * simple container class in order to pass results to client
+ */
 
 public class CBookStats implements Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private String m_Username;
 	private String m_FullName;
