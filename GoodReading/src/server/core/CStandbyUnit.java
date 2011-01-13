@@ -30,7 +30,9 @@ public class CStandbyUnit  extends AbstractServer
 			m_obj=new CStandbyUnit(CServerConstants.DEFAULT_PORT());
 		return CStandbyUnit.m_obj;
 	}
-	
+	/** simple constructor for this class
+	 * @param port determines to which port the server will listen
+	 */
 	private CStandbyUnit(int port) 
 	{
 		super(port);
