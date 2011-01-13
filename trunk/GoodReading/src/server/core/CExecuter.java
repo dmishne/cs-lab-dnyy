@@ -42,13 +42,26 @@ import common.data.CUser;
 
 public class CExecuter implements Runnable
 { 
-	private Set <CClientSession> m_sessions;				//  m_sessions holds all active sessions
-	private boolean m_sleeping;								//  m_sleeping indicates Executer is sleeping (waiting for jobs to do
-	private static boolean m_running=false;					//  m_running holds the MaintenanceRunner boolean to show it if to continue running or pause
-	private static MaintenanceRunner m_MaintenanceRunner;	//  m_MaintenanceRunner holds the MaintenanceRunner thread
-	private Thread m_ThreadHolder;							//  m_ThreadHolder holds the thread on which the executer is running
-	private Random m_generator;								//  m_generator is actually infrastracture helping to generate random numbers.
-	private static CExecuter m_obj;							//  m_obj is a part of the implementation for the Singleton Design patern
+	/** m_sessions holds all active sessions */
+	private Set <CClientSession> m_sessions;		
+	
+	/** m_sleeping indicates Executer is sleeping (waiting for jobs to do	 */	 
+	private boolean m_sleeping;					
+	
+	/**  m_running holds the MaintenanceRunner boolean to show it if to continue running or pause */
+	private static boolean m_running=false;		
+	
+	/** m_MaintenanceRunner holds the MaintenanceRunner thread */
+	private static MaintenanceRunner m_MaintenanceRunner;	
+	
+	/** m_ThreadHolder holds the thread on which the executer is running */
+	private Thread m_ThreadHolder;		
+	
+	/** m_generator is actually infrastructure helping to generate random numbers.	 */
+	private Random m_generator;		
+	
+	/** m_obj is a part of the implementation for the Singleton Design pattern */
+	private static CExecuter m_obj;							
 	
 	/**  
 	 * GetInstance finishes the implementation for the Singleton
@@ -61,6 +74,7 @@ public class CExecuter implements Runnable
 		return m_obj;
 	}
 	
+	/** constructor for class - only runs once */
 	private CExecuter()
 	{
 	    //Instance is configured inside init()
@@ -449,6 +463,10 @@ public class CExecuter implements Runnable
 		}
 	}
 
+	/** Searchuser Handles the search user request 
+	 * @param Work contains information and params for the request.
+	 * @param Privilage the requesting user's privilage 
+	 */
 	private void SearchUser(CEntry Work, int Privilage) 
 	{
 		LinkedList<CUser> ans;
@@ -464,7 +482,10 @@ public class CExecuter implements Runnable
 		else CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"no privilage!");
 	}
 
-	
+	/** handles the request to edit a user's details
+	 * @param Work contains all the parameters from client
+	 * @param Privilage the user's privilage (Librarian / Library Manager / Reader ..)
+	 */
 	private void EditUser(CEntry Work, int Privilage) 
 	{
 		CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
@@ -535,7 +556,11 @@ public class CExecuter implements Runnable
 			}
 	}
 
-	//Work map should contain isbn and 1 more attr of CBook
+	/**
+	 * handles the request to edit a book's details
+	 * @param Work contains all the parameters from client
+	 * @param Privilage the user's privilage (Librarian / Library Manager / Reader ..)
+	 */
 	private void EditBook(CEntry Work, int Privilage) 
 	{
 		CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
@@ -624,7 +649,12 @@ public class CExecuter implements Runnable
 			}
 		}	
 	}	//end of edit book
-
+	
+	/**
+	 * handles the request to add a new book
+	 * @param Work contains all the parameters from client
+	 * @param Privilage the user's privilage (Librarian / Library Manager / Reader ..)
+	 */
 	private void AddNewBook(CEntry Work, int Privilage) 
 	{
 		CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
@@ -675,7 +705,11 @@ public class CExecuter implements Runnable
 		} //end of privilage
 	}//end of add book
 
-	
+	/**
+	 * handles the request to submit a score (rate a book)
+	 * @param Work contains all the parameters from client, expecting isbn, and score
+	 * @param Privilage the user's privilage (Librarian / Library Manager / Reader ..)
+	 */
 	private void SubmitScore(CEntry Work, int Privilage) 
 	{
 		CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
@@ -696,12 +730,14 @@ public class CExecuter implements Runnable
 		
 		
 		else //take care of unprivileged ppl
-				CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Not authorized to use function \"SubmitScore()\"");		
-			
-	
-		
+				CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Not authorized to use function \"SubmitScore()\"");			
 	}
 
+	/**
+	 * handles the request to purchase a book
+	 * @param Work contains all the parameters from client, expecting isbn, and paytype
+	 * @param Privilage the user's privilage (Librarian / Library Manager / Reader ..)
+	 */
 	private void PurchaseBook(CEntry Work, int Privilage) 
 	{
 		CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
@@ -739,6 +775,11 @@ public class CExecuter implements Runnable
 		
 	}
 
+	/**
+	 * handles the request to edit a review)
+	 * @param Work contains all the parameters from client, expecting isbn, author,confirm;
+	 * @param Privilage the user's privilage (Librarian / Library Manager / Reader ..)
+	 */
 	private void EditReview(CEntry Work, int Privilage) 
 	{
 
@@ -766,6 +807,11 @@ public class CExecuter implements Runnable
 		
 	}
 
+	/**
+	 * handles the request to delete a file)
+	 * @param Work contains all the parameters from client, expecting isbn, and format
+	 * @param Privilage the user's privilage (Librarian / Library Manager / Reader ..)
+	 */
 	private void DeleteFile(CEntry Work, int Privilage) 
 	{
 		//this function is not implemented in GUI, but it is usefull in order to delete book files in DB and it's par func on DBIG is actually used a few times.
@@ -785,6 +831,11 @@ public class CExecuter implements Runnable
 		
 	}
 
+	/**
+	 * handles the request to delete a book
+	 * @param Work contains all the parameters from client, expecting isbn
+	 * @param Privilage the user's privilage (Librarian / Library Manager / Reader ..)
+	 */
 	private void DeleteBook(CEntry Work, int Privilage) {
 
 		Map<String,String> arg=Work.getMsgMap();
@@ -799,10 +850,14 @@ public class CExecuter implements Runnable
 				CRespondToClient.GetInstance().SendResponse(Work.getSessionID(), "Fail: failed to delete");
 				CDBInteractionGenerator.GetInstance().ServerUpdateLog("Failure at executer: deleting Book\n");  System.out.println("failure at executer: delete Book");
 			}
-		}//end of auth
-		
+		}//end of auth	
 	}
 
+	/**
+	 * handles the request to delete a review
+	 * @param Work contains all the parameters from client, expecting isbn, and author
+	 * @param Privilage the user's privilage (Librarian / Library Manager / Reader ..)
+	 */
 	private void DeleteReview(CEntry Work, int Privilage) 
 	{
 		
@@ -821,6 +876,11 @@ public class CExecuter implements Runnable
 		}//end of auth
 	}
 
+	/**
+	 * handles the request to submit a review (rate a book verbally)
+	 * @param Work contains all the parameters from client, expecting isbn, and topic, and review
+	 * @param Privilage the user's privilage (Librarian / Library Manager / Reader ..)
+	 */
 	private void AddReview(CEntry Work, int Privilage) 
 	{
 		CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
@@ -839,7 +899,12 @@ public class CExecuter implements Runnable
 			}
 		}//end of reading auth
 	}
-
+	
+	/**
+	 * handles the request to get a list of unhandled reviews (to be Edited)
+	 * @param Work contains all the parameters from client should be an empty list
+	 * @param Privilage the user's privilage (Librarian / Library Manager / Reader ..)
+	 */
 	private void GetUnhandledReviews(CEntry Work, int Privilage) 
 	{
 		if(Privilage <3)
@@ -859,7 +924,12 @@ public class CExecuter implements Runnable
 		}
 		
 	}
-
+	
+	/**
+	 * handles the request to search a review
+	 * @param Work contains all the parameters from client
+	 * @param Privilage the user's privilage (Librarian / Library Manager / Reader ..)
+	 */
 	private void SearchReview(CEntry Work, int Privilage) 
 	{
 
@@ -883,6 +953,11 @@ public class CExecuter implements Runnable
 		
 	}
 
+	/**
+	 * handles the request to download a book
+	 * @param Work contains all the parameters from client, expecting isbn, format
+	 * @param Privilage the user's privilage (Librarian / Library Manager / Reader ..)
+	 */
 	private void DownloadBook(CEntry Work, int Privilage) 
 	{
 		CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
@@ -905,7 +980,12 @@ public class CExecuter implements Runnable
 				CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),db.getBook(Work.getMsgMap().get("isbn"),Work.getMsgMap().get("format")));
 		
 	}
-
+	
+	/**
+	 * handles the request to search a book
+	 * @param Work contains all the parameters from client
+	 * @param Privilage the user's privilage (Librarian / Library Manager / Reader ..)
+	 */
 	private void SearchBook(CEntry Work, int Privilage) 
 	{
 
@@ -927,6 +1007,11 @@ public class CExecuter implements Runnable
 			
 	}
 
+	/**
+	 * handles the request to logout
+	 * @param Work contains the user connection details (such as sid and username)
+	 * @param Privilage the user's privilage (Librarian / Library Manager / Reader ..)
+	 */
 	private void LogOut(CEntry Work, int Privilage) 
 	{
 		Set <CClientSession> temp=new HashSet<CClientSession>(m_sessions);
@@ -946,6 +1031,12 @@ public class CExecuter implements Runnable
 		}	
 	}
 
+
+	/**
+	 * handles the request to arrange a payment
+	 * @param Work contains all the parameters from client
+	 * @param Privilage the user's privilage (Librarian / Library Manager / Reader ..)
+	 */
 	private void ArrangePayment(CEntry Work, int Privilage) 
 	{
 		
@@ -978,11 +1069,16 @@ public class CExecuter implements Runnable
 		}
 		else {
 			CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Not authorized to use function \"ArrangePayment()\"");								
-		}
-	
-		
+		}	
 	}
 
+
+	/**
+	 * handles the request to change a user's payment
+	 * @param usr contains the desired user's details
+	 * @param newpays contains the new payment method requiered
+	 * @return true on success
+	 */
 	private boolean ChangePayments(CUser usr, String newpays) 
 	{
 		CDBInteractionGenerator db=CDBInteractionGenerator.GetInstance();
@@ -1092,7 +1188,10 @@ public class CExecuter implements Runnable
 		return m_ThreadHolder;
 	}
 	
-		
+	/**
+	 * handles the login request from client	
+	 * @param Work contains all params from client - such as user and password
+	 */
 	private void handleLogin(CEntry Work) 
 	{
 		
@@ -1127,8 +1226,12 @@ public class CExecuter implements Runnable
 	}
 	
 	
-	//function just changes names of months from numbers to actual names
-	//also adds months that aren't in set with 0 as counter
+	/**
+	 * Util function that only changes names of months from numbers to actual names
+	 * also adds months that aren't in set with 0 as counter
+	 * @param arg
+	 * @return
+	 */
 	private HashMap<String,Integer> ChangeMonthsNames(HashMap<String,Integer> arg)
 	{
 		HashMap<String,Integer> tmp=new HashMap<String,Integer>(arg);
@@ -1209,7 +1312,12 @@ public class CExecuter implements Runnable
 		return arg;
 	}
 
-	//same as prev only with full month name
+	/**
+	 * Util function that only changes names of months from numbers to actual names
+	 * also adds months that aren't in set with 0 as counter
+	 * @param arg
+	 * @return
+	 */
 	private Set<CPurchaseStats> ChangeLongMonthsNames(Set<CPurchaseStats> arg)
 	{
 		Set<CPurchaseStats> tmp=new HashSet<CPurchaseStats>(arg);
@@ -1247,6 +1355,13 @@ public class CExecuter implements Runnable
 		
 	}
 	
+
+	/**
+	 * Util function that only changes names of months from numbers to actual names
+	 * also adds months that aren't in set with 0 as counter
+	 * @param arg
+	 * @return
+	 */
 	private Set<CBookStats> ChangeLongMonthNames(Set<CBookStats> arg)
 	{
 		Set<CBookStats> tmp=new HashSet<CBookStats>(arg);
@@ -1353,6 +1468,9 @@ public class CExecuter implements Runnable
 	}
 	
 	//private class to help keep in touch of the thread running the checks
+	/**
+	 * private class, helps CExecuter to run maintenance checks by running a cycle of maintenance and sleeping
+	 */
 	private class MaintenanceRunner extends Thread
 	{
 		private int m_checkdelay;
@@ -1369,6 +1487,7 @@ public class CExecuter implements Runnable
 		
 		
 		/**
+		 * function implements the maintenance cycle
 		 * flow chart for function
 		 * while ( should run && wasn't told to stop )
 		 * 	 DO: maintenance {
@@ -1383,12 +1502,17 @@ public class CExecuter implements Runnable
 		public void run()
 		{
 			m_running=true;
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) {
 			
+				e1.printStackTrace();
+			}
 			while(CExecuter.m_running)
 			{
 				//Maintenance functions start
 				CExecuter.recheckPopularity();
-				CDBInteractionGenerator.GetInstance().removeSessionId();
+				//TODO: release - CDBInteractionGenerator.GetInstance().removeSessionId();
 				//Maintenance functions end
 				
 				
