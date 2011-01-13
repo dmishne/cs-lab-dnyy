@@ -3,46 +3,70 @@ package common.api;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
+	
+	/**
+	 * this class is requested during startup of client.
+	 * it contains a set of Languages which are in use
+	 * also a set of topics that are in use.
+	 * this is for GUI to have data transfered into the combo-boxes 
+	 */
 
 public class CListOptions implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7986416378972374649L;
-	private Set<String> m_langueges;
+	/**
+	 *  a set of used languages.
+	 */
+	private Set<String> m_languages;
+	/**
+	 * a set of used topics.
+	 */
 	private Set<String> m_topics;
+	/**
+	 * holder, is referenced in client side as singleton.
+	 */
 	private static CListOptions m_hold;
 	
-	/**
-	 * @param m_langueges
-	 * @param m_topics
+	/**	
+	 * simple constructor for class
+	 * @param m_languages the new languages set
+	 * @param m_topics the new topics set
 	 */
-	public CListOptions(Set<String> m_langueges, Set<String> m_topics) {
-		this.m_langueges = m_langueges;
+	public CListOptions(Set<String> m_languages, Set<String> m_topics) {
+		this.m_languages = m_languages;
 		this.m_topics = m_topics;
 	}
 	
-	
-	
+	/**
+	 * private constructor
+	 * does nothing but create new sets.
+	 */
+
 	private CListOptions() {
-		m_langueges = new HashSet<String>();
+		m_languages = new HashSet<String>();
 		m_topics = new HashSet<String>();
 	}
-	
+	/**
+	 * Singleton implementation for Client.
+	 * @return the singleton of CListOptions
+	 */
 	public static CListOptions getInstance()
 	{
 		if(m_hold == null)
 			m_hold=new CListOptions();
 		return m_hold;
 	}
-	//CListOptions.CListOptionsInit((CListOptions)o.getM_langueges(),(CListOptions)o.getM_topics());
+	/**
+	 * initialization of CListOptions,
+	 * @param lang new lang set
+	 * @param topics new topics set
+	 * @return singleton of CListOptions
+	 */
 	public static CListOptions CListOptionsInit(Set<String> lang,Set<String> topics)
 	{
 		if(m_hold == null)
 			m_hold=new CListOptions();
-		m_hold.m_langueges = new HashSet<String>(lang);
+		m_hold.m_languages = new HashSet<String>(lang);
 		m_hold.m_topics = new HashSet<String>(topics);
 		return m_hold;
 	}
@@ -50,10 +74,10 @@ public class CListOptions implements Serializable{
 
 
 	/**
-	 * @return the m_langueges
+	 * @return the m_languages
 	 */
-	public Set<String> getM_langueges() {
-		return m_langueges;
+	public Set<String> getm_languages() {
+		return m_languages;
 	}
 
 
@@ -64,7 +88,4 @@ public class CListOptions implements Serializable{
 		return m_topics;
 	}
 	
-	
-	
-
 }
