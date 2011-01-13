@@ -65,7 +65,7 @@ public class CExecuter implements Runnable
 	
 	/**  
 	 * GetInstance finishes the implementation for the Singleton
-	 * @returns the only instance of CExecuter
+	 * @return the only instance of CExecuter
 	 */
 	public static CExecuter GetInstance()
 	{
@@ -1125,7 +1125,7 @@ public class CExecuter implements Runnable
 	/**
 	 *  checking to see if user is logged
 	 *  
-	 *  @returns true if user is logged
+	 *  @return true if user is logged
 	 */
 	private  boolean isLogged(CEntry Work)
 	{
@@ -1229,8 +1229,8 @@ public class CExecuter implements Runnable
 	/**
 	 * Util function that only changes names of months from numbers to actual names
 	 * also adds months that aren't in set with 0 as counter
-	 * @param arg
-	 * @return
+	 * @param arg is the work set to change
+	 * @return new set, months in name instead of digits
 	 */
 	private HashMap<String,Integer> ChangeMonthsNames(HashMap<String,Integer> arg)
 	{
@@ -1315,8 +1315,8 @@ public class CExecuter implements Runnable
 	/**
 	 * Util function that only changes names of months from numbers to actual names
 	 * also adds months that aren't in set with 0 as counter
-	 * @param arg
-	 * @return
+	 * @param arg is the work set to change
+	 * @return new set, months in name instead of digits
 	 */
 	private Set<CPurchaseStats> ChangeLongMonthsNames(Set<CPurchaseStats> arg)
 	{
@@ -1359,8 +1359,8 @@ public class CExecuter implements Runnable
 	/**
 	 * Util function that only changes names of months from numbers to actual names
 	 * also adds months that aren't in set with 0 as counter
-	 * @param arg
-	 * @return
+	 * @param arg is the work set to change
+	 * @return new set, months in name instead of digits
 	 */
 	private Set<CBookStats> ChangeLongMonthNames(Set<CBookStats> arg)
 	{
@@ -1399,7 +1399,7 @@ public class CExecuter implements Runnable
 
 	/**
 	 * function checks popularity of all books in DB and sets their ranks accordingly (in DB!)
-	 * @see server.core.CExecuter#startCheck()
+	 * @see startCheck()
 	 */
 	public static void recheckPopularity()
 	{

@@ -22,7 +22,7 @@ public class CStandbyUnit  extends AbstractServer
 
 	/**
 	 * Implementation for the Singleton DP
-	 * @returns the instance of CStandbyUnit
+	 * @return the instance of CStandbyUnit
 	 */	
 	public static CStandbyUnit GetInstance()
 	{
@@ -40,7 +40,7 @@ public class CStandbyUnit  extends AbstractServer
 	}
 	/**
 	 * used by CExecuter to get a request from the clients.
-	 * @returns CEntry which is the base for the client-server API.
+	 * @return CEntry which is the base for the client-server API.
 	 * @see common.api.CEntry
 	 */
 	public CEntry getEntryFromQueue() 
