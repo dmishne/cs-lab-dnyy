@@ -1180,7 +1180,8 @@ public class CDBInteractionGenerator
 				{
 					if(book.getString("topic").compareToIgnoreCase(prevTopic) == 0)
 						res += ","+book.getString("subtopic");
-					res += "~"+book.getString("topic")+"@"+book.getString("subtopic");
+					else
+						res += "~"+book.getString("topic")+"@"+book.getString("subtopic");
 					prevTopic = book.getString("topic");
 				}
 		} catch (Exception e) 
