@@ -1,6 +1,11 @@
 package server.main;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Calendar;
+
 import server.core.CExecuter;
 import server.core.CServerConstants;
 import server.core.CStandbyUnit;
@@ -23,6 +28,7 @@ public class CGoodReadingServer {
 	 * @param args unused
 	 */
 	public static void main(String[] args) {
+		
 		/*
 		 * 			load properties (configuration)
 		 * 			open up window for feedback to user (progress bar + IP address)
@@ -35,16 +41,30 @@ public class CGoodReadingServer {
 		CServerInfo info = null;
 
 		CServerConstants.Config(); //load all properties
+
+		//if we're not in debug mode, set output into log files
+		if(!CServerConstants.DEBUG())
+		try {
+			System.out.print("Setting output to log files");
+			System.setOut(new PrintStream(new File("serverRuntime.log")));
+			System.setErr(new PrintStream(new File("serverCritical.log")));
+			System.out.println("Log started at: "+Calendar.getInstance().getTime());
+			System.out.println("Properties are set");
+		} catch (FileNotFoundException e1) {
+			
+			System.out.println("error while changing streams: "+e1.getMessage());
+		}
 		
-		if (CServerConstants.POP_WINDOW())
-		{
+		
+		
 		try {
 			 info = new CServerInfo("GoodReadingServer V" + Version + "." + Revision);
-			 info.setVisible(true);
+			 if (CServerConstants.POP_WINDOW())
+				info.setVisible(true);
 			 Thread.sleep(3500);
 		} 
 		catch(Exception e) { System.out.println("Can't get ip address: "+e.getMessage()); }
-		}
+		
 		
 
 		
@@ -120,6 +140,7 @@ public class CGoodReadingServer {
 			}
 			info.done();
 		}
+		
 		CExecuter.GetInstance().startCheck(150000); // final set of the server.
 	}
 	

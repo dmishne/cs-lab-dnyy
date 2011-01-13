@@ -12,15 +12,26 @@ public class CServerConstants {
 	/*
 	 * these are all members who can be called statically
 	 */
+	/** m_POP_WINDOW determines whether or not the pop up with progress bar will pop */
 	private static boolean m_POP_WINDOW=true;
+	/** m_DEFAULT_Global_Library_Path the default path to the library (for uploading files into db) 	 */
 	private static String m_DEFAULT_Global_Library_Path="c:/library/";
+	/** m_YEARLY_AMMOUNT the ammount of books you get for buying a yearly subscription */
 	private static int m_YEARLY_AMMOUNT=150;
+	/** m_MONTHLY_AMMOUNT the ammount of books you get for buying a monthly subscription */
 	private static int m_MONTHLY_AMMOUNT=5;
+	/** m_DEFAULTHOST default host for the DB */
 	private static String m_DEFAULTHOST="jdbc:mysql://localhost/cslabdnyy";
+	/** m_DEFAULTUSER default user for the DB */
 	private static String m_DEFAULTUSER="root";
-	private static String m_DEFAULTPASS="m00nkey";
-	private static int m_POPULARITY_RATIO=10;
+	/** m_DEFAULTPASS default password for the DB */
+	private static String m_DEFAULTPASS="Braude";
+	/** m_DEFAULT_PORT default port for the DB */
 	private static int m_DEFAULT_PORT=5555;
+	/** m_POPULARITY_RATIO determines how much a view is worth vs a purchase, for example if the ratio is 5 than 5 views equals a purchase. @see server.core.CExecuter#recheckPopularity */
+	private static int m_POPULARITY_RATIO=10;
+	/** m_DEBUG if true, will display output to console, false means output goes to logs  */
+	private static boolean m_DEBUG=false;
 	
 	/**
 	 * method configures all the static vars
@@ -60,6 +71,8 @@ public class CServerConstants {
 				m_DEFAULTPASS=arg.getString("DEFAULTPASS");
 			if(arg.containsKey("DEFAULT_PORT"))
 				m_DEFAULT_PORT=Integer.parseInt(arg.getString("DEFAULT_PORT"));
+			if(arg.containsKey("DEBUG"))
+				m_DEBUG=Boolean.parseBoolean(arg.getString("DEBUG"));
 		}
 		catch(Exception e) 
 		{
@@ -69,33 +82,54 @@ public class CServerConstants {
 	
 
 	//Getters for constants
-	
+	/** getter for POP_WINDOW */
 	public static boolean POP_WINDOW() {
 		return m_POP_WINDOW;
 	}
+
+	/** getter for DEFAULT_Global_Library_Path */
 	public static String DEFAULT_Global_Library_Path() {
 		return m_DEFAULT_Global_Library_Path;
 	}
+
+	/** getter for MONTHLY_AMMOUNT */
 	public static int MONTHLY_AMMOUNT() {
 		return m_MONTHLY_AMMOUNT;
 	}
+
+	/** getter for YEARLY_AMMOUNT */
 	public static int YEARLY_AMMOUNT() {
 		return m_YEARLY_AMMOUNT;
 	}
+
+	/** getter for DEFAULTHOST */
 	public static String DEFAULTHOST() {
 		return m_DEFAULTHOST;
 	}
+
+	/** getter for DEFAULTUSER */
 	public static String DEFAULTUSER() {
 		return m_DEFAULTUSER;
 	}
+
+	/** getter for DEFAULTPASS */
 	public static String DEFAULTPASS() {
 		return m_DEFAULTPASS;
 	}	
+
+	/** getter for POPULARITY_RATIO */
 	public static int POPULARITY_RATIO()
 	{
 		return m_POPULARITY_RATIO;
 	}
+
+	/** getter for DEFAULT_PORT */
 	public static int DEFAULT_PORT() {
 		return m_DEFAULT_PORT;
+	}
+	
+	/** getter for DEBUG */
+	public static boolean DEBUG() {
+		return m_DEBUG;
 	}
 }

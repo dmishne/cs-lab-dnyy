@@ -1619,14 +1619,19 @@ public class CDBInteractionGenerator
 
 	/**
 	 * Deletes the session id within an old receipt
+	 * Function is a maintenance function
+	 * @see server.core.CExecuter
 	 */
 	public void removeSessionId()
 	{
-		try {
-			Statement st = this.m_DB_Connection.createStatement();
-			st.executeUpdate("CALL RemoveSessionId();");	
-		} catch (SQLException e) {
-			System.out.println("removeSessionId():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
+		synchronized(this) 
+			{
+				try {
+					Statement st = this.m_DB_Connection.createStatement();
+					st.executeUpdate("CALL RemoveSessionId();");	
+				} catch (SQLException e) {
+					System.out.println("removeSessionId():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
+			}
 	}
 	
 }
