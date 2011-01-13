@@ -11,10 +11,16 @@ import ocsf.server.ConnectionToClient;
 	 * @see server.core.CExecuter main customer for this unit
 	 */
 public class CRespondToClient {
-
-	private Map <Integer,Object> m_connections;	//holds all connections to clients
-	private static CRespondToClient m_obj; 		//used for implementation of the Singleton DP
+	/**
+	 * holds all connections to clients
+	 */
+	private Map <Integer,Object> m_connections;	
+	/**
+	 * used for implementation of the Singleton DP
+	 */
+	private static CRespondToClient m_obj;
 	
+	/** simple constructor for class, only allocates a new instance for m_connections */
 	private CRespondToClient()
 	{
 		m_connections=new TreeMap<Integer,Object>();
@@ -33,6 +39,8 @@ public class CRespondToClient {
 		
 	/**
 	 * Save connection to client (or out stream)
+	 * @param key the key (Session ID) of the client's relevant stream
+	 * @param stream is the stream via which we send the response
 	 */
 	public void InsertOutstream(int key,Object stream)
 	{
@@ -41,6 +49,8 @@ public class CRespondToClient {
 	
 	/**
 	 * send response to client
+	 * @param i is the index (key / sid) of the client's stream
+	 * @param msg is the message to send to client
 	 */
 	public void SendResponse(int i, Object msg)
 	{
@@ -63,7 +73,8 @@ public class CRespondToClient {
 	
 	
 	/**
-	 * is object defined in map
+	 * simple Container reference - is object defined in map ?
+	 * @param key the key we're searching for in the m_connection container.
 	 * @return answer (is object defined in map / is key registered to a client)
 	 */
 	public boolean isRegistered(int key)
@@ -73,6 +84,7 @@ public class CRespondToClient {
 	
 	/**
 	 * removing an object so we can replace it / returns stream, it is also used in logout to return msg to client
+	 * @param key the key by which to remove the stream from our list
 	 * @return connection to client inserted by CExecuter
 	 */
 	public ConnectionToClient Remove(int key)
