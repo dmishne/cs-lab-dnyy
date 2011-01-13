@@ -7,27 +7,43 @@ import java.util.regex.Pattern;
 public class CBook implements Serializable,Comparable<CBook> {
 	
 	static private final long serialVersionUID = 1L;
+	/** title of the book */
 	private String	 m_title;
+	/** author of the book */
 	private String	 m_author;
+	/** isbn of the book */
 	private String	 m_ISBN;
-	private String	 m_release;    // Warning : Date type used
+	/** release date, stored in SQL format - 2010-1-13*/
+	private String	 m_release;   
+	/** publisher of the book */
 	private String	 m_publisher;
+	/** summary of the book */
 	private String	 m_summary;
+	/** price of the book */
 	private double	 m_price;
+	/** sum score of the book */
 	private double	 m_score=0;
+	/** counter for how many rated the book*/
 	private long 	 m_score_count=0;
+	/** related topics of the book */
 	private String	 m_topic;
+	/** rank / popularity of the book (all times) */
 	private int		 m_rank;
+	/** related lables of the book */
 	private String	 m_lables;
+	/** Table of Context*/
 	private String	 m_TOC;
+	/** determines if book is visible for Readers */
 	private boolean	 m_invisible;
+	/** language of the book */
 	private String	 m_language;
 	
 	/**
+	 * constructor - implemented in by-value-factory
 	 * @param m_title
 	 * @param m_author
 	 * @param m_ISBN
-	 * @param m_release_date     (Date type)
+	 * @param m_release_date   
 	 * @param m_publisher
 	 * @param m_summary
 	 * @param m_price
@@ -40,7 +56,6 @@ public class CBook implements Serializable,Comparable<CBook> {
 	 * @param m_language
 	 * @param m_release_date 
 	 */
-	
 	public CBook(String m_ISBN, String m_author, String m_title, String m_release, String m_publisher, String m_summary,double m_price, long m_score_count,double m_score,String m_topic, String m_lables, String m_TOC,boolean m_invisible, String m_language,int Rank) 
 	{   
 		this.m_title = m_title;
@@ -60,11 +75,17 @@ public class CBook implements Serializable,Comparable<CBook> {
 		this.m_rank=Rank;
 	}
 
+	/**
+	 * @return m_rank
+	 */
 	public int getM_rank()
 	{
 		return m_rank;
 	}
-
+	/**
+	 * setter for book's rank (locally) 
+	 * @param r new value for m_rank
+	 */
 	public void setM_rank(int r)
 	{
 		m_rank=r;
@@ -174,6 +195,10 @@ public class CBook implements Serializable,Comparable<CBook> {
 		return m_language;
 	}
 
+	/**
+	 * as score is summed up by raters, we take care of the extreme (though short) case in which nobody has yet to rate this book
+	 * @return m_score
+	 */
 	public int getScore() {
 		if(this.m_score_count != 0)
 		{
@@ -181,114 +206,84 @@ public class CBook implements Serializable,Comparable<CBook> {
 		}
 		return 0;
 	}
-
+	/**
+	 * we summed the score up, and now we need to convert it to 5 stars values.
+	 * @return Score AVG.
+	 */
 	public double getAvgScore() {
 		return (double) this.m_score/this.m_score_count;
 	}
-	
+	/**
+	 * simple setter for m_title
+	 */
 	public void settitle(String a) {
 		m_title=a;
 	}
-	
+	/**
+	 * simple setter for m_author
+	 */	
 	public void setauthor(String a) {
 		m_author=a;
 	}
-	
-
+	/**
+	 * simple setter for m_release
+	 */
 	public void setrelease_date(String a) {
 		 m_release=a;
 	}
-	
-	
+	/**
+	 * simple setter for m_publisher
+	 */
 	public void setpublisher(String a) {
 		 m_publisher=a;
 	}
-	
-
+	/**
+	 * simple setter for m_summary
+	 */
 	public void setsummary(String a) {
 		 m_summary=a;
 	}
-	
-	
+	/**
+	 * simple setter for m_price
+	 */
 	public void setprice(double a) {
 		 m_price=a;
 	}
-	
-	
+	/**
+	 * simple setter for m_topic
+	 */
 	public void settopic(String a) {
 		 m_topic=a;
 	}
-	
-	
+	/**
+	 * simple setter for m_lables
+	 */
 	public void setlables(String a) {
 		 m_lables=a;
 	}
-	
-	
+	/**
+	 * simple setter for m_TOC
+	 */
 	public void setTOC(String a) {
 		 m_TOC=a;
 	}
-	
-
+	/**
+	 * simple setter for m_invisible
+	 */
 	public void setinvisible(boolean a) {
 		 m_invisible=a;
 	}
-	
-	
+	/**
+	 * simple setter for m_language
+	 */
 	public void setlanguage(String a) {
 		 m_language=a;
 	}
-/*
-	//@return topics
-	public String[] gettopics()
-	{
-		LinkedList<String> arg=new LinkedList<String>();
-		String[] tmp=m_topic.substring(1).split("~");
-		for(String s:tmp)
-		{
-			arg.add(s.split("@")[0]);
-		}
-		
-		return (String[]) arg.toArray();
-	}*/
-	/*
-	public String[] getSubtopics(String topic)
-	{
-		String[] tmp=m_topic.substring(1).split("~");
-		for(String s:tmp)
-		{
-			if(topic.compareTo(s.split("@")[0]) == 0)
-					return s.split("@")[1].split(",");
-		}
-		
-		return null;
-	}*/
-	/*
-	 * //@return sub topics
-	 
-	public String[] getSubTopics()
-	{
-		LinkedList<String> arg=new LinkedList<String>();
-		String[] tmp=m_topic.substring(1).split("~");
-		for(String s:tmp)
-		{
-			for(String str:s.split("@")[1].split(","))
-				arg.add(str);
-		}
-		
-		return (String[]) arg.toArray();
-	}
 	
-	public String gettopicString()
-	{
-		return this.m_topic;
-	}
-	
-	*/
-
-
-//this function is only supposed to compare between CBooks, not anything else!
-//implements the Comparable interface
+	/**
+	 *	implements the Comparable interface
+	 *	this function is only supposed to compare between CBooks, not anything else! 
+	 */
 	public int compareTo(CBook b) 
 	{
 		if(b.equals(this))
