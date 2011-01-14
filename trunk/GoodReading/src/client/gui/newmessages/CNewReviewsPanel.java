@@ -175,7 +175,10 @@ public class CNewReviewsPanel extends JPanel implements ActionListener{
 					int i = 0;
 					for( CBookReview b : m_messages )
 					{
-						show[i] = b.getisbn() + " - " + b.gettitle() + " - " + b.getauthor() + " - " + b.getwrite_date();
+						String date = b.getNormalWriteDate();
+						date = date.replace("00:00:00.0", "");
+						date = date.replace("-", ".");
+						show[i] = b.getisbn() + " - " + b.gettitle() + " - " + b.getauthor() + " - " + date;
 						i++;
 					} 
 				    jList_NewReviewsList = new JList(show);
