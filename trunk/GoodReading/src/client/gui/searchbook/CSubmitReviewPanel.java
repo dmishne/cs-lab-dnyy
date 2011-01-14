@@ -27,7 +27,19 @@ import java.awt.Rectangle;
 
 public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseListener  {
 
+
+    /**
+	 * Defines the available operations that can cause removing this panel
+	 */
+	public enum ESRDecision
+	{
+		BACK,RESET,SUBMIT
+	}
+	
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Saves the last choice of the user
+	 */
 	private ESRDecision m_lastChoice = null;
 	private JTextField title = null;
 	private JTextArea review = null;
@@ -39,11 +51,6 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 	private JScrollPane spfText = null;
 	
     private HashMap<String,String> m_newReview = null;
-	
-	public enum ESRDecision
-	{
-		BACK,RESET,SUBMIT
-	}
 	
 
 	/**

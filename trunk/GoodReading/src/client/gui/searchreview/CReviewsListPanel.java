@@ -22,6 +22,14 @@ import java.awt.ComponentOrientation;
 
 public class CReviewsListPanel extends JPanel implements ActionListener{
 
+	/**
+	 * Defines the available operations that can cause removing this panel
+	 */
+	public enum RLPDecision
+	{
+		BACK,SHOWREVIEW
+	}
+	
 	private static final long serialVersionUID = 1L;
 	private JLabel jLabel_mainLabel_RL = null;
 	private JScrollPane jScrollPane_resultList_RL = null;
@@ -30,14 +38,11 @@ public class CReviewsListPanel extends JPanel implements ActionListener{
 	private JButton jButton_showReview_RL = null;
 	private static CBookReview m_chosenReview = null;
 	private LinkedList<CBookReview> m_reviewsList = null;  //  @jve:decl-index=0:
+	/**
+	 * Saves the last choice of the user
+	 */
 	private RLPDecision m_lastChoice = null;
 	
-	
-	public enum RLPDecision
-	{
-		BACK,SHOWREVIEW
-	}
-
 	/**
 	 * This is the default constructor
 	 */

@@ -24,6 +24,13 @@ import common.data.CUser;
 
 public class CSearchUserPanel extends JPanel implements ActionListener{
 
+	/**
+	 * Defines the available operations that can cause removing this panel
+	 */
+	public enum SUDecision{
+		BACK, SEARCHUSER
+	}
+	
 	private static final long serialVersionUID = 1L;
 	private JLabel jLabel_SUMainLabel = null;
 	private JLabel jLabel_username = null;
@@ -36,11 +43,12 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 	private JTextField jTextField_LastName = null;
 	private JButton jButton_back = null;
 	private JButton jButton_SearchUser = null;
+	/**
+	 * Saves the last choice of the user
+	 */
 	private SUDecision m_lastChoice = null;  //  @jve:decl-index=0:
 	private static LinkedList<CUser> result = null;
-	public enum SUDecision{
-		BACK, SEARCHUSER
-	}
+
 
 	public CSearchUserPanel() {
 		super();

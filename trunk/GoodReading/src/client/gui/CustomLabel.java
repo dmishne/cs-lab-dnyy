@@ -8,18 +8,25 @@ import java.awt.RenderingHints;
 
 import javax.swing.JLabel;
 
-/** Label with custom painting of alpha composite shadow. */
+/** 
+ * Label with custom painting of alpha composite shadow.
+ */
 public class CustomLabel extends JLabel{
 	
 	
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Default Constructor.
+	 */
 	public CustomLabel()
 	{
        setForeground( TEXT_COLOR );
     }
 
-    @Override
+	/**
+	 * Painting the text with shadows.
+	 */
     protected void paintComponent( final Graphics in_Graphics ){
 
       final Graphics2D graphics = ( Graphics2D ) in_Graphics;

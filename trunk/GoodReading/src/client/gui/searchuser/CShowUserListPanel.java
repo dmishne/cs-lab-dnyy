@@ -22,6 +22,15 @@ import javax.swing.JButton;
 
 public class CShowUserListPanel extends JPanel implements ActionListener{
 
+	
+	/**
+	 * Defines the available operations that can cause removing this panel
+	 */
+	public enum ULPDecision
+	{
+		BACK,USERLIST
+	}
+	
 	private static final long serialVersionUID = 1L;
 	private JLabel jLabel_main_label = null;
 	private JScrollPane jScrollPane_UL = null;
@@ -29,15 +38,14 @@ public class CShowUserListPanel extends JPanel implements ActionListener{
 	private JButton jButton_back_UL = null;
 	private JButton jButton_ShowUserDetails_UL = null;
 	private static CUser m_chosenUser = null;
+	/**
+	 * Saves the last choice of the user
+	 */
 	private ULPDecision m_lastChoice = null;
-	private LinkedList<CUser> usersList = null;
+	private LinkedList<CUser> usersList = null;  //  @jve:decl-index=0:
 
 	
 	
-	public enum ULPDecision
-	{
-		BACK,USERLIST
-	}
 	/**
 	 * This is the default constructor
 	 */

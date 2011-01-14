@@ -25,7 +25,7 @@ import client.core.CReader;
 public class CArrangePayPanel extends JPanel implements ActionListener {
 
 	/**
-	 * Defines the operation the will cause changing of the panel
+	 * Defines the available operations that can cause removing this panel
 	 */
 	public enum EAPDecision
 	{
@@ -40,7 +40,7 @@ public class CArrangePayPanel extends JPanel implements ActionListener {
 	/**
 	 * Saves the last choice of the user
 	 */
-	private EAPDecision m_lastChoice = null; 
+	private EAPDecision m_lastChoice = null;  //  @jve:decl-index=0:
 	
 	private JComboBox m_jComboBox_PaymentType = null;
 	private JLabel m_jLabel_ChoosePayment = null;

@@ -27,7 +27,19 @@ import client.core.EActor;
 
 public class CAddNewBookPanel extends JPanel implements ActionListener{
 
-        private static final long serialVersionUID = 1L;
+        
+		/**
+		 * Defines the available operations that can cause removing this panel
+		 */
+	    public enum ANBDecision
+	    {
+	            BACK,ADDBOOK,SETTOPICS
+	    }
+	
+		private static final long serialVersionUID = 1L;
+        /**
+    	 * Saves the last choice of the user
+    	 */
         private ANBDecision m_lastChoice;
         private JLabel jLabel_Title = null;
         private JLabel jLabel_Auhtor = null;
@@ -69,10 +81,8 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 		private static JList m_lastList = null;
 		private JButton jButton_manageTopics = null;
 		private JScrollPane jScrollPane_topics = null;
-        public enum ANBDecision
-        {
-                BACK,ADDBOOK,SETTOPICS
-        }
+		
+		
        
        
         /**

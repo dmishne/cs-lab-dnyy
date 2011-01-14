@@ -28,6 +28,9 @@ import javax.swing.JScrollPane;
 
 public class CBookDetailPanel extends JPanel implements MouseListener,ActionListener{
 
+	/**
+	 * Defines the available operations that can cause removing this panel
+	 */
 	public enum EBDDecision
 	{
 		BACK,REVIEW,ORDER,EDITBOOK,REPORT
@@ -43,6 +46,9 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 	private JLabel m_jLabel_Price = null;
 	private JButton m_jButton_Purchase_BDP = null;
 	private JButton m_jButton_publishReview = null;
+	/**
+	 * Saves the last choice of the user
+	 */
 	private EBDDecision m_lastChoice = EBDDecision.BACK;  //  @jve:decl-index=0:
 	private JButton m_jButton_EditBook = null;
 	private JButton m_jButton_Report = null;

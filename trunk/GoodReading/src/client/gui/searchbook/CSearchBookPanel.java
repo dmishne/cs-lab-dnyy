@@ -24,7 +24,9 @@ import client.core.AUser;
 
 public class CSearchBookPanel extends JPanel implements ActionListener,ItemListener{
 
-
+	/**
+	 * Defines the available operations that can cause removing this panel
+	 */
 	public enum SBPDecision{
 		BACK, SEARCH
 	}
@@ -47,6 +49,9 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 	private JComboBox m_jComboBox_Language_SBP = null;
 	private JComboBox m_jComboBox_Topics_SBP = null;
 	private JButton m_jButton_Search_SBP = null;
+	/**
+	 * Saves the last choice of the user
+	 */
 	private SBPDecision m_lastChoice = SBPDecision.BACK;  //  @jve:decl-index=0:
 	
 	static private HashMap<String,String> m_searchDetails = null;
