@@ -25,6 +25,10 @@ import client.core.CLibraryManager;
 import client.core.EActor;
 import common.data.CUser;
 
+/**
+ *This panel designed to present the details of chosen users account, 
+ *and to give the ability to edit this account details.
+ */
 
 public class CUserDetailsPanel extends JPanel implements ActionListener,ItemListener{
 
@@ -67,14 +71,13 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	private JCheckBox jCheckBox_suspend = null;
 	private boolean edit_flag;
 	private CUser chosenUser=null;
-	/**
-	 * Saves the last choice of the user
-	 */
+	/** Saves the last choice of the user */
 	private UDDecision m_lastChoice = null;
 	
 	
 	/**
-	 * This is the default constructor
+	 * This is the default constructor.
+	 * Sets the chosen account in variable
 	 */
 	public CUserDetailsPanel() {
 		super();
@@ -83,7 +86,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes this
+	 * This method initializes this class
 	 * 
 	 * @return void
 	 */
@@ -178,6 +181,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
+	 * Get the last button that pressed on this panel
 	 * @return the m_lastChoice
 	 */
 	public UDDecision getLastChoice() {
@@ -185,6 +189,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
+	 * Set the last button that pressed on this panel
 	 * @param m_lastChoice the m_lastChoice to set
 	 */
 	public void setLastChoice(UDDecision m_lastChoice) {
@@ -256,7 +261,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes jTextField_userName	
+	 * This method initializes jTextField_userName with chosen user UserName	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
@@ -272,7 +277,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes jTextField_userID	
+	 * This method initializes jTextField_userID with chosen user ID	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
@@ -289,7 +294,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes jTextField_firstName	
+	 * This method initializes jTextField_firstName	with chosen user first name
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
@@ -306,7 +311,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes jTextField_lastName	
+	 * This method initializes jTextField_lastName with chosen user last name
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
@@ -322,7 +327,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes jTextField_adress	
+	 * This method initializes jTextField_adress with chosen user address	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
@@ -338,7 +343,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes jTextField_birthDay	
+	 * This method initializes jTextField_birthDay with chosen user birth day
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
@@ -354,8 +359,10 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes jComboBox_privilage	
-	 * 	
+	 * This method initializes jComboBox_privilage.
+	 * Sets all available privileges, while chosen user privilege comes first.	
+	 * Contains ItemListener.	
+	 * 
 	 * @return javax.swing.JComboBox	
 	 */
 	private JComboBox getJComboBox_privilage() {
@@ -389,8 +396,10 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes jCheckBox_yearly	
-	 * 	
+	 * This method initializes jCheckBox_yearly.	
+	 * If chosen account hold this type of payment, the check box will be selected. 	
+	 * Default state Enabled(false).
+	 * 
 	 * @return javax.swing.JCheckBox	
 	 */
 	private JCheckBox getJCheckBox_yearly() {
@@ -408,8 +417,10 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes jCheckBox_monthly	
-	 * 	
+	 * This method initializes jCheckBox_monthly.
+	 * If chosen account hold this type of payment, the check box will be selected.	
+	 * Default state Enabled(false).	
+	 * 
 	 * @return javax.swing.JCheckBox	
 	 */
 	private JCheckBox getJCheckBox_monthly() {
@@ -427,7 +438,10 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes jCheckBox_creditCard	
+	 * This method initializes jCheckBox_creditCard.
+	 * If chosen account hold this type of payment, the check box will be selected.
+	 * Default state Enabled(false).
+	 * This check box is uneditable.	
 	 * 	
 	 * @return javax.swing.JCheckBox	
 	 */
@@ -446,8 +460,10 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes jCheckBox_suspend	
-	 * 	
+	 * This method initializes jCheckBox_suspend.
+	 * If chosen account is suspended, the check box will be selected.	
+	 * Default state Enabled(false).	
+	 * 
 	 * @return javax.swing.JCheckBox	
 	 */
 	private JCheckBox getJCheckBox_suspend() {
@@ -465,7 +481,11 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 		return jCheckBox_suspend;
 	}
 
-	
+	/**
+	 *  Handle the catched action on the panel 
+	 *  
+	 *  @param ae ActionEvent
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		if(source == jButton_Back_UD)
@@ -538,7 +558,10 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 		
 	}
 
-	
+	/**
+	 * Handle the catched event on privilege ComboBox.
+	 * Change various panel components to state enabled(true), according to selected privilege, or vice versa to set them enabled(false)
+	 */
 	public void itemStateChanged(ItemEvent pe) {
 		 if (pe.getItemSelectable() == jComboBox_privilage)
 		 {
