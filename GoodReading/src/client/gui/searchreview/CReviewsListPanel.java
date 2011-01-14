@@ -20,6 +20,11 @@ import javax.swing.ListSelectionModel;
 import common.data.CBookReview;
 import java.awt.ComponentOrientation;
 
+/**
+ *This panel designed to present the list of founded reviews, 
+ *and to give the ability to choose one from the list
+ */
+
 public class CReviewsListPanel extends JPanel implements ActionListener{
 
 	/**
@@ -36,11 +41,10 @@ public class CReviewsListPanel extends JPanel implements ActionListener{
 	private JList jList_resultList_RL = null;
 	private JButton jButton_Back_RL = null;
 	private JButton jButton_showReview_RL = null;
+	/** Saves the chosen review */
 	private static CBookReview m_chosenReview = null;
 	private LinkedList<CBookReview> m_reviewsList = null;  //  @jve:decl-index=0:
-	/**
-	 * Saves the last choice of the user
-	 */
+	/** Saves the last choice of the user */
 	private RLPDecision m_lastChoice = null;
 	
 	/**
@@ -53,9 +57,7 @@ public class CReviewsListPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes this
-	 * 
-	 * @return void
+	 * This method initializes this class
 	 */
 	private void initialize() {
 		jLabel_mainLabel_RL = new JLabel();
@@ -73,6 +75,7 @@ public class CReviewsListPanel extends JPanel implements ActionListener{
 	}
 
 	/**
+	 * Get the review that was chosen from the list
 	 * @return the m_chosenReview
 	 */
 	public static CBookReview getChosenReview() {
@@ -80,6 +83,7 @@ public class CReviewsListPanel extends JPanel implements ActionListener{
 	}
 
 	/**
+	 * Set the review that was chosen from the list
 	 * @param m_chosenReview the m_chosenReview to set
 	 */
 	public static void setChosenReview(CBookReview m_chosenReview) {
@@ -87,6 +91,7 @@ public class CReviewsListPanel extends JPanel implements ActionListener{
 	}
 
 	/**
+	 * Get the last button that pressed on this panel.
 	 * @return the m_lastChoice
 	 */
 	public RLPDecision getLastChoice() {
@@ -94,6 +99,7 @@ public class CReviewsListPanel extends JPanel implements ActionListener{
 	}
 
 	/**
+	 * Set the last button that pressed on this panel.
 	 * @param m_lastChoice the m_lastChoice to set
 	 */
 	public void setLastChoice(RLPDecision m_lastChoice) {
@@ -101,7 +107,8 @@ public class CReviewsListPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jScrollPane_resultList_RL	
+	 * This method initializes jScrollPane_resultList_RL.
+	 * Contains jList_resultList_RL.	
 	 * 	
 	 * @return javax.swing.JScrollPane	
 	 */
@@ -117,8 +124,8 @@ public class CReviewsListPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jList_resultList_RL	
-	 * 	
+	 * This method initializes jList_resultList_RL	with founded reviews list	
+	 * 
 	 * @return javax.swing.JList	
 	 */
 	private JList getJList_resultList_RL() {
@@ -175,7 +182,11 @@ public class CReviewsListPanel extends JPanel implements ActionListener{
 		return jButton_showReview_RL;
 	}
 
-	@Override
+	/**
+	 *  Handle the catched action on the panel. 
+	 *  
+	 *  @param ae ActionEvent
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		if(source == jButton_Back_RL)
