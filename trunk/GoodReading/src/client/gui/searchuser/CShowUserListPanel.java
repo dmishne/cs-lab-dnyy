@@ -20,6 +20,11 @@ import javax.swing.ListSelectionModel;
 import common.data.CUser;
 import javax.swing.JButton;
 
+/**
+ *This panel designed to present the list of founded users accounts, 
+ *and to give the ability to choose one from the list
+ */
+
 public class CShowUserListPanel extends JPanel implements ActionListener{
 
 	
@@ -38,11 +43,9 @@ public class CShowUserListPanel extends JPanel implements ActionListener{
 	private JButton jButton_back_UL = null;
 	private JButton jButton_ShowUserDetails_UL = null;
 	private static CUser m_chosenUser = null;
-	/**
-	 * Saves the last choice of the user
-	 */
+	/** Saves the last choice of the user */
 	private ULPDecision m_lastChoice = null;
-	private LinkedList<CUser> usersList = null;  //  @jve:decl-index=0:
+	private LinkedList<CUser> usersList = null;  
 
 	
 	
@@ -55,7 +58,7 @@ public class CShowUserListPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes this
+	 * This method initializes this class
 	 * 
 	 * @return void
 	 */
@@ -76,6 +79,7 @@ public class CShowUserListPanel extends JPanel implements ActionListener{
 
 	
 	/**
+	 * Set the last button that pressed on this panel
 	 * @param m_lastChoice the m_lastChoice to set
 	 */
 	public void setLastChoice(ULPDecision m_lastChoice) {
@@ -83,6 +87,7 @@ public class CShowUserListPanel extends JPanel implements ActionListener{
 	}
 
 	/**
+	 * Get the last button that pressed on this panel
 	 * @return the m_lastChoice
 	 */
 	public ULPDecision getLastChoice() {
@@ -92,6 +97,7 @@ public class CShowUserListPanel extends JPanel implements ActionListener{
 	
 	
 	/**
+	 * Get the user that was choosed
 	 * @return the m_chosenUser
 	 */
 	static public CUser getChosenUser() {
@@ -171,7 +177,12 @@ public class CShowUserListPanel extends JPanel implements ActionListener{
 		return jButton_ShowUserDetails_UL;
 	}
 
-	@Override
+	
+	/**
+	 *  Handle the catched action on the panel 
+	 *  
+	 *  @param ae ActionEvent
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		if(source == jButton_back_UL)

@@ -23,6 +23,9 @@ import client.core.CLibraryManager;
 
 import common.data.CPurchaseStats;
 
+/** 
+ * This panel designed to present data list of chosen user purchases for year by months.  
+ */
 public class CUserReport extends JPanel implements ActionListener, ItemListener {
 
 	private static final long serialVersionUID = 1L;
@@ -31,12 +34,13 @@ public class CUserReport extends JPanel implements ActionListener, ItemListener 
 	private JScrollPane m_listScroll = null;
 	private JButton m_jButton_Back = null;
 	private JComboBox m_jComboBox_years = null;
-	private Vector<String> m_years = null;  //  @jve:decl-index=0:
+	/** Years user made his purchases at*/ 
+	private Vector<String> m_years = null;  
 	private String m_lastYear;
 
 	/**
 	 * This is the default constructor
-	 * @throws Exception 
+	 * @throws Exception Initialize fail
 	 */
 	public CUserReport() throws Exception {
 		super();
@@ -44,10 +48,10 @@ public class CUserReport extends JPanel implements ActionListener, ItemListener 
 	}
 
 	/**
-	 * This method initializes this
+	 * Initializes this class
 	 * 
 	 * @return void
-	 * @throws Exception 
+	 * @throws Exception fail to get parameters from core
 	 */
 	private void initialize() throws Exception {
 		m_years = ((CLibraryManager)AUser.getInstance()).getYears();
@@ -68,10 +72,11 @@ public class CUserReport extends JPanel implements ActionListener, ItemListener 
 	}
 
 	/**
-	 * This method initializes m_jList	
+	 * Initializes m_jList, with purchase data for cosen user.
+	 * 	
 	 * 	
 	 * @return javax.swing.JList	
-	 * @throws Exception 
+	 * @throws Exception fail to get rarameter from core
 	 */
 	private JList getM_jList() throws Exception {
 		if (m_jList == null) {
@@ -84,6 +89,13 @@ public class CUserReport extends JPanel implements ActionListener, ItemListener 
 		return m_jList;
 	}
 	
+	/**
+	 * Initializes m_listScroll.
+	 * Contains m_jList.	
+	 * 	
+	 * @return javax.swing.JScrollPane	
+	 * @throws Exception fail on get JList
+	 */
 	private JScrollPane getM_jListScrollPane() throws Exception {
 		if (m_listScroll == null) {
 			m_listScroll = new JScrollPane(getM_jList());
@@ -94,7 +106,7 @@ public class CUserReport extends JPanel implements ActionListener, ItemListener 
 	}
 
 	/**
-	 * This method initializes m_jButton_Back	
+	 * Initializes m_jButton_Back.	
 	 * 	
 	 * @return javax.swing.JButton	
 	 */
@@ -109,12 +121,16 @@ public class CUserReport extends JPanel implements ActionListener, ItemListener 
 		return m_jButton_Back;
 	}
 
+	/**
+	 * Set panel visible(false).
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		this.setVisible(false);
 	}
 
 	/**
-	 * This method initializes m_jComboBox_years	
+	 * Initializes m_jComboBox_years.
+	 * Sets years user made his purchases at. 	
 	 * 	
 	 * @return javax.swing.JComboBox	
 	 */
@@ -130,6 +146,10 @@ public class CUserReport extends JPanel implements ActionListener, ItemListener 
 		return m_jComboBox_years;
 	}
 
+	/**
+	 *  Finds the latest year user made his purchase at.
+	 *  Store latest year in variable. 
+	 */
 	private void setMaxYear()
 	{
 		String max = m_years.get(0);
@@ -143,6 +163,11 @@ public class CUserReport extends JPanel implements ActionListener, ItemListener 
 		m_lastYear = max;
 	}
 	
+	
+	/**
+	 * Handle the catched event on Years ComboBox.
+	 * Refresh list on selected item change. 
+	 */
 	public void itemStateChanged(ItemEvent ie) {
 		if(ie.getSource() == m_jComboBox_years)
 		{

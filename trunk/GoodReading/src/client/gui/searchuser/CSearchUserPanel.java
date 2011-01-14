@@ -22,6 +22,11 @@ import client.core.CLibraryManager;
 
 import common.data.CUser;
 
+/**
+ * 
+ * This panel designed to give library manager the ability to search users accounts
+ */
+
 public class CSearchUserPanel extends JPanel implements ActionListener{
 
 	/**
@@ -43,13 +48,15 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 	private JTextField jTextField_LastName = null;
 	private JButton jButton_back = null;
 	private JButton jButton_SearchUser = null;
-	/**
-	 * Saves the last choice of the user
-	 */
-	private SUDecision m_lastChoice = null;  //  @jve:decl-index=0:
+	/** Saves the last choice of the user */
+	private SUDecision m_lastChoice = null;  
+	/** This variable hold the list of searched users */
 	private static LinkedList<CUser> result = null;
 
 
+	/**
+	 * This is the default constructor
+	 */
 	public CSearchUserPanel() {
 		super();
 		initialize();
@@ -57,7 +64,7 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 
 	
 	/**
-	 * This method initializes this
+	 * initialize() initializes this class
 	 * 
 	 * @return void
 	 */
@@ -107,7 +114,9 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 
 
 	/**
-	 * @return the m_lastChoice
+	 * Get the last button that pressed on this panel
+	 * 
+	 * @return the m_lastChoice  is a button that was pressed in this panel
 	 */
 	public SUDecision getlastChoice() {
 		return m_lastChoice;
@@ -115,6 +124,8 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 
 
 	/**
+	 * Set the last button that pressed on this panel
+	 * 
 	 * @param m_lastChoice the m_lastChoice to set
 	 */
 	public void setlastChoice(SUDecision m_lastChoice) {
@@ -123,6 +134,7 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 
 
 	/**
+	 * Returns the variable that holds the list of searched users
 	 * @return the result
 	 */
 	static public LinkedList<CUser> getResult() {
@@ -224,7 +236,11 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 	}
 
 
-	@Override
+	/**
+	 *  Handle the catched action on the panel. 
+	 *  
+	 *  @param ae ActionEvent
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		if(source == jButton_back)
@@ -236,10 +252,6 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 		{
 			try {
 				result = ((CLibraryManager)AUser.getInstance()).searchUser(jTextField_UserName.getText(),jTextField_UserID.getText(),jTextField_FirstName.getText(),jTextField_LastName.getText());
-				//CUser stub = new CUser("Daniel", "Mishne", 1 , "daniel", "29/09/1984","Haifa",new String[0] ,EActor.LibraryManager, false);
-				//LinkedList <CUser> stubll = new LinkedList<CUser>();
-				//stubll.add(stub);
-				//result = stubll;
 				this.setlastChoice(SUDecision.SEARCHUSER);
 				this.setVisible(false);
 			    } catch (Exception e) {
@@ -250,6 +262,11 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 	}
 	
 	
+	/**
+	 * Refresh the LinkedList of searched users in static variable.
+	 *  
+	 * @throws Exception Search action fail
+	 */
 	public void research() throws Exception
 	{
 		result = ((CLibraryManager)AUser.getInstance()).searchUser(jTextField_UserName.getText(),jTextField_UserID.getText(),jTextField_FirstName.getText(),jTextField_LastName.getText());
