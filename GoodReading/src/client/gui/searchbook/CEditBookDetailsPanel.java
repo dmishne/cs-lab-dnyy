@@ -29,7 +29,18 @@ import common.data.CBook;
 
 public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 
+	/**
+	 * Defines the available operations that can cause removing this panel
+	 */
+	public enum EBDDecision
+	{
+		BACK,SAVE,DELETEBOOK,EDITTOPICS
+	}
+	
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Saves the last choice of the user
+	 */
 	private EBDDecision m_lastChoice;
 	private JLabel jLabel_Title = null;
 	private JLabel jLabel_Auhtor = null;
@@ -74,15 +85,6 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	private static JList m_lastList = null;
 	private JButton jButton_setTopics = null;
 	private static String[] m_topics = null;
-	
-	
-	
-
-	public enum EBDDecision
-	{
-		BACK,SAVE,DELETEBOOK,EDITTOPICS
-	}
-	
 	
 	
 	

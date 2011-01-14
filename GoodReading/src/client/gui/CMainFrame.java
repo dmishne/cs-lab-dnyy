@@ -45,6 +45,10 @@ import client.gui.searchuser.CShowUserListPanel;
 import client.gui.searchuser.CUserDetailsPanel;
 import client.gui.searchuser.CUserReport;
 
+/**
+ * CMainFrame is the main frame and the only JFrame of the Client GUI.
+ * CMainFrame contains(not at the same time) all the necessary panels.
+ */
 public class CMainFrame extends JFrame implements ActionListener,ComponentListener{
 
 	private static final long serialVersionUID = 1L;
@@ -75,13 +79,17 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	private CShowReviewPanel GUI_CShowReviewPanel = null;
 	private CEditBookDetailsPanel GUI_CEditBookDetailsPanel = null;
 	private CManageTopicsPanel GUI_CManageTopicsPanel = null;
-	private msgChecker m_msgchk = null;
 	private CBookReport GUI_CBookReport = null;
 	private CUserReport GUI_CUserReport = null;
 	private CPurchaseReceipt GUI_CPurchaseReceipt = null;
+	/**
+	 * Save a thread which check if there's any new review every 1 minute.
+	 */
+	private msgChecker m_msgchk = null;
+	
 	
 	/**
-	 * This is the default constructor
+	 * CMainFrame() is the default constructor
 	 */
 	public CMainFrame() {
 		super();
@@ -89,7 +97,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	}
 	
 	/**
-	 * This method initializes this
+	 * initialize initializes this class
 	 * 
 	 * @return void
 	 */
@@ -143,8 +151,14 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	}
 	
 	/*--------------DO NOT TO IMPLEMENT---------------*/
-	public void componentMoved(ComponentEvent arg0) {}
-	public void componentResized(ComponentEvent arg0) {}
+	/**
+	 * Does Nothing
+	 */
+	public void componentMoved(ComponentEvent ce) {}
+	/**
+	 * Does Nothing
+	 */
+	public void componentResized(ComponentEvent ce) {}
 	/*------------------------------------------------*/
 
 	/**
@@ -209,9 +223,13 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		return m_jMenuItem_Help_About;
 	}
 	
+	/**
+	 * componentHidden responsible for changing between panels.
+	 * Its listen to panels, when ever panel make itself invisible
+	 * componentHidden knows about it and show a different, relevant panel instead.
+	 * @param ceh ComponentEvent
+	 */
 	public void componentHidden(ComponentEvent ceh){
-		//Think about changing to switch//
-		
 		Object source = ceh.getSource();
 		try
 		{
@@ -247,9 +265,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 						m_msgchk.Stop();
 						getM_jMenu_messages().setVisible(false);
 						getM_jMenu_messages().setEnabled(false);
-					}
-					
-					
+					}				
 				}
 				else if(GUI_CMainMenuPanel.getLastChoice() == CMainMenuPanel.EMMDecision.ARRANGE)
 				{
@@ -639,10 +655,16 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		validate();		
 	}
 
+	/**
+	 * Does Nothing
+	 */
 	public void componentShown(ComponentEvent ces) {
-		
 	}
 	
+	/**
+	 * actionPerformed listen to any action performed in the MenuBar and
+	 * acts depending on the pressed menu.
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		if(source == m_jMenuItem_Help_About)
@@ -1016,6 +1038,11 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		return GUI_CEditBookDetailsPanel;
 	}
 	
+	/**
+	 * This method initializes getGUI_CManageTopicsPanel
+	 * @param from From which panel ManageTopicsPanel was called.
+	 * @return CManageTopicsPanel
+	 */
 	private CManageTopicsPanel getGUI_CManageTopicsPanel(String from) {
 		if (GUI_CManageTopicsPanel == null) {
 			GUI_CManageTopicsPanel = new CManageTopicsPanel(from);
@@ -1028,25 +1055,32 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		return GUI_CManageTopicsPanel;
 	}
 	
-	
-	
 	/**
 	 * Class msgChecker
 	 * Extends Thread
 	 * 
-	 * Description: This thread class will check and update
+	 * Description: This nested thread class will check and update
 	 * if there any new messages. 
 	 */
 	class msgChecker extends Thread
 	{
 		boolean checker;
 		
+		/**
+		 * msgChecker() is a constructor. 
+		 */
 		public msgChecker()
 		{
 			super();
 			checker = true;
 		}
 		
+		/**
+		 * This method runs in separated thread and checks every 1 minute
+		 * if there's any new reviews.
+		 * This method runs only if the logged in user is a Librarian or
+		 * a Library Manager.
+		 */
 		public void run()
 		{
 			while(checker)
@@ -1063,6 +1097,9 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			}
 		}
 		
+		/**
+		 * Stop the running thread.
+		 */
 		public void Stop()
 		{
 			checker = false;

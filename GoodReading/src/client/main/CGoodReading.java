@@ -7,21 +7,30 @@ import javax.swing.UIManager.LookAndFeelInfo;
 public class CGoodReading{
 
 	/**
+	 * Application Version
+	 */
+	final public static int Version = 1;
+	/**
+	 * Application Revision
+	 */
+	final public static int Revision = 0;
+
+	/**
+	 * Client Application Entry Point.
 	 * @param args
 	 */
-	final public static int Version = 0;
-	final public static int Revision = 1;
-
 	public static void main(String[] args) {
 
-		// initialize OS look and feel
 		initLookAndFeel();
 		client.gui.CMainFrame.setDefaultLookAndFeelDecorated(true); // Set Graphics to be similar to OS.
 		client.gui.CMainFrame mainFrame = new client.gui.CMainFrame();
 		mainFrame.setVisible(true);
 	}
 	
-	/* Look And Feel Initialization */
+	/**
+	 *  Look And Feel Initialization 
+	 *  Initialization look and feel to Nimbus.  
+	 */
 	static void initLookAndFeel()
 	{
 		try {

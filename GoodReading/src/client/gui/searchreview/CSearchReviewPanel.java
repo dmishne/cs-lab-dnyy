@@ -23,7 +23,9 @@ import common.data.CBookReview;
 
 public class CSearchReviewPanel extends JPanel implements ActionListener{
 
-
+	/**
+	 * Defines the available operations that can cause removing this panel
+	 */
 	public enum SRPDecision{
 		BACK, SEARCH
 	}
@@ -38,6 +40,9 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 	private JTextField m_jTextField_Author_SBP = null;
 	private JTextField m_jTextField_keyphrase_SBP = null;
 	private JButton m_jButton_Search_SRP = null;
+	/**
+	 * Saves the last choice of the user
+	 */
 	private SRPDecision m_lastChoice = SRPDecision.BACK;  //  @jve:decl-index=0:
 	
 	static private LinkedList<CBookReview> m_reviewsList = null;

@@ -23,6 +23,14 @@ import client.gui.CustomLabel;
 
 public class COrderBookPanel extends JPanel implements ActionListener{
 
+	/**
+	 * Defines the available operations that can cause removing this panel
+	 */
+	public enum EOBDecision
+	{
+		BACK,PURCHASE,SHOWRECEIPT
+	}
+	
 	private static final long serialVersionUID = 1L;
 	private JLabel jLabel_screenTitle = null;
 	private JButton jButton_Back = null;
@@ -40,6 +48,9 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 	private JLabel jLabel_labelPrice = null;
 	private JLabel jLabel_choosePayment = null;
 	private JLabel jLabel_chooseFile = null;
+	/**
+	 * Saves the last choice of the user
+	 */
 	private EOBDecision m_lastChoice = null;  
 	private static String chosenFileType = null;  //  @jve:decl-index=0:
 	private static String m_receipt = null;	
@@ -53,11 +64,6 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 		initialize();
 	}
 	
-	
-	public enum EOBDecision
-	{
-		BACK,PURCHASE,SHOWRECEIPT
-	}
 
 	/**
 	 * This method initializes this

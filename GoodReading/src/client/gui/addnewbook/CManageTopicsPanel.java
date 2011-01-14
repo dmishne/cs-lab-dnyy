@@ -28,6 +28,20 @@ import client.gui.searchbook.CEditBookDetailsPanel;
 
 public class CManageTopicsPanel extends JPanel implements ActionListener,ItemListener, ListSelectionListener{
 
+	/**
+	 * Defines the available operations that can cause removing this panel
+	 */
+	public enum MTPDecision
+	{
+		SET,BACK
+	}
+	
+	
+	public enum MTPfrom
+	{
+		ADDBOOK,EDITBOOK
+	}
+	
 	private static final long serialVersionUID = 1L;
 	private JLabel jLabel_main_label = null;
 	private JScrollPane jScrollPane_ChoosenTopics_MT = null;
@@ -48,16 +62,12 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 	private MTPfrom from = null;
 	private boolean m_flag = false;
 	private int selection = 0;
+	/**
+	 * Saves the last choice of the user
+	 */
 	private MTPDecision m_lastChoice = null;  //  @jve:decl-index=0:
 	
-	public enum MTPDecision
-	{
-		SET,BACK
-	}
-	public enum MTPfrom
-	{
-		ADDBOOK,EDITBOOK
-	}
+	
 	
 
 	/**

@@ -15,7 +15,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
-
+/**
+ * CLoginPanel is a Login Panel
+ * With this panel, the user can login with his username and password.
+ */
 public class CLoginPanel extends JPanel implements ActionListener, KeyListener{
 
 	private static final long serialVersionUID = 1L;
@@ -26,7 +29,7 @@ public class CLoginPanel extends JPanel implements ActionListener, KeyListener{
 	private JButton m_jButton_Login = null;
 	
 	/**
-	 * This is the default constructor
+	 * CLoginPanel() is the default constructor
 	 */
 	public CLoginPanel() {
 		super();
@@ -34,7 +37,7 @@ public class CLoginPanel extends JPanel implements ActionListener, KeyListener{
 	}
 
 	/**
-	 * This method initializes this
+	 * initialize() initializes this class
 	 * 
 	 * @return void
 	 */
@@ -61,7 +64,10 @@ public class CLoginPanel extends JPanel implements ActionListener, KeyListener{
 	}
 	
 	
-	
+	/**
+	 * keyPressed() checks if Enter was pressed, is yes, trying to log in.
+	 * @param e KeyEvent
+	 */
 	public void keyPressed(KeyEvent e) {
 		char[] inputPasswordField =  m_jPasswordField_Password.getPassword();
 		String Pass = String.valueOf(inputPasswordField, 0, inputPasswordField.length);
@@ -108,7 +114,8 @@ public class CLoginPanel extends JPanel implements ActionListener, KeyListener{
 
 	/**
 	 * This method initializes m_jButton_Login	
-	 * 	
+	 * Pressing on m_jButton_Login will cause trying to login
+	 * using username and password. 	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_Login() {
@@ -121,8 +128,9 @@ public class CLoginPanel extends JPanel implements ActionListener, KeyListener{
 		return m_jButton_Login;
 	}
 
-	/* 
-	 * This method responsible on the actions occur in this container
+	/** 
+	 * This method responsible on the actions occur in this panel
+	 * Login: try to login using given username and password.
 	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
@@ -142,15 +150,15 @@ public class CLoginPanel extends JPanel implements ActionListener, KeyListener{
 		}
 	}
 
-	@Override
+	/**
+	 * Does Nothing
+	 */
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+	/**
+	 * Does Nothing
+	 */
+	public void keyTyped(KeyEvent e) {	
 	}
 }  //  @jve:decl-index=0:visual-constraint="44,10"

@@ -25,6 +25,9 @@ import common.data.CBook;
 
 public class CSearchResultPanel extends JPanel implements ActionListener {
 
+	/**
+	 * Defines the available operations that can cause removing this panel
+	 */
 	public enum SRPDecision
 	{
 		BACK,DETAILS
@@ -41,6 +44,9 @@ public class CSearchResultPanel extends JPanel implements ActionListener {
 	private JLabel m_jLabel_SRP_title = null;
 	private JButton m_jButton_ShowDetails_SRP = null;
 	
+	/**
+	 * Saves the last choice of the user
+	 */
 	private SRPDecision m_lastChoice = SRPDecision.BACK;  //  @jve:decl-index=0:
 	
 	

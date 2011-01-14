@@ -28,6 +28,14 @@ import common.data.CUser;
 
 public class CUserDetailsPanel extends JPanel implements ActionListener,ItemListener{
 
+	/**
+	 * Defines the available operations that can cause removing this panel
+	 */
+	public enum UDDecision
+	{
+		BACK,SHOWREPORT,SAVE
+	}
+	
 	private static final long serialVersionUID = 1L;
 	private JButton jButton_Edit_UD = null;
 	private JButton jButton_Back_UD = null;
@@ -59,13 +67,11 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	private JCheckBox jCheckBox_suspend = null;
 	private boolean edit_flag;
 	private CUser chosenUser=null;
+	/**
+	 * Saves the last choice of the user
+	 */
 	private UDDecision m_lastChoice = null;
 	
-	
-	public enum UDDecision
-	{
-		BACK,SHOWREPORT,SAVE
-	}
 	
 	/**
 	 * This is the default constructor

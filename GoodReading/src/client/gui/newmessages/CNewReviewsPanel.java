@@ -21,21 +21,28 @@ import common.data.*;
 
 public class CNewReviewsPanel extends JPanel implements ActionListener{
 
+	/**
+	 * Defines the available operations that can cause removing this panel
+	 */
+	public enum NRPDecision
+	{
+		BACK,SHOWMESSAGE
+	}
+
 	private static final long serialVersionUID = 1L;
 	private JScrollPane jScrollPane_NewReviewsScrolPane = null;
 	private JLabel jLabel_menuLabel_NR = null;
 	private JButton jButton_back_NR = null;
 	private JButton jButton_ShowReview_NR = null;
 	private JList jList_NewReviewsList = null;
+	/**
+	 * Saves the last choice of the user
+	 */
 	private NRPDecision m_lastChoice = null;
 	private LinkedList<CBookReview> m_messages = null;
 	private static CBookReview m_chosen_message = null;
 	
-	public enum NRPDecision
-	{
-		BACK,SHOWMESSAGE
-	}
-
+	
 	/**
 	 * This is the default constructor
 	 */

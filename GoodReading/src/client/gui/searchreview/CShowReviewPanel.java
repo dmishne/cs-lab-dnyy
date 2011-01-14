@@ -24,6 +24,9 @@ import client.gui.newmessages.CNewReviewsPanel;
 
 public class CShowReviewPanel extends JPanel implements ActionListener{
 
+	/**
+	 * Defines the available operations that can cause removing this panel
+	 */
 	public enum SRPDecision
 	{
 		BACK,DELETEREVIEW,SAVE
@@ -52,6 +55,9 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	private JLabel jLabel = null;
 	private AUser user = null;
 	private boolean E_flag = false;
+	/**
+	 * Saves the last choice of the user
+	 */
 	private SRPDecision m_lastChoice = null;
 	private SRPFrom m_fromWhere = null;
 	private CBookReview review = null;

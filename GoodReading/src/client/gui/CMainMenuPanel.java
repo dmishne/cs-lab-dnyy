@@ -15,8 +15,14 @@ import client.core.AUser;
 import client.core.EActor;
 import java.awt.Point;
 
+/**
+ * CMainMenuPanel defines the panel of the Main Menu Screen.
+ */
 public class CMainMenuPanel extends JPanel implements ActionListener {
 
+	/**
+	 * Defines the available operations that can cause removing this panel
+	 */
 	public enum EMMDecision{
 		LOGOUT,SEARCHBOOK,SEARCHREVIEW,ARRANGE,NEWMSGS,ADDNEWBOOK,REPORT,SEARCHUSER
 	}
@@ -29,11 +35,14 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	private JButton m_jButton_SearchUser_MM = null;
 	
 
-	
+	/**
+	 * Saves the last choice of the user
+	 */
 	private EMMDecision m_lastChoice = EMMDecision.LOGOUT;  //  @jve:decl-index=0:
 	private JButton m_jButton_ArrangePayment = null;
 	private JButton m_jButton_SearchReview_MM = null;
 	private JLabel m_jLabel_Greeting = null;
+	
 	/**
 	 * This is the default constructor
 	 */
@@ -42,7 +51,10 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 		initialize();
 	}
 
-	
+	/**
+	 * Initialize greeting message for User.
+	 * @throws Exception on User not connected
+	 */
 	public void initGreeting() throws Exception
 	{
 		m_jLabel_Greeting.setText("Hey " + AUser.getInstance().getFirstName() + " " + AUser.getInstance().getLastName() + ", Privilege: " + AUser.getInstance().getPrivilege().toString());
@@ -75,7 +87,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 
 	/**
 	 * This method initializes m_jButton_Logout	
-	 * 	
+	 * Pressing on this button cause to logout an returning to login screen.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_Logout() {
@@ -90,7 +102,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 
 	/**
 	 * This method initializes m_jButton_SearchBook_MM	
-	 * 	
+	 * Pressing on this button cause to switch to Search Book panel.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_Search_MM() {
@@ -105,7 +117,8 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 
 	/**
 	 * This method initializes m_jButton_NewMsgs_MM	
-	 * 	
+	 * Pressing on this button cause to switch to New Messages panel.
+	 * Button visible and enable only to Librarian and LibraryManager.	
 	 * @return javax.swing.JButton	
 	 * @throws Exception 
 	 */
@@ -127,7 +140,8 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 
 	/**
 	 * This method initializes m_jButton_AddNewBook_MM	
-	 * 	
+	 * Pressing on this button cause to switch to Add New Book panel.
+	 * Button visible and enable only to Librarian and LibraryManager.
 	 * @return javax.swing.JButton	
 	 * @throws Exception 
 	 */
@@ -150,15 +164,22 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 
 	/**
 	 * This method initializes m_jButton_ArrangePayment	
-	 * 	
+	 * Pressing on this button cause to switch to Arrange Payment panel.
+	 * Button visible and enable only to User and Reader.
 	 * @return javax.swing.JButton	
+	 * @throws Exception 
 	 */
-	private JButton getM_jButton_ArrangePayment() {
+	private JButton getM_jButton_ArrangePayment() throws Exception {
 		if (m_jButton_ArrangePayment == null) {
 			m_jButton_ArrangePayment = new JButton();
 			m_jButton_ArrangePayment.setBounds(new Rectangle(524, 18, 148, 34));
 			m_jButton_ArrangePayment.setText("Arrange Payment");
 			m_jButton_ArrangePayment.addActionListener(this);
+		}
+		if(AUser.getInstance().getPrivilege() == EActor.Librarian ||
+		   AUser.getInstance().getPrivilege() == EActor.LibraryManager)	{
+			m_jButton_ArrangePayment.setVisible(false);
+			m_jButton_ArrangePayment.setEnabled(false);
 		}
 		return m_jButton_ArrangePayment;
 	}
@@ -166,7 +187,8 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	
 	/**
 	 * This method initializes m_jButton_SearchUser_MM	
-	 * 	
+	 * Pressing on this button cause to switch to Search User panel.
+	 * Button visible and enable only to Library Manager.
 	 * @return javax.swing.JButton	
 	 * @throws Exception 
 	 */
@@ -188,7 +210,10 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 		return m_jButton_SearchUser_MM;
 	}
 
-
+	/**
+	 * actionPerformed handle responsible for action performed.
+	 * @param ae ActionEvent
+	 */
 	public void actionPerformed(ActionEvent ae)
 	{
 		Object source = ae.getSource();
@@ -230,17 +255,25 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * 
+	 * @param m_lastChoice
+	 */
 	public void setLastChoice(EMMDecision m_lastChoice) {
 		this.m_lastChoice = m_lastChoice;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public EMMDecision getLastChoice() {
 		return m_lastChoice;
 	}
 
 	/**
 	 * This method initializes m_jButton_SearchReview_MM	
-	 * 	
+	 * Pressing on this button cause to switch to Search Review panel.
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_SearchReview_MM() {
