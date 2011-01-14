@@ -143,7 +143,8 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 
 
 	/**
-	 * This method initializes jTextField_UserName	
+	 * This method initializes jTextField_UserName.
+	 * Field to add the UserName of user for search.	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
@@ -159,7 +160,7 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 
 	/**
 	 * This method initializes jTextField_UserID	
-	 * 	
+	 * Field to add the UserID of user for search.	
 	 * @return javax.swing.JTextField	
 	 */
 	private JTextField getJTextField_UserID() {
@@ -174,7 +175,7 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 
 	/**
 	 * This method initializes jTextField_FirstName	
-	 * 	
+	 * Field to add the User firdt name of user for search.	
 	 * @return javax.swing.JTextField	
 	 */
 	private JTextField getJTextField_FirstName() {
@@ -189,7 +190,7 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 
 	/**
 	 * This method initializes jTextField_LastName	
-	 * 	
+	 * 	Field to add the User last name of user for search.
 	 * @return javax.swing.JTextField	
 	 */
 	private JTextField getJTextField_LastName() {
@@ -203,8 +204,8 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 
 
 	/**
-	 * This method initializes jButton_back	
-	 * 	
+	 * This method initializes jButton_back.	
+	 * Return to previous panel.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_back() {
@@ -220,7 +221,8 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 
 
 	/**
-	 * This method initializes jButton_SearchUser	
+	 * This method initializes jButton_SearchUser.
+	 * Press this button to start the search of the user by added parameters.	
 	 * 	
 	 * @return javax.swing.JButton	
 	 */

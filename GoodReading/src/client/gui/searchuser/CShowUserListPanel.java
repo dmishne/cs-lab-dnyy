@@ -44,7 +44,7 @@ public class CShowUserListPanel extends JPanel implements ActionListener{
 	private JButton jButton_ShowUserDetails_UL = null;
 	private static CUser m_chosenUser = null;
 	/** Saves the last choice of the user */
-	private ULPDecision m_lastChoice = null;
+	private ULPDecision m_lastChoice = null;  //  @jve:decl-index=0:
 	private LinkedList<CUser> usersList = null;  
 
 	
@@ -105,7 +105,8 @@ public class CShowUserListPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jScrollPane_UL	
+	 * This method initializes jScrollPane_UL.
+	 * Contains jList_UL. 	
 	 * 	
 	 * @return javax.swing.JScrollPane	
 	 */
@@ -121,7 +122,8 @@ public class CShowUserListPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jList_UL	
+	 * This method initializes jList_UL.
+	 * Presents the list of found users from previous panel search.	
 	 * 	
 	 * @return javax.swing.JList	
 	 */
@@ -146,8 +148,8 @@ public class CShowUserListPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jButton_back_UL	
-	 * 	
+	 * This method initializes jButton_back_UL.	
+	 * Press this button to return the previous panel.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_back_UL() {
@@ -162,7 +164,8 @@ public class CShowUserListPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jButton_ShowUserDetails_UL	
+	 * This method initializes jButton_ShowUserDetails_UL.
+	 * Press this button to show the details of chosen user.	
 	 * 	
 	 * @return javax.swing.JButton	
 	 */

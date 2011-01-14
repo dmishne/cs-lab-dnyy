@@ -202,7 +202,8 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jTextField_title_SR, with compatible review title	
+	 * This method initializes jTextField_title_SR, 
+	 * with compatible review title.	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
@@ -218,7 +219,8 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jTextField_reviewAuthor_SR, with compatible review author	
+	 * This method initializes jTextField_reviewAuthor_SR,
+	 * with compatible review author.	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
@@ -233,7 +235,8 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jTextField_bookName_SR, with compatible reviewed book name	
+	 * This method initializes jTextField_bookName_SR, 
+	 * with compatible reviewed book name.	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
@@ -266,8 +269,8 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jButton_Back_SR	
-	 * 	
+	 * This method initializes jButton_Back_SR.	
+	 * Return to previous panel.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_Back_SR() {
@@ -283,6 +286,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 
 	/**
 	 * This method initializes jButton_Save_SR.
+	 * Press this button to save the changes made to this review.
 	 * Presented only for Librarian or Library Manager.	
 	 * 	
 	 * @return javax.swing.JButton	
@@ -330,7 +334,8 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jTextArea_review_SR, with the review text.	
+	 * This method initializes jTextArea_review_SR, 
+	 * with the review text.	
 	 * 	
 	 * @return javax.swing.JTextArea	
 	 */
@@ -346,7 +351,8 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	
 	
 	/**
-	 * This method initializes jButton_DeleteReview_SR	
+	 * This method initializes jButton_DeleteReview_SR.
+	 * Press this button to delete completely this review from DB.	
 	 * Presented only for Librarian or Library Manager.	
 	 * 
 	 * @return javax.swing.JButton	
@@ -368,7 +374,8 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jButton_editReview_SR	
+	 * This method initializes jButton_editReview_SR.
+	 * Press this button to enable the edit options this panel provide.	
 	 * Presented only for Librarian or Library Manager.	
 	 * 
 	 * @return javax.swing.JButton	
