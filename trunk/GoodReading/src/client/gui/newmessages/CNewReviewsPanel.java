@@ -19,6 +19,9 @@ import javax.swing.JList;
 import client.core.*;
 import common.data.*;
 
+/**
+ * CNewReviewsPanel defines the New Reviews Panel.
+ */
 public class CNewReviewsPanel extends JPanel implements ActionListener{
 
 	/**
@@ -39,12 +42,18 @@ public class CNewReviewsPanel extends JPanel implements ActionListener{
 	 * Saves the last choice of the user
 	 */
 	private NRPDecision m_lastChoice = null;
+	/**
+	 * Save list of new BookReviews
+	 */
 	private LinkedList<CBookReview> m_messages = null;  //  @jve:decl-index=0:
+	/**
+	 * Chosen book review to represent.
+	 */
 	private static CBookReview m_chosen_message = null;
 	
 	
 	/**
-	 * This is the default constructor
+	 * CNewReviewsPanel is the default constructor
 	 */
 	public CNewReviewsPanel() {
 		super();
@@ -52,7 +61,7 @@ public class CNewReviewsPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes this
+	 * initialize initializes this class
 	 * 
 	 * @return void
 	 */
@@ -126,7 +135,7 @@ public class CNewReviewsPanel extends JPanel implements ActionListener{
 
 	/**
 	 * This method initializes jButton_back_NR	
-	 * 	
+	 * Pressing on this button will return to the Main Menu.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_back_NR() {
@@ -142,7 +151,8 @@ public class CNewReviewsPanel extends JPanel implements ActionListener{
 
 	/**
 	 * This method initializes jButton_ShowReview_NR	
-	 * 	
+	 * Pressing on this button will change panels and show the chosen review,
+	 * unless no review has been chosen.
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_ShowReview_NR() {
@@ -188,7 +198,10 @@ public class CNewReviewsPanel extends JPanel implements ActionListener{
 		return jList_NewReviewsList;
 	}
 
-	@Override
+	/**
+	 * actionPerformed handle responsible for action performed.
+     * @param ae ActionEvent
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		if(source == jButton_back_NR)

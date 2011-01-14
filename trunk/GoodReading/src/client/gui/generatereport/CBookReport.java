@@ -24,19 +24,32 @@ import client.core.AUser;
 import client.core.CLibraryManager;
 import client.gui.searchbook.CBookDetailPanel;
 
+/**
+ * CBookReport define the panel which represents the Books Histogram.
+ */
 public class CBookReport extends JPanel implements ActionListener, ItemListener {
 
 	private static final long serialVersionUID = 1L;
 	private JButton m_jButton_back = null;
-
+	
+	/**
+	 *  String of names of all the months of the year
+	 */
 	private final String[] m_months = {"Jan","Feb","Mars","Apr","May","June","July","Aug","Sep","Oct","Nov","Dec"};
 	private JComboBox m_jComboBox_Years = null;
+	
+	/**
+	 * Vector of available years in database.
+	 */
 	private Vector<String> m_years = null;  //  @jve:decl-index=0:
+	/**
+	 * Save the most recent year. 
+	 */
 	private String m_lastYear;
 	private ChartPanel m_chart = null;
 	
 	/**
-	 * This is the default constructor
+	 * CBookReport() is the default constructor
 	 * @throws Exception 
 	 */
 	public CBookReport() throws Exception {
@@ -45,7 +58,7 @@ public class CBookReport extends JPanel implements ActionListener, ItemListener 
 	}
 
 	/**
-	 * This method initializes this
+	 * initialize() initializes this class
 	 * 
 	 * @return void
 	 * @throws Exception 
@@ -62,7 +75,7 @@ public class CBookReport extends JPanel implements ActionListener, ItemListener 
 
 	/**
 	 * This method initializes m_jButton_back	
-	 * 	
+	 * Pressing on this button change the panel to the previous one.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_back() {
@@ -76,6 +89,12 @@ public class CBookReport extends JPanel implements ActionListener, ItemListener 
 		return m_jButton_back;
 	}
 	
+	
+	/**
+	 * Build, year relevant Histogram panel.
+	 * @return Histogram panel.
+	 * @throws Exception
+	 */
 	private ChartPanel getChart() throws Exception
 	{
 		if(m_chart == null)
@@ -102,6 +121,10 @@ public class CBookReport extends JPanel implements ActionListener, ItemListener 
 		return m_chart;
 	}
 
+	/**
+	 * On any button pressing from this panel, the panel changes to the
+	 * previous one.
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		this.setVisible(false);
 	}
@@ -124,6 +147,9 @@ public class CBookReport extends JPanel implements ActionListener, ItemListener 
 		return m_jComboBox_Years;
 	}
 
+	/**
+	 * Find and setting the most recent year.
+	 */
 	private void setMaxYear()
 	{
 		String max = m_years.get(0);
@@ -137,6 +163,11 @@ public class CBookReport extends JPanel implements ActionListener, ItemListener 
 		m_lastYear = max;
 	}
 
+	/**
+	 * On changing the year from the years combobox, this method is called.
+	 * itemStateChanged updates the chart to the relevent year.
+	 * @param ie ItemEvent
+	 */
 	public void itemStateChanged(ItemEvent ie) {
 		if(ie.getItemSelectable() == m_jComboBox_Years)
 		{
@@ -152,6 +183,4 @@ public class CBookReport extends JPanel implements ActionListener, ItemListener 
 			
 		}
 	}
-	
-	
 }
