@@ -22,7 +22,6 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import client.common.CClientConnector;
 import client.core.AUser;
 import client.core.CLibrarian;
 import client.gui.searchbook.CEditBookDetailsPanel;
