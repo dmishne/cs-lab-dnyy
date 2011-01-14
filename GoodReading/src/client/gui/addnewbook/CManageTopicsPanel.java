@@ -26,6 +26,10 @@ import client.core.AUser;
 import client.core.CLibrarian;
 import client.gui.searchbook.CEditBookDetailsPanel;
 
+/**
+ * CManageTopicsPanel defines the panes which enables adding topic and subtopics to database
+ * and assigning topics and subtopics to books
+ */
 public class CManageTopicsPanel extends JPanel implements ActionListener,ItemListener, ListSelectionListener{
 
 	/**
@@ -36,7 +40,9 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 		SET,BACK
 	}
 	
-	
+	/**
+	 * Defines the panel that has enabled this panel
+	 */
 	public enum MTPfrom
 	{
 		ADDBOOK,EDITBOOK
@@ -57,10 +63,22 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 	private JButton jButton_Set_MT = null;
 	private JButton jButton_RemoveFromList_MT = null;
 	private DefaultListModel listModel = null;
+	/**
+	 * m_last save the String representation of the previous panel.
+	 */
 	private String m_last = null;
+	/**
+	 * m_list save the list of chosen topics and subtopics.
+	 */
 	private static JList m_list = null;
+	/**
+	 * Saves the Enabling panel enum  
+	 */
 	private MTPfrom from = null;
 	private boolean m_flag = false;
+	/**
+	 * save last selected row on the chosen topics and subtopics list
+	 */
 	private int selection = 0;
 	/**
 	 * Saves the last choice of the user
@@ -71,7 +89,7 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 	
 
 	/**
-	 * This is the default constructor
+	 * CManageTopicsPanel is the default constructor
 	 */
 	public CManageTopicsPanel(String from) {
 		super();
@@ -80,7 +98,7 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 	}
 
 	/**
-	 * This method initializes this
+	 * Initialize() initializes this class
 	 * 
 	 * @return void
 	 */
@@ -271,7 +289,7 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 
 	/**
 	 * This method initializes jButton_add_Topic	
-	 * 	
+	 * Pressing on this button add the topic to the database.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_add_Topic() {
@@ -287,7 +305,7 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 
 	/**
 	 * This method initializes jButton_addSubTopic_MT	
-	 * 	
+	 * Pressing on this button add the subtopic to the database.
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_addSubTopic_MT() {
@@ -304,7 +322,7 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 
 	/**
 	 * This method initializes jButton_AddToList_MT	
-	 * 	
+	 * Pressing on this button add the topic/subtopic to the list of topics.
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_AddToList_MT() {
@@ -320,7 +338,8 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 
 	/**
 	 * This method initializes jButton_Back_MT	
-	 * 	
+	 * Pressing on this change the panel to the previous panel without 
+	 * save the list of topics.
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_Back_MT() {
@@ -336,7 +355,8 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 
 	/**
 	 * This method initializes jButton_Set_MT	
-	 * 	
+	 * Pressing on this change the panel to the previous panel with 
+	 * save the list of topics.
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_Set_MT() {
@@ -352,7 +372,7 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 
 	/**
 	 * This method initializes jButton_RemoveFromList_MT	
-	 * 	
+	 * Pressing on this button removes selected topic/subtopic to the list of topics.
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_RemoveFromList_MT() {
@@ -366,7 +386,12 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 		return jButton_RemoveFromList_MT;
 	}
 
-
+	/**
+	 * itemStateChanged() responsible on setting the relevant subtopics
+	 * in the subtopics combobox.
+	 * On choosing topic from the topics combobox, this method will load
+	 * the relevant subtopics.
+	 */
 	public void itemStateChanged(ItemEvent te) {
 		  if (te.getItemSelectable() == jComboBox_AvailTopics)
 		  {
@@ -399,7 +424,10 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 		  }
 	}
 
-	
+	/**
+	 * actionPerformed handle responsible for action performed.
+     * @param ae ActionEvent
+	 */
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 		if(source == jButton_add_Topic)
@@ -488,7 +516,9 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 	}
 
 	
-
+	/**
+	 * valueChanged saving the selected index in the list.
+	 */
 	public void valueChanged(ListSelectionEvent a) {
 		if(!a.getValueIsAdjusting())
 		{

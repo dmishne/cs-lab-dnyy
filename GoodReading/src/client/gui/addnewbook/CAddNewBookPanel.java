@@ -25,6 +25,9 @@ import client.core.AUser;
 import client.core.CLibrarian;
 import client.core.EActor;
 
+/**
+ * CAddNewBookPanel defines the panel of adding a new book
+ */
 public class CAddNewBookPanel extends JPanel implements ActionListener{
 
         
@@ -86,7 +89,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
        
        
         /**
-         * This is the default constructor
+         * CAddNewBookPanel is the default constructor
          */
         public CAddNewBookPanel() {
                 super();
@@ -94,7 +97,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
         }
 
         /**
-         * This method initializes this
+         * initialize initializes this class
          *
          * @return void
          */
@@ -445,7 +448,8 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 
         /**
          * This method initializes jButton_back
-         *      
+         * Pressing on this button cause to remove this panel and return
+         * to the previous panel.
          * @return javax.swing.JButton  
          */
         private JButton getJButton_back() {
@@ -461,7 +465,8 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 
         /**
          * This method initializes jButton_AddBook      
-         *      
+         * Pressing on this button cause to add a book with the given
+         * parameters to the database.      
          * @return javax.swing.JButton  
          */
         private JButton getJButton_AddBook() {
@@ -536,7 +541,10 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
                 return jCheckBox_doc;
         }
        
-       
+       /**
+        * actionPerformed handle responsible for action performed.
+        * @param ae ActionEvent
+        */
         public void actionPerformed(ActionEvent ae) {
                 Object source = ae.getSource();
                 String topics = "";
@@ -599,7 +607,11 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 		}
 		
 		
-		
+		/**
+		 * This method set the new JList to be shown, instead the current
+		 * JList regarding the topics.
+		 * @param nList JList of chosen topics and subtopics 
+		 */
 		public void setNewList(JList nList)
 		{
 			this.remove(jList_topics);
@@ -615,7 +627,7 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 
 		/**
 		 * This method initializes jButton_manageTopics	
-		 * 	
+		 * Pressing on this button cause the MainFrame to change panel to Manage Topics.
 		 * @return javax.swing.JButton	
 		 */
 		private JButton getJButton_manageTopics() {
