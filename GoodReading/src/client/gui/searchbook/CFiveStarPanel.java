@@ -1,6 +1,3 @@
-/**
- * 
- */
 package client.gui.searchbook;
 
 import java.awt.Graphics;
@@ -13,14 +10,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- * @author Daniel
- *
+ * This panel show 5 golden stars, empty or full.
  */
 public class CFiveStarPanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Array of BufferedImage which will save the relevant star images.
+	 */
 	private BufferedImage[] stars;
-	
+
+	/**
+	 * CFiveStarPanel - Constructor, load the relevant images.
+	 * @param numOfFullStars number of full stars to be presented.
+	 */
 	CFiveStarPanel(int numOfFullStars)
 	{
 		super();
@@ -46,6 +49,10 @@ public class CFiveStarPanel extends JPanel {
 		repaint();
 	}
 	
+	/**
+	 * paintComponent is an overloaded which in this
+	 * implementation responsible on painting the stars.
+	 */
 	public void paintComponent(Graphics g) {
 		int i=0;
 		if(stars != null)
@@ -59,4 +66,3 @@ public class CFiveStarPanel extends JPanel {
 	}
 
 }
-
