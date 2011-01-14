@@ -59,8 +59,6 @@ public class CShowUserListPanel extends JPanel implements ActionListener{
 
 	/**
 	 * This method initializes this class
-	 * 
-	 * @return void
 	 */
 	private void initialize(){
 		jLabel_main_label = new JLabel();

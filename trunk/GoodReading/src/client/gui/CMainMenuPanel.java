@@ -63,8 +63,6 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 	
 	/**
 	 * This method initializes this
-	 * 
-	 * @return void
 	 */
 	private void initialize() throws Exception{
 		m_jLabel_Greeting = new JLabel();
@@ -265,7 +263,7 @@ public class CMainMenuPanel extends JPanel implements ActionListener {
 
 	/**
 	 * 
-	 * @return
+	 * @return m_lastChoice
 	 */
 	public EMMDecision getLastChoice() {
 		return m_lastChoice;

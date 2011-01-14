@@ -49,8 +49,6 @@ public class CUserReport extends JPanel implements ActionListener, ItemListener 
 
 	/**
 	 * Initializes this class
-	 * 
-	 * @return void
 	 * @throws Exception fail to get parameters from core
 	 */
 	private void initialize() throws Exception {

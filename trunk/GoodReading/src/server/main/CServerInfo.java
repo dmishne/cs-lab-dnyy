@@ -38,8 +38,6 @@ public class CServerInfo extends JFrame {
 
 	/**
 	 * This method initializes this
-	 * 
-	 * @return void
 	 * @throws Exception 
 	 */
 	private void initialize(String name) throws Exception {

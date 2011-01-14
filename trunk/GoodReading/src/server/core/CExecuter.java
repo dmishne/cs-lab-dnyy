@@ -1399,7 +1399,7 @@ public class CExecuter implements Runnable
 
 	/**
 	 * function checks popularity of all books in DB and sets their ranks accordingly (in DB!)
-	 * @see startCheck()
+	 * @see #startCheck(int)
 	 */
 	public static void recheckPopularity()
 	{
@@ -1497,7 +1497,7 @@ public class CExecuter implements Runnable
 		 * 		Sleep for awhile( delay / 1000) seconds
 		 * 
 		 * @see java.lang.Thread#run()
-		 * @see server.core.CExecuter#startCheck()
+		 * @see server.core.CExecuter#startCheck(int)
 		 */
 		public void run()
 		{

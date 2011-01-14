@@ -62,8 +62,6 @@ public class CNewReviewsPanel extends JPanel implements ActionListener{
 
 	/**
 	 * initialize initializes this class
-	 * 
-	 * @return void
 	 */
 	private void initialize() {
 		jLabel_menuLabel_NR = new JLabel();
