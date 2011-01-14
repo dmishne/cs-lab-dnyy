@@ -21,6 +21,10 @@ import common.data.CBookReview;
 import client.core.*;
 import client.gui.newmessages.CNewReviewsPanel;
 
+/**
+ *This panel designed to present chosen review, 
+ *and to give the ability to edit this review only for Librarian and Library manager privileges.
+ */
 
 public class CShowReviewPanel extends JPanel implements ActionListener{
 
@@ -32,6 +36,12 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 		BACK,DELETEREVIEW,SAVE
 	}
 	
+	/**
+	 * Defines which panel was the previous panel.
+	 * The previous panel can be NewReviewsPanel or ReviewsListPanel
+	 * @see  CNewReviewsPanel
+	 * @see  CReviewsListPanel
+	 */
 	public enum SRPFrom
 	{
 		RLP,NRP
@@ -72,8 +82,11 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 		return m_fromWhere;
 	}
 
+	
 	/**
-	 * This is the default constructor
+	 * This is the default constructor.
+	 * Set the defenition of the previous panel from MainFrame and the chosen review accordingly.
+	 * @param from   the previous panel initials
 	 */
 	public CShowReviewPanel(String from) {
 		super();
@@ -95,9 +108,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes this
-	 * 
-	 * @return void
+	 * This method initializes this class
 	 */
 	private void initialize() {
 		jLabel = new JLabel();
@@ -158,6 +169,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	
 	
 	/**
+	 * Set the last button that pressed on this panel.
 	 * @param m_lastChoice the m_lastChoice to set
 	 */
 	public void setLastChoice(SRPDecision m_lastChoice) {
@@ -165,6 +177,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
+	 * Get the last button that pressed on this panel.
 	 * @return the m_lastChoice
 	 */
 	public SRPDecision getLastChoice() {
@@ -173,6 +186,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 
 
 	/**
+	 * Get the chosen review setted in the constructor. 
 	 * @return the review
 	 */
 	public CBookReview getReview() {
@@ -180,6 +194,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
+	 * Set the chosen review to static variable 
 	 * @param review the review to set
 	 */
 	public void setReview(CBookReview review) {
@@ -187,7 +202,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jTextField_title_SR	
+	 * This method initializes jTextField_title_SR, with compatible review title	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
@@ -203,7 +218,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jTextField_reviewAuthor_SR	
+	 * This method initializes jTextField_reviewAuthor_SR, with compatible review author	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
@@ -218,7 +233,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jTextField_bookName_SR	
+	 * This method initializes jTextField_bookName_SR, with compatible reviewed book name	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
@@ -234,7 +249,8 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jScrollPane_revie_SR	
+	 * This method initializes jScrollPane_revie_SR.	
+	 * Contains jTextArea_review_SR.
 	 * 	
 	 * @return javax.swing.JScrollPane	
 	 */
@@ -266,7 +282,8 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jButton_Save_SR	
+	 * This method initializes jButton_Save_SR.
+	 * Presented only for Librarian or Library Manager.	
 	 * 	
 	 * @return javax.swing.JButton	
 	 */
@@ -287,8 +304,10 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jCheckBox_confirm_SR	
-	 * 	
+	 * This method initializes jCheckBox_confirm_SR.
+	 * If review confirmed, selected(true), otherwise selected(false).	
+	 * Presented only for Librarian or Library Manager.	
+	 * 
 	 * @return javax.swing.JCheckBox	
 	 * @throws Exception 
 	 */
@@ -311,7 +330,7 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jTextArea_review_SR	
+	 * This method initializes jTextArea_review_SR, with the review text.	
 	 * 	
 	 * @return javax.swing.JTextArea	
 	 */
@@ -328,7 +347,8 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 	
 	/**
 	 * This method initializes jButton_DeleteReview_SR	
-	 * 	
+	 * Presented only for Librarian or Library Manager.	
+	 * 
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_DeleteReview_SR() {
@@ -349,7 +369,8 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 
 	/**
 	 * This method initializes jButton_editReview_SR	
-	 * 	
+	 * Presented only for Librarian or Library Manager.	
+	 * 
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_editReview_SR() {
@@ -368,7 +389,11 @@ public class CShowReviewPanel extends JPanel implements ActionListener{
 		return jButton_editReview_SR;
 	}
 
-	
+	/**
+	 *  Handle the catched action on the panel. 
+	 *  
+	 *  @param ae ActionEvent
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		if(m_from.compareTo("NRP") == 0)

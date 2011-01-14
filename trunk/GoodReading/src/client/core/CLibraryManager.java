@@ -220,7 +220,8 @@ public class CLibraryManager extends CLibrarian{
 	}
 	
 	/**
-	 *   ????????????????
+	 * Request server to return years that purchases was made due . 
+	 *  
 	 * @return   vector
 	 * @throws Exception    request to server fail
 	 */

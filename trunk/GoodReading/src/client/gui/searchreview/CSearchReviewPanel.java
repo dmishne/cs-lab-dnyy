@@ -21,6 +21,10 @@ import client.core.AUser;
 
 import common.data.CBookReview;
 
+/**
+ * This panel designed to give the ability to search book reviews submitted to the system. 
+ */
+
 public class CSearchReviewPanel extends JPanel implements ActionListener{
 
 	/**
@@ -40,15 +44,15 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 	private JTextField m_jTextField_Author_SBP = null;
 	private JTextField m_jTextField_keyphrase_SBP = null;
 	private JButton m_jButton_Search_SRP = null;
-	/**
-	 * Saves the last choice of the user
-	 */
+	/** Saves the last choice of the user */
 	private SRPDecision m_lastChoice = SRPDecision.BACK;  //  @jve:decl-index=0:
-	
+	/** This variable hold the list of searched reviews */
 	static private LinkedList<CBookReview> m_reviewsList = null;
+	/** This variable hold the details of search */
 	static private HashMap<String,String> m_searchDetails = null;
 	
 	/**
+	 * Get the last button that pressed on this panel.
 	 * @return the m_lastChoice
 	 */
 	public SRPDecision getLastChoice() {
@@ -56,6 +60,7 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
+	 * Set the last button that pressed on this panel.
 	 * @param mLastChoice the m_lastChoice to set
 	 */
 	public void setLastChoice(SRPDecision mLastChoice) {
@@ -71,9 +76,7 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes this
-	 * 
-	 * @return void
+	 * initialize() initializes this class
 	 */
 	private void initialize() {
 		m_jLabel_keyphrase_SBP = new JLabel();
@@ -173,6 +176,11 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 		return m_jTextField_keyphrase_SBP;
 	}
 
+	/**
+	 *  Handle the catched action on the panel. 
+	 *  
+	 *  @param ae ActionEvent
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		if(source == m_jButton_back_SRP)
@@ -196,12 +204,17 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 		}
 	}
 
+	/**
+	 * Refresh the LinkedList of searched reviews in static variable.
+	 * @throws Exception Search action fail
+	 */
 	public void research() throws Exception
 	{
 		m_reviewsList = AUser.getInstance().searchBookReview(m_searchDetails);
 	}
 	
 	/**
+	 * Get the search details map
 	 * @return the m_searchDetails
 	 */
 	static public HashMap<String, String> getSearchDetails() {
@@ -209,6 +222,7 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
+	 * Get the list of searched reviews
 	 * @return the m_reviewsList
 	 */
 	public static LinkedList<CBookReview> getReviewsList() {
