@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Data type class
+ * contains an instance of Book.
+ */
 public class CBook implements Serializable,Comparable<CBook> {
 	
 	static private final long serialVersionUID = 1L;

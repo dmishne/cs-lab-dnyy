@@ -321,9 +321,13 @@ public class CDBInteractionGenerator
 	private String buildSearchBookWhere(Map<String,String> params)
 	{ 
 		String ans="";
+		String Delimiter="AND";
 		if(params.isEmpty())
 			return ans;
 		ans="WHERE ";
+		
+		if(params.containsKey("toggle") && params.get("toggle").compareTo("true") == 0)
+			Delimiter="OR";
 
 		Set<String> a = params.keySet();
 		for(String arg: a)
@@ -370,46 +374,44 @@ public class CDBInteractionGenerator
 			ans=ans+"language LIKE '%"+params.get("language")+"%'";
 			params.remove("language");
 		}
-		
-		
-		
-		
+	
 		//now inserting new attributes
 		if(params.containsKey("title"))
 		{
-			ans=ans+" AND title LIKE '%"+params.get("title")+"%'";
+			ans=ans+" "+Delimiter+" title LIKE '%"+params.get("title")+"%'";
 		}
 		 if(params.containsKey("author"))
 		{
-			ans=ans+" AND author LIKE '%"+params.get("author")+"%'";
+			ans=ans+" "+Delimiter+" author LIKE '%"+params.get("author")+"%'";
 		}
 		 if(params.containsKey("labels"))
 		{
-			ans=ans+" AND lables LIKE '%"+params.get("labels")+"%'";
+			ans=ans+" "+Delimiter+" lables LIKE '%"+params.get("labels")+"%'";
 		}
 		 if(params.containsKey("isbn"))
 		{
-			ans=ans+" AND isbn LIKE '"+params.get("isbn")+"'";
+			ans=ans+" "+Delimiter+" isbn LIKE '"+params.get("isbn")+"'";
 		}
 		 if(params.containsKey("publisher"))
 		{
-			ans=ans+" AND publisher Like '%"+params.get("publisher")+"%'";
+			ans=ans+" "+Delimiter+" publisher Like '%"+params.get("publisher")+"%'";
 		}
 		 if(params.containsKey("summary"))
 		{
-			ans=ans+" AND summary LIKE '%"+params.get("summary")+"%'";
+			ans=ans+" "+Delimiter+" summary LIKE '%"+params.get("summary")+"%'";
 		}
 		 if(params.containsKey("TOC"))
 		{
-			ans=ans+" AND TOC LIKE '%"+params.get("toc")+"%'";
+			ans=ans+" "+Delimiter+" TOC LIKE '%"+params.get("toc")+"%'";
 		}
 		 if(params.containsKey("language"))
 		{
-			ans=ans+" AND language LIKE '%"+params.get("language")+"%'";
+			ans=ans+" "+Delimiter+" language LIKE '%"+params.get("language")+"%'";
 		}
 		return ans;		
 	}
 
+	
 	/**
 	 * Searches for a book in the database
 	 * @param msgMap
@@ -444,18 +446,37 @@ public class CDBInteractionGenerator
 			LinkedList<CBook> argtopic=new LinkedList<CBook>();
 			argtopic = searchByTopics(atopic, asubtopic);
 			LinkedList<CBook> list =new LinkedList<CBook>();
-			for(int i = 0 ; i < arg.size(); i++)
+			
+			//first we check if we don't need to use OR
+			if(msgMap.containsKey("toggle") && msgMap.get("toggle").compareTo("true") != 0)
+				for(int i = 0 ; i < arg.size(); i++)
+				{
+					for(int j =0 ; j < argtopic.size(); j++)
+						{
+							if(arg.get(i).getM_ISBN().compareTo(argtopic.get(j).getM_ISBN()) == 0)
+								list.add(arg.get(i));
+						}
+				} //end of for (AND)
+			
+			else //added for OR possibility
 			{
-				for(int j =0 ; j < argtopic.size(); j++)
-					{
-						if(arg.get(i).getM_ISBN().compareTo(argtopic.get(j).getM_ISBN()) == 0)
-							list.add(arg.get(i));
-					}
-			}
+				list.addAll(arg);
+				for(CBook a: argtopic)
+				{
+					boolean t=true;
+					for(CBook b:list)
+						if(a.getM_ISBN().compareTo(b.getM_ISBN()) == 0)
+								t=false;
+					if(t)	//if there isn't any book in list that already carries this ISBN
+						list.add(a);
+				}
+			}	//end of or
+			
 			return list;
 		}
 		return arg;
 	}
+	
 
 	/**
 	 * Searches books in database according to their topics and sub topics
