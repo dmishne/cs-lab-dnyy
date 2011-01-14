@@ -69,9 +69,7 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 
 
 	/**
-	 * Initialize initializes this
-	 * 
-	 * @return void
+	 * Initialize initializes this class
 	 */
 	private void initialize() {
 		Jlabel_label = new JLabel();

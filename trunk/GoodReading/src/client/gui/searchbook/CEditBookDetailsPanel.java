@@ -100,9 +100,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * initialize initializes this class
-	 * 
-	 * @return void
+	 * initialize() initializes this class
 	 */
 	private void initialize() {
 		jLabel_Type_doc = new JLabel();
