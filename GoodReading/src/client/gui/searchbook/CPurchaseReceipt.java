@@ -26,6 +26,9 @@ import client.core.CReader;
 
 import common.data.CBook;
 
+/**
+ * CPurchaseReceipt defines the Purchase Receipt panel.
+ */
 public class CPurchaseReceipt extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -39,7 +42,7 @@ public class CPurchaseReceipt extends JPanel implements ActionListener {
 	private JFileChooser m_fileChooser = null;
 
 	/**
-	 * This is the default constructor
+	 * CPurchaseReceipt is the default constructor
 	 */
 	public CPurchaseReceipt() {
 		super();
@@ -47,9 +50,8 @@ public class CPurchaseReceipt extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * This method initializes this
-	 * 
-	 * @return void
+	 * initialize initializes this class
+	 *
 	 */
 	private void initialize() {
 		m_jLabel_MainLabel = new JLabel();
@@ -94,6 +96,10 @@ public class CPurchaseReceipt extends JPanel implements ActionListener {
 		return m_jScrollPane_receipt;
 	}
 
+	/**
+	 * receipt build a string representation of a receipt.
+	 * @return String representation of a receipt.
+	 */
 	private String receipt()
 	{
 		m_receipt = new String();
@@ -112,7 +118,8 @@ public class CPurchaseReceipt extends JPanel implements ActionListener {
 	
 	/**
 	 * This method initializes m_jButton_Back	
-	 * 	
+	 * Pressing this button cause to change the panel and
+	 * resume to the previous panel.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_Back() {
@@ -128,7 +135,8 @@ public class CPurchaseReceipt extends JPanel implements ActionListener {
 
 	/**
 	 * This method initializes m_jButton_SaveFile	
-	 * 	
+	 * Pressing this button cause to open a menu which in the end
+	 * saves the book file in a destination chosen by the user.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_SaveFile() {
@@ -144,7 +152,8 @@ public class CPurchaseReceipt extends JPanel implements ActionListener {
 
 	/**
 	 * This method initializes m_jButton_SaveReceipt	
-	 * 	
+	 * Pressing this button cause to open a menu which in the end
+	 * saves the receipt as a text file in a destination chosen by the user.
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_SaveReceipt() {
@@ -158,6 +167,10 @@ public class CPurchaseReceipt extends JPanel implements ActionListener {
 		return m_jButton_SaveReceipt;
 	}
 
+	/**
+	 * actionPerformed handle responsible for action performed.
+     * @param ae ActionEvent
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		if(source == m_jButton_SaveReceipt)

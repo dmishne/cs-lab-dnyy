@@ -26,7 +26,9 @@ import client.core.EActor;
 
 import common.data.CBook;
 
-
+/**
+ * CEditBookDetailsPanel defines the edit book details panel.
+ */
 public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 
 	/**
@@ -89,7 +91,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	
 	
 	/**
-	 * This is the default constructor
+	 * CEditBookDetailsPanel is the default constructor
 	 */
 	public CEditBookDetailsPanel() {
 		super();
@@ -98,7 +100,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes this
+	 * initialize initializes this class
 	 * 
 	 * @return void
 	 */
@@ -491,7 +493,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 
 	/**
 	 * This method initializes jCheckBox_doc	
-	 * 	
+	 * 
 	 * @return javax.swing.JCheckBox	
 	 */
 	private JCheckBox getJCheckBox_doc() {
@@ -541,7 +543,8 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 
 	/**
 	 * This method initializes jButton_back_EBD	
-	 * 	
+	 * Pressing this button cause to change the panel
+	 * and show the previous panel. 	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getjButton_back_EBD() {
@@ -557,7 +560,8 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 
 	/**
 	 * This method initializes jButton_Save_EBD	
-	 * 	
+	 * Pressing this button sends and updates all the relevant book details
+	 * in the database.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getjButton_Save_EBD() {
@@ -589,7 +593,10 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 		return jTextField_label;
 	}
 	
-	
+	/**
+	 * actionPerformed handle responsible for action performed.
+     * @param ae ActionEvent
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		String topics = "";
@@ -652,7 +659,8 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 
 	/**
 	 * This method initializes jButton_deleteBook	
-	 * 	
+	 * Pressing this button cause to delete the current book
+	 * and to change the panel to the previous panel.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_deleteBook() {
@@ -697,7 +705,10 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 		return jList_topics;
 	}
 	
-	
+	/**
+	 * setting new list of topics and subtopics.
+	 * @param nList new list of topics and subtopics.
+	 */
 	public void setNewList(JList nList)
 	{
 		this.remove(jList_topics);
@@ -713,7 +724,8 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 
 	/**
 	 * This method initializes jButton_setTopics	
-	 * 	
+	 * Pressing this button cause to change the panel
+	 * to Manage Topics panel.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_setTopics() {
@@ -727,6 +739,4 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 		}
 		return jButton_setTopics;
 	}
-
-
 }

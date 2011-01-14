@@ -23,6 +23,9 @@ import client.core.AUser;
 
 import common.data.CBook;
 
+/**
+ * CSearchResultPanel defines the book search result panel.
+ */
 public class CSearchResultPanel extends JPanel implements ActionListener {
 
 	/**
@@ -38,7 +41,16 @@ public class CSearchResultPanel extends JPanel implements ActionListener {
 	private JList m_jList_Results_SRP = null;
 	private JScrollPane m_JScrollPane_Results_SRP = null;
 	
+	/**
+	 * List of books to represent in the search
+	 * result list.
+	 */
 	private LinkedList<CBook> m_books = null;  			  //  @jve:decl-index=0:
+	
+	/**
+	 * Store the chosen book by the user for
+	 * further book details.
+	 */
 	private static CBook m_chosenBook = null;
 
 	private JLabel m_jLabel_SRP_title = null;
@@ -51,8 +63,7 @@ public class CSearchResultPanel extends JPanel implements ActionListener {
 	
 	
 	/**
-	 * This is the default constructor
-	 * @throws Exception 
+	 * This is the default constructor 
 	 */
 	public CSearchResultPanel() throws Exception {
 		super();
@@ -60,10 +71,7 @@ public class CSearchResultPanel extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * This method initializes this
-	 * 
-	 * @return void
-	 * @throws Exception 
+	 * initialize initializes this class 
 	 */
 	private void initialize() throws Exception {
 		m_jLabel_SRP_title = new JLabel();
@@ -84,7 +92,8 @@ public class CSearchResultPanel extends JPanel implements ActionListener {
 
 	/**
 	 * This method initializes m_jButton_back_SRP	
-	 * 	
+	 * Pressing the button changes the panel and resume to the 
+	 * previous panel. 	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_back_SRP() {
@@ -140,7 +149,10 @@ public class CSearchResultPanel extends JPanel implements ActionListener {
 		return m_JScrollPane_Results_SRP;
 	}
 
-
+	/**
+	 * actionPerformed handle responsible for action performed.
+     * @param ae ActionEvent
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		if(source == m_jButton_back_SRP)
@@ -210,7 +222,8 @@ public class CSearchResultPanel extends JPanel implements ActionListener {
 
 	/**
 	 * This method initializes m_jButton_ShowDetails_SRP	
-	 * 	
+	 * Pressing this button cause to show extra book details of the
+	 * selected book.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_ShowDetails_SRP() {

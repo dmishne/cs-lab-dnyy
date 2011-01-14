@@ -22,6 +22,10 @@ import javax.swing.border.BevelBorder;
 import client.common.CClientConnector;
 import client.core.AUser;
 
+/**
+ * CSearchBookPanel defines the panel and the gui interface for searching
+ * a book
+ */
 public class CSearchBookPanel extends JPanel implements ActionListener,ItemListener{
 
 	/**
@@ -53,7 +57,10 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 	 * Saves the last choice of the user
 	 */
 	private SBPDecision m_lastChoice = SBPDecision.BACK;  //  @jve:decl-index=0:
-	
+
+	/**
+	 * Saved search details for other classes to use.
+	 */
 	static private HashMap<String,String> m_searchDetails = null;
 	private JLabel jLabel_Subtopics_SBR = null;
 	private JComboBox jComboBox_Subtopics_SBR = null;
@@ -74,7 +81,7 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 	}
 
 	/**
-	 * This is the default constructor
+	 * CSearchBookPanel() is the default constructor
 	 */
 	public CSearchBookPanel() throws Exception{
 		super();
@@ -82,9 +89,7 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 	}
 
 	/**
-	 * This method initializes this
-	 * 
-	 * @return void
+	 * initialize initializes this class
 	 */
 	private void initialize() throws Exception {
 		jLabel_Subtopics_SBR = new JLabel();
@@ -160,7 +165,8 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 
 	/**
 	 * This method initializes m_jButton_back_SBP	
-	 * 	
+	 * Pressing this button causes to change the panel and
+	 * resume to the previous panel.
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_back_SBP() {
@@ -205,7 +211,6 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 
 	/**
 	 * This method initializes m_jTextField_Summary_SBP	
-	 * 	
 	 * @return javax.swing.JTextField	
 	 */
 	private JTextField getM_jTextField_Summary_SBP() {
@@ -219,7 +224,6 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 
 	/**
 	 * This method initializes m_jTextField_TOC_SBP	
-	 * 	
 	 * @return javax.swing.JTextField	
 	 */
 	private JTextField getM_jTextField_TOC_SBP() {
@@ -233,7 +237,6 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 
 	/**
 	 * This method initializes m_jTextField_Labels_SBP	
-	 * 	
 	 * @return javax.swing.JTextField	
 	 */
 	private JTextField getM_jTextField_Labels_SBP() {
@@ -247,7 +250,6 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 
 	/**
 	 * This method initializes m_jComboBox_Language_SBP	
-	 * 	
 	 * @return javax.swing.JComboBox	
 	 */
 	private JComboBox getM_jComboBox_Language_SBP() throws Exception {
@@ -260,8 +262,7 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 	}
 
 	/**
-	 * This method initializes m_jComboBox_Topics_SBP	
-	 * 	
+	 * This method initializes m_jComboBox_Topics_SBP	 	
 	 * @return javax.swing.JComboBox	
 	 */
 	private JComboBox getM_jComboBox_Topics_SBP() throws Exception {
@@ -274,6 +275,10 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 		return m_jComboBox_Topics_SBP;
 	}
 
+	/**
+	 * actionPerformed handle responsible for action performed.
+     * @param ae ActionEvent
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		if(source == m_jButton_back_SBP)
@@ -337,6 +342,10 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 		return jComboBox_Subtopics_SBR;
 	}
 	
+	/**
+	 * itemStateChanged called when changing the Topics combobox,
+	 * The method updates the Subtopics combobox accordingly.
+	 */
 	public void itemStateChanged(ItemEvent ie) {
 	    if (ie.getItemSelectable() == m_jComboBox_Topics_SBP) {
 	    	if(m_jComboBox_Topics_SBP.getSelectedItem().toString().compareTo(" ") != 0)
@@ -361,6 +370,4 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 		    }
 	    }
 	}
-
-	
 }

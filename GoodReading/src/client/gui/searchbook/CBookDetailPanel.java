@@ -26,6 +26,9 @@ import client.gui.CustomLabel;
 import common.data.CBook;
 import javax.swing.JScrollPane;
 
+/**
+ * CBookDetailPanel defines the book details panel.
+ */
 public class CBookDetailPanel extends JPanel implements MouseListener,ActionListener{
 
 	/**
@@ -38,6 +41,9 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 	
 	private static final long serialVersionUID = 1L;
 	private JButton m_jButton_back_BDP = null;
+	/**
+	 * Currently presented book 
+	 */
 	private static CBook m_book;
 	private CustomLabel m_jLabel_Title = null;
 	private CustomLabel m_jLabel_Author = null;
@@ -68,23 +74,21 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 	private CustomLabel jLabel_intrank = null;
 
 	/**
-	 * This is the default constructor
+	 * CBookDetailPanel is the default constructor
 	 * @throws Exception 
 	 */
-	public CBookDetailPanel(CBook book) throws Exception {
+	public CBookDetailPanel() throws Exception {
 		super();
 		m_book = CSearchResultPanel.getChosenBook();
 		initialize();
 	}
 
 	/**
-	 * This method initializes this
-	 * 
+	 * This method initializes this class
 	 * @return void
 	 * @throws Exception 
 	 */
 	private void initialize() throws Exception {
-		//
 		jLabel_intrank = new CustomLabel();
 		jLabel_intrank.setBounds(new Rectangle(115, 120, 27, 27));
 		jLabel_intrank.setFont(new Font("Old English Text MT", Font.BOLD, 18));
@@ -142,7 +146,6 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 		int size = sized(publisher);	
 		jLabel_publisher.setFont(new Font("Eras Light ITC", Font.BOLD, size));
 		jLabel_publisher.setText(publisher);
-		//
 		jLabel_scoreRes = new JLabel();
 		jLabel_scoreRes.setText("    1                                                  5");
 		jLabel_scoreRes.setLocation(new Point(40, 85));
@@ -208,7 +211,7 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 
 	/**
 	 * This method initializes m_jButton_back_BDP	
-	 * 	
+	 * Pressing on this button changes the panel and shows the previous panel.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_back_BDP() {
@@ -230,6 +233,10 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 		return m_book;
 	}
 
+	/**
+	 * actionPerformed handle responsible for action performed.
+     * @param ae ActionEvent
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		if (source == m_jButton_back_BDP)
@@ -273,7 +280,6 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 			m_jTextArea_Summary.setPreferredSize(new Dimension(325, 300));
 			m_jTextArea_Summary.setLineWrap(true);
 			m_jTextArea_Summary.setBackground(new Color(238, 238, 238));
-			//m_jTextArea_Summary.setBorder(BorderFactory.createTitledBorder( BorderFactory.createLineBorder(Color.black), "Summary", TitledBorder.LEFT, TitledBorder.TOP,  new Font("Dialog", Font.PLAIN, 12),Color.BLACK));
 			m_jTextArea_Summary.setWrapStyleWord(true);
 			m_jTextArea_Summary.setText(m_book.getM_summary());
 		}
@@ -282,7 +288,9 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 
 	/**
 	 * This method initializes m_cFiveStarPanel	
-	 * 	
+	 * Pressing on one of the stars submit a score(1-5) to the book,
+	 * which saved in the database.
+	 * Only Reader can vote.
 	 * @return client.gui.CFiveStarPanel	
 	 */
 	private CFiveStarPanel getM_cFiveStarPanel() {
@@ -296,6 +304,10 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 		return m_cFiveStarPanel;
 	}
 
+	/**
+	 * Catch mouse clicks, used for the CFiveStarPanel
+	 * @param me MouseEvent
+	 */
 	public void mouseClicked(MouseEvent me){
 		Point clicked = me.getPoint();
 		int score = 0;
@@ -334,22 +346,35 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 		}
 	}
 
-
+	/**
+	 * Does nothing.
+	 */
 	public void mouseEntered(MouseEvent arg0) {
 	}
 
+	/**
+	 * Does nothing.
+	 */
 	public void mouseExited(MouseEvent arg0) {
 	}
 
+	/**
+	 * Does nothing.
+	 */
 	public void mousePressed(MouseEvent arg0) {
 	}
 
+	/**
+	 * Does nothing.
+	 */
 	public void mouseReleased(MouseEvent arg0) {
 	}
 
 	/**
 	 * This method initializes m_jButton_Purchase_BDP	
-	 * 	
+	 * Pressing on this method will change the panel and 
+	 * show the COrderBookPanel.
+	 * This button visible only to Reader. 	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_Purchase_BDP() {
@@ -365,7 +390,9 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 
 	/**
 	 * This method initializes m_jButton_publishReview	
-	 * 	
+	 * Pressing on this method will change the panel and 
+	 * show the CSubmitReviewPanel.
+	 * This button visible only to Reader.
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_publishReview() {
@@ -394,7 +421,10 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 
 	/**
 	 * This method initializes m_jButton_EditBook	
-	 * 	
+	 * Pressing on this button will change the panel
+	 * and show CEditBookDetailsPanel where one can change the
+	 * book details.
+	 * This button visible to Librarian and LibraryManager.
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_EditBook() {
@@ -409,7 +439,9 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 
 	/**
 	 * This method initializes m_jButton_Report	
-	 * 	
+	 * Pressing on this button will change the panel
+	 * and show CBookReport panel.
+	 * This button visible only to LibraryManager
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_Report() {
@@ -423,7 +455,11 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 		return m_jButton_Report;
 	}
 	
-	
+	/**
+	 * Method calculates the correct necessary size of a label
+	 * @param label Text
+	 * @return correct size for label
+	 */
 	private int sized(String labelText) {
 		Font LFont = jLabel_publisher.getFont();
 		double widthRatio = (double)jLabel_publisher.getWidth() / (double)jLabel_publisher.getFontMetrics(LFont).stringWidth(labelText);;
@@ -434,7 +470,11 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 		return newSize;
 	}
 	
-	
+	/**
+	 * Method calculates the correct necessary size of a label
+	 * @param label Text
+	 * @return correct size for label with 1.25 delta.
+	 */
 	private int sizedM(String labelText) {
 		Font LFont = m_jLabel_Title.getFont();
 		double widthRatio = (double)m_jLabel_Title.getWidth() / (double)m_jLabel_Title.getFontMetrics(LFont).stringWidth(labelText);;
