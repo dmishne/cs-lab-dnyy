@@ -65,8 +65,6 @@ public class CArrangePayPanel extends JPanel implements ActionListener {
 
 	/**
 	 * initialize() initializes this class
-	 * 
-	 * @return void
 	 */
 	private void initialize() {
 		m_jLabel_SSN = new JLabel();

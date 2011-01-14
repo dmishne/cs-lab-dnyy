@@ -38,8 +38,6 @@ public class CLoginPanel extends JPanel implements ActionListener, KeyListener{
 
 	/**
 	 * initialize() initializes this class
-	 * 
-	 * @return void
 	 */
 	private void initialize() {
 		m_JLabel_Password = new JLabel();

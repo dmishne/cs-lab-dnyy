@@ -59,8 +59,6 @@ public class CBookReport extends JPanel implements ActionListener, ItemListener 
 
 	/**
 	 * initialize() initializes this class
-	 * 
-	 * @return void
 	 * @throws Exception 
 	 */
 	private void initialize() throws Exception {

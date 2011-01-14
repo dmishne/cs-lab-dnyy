@@ -98,8 +98,6 @@ public class CAddNewBookPanel extends JPanel implements ActionListener{
 
         /**
          * initialize initializes this class
-         *
-         * @return void
          */
         private void initialize() {
                 jLabel_subtopic = new JLabel();

@@ -87,8 +87,6 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 
 	/**
 	 * This method initializes this class
-	 * 
-	 * @return void
 	 */
 	private void initialize() {
 		jLabel_creditCard = new JLabel();

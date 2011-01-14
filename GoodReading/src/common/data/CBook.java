@@ -40,21 +40,21 @@ public class CBook implements Serializable,Comparable<CBook> {
 	
 	/**
 	 * constructor - implemented in by-value-factory
-	 * @param m_title
-	 * @param m_author
 	 * @param m_ISBN
-	 * @param m_release_date   
+	 * @param m_author
+	 * @param m_title
+	 * @param m_release
 	 * @param m_publisher
 	 * @param m_summary
 	 * @param m_price
-	 * @param m_score
 	 * @param m_score_count
+	 * @param m_score
 	 * @param m_topic
 	 * @param m_lables
 	 * @param m_TOC
 	 * @param m_invisible
 	 * @param m_language
-	 * @param m_release_date 
+	 * @param Rank
 	 */
 	public CBook(String m_ISBN, String m_author, String m_title, String m_release, String m_publisher, String m_summary,double m_price, long m_score_count,double m_score,String m_topic, String m_lables, String m_TOC,boolean m_invisible, String m_language,int Rank) 
 	{   

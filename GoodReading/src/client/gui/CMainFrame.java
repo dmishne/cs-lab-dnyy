@@ -98,8 +98,6 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	
 	/**
 	 * initialize initializes this class
-	 * 
-	 * @return void
 	 */
 	private void initialize() {
 		this.setJMenuBar(getM_jJMenuBar_MenuBar());

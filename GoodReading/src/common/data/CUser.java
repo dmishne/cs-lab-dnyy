@@ -68,7 +68,7 @@ public class CUser implements Serializable{
      * @param data result set by DB
      * @param arg payment types arranged by user
      * @throws SQLException handled in DBIG
-     * @see server.core.CDBInteractionGenerator
+     * @see server.db.CDBInteractionGenerator
      */
 	public CUser(ResultSet data,LinkedList<String> arg) throws SQLException {
 		m_firstName     = data.getString(7) ;

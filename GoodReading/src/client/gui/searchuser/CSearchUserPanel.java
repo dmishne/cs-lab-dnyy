@@ -65,8 +65,6 @@ public class CSearchUserPanel extends JPanel implements ActionListener{
 	
 	/**
 	 * initialize() initializes this class
-	 * 
-	 * @return void
 	 */
 	private void initialize() {
 		jLabel_userID = new JLabel();
