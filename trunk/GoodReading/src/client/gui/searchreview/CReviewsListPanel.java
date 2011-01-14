@@ -151,7 +151,8 @@ public class CReviewsListPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jButton_Back_RL	
+	 * This method initializes jButton_Back_RL.
+	 * Return to previous panel.	
 	 * 	
 	 * @return javax.swing.JButton	
 	 */
@@ -167,7 +168,8 @@ public class CReviewsListPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes jButton_showReview_RL	
+	 * This method initializes jButton_showReview_RL.
+	 * Press this button to open the panel that shows the chosen review. 	
 	 * 	
 	 * @return javax.swing.JButton	
 	 */

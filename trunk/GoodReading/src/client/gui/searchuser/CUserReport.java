@@ -72,9 +72,8 @@ public class CUserReport extends JPanel implements ActionListener, ItemListener 
 	}
 
 	/**
-	 * Initializes m_jList, with purchase data for cosen user.
-	 * 	
-	 * 	
+	 * Initializes m_jList, 
+	 * with purchase data for cosen user.
 	 * @return javax.swing.JList	
 	 * @throws Exception fail to get rarameter from core
 	 */
@@ -106,7 +105,8 @@ public class CUserReport extends JPanel implements ActionListener, ItemListener 
 	}
 
 	/**
-	 * Initializes m_jButton_Back.	
+	 * Initializes m_jButton_Back.
+	 * Return to previous panel.	
 	 * 	
 	 * @return javax.swing.JButton	
 	 */
@@ -123,6 +123,7 @@ public class CUserReport extends JPanel implements ActionListener, ItemListener 
 
 	/**
 	 * Set panel visible(false).
+	 * The only ActionEvent can be done on this panel is Back button press.
 	 */
 	public void actionPerformed(ActionEvent ae) {
 		this.setVisible(false);

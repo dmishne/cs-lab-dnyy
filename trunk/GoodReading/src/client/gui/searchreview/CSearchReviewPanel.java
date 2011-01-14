@@ -118,8 +118,8 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 	
 	
 	/**
-	 * This method initializes m_jButton_back_SRP	
-	 * 	
+	 * This method initializes m_jButton_back_SRP.	
+	 * Return to previous panel.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getM_jButton_back_SRP() {
@@ -135,7 +135,8 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes m_jTextField_title_SBP	
+	 * This method initializes m_jTextField_title_SBP.
+	 * Field to add the title of review for search.	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
@@ -149,8 +150,8 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes m_jTextField_Author_SBP	
-	 * 	
+	 * This method initializes m_jTextField_Author_SBP.	
+	 * Field to add the author of review for search.	
 	 * @return javax.swing.JTextField	
 	 */
 	private JTextField getM_jTextField_Author_SBP() {
@@ -163,7 +164,8 @@ public class CSearchReviewPanel extends JPanel implements ActionListener{
 	}
 
 	/**
-	 * This method initializes m_jTextField_keyphrase_SBP	
+	 * This method initializes m_jTextField_keyphrase_SBP.
+	 * Field to add the key phrase of review for search.	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */

@@ -198,7 +198,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 
 	/**
 	 * This method initializes jButton_Edit_UD	
-	 * 	
+	 * Press this button to enable the edit option this panel give for user details.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_Edit_UD() {
@@ -213,8 +213,8 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes jButton_Back_UD	
-	 * 	
+	 * This method initializes jButton_Back_UD.	
+	 * Return to previous panel.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_Back_UD() {
@@ -230,7 +230,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 
 	/**
 	 * This method initializes jButton_showReport_UD	
-	 * 	
+	 * Press this button to open purchases report for chosen user. 	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_showReport_UD() {
@@ -245,7 +245,8 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes jButton_Save_UD	
+	 * This method initializes jButton_Save_UD.
+	 * Press this button to save the changes made to user details in DB.	
 	 * 	
 	 * @return javax.swing.JButton	
 	 */
@@ -261,7 +262,8 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes jTextField_userName with chosen user UserName	
+	 * This method initializes jTextField_userName, 
+	 * with chosen user UserName.	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
@@ -277,7 +279,8 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes jTextField_userID with chosen user ID	
+	 * This method initializes jTextField_userID, 
+	 * with chosen user ID.	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
@@ -294,7 +297,8 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes jTextField_firstName	with chosen user first name
+	 * This method initializes jTextField_firstName,	
+	 * with chosen user first name.
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
@@ -311,7 +315,8 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes jTextField_lastName with chosen user last name
+	 * This method initializes jTextField_lastName, 
+	 * with chosen user last name.
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
@@ -327,7 +332,8 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes jTextField_adress with chosen user address	
+	 * This method initializes jTextField_adress, 
+	 * with chosen user address.	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
@@ -343,7 +349,8 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 	}
 
 	/**
-	 * This method initializes jTextField_birthDay with chosen user birth day
+	 * This method initializes jTextField_birthDay, 
+	 * with chosen user birth day.
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
