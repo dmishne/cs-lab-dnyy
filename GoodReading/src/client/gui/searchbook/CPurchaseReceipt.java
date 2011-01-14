@@ -51,7 +51,6 @@ public class CPurchaseReceipt extends JPanel implements ActionListener {
 
 	/**
 	 * initialize initializes this class
-	 *
 	 */
 	private void initialize() {
 		m_jLabel_MainLabel = new JLabel();

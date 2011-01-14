@@ -72,6 +72,7 @@ public class CSearchResultPanel extends JPanel implements ActionListener {
 
 	/**
 	 * initialize initializes this class 
+     * @throws Exception fail to get parameters
 	 */
 	private void initialize() throws Exception {
 		m_jLabel_SRP_title = new JLabel();

@@ -99,8 +99,6 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 
 	/**
 	 * Initialize() initializes this class
-	 * 
-	 * @return void
 	 */
 	private void initialize() {
 		listModel = new DefaultListModel();
@@ -426,7 +424,7 @@ public class CManageTopicsPanel extends JPanel implements ActionListener,ItemLis
 
 	/**
 	 * actionPerformed handle responsible for action performed.
-     * @param ae ActionEvent
+     * @param e ActionEvent
 	 */
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();

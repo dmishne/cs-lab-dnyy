@@ -1438,7 +1438,7 @@ public class CExecuter implements Runnable
 	/**
 	 * this function is dangerous as it may take a long time until thread returns to caller!
 	 * function will tell the maintenance thread to stop, which will happen as soon as it ends it's cycle ( and wakes up from Thread.sleep).
-	 * @see server.core.CExecuter#startCheck()
+	 * @see server.core.CExecuter#startCheck(int)
 	 */
 	public void stopMaintenance() throws InterruptedException
 	{

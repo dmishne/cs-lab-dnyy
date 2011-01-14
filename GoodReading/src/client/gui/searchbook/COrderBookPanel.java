@@ -77,8 +77,7 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 
 	/**
 	 * initialize initializes this class
-	 * 
-	 * @throws Exception 
+	 * @throws Exception fail to get parameters
 	 */
 	private void initialize() throws Exception {
 		jLabel_choosePayment = new JLabel();

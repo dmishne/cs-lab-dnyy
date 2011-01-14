@@ -84,9 +84,8 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 	}
 
 	/**
-	 * This method initializes this class
-	 * @return void
-	 * @throws Exception 
+	 * This method initializes this
+	 * @throws Exception fail to get parameters
 	 */
 	private void initialize() throws Exception {
 		jLabel_intrank = new CustomLabel();
@@ -457,7 +456,7 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 	
 	/**
 	 * Method calculates the correct necessary size of a label
-	 * @param label Text
+	 * @param labelText
 	 * @return correct size for label
 	 */
 	private int sized(String labelText) {
@@ -472,7 +471,7 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 	
 	/**
 	 * Method calculates the correct necessary size of a label
-	 * @param label Text
+	 * @param labelText
 	 * @return correct size for label with 1.25 delta.
 	 */
 	private int sizedM(String labelText) {
