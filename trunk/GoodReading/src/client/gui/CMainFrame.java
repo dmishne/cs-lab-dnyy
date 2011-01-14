@@ -535,6 +535,11 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			}
 			else if(source == GUI_CShowReviewPanel)
 			{
+				if(GUI_CShowReviewPanel.getLastChoice() != CShowReviewPanel.SRPDecision.BACK)
+				{
+					m_jMenu_messages.setText(String.valueOf(((CLibrarian)AUser.getInstance()).isMessages()) + " Messages");
+				}
+				
 				if(GUI_CShowReviewPanel.getFromWhere() == CShowReviewPanel.SRPFrom.NRP)
 				{
 					jContentPane.remove(GUI_CShowReviewPanel);
@@ -552,7 +557,6 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 					jContentPane.add(getGUI_CReviewsListPanel());
 					GUI_CReviewsListPanel.setVisible(true);
 				}
-				m_jMenu_messages.setText(String.valueOf(((CLibrarian)AUser.getInstance()).isMessages()) + " Messages");
 			}
 			else if(source == GUI_CEditBookDetailsPanel)
 			{
