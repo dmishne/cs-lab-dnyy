@@ -801,7 +801,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 	 */
 	private CBookDetailPanel getGUI_CBookDetailPanel() throws Exception {
 		if (GUI_CBookDetailPanel == null) {
-			GUI_CBookDetailPanel = new CBookDetailPanel(CSearchResultPanel.getChosenBook());
+			GUI_CBookDetailPanel = new CBookDetailPanel();
 			GUI_CBookDetailPanel.setLocation(new Point(0, 100));
 			GUI_CBookDetailPanel.setPreferredSize(new Dimension(700, 600));
 			GUI_CBookDetailPanel.setSize(new Dimension(700, 550));

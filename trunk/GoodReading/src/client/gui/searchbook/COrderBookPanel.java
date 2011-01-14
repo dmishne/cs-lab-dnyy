@@ -21,6 +21,10 @@ import client.core.AUser;
 import client.core.CReader;
 import client.gui.CustomLabel;
 
+/**
+ * This panel responsible for showing all relevant information about
+ * a book before purchase.
+ */
 public class COrderBookPanel extends JPanel implements ActionListener{
 
 	/**
@@ -51,12 +55,18 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 	/**
 	 * Saves the last choice of the user
 	 */
-	private EOBDecision m_lastChoice = null;  
+	private EOBDecision m_lastChoice = null;  //  @jve:decl-index=0:
+	/**
+	 * Saves chosen File Type.
+	 */
 	private static String chosenFileType = null;  //  @jve:decl-index=0:
+	/**
+	 * Save the receipt Number
+	 */
 	private static String m_receipt = null;	
 	
 	/**
-	 * This is the default constructor
+	 * COrderBookPanel() is the default constructor
 	 * @throws Exception 
 	 */
 	public COrderBookPanel() throws Exception {
@@ -66,9 +76,8 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 	
 
 	/**
-	 * This method initializes this
+	 * initialize initializes this class
 	 * 
-	 * @return void
 	 * @throws Exception 
 	 */
 	private void initialize() throws Exception {
@@ -188,13 +197,6 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 		return m_lastChoice;
 	}
 
-	
-
-
-	
-	
-
-
 	/**
 	 * @return the chosenFileType
 	 */
@@ -220,7 +222,8 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 
 	/**
 	 * This method initializes jButton_Back	
-	 * 	
+	 * Pressing the button changes the panel and show the
+	 * previous panel.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_Back() {
@@ -237,7 +240,8 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 
 	/**
 	 * This method initializes jButton_Purchase	
-	 * 	
+	 * Pressing this button actually perform the purchase
+	 * of the book including removing credit from the method of payment.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_Purchase() {
@@ -284,7 +288,8 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 
 	/**
 	 * This method initializes jButton_ShowReceipt	
-	 * 	
+	 * Pressing the button cause to change the panel and show the 
+	 * CPurchaseReceipt panel.
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getJButton_ShowReceipt() {
@@ -300,7 +305,11 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 		return jButton_ShowReceipt;
 	}
 
-	@Override
+
+	/**
+	 * actionPerformed handle responsible for action performed.
+     * @param ae ActionEvent
+	 */
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		String receipt;
@@ -336,9 +345,6 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 		{
 			this.setLastChoice(EOBDecision.SHOWRECEIPT); 
 			this.setVisible(false);
-		}
-		
+		}	
 	}
-	
-
 }

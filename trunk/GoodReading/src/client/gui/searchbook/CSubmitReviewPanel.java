@@ -25,6 +25,9 @@ import client.core.AUser;
 import client.core.CReader;
 import java.awt.Rectangle;
 
+/**
+ *  CSubmitReviewPanel define the panel for submitting a review for a book.
+ */
 public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseListener  {
 
 
@@ -50,11 +53,14 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 	private JLabel Jlabel_label = null;
 	private JScrollPane spfText = null;
 	
+	/**
+	 * Saving new review
+	 */
     private HashMap<String,String> m_newReview = null;
 	
 
 	/**
-	 * This is the default constructor
+	 * CSubmitReviewPanel is the default constructor
 	 */
 	public CSubmitReviewPanel() {
 		super();
@@ -63,7 +69,7 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 
 
 	/**
-	 * This method initializes this
+	 * Initialize initializes this
 	 * 
 	 * @return void
 	 */
@@ -107,7 +113,7 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 
 	/**
 	 * This method initializes title	
-	 * 	
+	 * 
 	 * @return javax.swing.JTextField	
 	 */
 	private JTextField getTitle() {
@@ -146,7 +152,8 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 
 	/**
 	 * This method initializes back	
-	 * 	
+	 * Pressing this button cause to change this panel by resuming to the
+	 * previous panel.
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getBack() {
@@ -163,7 +170,8 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 
 	/**
 	 * This method initializes reset	
-	 * 	
+	 * Pressing this button reset the text areas and text fields
+	 * in this panel.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getReset() {
@@ -179,7 +187,8 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 
 	/**
 	 * This method initializes submit	
-	 * 	
+	 * Pressing this button send and updates the review in the database.
+	 * Also, the panel changes and resuming to the previous panel.	
 	 * @return javax.swing.JButton	
 	 */
 	private JButton getSubmit() {
@@ -201,6 +210,10 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 		return m_newReview;
 	}
 
+	/**
+	 * actionPerformed handle responsible for action performed.
+     * @param ae ActionEvent
+	 */
 	public void actionPerformed(ActionEvent ae)  {
 		Object source = ae.getSource();
 		if(source == JButton_back)
@@ -252,7 +265,10 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 		}
 	}
 
-	@Override
+	/**
+	 * This method listen to mouse clicks and it clears the text areas when user press
+	 * on the text areas for the first time.  
+	 */
 	public void mouseClicked(MouseEvent me) {
 		if(me.getSource() == review)
 		{
@@ -272,32 +288,28 @@ public class CSubmitReviewPanel extends JPanel implements ActionListener, MouseL
 		}
 	}
 
-	@Override
+	/**
+	 * Does Nothing.
+	 */
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
-	@Override
+	/**
+	 * Does Nothing.
+	 */
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
-	@Override
+	/**
+	 * Does Nothing.
+	 */
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
-	@Override
+	/**
+	 * Does Nothing.
+	 */
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
-
-	
-	
-	
 
 }  //  @jve:decl-index=0:visual-constraint="-22,-36"
