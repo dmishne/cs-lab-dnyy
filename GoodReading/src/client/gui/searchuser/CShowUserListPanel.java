@@ -134,6 +134,7 @@ public class CShowUserListPanel extends JPanel implements ActionListener{
 			jList_UL.setSize(new Dimension(600, 400));
 			jList_UL.setLocation(new Point(50, 50));
 			jList_UL.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+			jList_UL.setFont(new Font("Eras Light ITC", Font.BOLD, 24));
 		}
 		return jList_UL;
 	}
