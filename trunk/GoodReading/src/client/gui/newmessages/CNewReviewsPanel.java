@@ -39,7 +39,7 @@ public class CNewReviewsPanel extends JPanel implements ActionListener{
 	 * Saves the last choice of the user
 	 */
 	private NRPDecision m_lastChoice = null;
-	private LinkedList<CBookReview> m_messages = null;
+	private LinkedList<CBookReview> m_messages = null;  //  @jve:decl-index=0:
 	private static CBookReview m_chosen_message = null;
 	
 	
@@ -178,14 +178,8 @@ public class CNewReviewsPanel extends JPanel implements ActionListener{
 						show[i] = b.getisbn() + " - " + b.gettitle() + " - " + b.getauthor() + " - " + b.getwrite_date();
 						i++;
 					} 
-						/*
-						 *      stub
-						 *
-						String[] stub = new String[3];;
-						stub[0] = "nt34" + " - " + "my first review" + " - " + " testUser" + " - " + "28.12.2010";
-						stub[1] = "54n4" + " - " + "my second review" + " - " + " test2User" + " - " + "12.12.2010";
-							jList_NewReviewsList = new JList(stub);*/ // end of stub
-				   jList_NewReviewsList = new JList(show);
+				    jList_NewReviewsList = new JList(show);
+				    jList_NewReviewsList.setFont(new Font("Eras Light ITC", Font.BOLD, 24));
 			   }
 		}
 		return jList_NewReviewsList;

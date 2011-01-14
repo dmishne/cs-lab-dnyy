@@ -138,6 +138,7 @@ public class CReviewsListPanel extends JPanel implements ActionListener{
 			jList_resultList_RL.setLocation(new Point(50, 50));
 			jList_resultList_RL.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 			jList_resultList_RL.setSize(new Dimension(600, 400));
+			jList_resultList_RL.setFont(new Font("Eras Light ITC", Font.BOLD, 24));
 		}
 		return jList_resultList_RL;
 	}

@@ -119,7 +119,8 @@ public class CSearchResultPanel extends JPanel implements ActionListener {
 			m_jList_Results_SRP.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			m_jList_Results_SRP.setSize(new Dimension(600, 400));
 			m_jList_Results_SRP.setLocation(new Point(50, 50));
-			m_jList_Results_SRP.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);	
+			m_jList_Results_SRP.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+			m_jList_Results_SRP.setFont(new Font("Eras Light ITC", Font.BOLD, 24));
 		}
 		return m_jList_Results_SRP;
 	}
