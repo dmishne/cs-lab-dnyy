@@ -210,6 +210,7 @@ public class CDBInteractionGenerator
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
 			st.executeUpdate("INSERT INTO credit_card_details VALUES ('"+user+"',"+CCnum+",'"+CCExpire+"',"+CCid+")");
+			st.executeUpdate("INSERT INTO subscriptions VALUES ('"+ user +"','Credit Card',100000)");
 			return true;	
 		} catch (SQLException e) {
 			System.out.println("AddCC():SQL exception: "+e.getErrorCode()+" "+e.getMessage());		}
@@ -703,9 +704,9 @@ public class CDBInteractionGenerator
 					{
 						ltype = check.getString("type");
 						amount = check.getInt("ammount");
-						if(type.equals(ltype)) break;
+						if(type.equalsIgnoreCase(ltype)) break;
 					}
-					if(type.equals(ltype)) // check that user has a matching type subscription
+					if(type.equalsIgnoreCase(ltype)) // check that user has a matching type subscription
 					{
 						Statement st = this.m_DB_Connection.createStatement();
 						// sub 1 from amount and delete if needed
