@@ -1,5 +1,6 @@
 package server.core;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -630,10 +631,10 @@ public class CExecuter implements Runnable
 						if(arg.get("format") != null && arg.get("format").compareTo("") != 0)
 						for(String s: arg.get("format").split(","))
 						{
-							System.out.println(CServerConstants.DEFAULT_Global_Library_Path()+arg.get("isbn")+"."+s);
-							if( db.UploadFile(arg.get("isbn"),s,new CFile( CServerConstants.DEFAULT_Global_Library_Path()+arg.get("isbn")+"."+s )) )
-								
-								count--;
+							File myfile=new File( CServerConstants.DEFAULT_Global_Library_Path()+arg.get("isbn")+"."+s );
+							if(myfile.exists() && myfile.canRead())
+								if( db.UploadFile(arg.get("isbn"),s) )
+									count--;
 						}
 						}
 					if(count == 0)
@@ -692,10 +693,10 @@ public class CExecuter implements Runnable
 					
 					for(String a: arg.get("format").split(","))
 					{
-						CFile asd=new CFile(CServerConstants.DEFAULT_Global_Library_Path()+arg.get("isbn")+"."+a);
-						
-						if( a!= null && a.compareTo("") != 0 && db.UploadFile(arg.get("isbn"),a,asd) )
-							count--;
+						File myfile=new File( CServerConstants.DEFAULT_Global_Library_Path()+arg.get("isbn")+"."+a );
+						if(myfile.exists() && myfile.canRead())
+							if( a!= null && a.compareTo("") != 0 && db.UploadFile(arg.get("isbn"),a) )
+								count--;
 					}
 				}
 				
@@ -980,7 +981,6 @@ public class CExecuter implements Runnable
 			if(!db.getBookFormats(Work.getMsgMap().get("isbn")).contains(Work.getMsgMap().get("format")))
 				CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"no such format for this book");
 			else
-			//TO RESOLVE: this is the branch for download book  	CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),db.getBook(Work.getMsgMap().get("isbn"),Work.getMsgMap().get("format")));
 				CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),  new CFile(CServerConstants.DEFAULT_Global_Library_Path()+Work.getMsgMap().get("isbn")+"."+Work.getMsgMap().get("format"))  );
 	}	
 		
