@@ -458,7 +458,7 @@ public class CUserDetailsPanel extends JPanel implements ActionListener,ItemList
 			jCheckBox_creditCard.setLocation(new Point(210, 367));
 			if(chosenUser.getM_privilege().toString().compareTo("Reader") == 0)
 				for(String pt : chosenUser.getPayTypes())
-					   if(pt.compareTo("CreditCard") == 0)
+					   if(pt.compareTo("CreditCard") == 0 || pt.compareTo("Credit Card") == 0)
 						   jCheckBox_creditCard.setSelected(true);
 		}
 		return jCheckBox_creditCard;
