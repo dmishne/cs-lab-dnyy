@@ -436,6 +436,52 @@ public class CDBInteractionGenerator
 				} catch (Exception e) 
 			{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}	
 		}
+		else if(msgMap.get("subtopic") == null)
+		{
+			String atopic =  msgMap.get("topic");
+			msgMap.remove("topic");
+			boolean bool = false;
+			if(msgMap.size() > 1)
+			{
+				bool = true;
+			}
+			try {
+				data = this.MySQLQuery("SELECT * FROM books "+this.buildSearchBookWhere(msgMap)+";");
+				while(data.next())
+					arg.add(new CBook(data.getString(1),data.getString(2),data.getString(3),data.getString(4),data.getString(5),data.getString(6),data.getFloat(7),data.getInt(8),data.getLong(9),getBookTopics(data.getString(1)),data.getString(11),data.getString(12),data.getBoolean(13),data.getString(14),data.getInt(15)));
+			
+				} catch (Exception e) 
+			{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
+				LinkedList<CBook> argtopic=new LinkedList<CBook>();
+				argtopic = searchByTopicOnly(atopic);
+				LinkedList<CBook> list =new LinkedList<CBook>();
+				if(!bool) return argtopic;	//in case there are only topics and subtopics to search from
+				//first we check if we don't need to use OR
+				if(msgMap.containsKey("toggle") && msgMap.get("toggle").compareTo("true") != 0)
+					for(int i = 0 ; i < arg.size(); i++)
+					{
+						for(int j =0 ; j < argtopic.size(); j++)
+							{
+								if(arg.get(i).getM_ISBN().compareTo(argtopic.get(j).getM_ISBN()) == 0)
+									list.add(arg.get(i));
+							}
+					} //end of for (AND)
+				
+				else //added for OR possibility
+				{
+					list.addAll(arg);
+					for(CBook a: argtopic)
+					{
+						boolean t=true;
+						for(CBook b:list)
+							if(a.getM_ISBN().compareTo(b.getM_ISBN()) == 0)
+									t=false;
+						if(t)	//if there isn't any book in list that already carries this ISBN
+							list.add(a);
+					}
+				}	//end of or
+				return list;
+		}
 		else
 		{
 			String atopic = msgMap.get("topic");
@@ -482,18 +528,35 @@ public class CDBInteractionGenerator
 						list.add(a);
 				}
 			}	//end of or
-			
 			return list;
 		}
 		return arg;
 	}
 	
+	/**
+	 * Searches books in database according to their topics
+	 * @param topic
+	 * @return a list of books
+	 */
+	private LinkedList<CBook> searchByTopicOnly(String topic)
+	{
+		LinkedList<CBook> books = new LinkedList<CBook>();
+		ResultSet res;
+		try {
+			res = this.MySQLQuery("CALL SearchByTopicOnly ('"+ topic +"')");
+			while(res.next())
+				books.add(new CBook(res.getString(1),res.getString(2),res.getString(3),res.getString(4),res.getString(5),res.getString(6),res.getFloat(7),res.getInt(8),res.getLong(9),res.getString(10),res.getString(11),res.getString(12),res.getBoolean(13),res.getString(14),res.getInt(15)));
+		
+			} catch (Exception e) 
+		{	 System.out.println("Exception while reading data from result set (FactoryData() "+e.getMessage());	}
+		return books;
+	}
 
 	/**
 	 * Searches books in database according to their topics and sub topics
 	 * @param topic
 	 * @param subtopic
-	 * @return  a list of books
+	 * @return a list of books
 	 */
 	private LinkedList<CBook> searchByTopics(String topic, String subtopic)
 	{
