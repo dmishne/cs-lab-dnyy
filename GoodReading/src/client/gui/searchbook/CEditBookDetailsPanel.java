@@ -132,7 +132,7 @@ public class CEditBookDetailsPanel extends JPanel implements ActionListener{
 		jLabel_label.setFont(new Font("Eras Light ITC", Font.BOLD, 12));
 		jLabel_label.setSize(new Dimension(90, 26));
 		jLabel_label.setLocation(new Point(20, 248));
-		jLabel_label.setText("Labels");
+		jLabel_label.setText("Labels :");
 		jLabel_toc = new JLabel();
 		jLabel_toc.setText("Table Of Contents");
 		jLabel_toc.setLocation(new Point(476, 185));
