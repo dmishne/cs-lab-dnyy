@@ -54,7 +54,7 @@ public class CRespondToClient {
 	 */
 	public void SendResponse(int i, Object msg)
 	{
-		if(i < 0)
+		if(i == -1)
 			return;
 		System.out.print("\n\nSending message to client @ "+((ConnectionToClient)m_connections.get(i)).getName());
 		if(msg==null)

@@ -67,7 +67,7 @@ public class CStandbyUnit  extends AbstractServer
 	{
 		((CEntry) msg).setClient(client); //save client so we could send the response later on.
 		m_que.add((CEntry) msg);
-		System.out.println("Server recieved client request from " + client.getInetAddress());
+		System.out.println("Server recieved client request "+((CEntry)msg).getMsgType()+" from " + client.getInetAddress());
 		CExecuter.GetInstance().NotifyOfEntry();
 	}
 
