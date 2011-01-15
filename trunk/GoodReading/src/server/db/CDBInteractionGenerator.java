@@ -141,8 +141,7 @@ public class CDBInteractionGenerator
 	 */
 	public void ServerUpdateLog(String toLog) 
 	{
-		// TODO Auto-generated method stub
-		
+		System.err.println(toLog);
 	}
 	
 	/**
