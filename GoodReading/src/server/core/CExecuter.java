@@ -88,7 +88,7 @@ public class CExecuter implements Runnable
 	{
 		m_obj=new CExecuter();
 		m_obj.m_sleeping=true;
-		m_obj.m_generator = new Random( 19580427 );
+		m_obj.m_generator = new Random( 32000 );
 		m_obj.m_ThreadHolder=new Thread(m_obj);
 		m_obj.m_ThreadHolder.start();
 	}
@@ -107,8 +107,7 @@ public class CExecuter implements Runnable
 		
 		try {
 			while (true)									//run forever
-			{
-				Work.setSessionID(-1);
+			{		
 				if(CStandbyUnit.GetInstance().isEmpty())
 				{
 					m_sleeping = true;
@@ -128,7 +127,7 @@ public class CExecuter implements Runnable
 					//make sure nobody's using the selected key
 					do {
 						Work.setSessionID(Random());
-					} while( CRespondToClient.GetInstance().isRegistered(Work.getSessionID()) );
+					} while( Work.getSessionID() == -1 || CRespondToClient.GetInstance().isRegistered(Work.getSessionID()) );
 					
 					//insert to Connections
 					CRespondToClient.GetInstance().InsertOutstream(Work.getSessionID(), Work.getClient());
@@ -1154,7 +1153,7 @@ public class CExecuter implements Runnable
 	
 	/**
 	 * Infrastructure function.
-	 * @return a random integer from 0 to 19580427.
+	 * @return a random integer from 0 to 32000.
 	 */
 	public int Random()
 	{
@@ -1512,7 +1511,7 @@ public class CExecuter implements Runnable
 			{
 				//Maintenance functions start
 				CExecuter.recheckPopularity();
-				CDBInteractionGenerator.GetInstance().removeSessionId();
+			//	CDBInteractionGenerator.GetInstance().removeSessionId();
 				//Maintenance functions end
 				
 				
