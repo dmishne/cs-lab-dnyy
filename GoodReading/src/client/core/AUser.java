@@ -275,6 +275,10 @@ public abstract class AUser implements Serializable{
 	                search_param.put("toc", (String)book_param.get("toc"));
 	    if(!book_param.get("labels").isEmpty())
 	                search_param.put("labels", (String)book_param.get("labels"));
+	    if(!book_param.get("toggle").isEmpty())
+	    	        search_param.put("toggle", book_param.get("toggle"));
+	    else
+	    	        search_param.put("toggle", "false");
 	    EntryToSrv = new CEntry("SearchBook",search_param,m_userName,m_UserSessionId);
 		Object res =  CClientConnector.getInstance().messageToServer(EntryToSrv);
 		@SuppressWarnings("unchecked")

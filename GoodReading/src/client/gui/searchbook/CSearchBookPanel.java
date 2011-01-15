@@ -21,6 +21,7 @@ import javax.swing.border.BevelBorder;
 
 import client.common.CClientConnector;
 import client.core.AUser;
+import javax.swing.JCheckBox;
 
 /**
  * CSearchBookPanel defines the panel and the gui interface for searching
@@ -65,6 +66,8 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 	private JLabel jLabel_Subtopics_SBR = null;
 	private JComboBox jComboBox_Subtopics_SBR = null;
 	private boolean s_flag = false;
+	private JLabel jLabel_toggle = null;
+	private JCheckBox m_jCheckBox_toggle = null;
 	
 	/**
 	 * @return the m_lastChoice
@@ -92,6 +95,11 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 	 * initialize initializes this class
 	 */
 	private void initialize() throws Exception {
+		jLabel_toggle = new JLabel();
+		jLabel_toggle.setText("Search Separatly:");
+		jLabel_toggle.setSize(new Dimension(160, 40));
+		jLabel_toggle.setFont(new Font("Eras Light ITC", Font.BOLD, 18));
+		jLabel_toggle.setLocation(new Point(30, 425));
 		jLabel_Subtopics_SBR = new JLabel();
 		jLabel_Subtopics_SBR.setFont(new Font("Eras Light ITC", Font.BOLD, 18));
 		jLabel_Subtopics_SBR.setLocation(new Point(30, 345));
@@ -161,6 +169,8 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 		this.add(getM_jButton_Search_SBP(), null);
 		this.add(jLabel_Subtopics_SBR, null);
 		this.add(getJComboBox_Subtopics_SBR(), null);
+		this.add(jLabel_toggle, null);
+		this.add(getJCheckBox(), null);
 	}
 
 	/**
@@ -296,6 +306,10 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 			m_searchDetails.put("summary",m_jTextField_Summary_SBP.getText());
 			m_searchDetails.put("toc",m_jTextField_TOC_SBP.getText());
 			m_searchDetails.put("labels",m_jTextField_Labels_SBP.getText());
+			if(m_jCheckBox_toggle.isSelected())
+			            m_searchDetails.put("toggle", "true");
+			else if(!m_jCheckBox_toggle.isSelected())
+				        m_searchDetails.put("toggle", "false");
 			if(jComboBox_Subtopics_SBR.isEnabled())
 			       m_searchDetails.put("subtopic",jComboBox_Subtopics_SBR.getSelectedItem().toString());
 			else if (!jComboBox_Subtopics_SBR.isEnabled())
@@ -369,5 +383,20 @@ public class CSearchBookPanel extends JPanel implements ActionListener,ItemListe
 				s_flag = false;	
 		    }
 	    }
+	}
+
+	/**
+	 * This method initializes m_jCheckBox_toggle,	
+	 * if selected the search will be on each section separatly.
+	 * Defalt unselected.	
+	 * @return javax.swing.JCheckBox	
+	 */
+	private JCheckBox getJCheckBox() {
+		if (m_jCheckBox_toggle == null) {
+			m_jCheckBox_toggle = new JCheckBox();
+			m_jCheckBox_toggle.setLocation(new Point(200, 435));
+			m_jCheckBox_toggle.setSize(new Dimension(25, 25));
+		}
+		return m_jCheckBox_toggle;
 	}
 }
