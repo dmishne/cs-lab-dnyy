@@ -443,6 +443,11 @@ public class CDBInteractionGenerator
 			String asubtopic =  msgMap.get("subtopic");
 			msgMap.remove("topic");
 			msgMap.remove("subtopic");
+			boolean bool = false;
+			if(msgMap.size() > 1)
+			{
+				bool = true;
+			}
 			try {
 				data = this.MySQLQuery("SELECT * FROM books "+this.buildSearchBookWhere(msgMap)+";");
 				while(data.next())
@@ -453,7 +458,7 @@ public class CDBInteractionGenerator
 			LinkedList<CBook> argtopic=new LinkedList<CBook>();
 			argtopic = searchByTopics(atopic, asubtopic);
 			LinkedList<CBook> list =new LinkedList<CBook>();
-			
+			if(!bool) return argtopic;	//in case there are only topics and subtopics to search from
 			//first we check if we don't need to use OR
 			if(msgMap.containsKey("toggle") && msgMap.get("toggle").compareTo("true") != 0)
 				for(int i = 0 ; i < arg.size(); i++)
