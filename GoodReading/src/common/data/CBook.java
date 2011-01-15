@@ -86,6 +86,7 @@ public class CBook implements Serializable,Comparable<CBook> {
 	{
 		return m_rank;
 	}
+	
 	/**
 	 * setter for book's rank (locally) 
 	 * @param r new value for m_rank
