@@ -1350,7 +1350,7 @@ public class CDBInteractionGenerator
 	 * @param file
 	 * @return true on success false on failure
 	 */
-	public boolean UploadFile(String isbn, String format, CFile file) {
+	public boolean UploadFile(String isbn, String format) { 
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
 			int i = st.executeUpdate("CALL InsertFile ('"+ isbn +"','"+ format +"','  ');");
