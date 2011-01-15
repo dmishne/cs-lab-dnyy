@@ -322,13 +322,16 @@ public class CDBInteractionGenerator
 	{ 
 		String ans="";
 		String Delimiter="AND";
+		
+		if(params.containsKey("toggle") && params.get("toggle").compareTo("true") == 0)
+			Delimiter="OR";
+		params.remove("toggle");
+		
 		if(params.isEmpty())
 			return ans;
 		ans="WHERE ";
 		
-		if(params.containsKey("toggle") && params.get("toggle").compareTo("true") == 0)
-			Delimiter="OR";
-
+		
 		Set<String> a = params.keySet();
 		for(String arg: a)
 			if (params.get(arg).equals(""))
@@ -408,6 +411,10 @@ public class CDBInteractionGenerator
 		{
 			ans=ans+" "+Delimiter+" language LIKE '%"+params.get("language")+"%'";
 		}
+		if(Delimiter.compareTo("OR") == 0)
+			params.put("toggle","true");
+		else params.put("toggle","false");
+			
 		return ans;		
 	}
 
