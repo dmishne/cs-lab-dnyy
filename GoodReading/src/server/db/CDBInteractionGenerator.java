@@ -1353,7 +1353,7 @@ public class CDBInteractionGenerator
 	public boolean UploadFile(String isbn, String format, CFile file) {
 		try {
 			Statement st = this.m_DB_Connection.createStatement();
-			int i = st.executeUpdate("CALL InsertFile ('"+ isbn +"','"+ format +"','"+ new String(file.getChars()) +"');");
+			int i = st.executeUpdate("CALL InsertFile ('"+ isbn +"','"+ format +"','  ');");
 			if(i == 1) return true;	
 		} catch (SQLException e) {
 			System.out.println("UploadFile():SQL exception: "+e.getErrorCode()+" "+e.getMessage());  }

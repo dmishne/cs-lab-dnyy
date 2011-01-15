@@ -629,8 +629,12 @@ public class CExecuter implements Runnable
 							
 						if(arg.get("format") != null && arg.get("format").compareTo("") != 0)
 						for(String s: arg.get("format").split(","))
-							if( db.UploadFile(arg.get("isbn"),s,new CFile(CServerConstants.DEFAULT_Global_Library_Path()+arg.get("isbn")+"."+s)) )
+						{
+							System.out.println(CServerConstants.DEFAULT_Global_Library_Path()+arg.get("isbn")+"."+s);
+							if( db.UploadFile(arg.get("isbn"),s,new CFile( CServerConstants.DEFAULT_Global_Library_Path()+arg.get("isbn")+"."+s )) )
+								
 								count--;
+						}
 						}
 					if(count == 0)
 						CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"Edit new book: SUCCESS");
@@ -976,11 +980,11 @@ public class CExecuter implements Runnable
 			if(!db.getBookFormats(Work.getMsgMap().get("isbn")).contains(Work.getMsgMap().get("format")))
 				CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),"no such format for this book");
 			else
-				CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),db.getBook(Work.getMsgMap().get("isbn"),Work.getMsgMap().get("format")));
+			//TO RESOLVE: this is the branch for download book  	CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),db.getBook(Work.getMsgMap().get("isbn"),Work.getMsgMap().get("format")));
+				CRespondToClient.GetInstance().SendResponse(Work.getSessionID(),  new CFile(CServerConstants.DEFAULT_Global_Library_Path()+Work.getMsgMap().get("isbn")+"."+Work.getMsgMap().get("format"))  );
+	}	
 		
-	}
-	
-	/**
+		/**
 	 * handles the request to search a book
 	 * @param Work contains all the parameters from client
 	 * @param Privilage the user's privilage (Librarian / Library Manager / Reader ..)
