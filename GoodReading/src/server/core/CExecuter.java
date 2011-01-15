@@ -1511,7 +1511,7 @@ public class CExecuter implements Runnable
 			{
 				//Maintenance functions start
 				CExecuter.recheckPopularity();
-			//	CDBInteractionGenerator.GetInstance().removeSessionId();
+				CDBInteractionGenerator.GetInstance().removeSessionId();
 				//Maintenance functions end
 				
 				
