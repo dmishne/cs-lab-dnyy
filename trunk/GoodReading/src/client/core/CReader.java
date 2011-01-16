@@ -173,7 +173,7 @@ public class CReader extends AUser{
 	public String[] getPaymentType() throws Exception
 	{
 		CEntry EntryToSrv = null;
-		String[] fail = {"No payment type"};
+		String[] fail = {"No affordable pay types"};
 		Map <String,String> PayType = new HashMap<String,String>();
 		EntryToSrv = new CEntry("GetPayment",PayType,this.getUserName(),this.getUserSessionId());
 		String[] result = (String[])CClientConnector.getInstance().messageToServer(EntryToSrv);	
@@ -201,7 +201,7 @@ public class CReader extends AUser{
 		if(isbn.isEmpty())
 			throw new IOException("Book ISBN required for order!"); 
 		orderInfo.put("isbn", isbn);
-		if(PayType.isEmpty())
+		if(PayType.compareTo("No affordable pay types") == 0)
 			throw new IOException("Pay type required for order!");
 		orderInfo.put("paytype", PayType);
 		EntryToSrv = new CEntry("PurchaseBook",orderInfo,this.getUserName(),this.getUserSessionId());
