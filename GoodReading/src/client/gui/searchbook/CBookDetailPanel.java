@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.DecimalFormat;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -153,7 +154,8 @@ public class CBookDetailPanel extends JPanel implements MouseListener,ActionList
 		m_jLabel_Price.setBounds(new Rectangle(226, 420, 257, 45));
 		m_jLabel_Price.setFont(new Font("Freestyle Script", Font.BOLD, 36));
 		m_jLabel_Price.setHorizontalAlignment(SwingConstants.CENTER);
-		m_jLabel_Price.setText("Price: " + ((Double)m_book.getM_price()).intValue() +"." + (int)((m_book.getM_price()-((Double)m_book.getM_price()).intValue())*100) + " $USD");
+		DecimalFormat df= new DecimalFormat("#0.00");
+		m_jLabel_Price.setText("Price: " + df.format(m_book.getM_price()) + " $USD");
 		String title = m_book.getM_title();
 		m_jLabel_Title = new CustomLabel();
 		m_jLabel_Title.setSize(new Dimension(700, 60));
