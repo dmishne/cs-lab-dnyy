@@ -690,6 +690,8 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			try {
 				AUser.getInstance();
 				jContentPane.removeAll();
+				jContentPane.add(m_jLabel_LOGO, null);
+				m_jLabel_LOGO.setVisible(true);
 				GUI_CMainMenuPanel = null;
 				jContentPane.add(getGUI_CMainMenuPanel());
 				GUI_CMainMenuPanel.setVisible(true);
@@ -706,6 +708,8 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 			try
 			{
 				jContentPane.removeAll();
+				jContentPane.add(m_jLabel_LOGO, null);
+				m_jLabel_LOGO.setVisible(true);
 				GUI_CMainMenuPanel = null;
 				jContentPane.add(getGUI_CMainMenuPanel());
 				GUI_CMainMenuPanel.setVisible(true);
