@@ -7,6 +7,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -115,8 +116,8 @@ public class COrderBookPanel extends JPanel implements ActionListener{
 		jLabel_BookLanguage.setSize(new Dimension(150, 30));
 		jLabel_BookLanguage.setLocation(new Point(170, 245));
 		jLabel_BookLanguage.setFont(new Font("Eras Bold ITC", Font.BOLD, 12));
-		Double pricetemp = (CBookDetailPanel.getBook().getM_price());
-		String price = pricetemp.intValue() + "." + (int)((pricetemp-(pricetemp).intValue())*100) + "$";
+		DecimalFormat df= new DecimalFormat("#0.00");
+		String price = df.format(CBookDetailPanel.getBook().getM_price()) + "$";
 		jLabel_BookPrice = new JLabel();
 		jLabel_BookPrice.setText(price);
 		jLabel_BookPrice.setSize(new Dimension(150, 30));

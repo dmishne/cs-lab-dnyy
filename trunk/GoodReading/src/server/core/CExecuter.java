@@ -1328,11 +1328,11 @@ public class CExecuter implements Runnable
 		
 		for(CPurchaseStats a: tmp)
 			if(a.getmonth().compareTo("01") == 0)
-				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"Jannuar"));
+				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"January"));
 			else if(a.getmonth().compareTo("02") == 0)
-				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"Februar"));
+				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"February"));
 			else if(a.getmonth().compareTo("03") == 0)
-				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"Mars"));
+				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"March"));
 			else if(a.getmonth().compareTo("04") == 0)
 				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"April"));
 			else if(a.getmonth().compareTo("05") == 0)
@@ -1350,7 +1350,7 @@ public class CExecuter implements Runnable
 			else if(a.getmonth().compareTo("11") == 0)
 				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"November"));
 			else if(a.getmonth().compareTo("12") == 0)
-				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"Jannuar"));
+				arg.add(new CPurchaseStats(a.getisbn(),a.gettitle(),"December"));
 			
 	
 		

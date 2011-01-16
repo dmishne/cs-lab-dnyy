@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -102,13 +103,14 @@ public class CPurchaseReceipt extends JPanel implements ActionListener {
 	private String receipt()
 	{
 		m_receipt = new String();
+		DecimalFormat df= new DecimalFormat("#0.00");
 		CBook currBook = CBookDetailPanel.getBook();
 		m_receipt += "Receipt number: " + COrderBookPanel.getReceipt() + "\n";
 		m_receipt += "--------------\n";
 		m_receipt += "Title: " + currBook.getM_title() + "\n";
 		m_receipt += "Author: " + currBook.getM_author() + "\n";
 		m_receipt += "ISBN: " + currBook.getM_ISBN() + "\n";
-		m_receipt += "\n\nTotal Price: " + currBook.getM_price() + "$\n";
+		m_receipt += "\n\nTotal Price: " + df.format(currBook.getM_price()) + "$\n";
 		m_receipt += "\nThank you for buying books with GoodReading";
 		return m_receipt;
 	}

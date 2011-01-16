@@ -649,6 +649,7 @@ public class CMainFrame extends JFrame implements ActionListener,ComponentListen
 		{
 			JOptionPane.showMessageDialog(null, e.getMessage() + e.getClass(), "Error",JOptionPane.ERROR_MESSAGE);	
 		}
+		m_jLabel_LOGO.setVisible(true);
 		pack();
 		validate();		
 	}
