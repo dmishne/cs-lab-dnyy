@@ -25,7 +25,7 @@ public class CServerConstants {
 	/** m_DEFAULTUSER default user for the DB */
 	private static String m_DEFAULTUSER="root";
 	/** m_DEFAULTPASS default password for the DB */
-	private static String m_DEFAULTPASS="Braude";
+	private static String m_DEFAULTPASS="m00nkey";
 	/** m_DEFAULT_PORT default port for the server (from which clients may connect */
 	private static int m_DEFAULT_PORT=5555;
 	/** m_POPULARITY_RATIO determines how much a view is worth vs a purchase, for example if the ratio is 5 than 5 views equals a purchase. @see server.core.CExecuter#recheckPopularity */
